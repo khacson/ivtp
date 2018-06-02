@@ -8,17 +8,17 @@
 		parent::__construct();
 	}
 	function login($u, $p = null) {
-		$query = $this->model->table('ffm_users')
-		->select("ffm_users.*,ffm_groups.params")
-		->join('ffm_groups', 'ffm_groups.id = ffm_users.groupid', 'inner')
-		->where('ffm_users.isdelete',0)	
-		->where('ffm_groups.isdelete',0)	
-		->where('ffm_users.username',$u)
+		$query = $this->model->table('ivt_users')
+		->select("ivt_users.*,ivt_groups.params")
+		->join('ivt_groups', 'ivt_groups.id = ivt_users.groupid', 'inner')
+		->where('ivt_users.isdelete',0)	
+		->where('ivt_groups.isdelete',0)	
+		->where('ivt_users.username',$u)
 		->find();
 		return $query;
 	}
 	function getListMenu(){
-		$menu = $this->model->table('ffm_menus')
+		$menu = $this->model->table('ivt_menus')
 							->select('name,route')
 							->where('isdelete',0)
 							->where('route <>','')
@@ -32,7 +32,7 @@
 	}
 	function getRouter($str){
 		$json = json_decode($str);
-		$menu = $this->model->table('ffm_menus')
+		$menu = $this->model->table('ivt_menus')
 							->select('id,route')
 							->where('isdelete',0)
 							->where('route <>','')
@@ -56,7 +56,7 @@
 		$data['timelogin'] = $GMTTime;
 		$data['ipaddress'] = $address;
 		$data['username'] = $uid;	
-		$id = $this->model->table('ffm_time_login')->save('', $data);
+		$id = $this->model->table('ivt_time_login')->save('', $data);
 		return $id;
 	}
 	function getLanguage($lang=''){
@@ -66,7 +66,7 @@
 		else{
 			$langs = "vn";	
 		}
-		$query = $this->model->table('ffm_language')
+		$query = $this->model->table('ivt_language')
 					  ->select('keyword,translation,langpage')
 					  ->where('isdelete',0)
 					  ->where('language',$langs)
