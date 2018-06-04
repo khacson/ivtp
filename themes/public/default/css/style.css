@@ -80,7 +80,7 @@
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
 html {
-	font-family: Tahoma, Verdana, Segoe, sans-serif;
+	font-family: Arial, Tahoma, Verdana, Segoe, sans-serif;
 	-ms-text-size-adjust: 100%;
 	-webkit-text-size-adjust: 100%;
 }
@@ -389,8 +389,8 @@ html {
 }
 
 body {
-	font-family: Tahoma, Verdana, Segoe, sans-serif;
-	font-size: 13px;
+	font-family: 'Roboto', Tahoma, Verdana, Segoe, sans-serif;
+	font-size: 15px;
 	line-height: 1.5;
 	color: #7d7d7d;
 	background-color: #fff;
@@ -31504,7 +31504,8 @@ html:not(.lt-ie10) .not-animated {
 	right: -12px;
 	margin-top: -6px;
 	font: 400 8px/24px "FontAwesome";
-	color: #2a2a30;
+	/*color: #2a2a30;*/
+	color: #764ebe;
 	-webkit-transform: translateY(-50%);
 	transform: translateY(-50%);
 	transition: .3s all ease;
@@ -31512,14 +31513,16 @@ html:not(.lt-ie10) .not-animated {
 
 .rd-navbar-static .rd-navbar-nav > .rd-navbar-submenu > a:hover:after,
 .rd-navbar-fullwidth .rd-navbar-nav > .rd-navbar-submenu > a:hover:after {
-	color: #79d5ca;
+	/*color: #79d5ca;*/
+	color: #764ebe;
 	-webkit-transform: translateY(-50%) rotate(-180deg);
 	transform: translateY(-50%) rotate(-180deg);
 }
 
 .rd-navbar-static .rd-navbar-nav > .rd-navbar-submenu.focus a:after,
 .rd-navbar-fullwidth .rd-navbar-nav > .rd-navbar-submenu.focus a:after {
-	color: #79d5ca;
+	/*color: #79d5ca;*/
+	color: #764ebe;
 	-webkit-transform: translateY(-50%) rotate(-180deg);
 	transform: translateY(-50%) rotate(-180deg);
 }
@@ -31529,9 +31532,10 @@ html:not(.lt-ie10) .not-animated {
 	position: relative;
 	z-index: 1;
 	display: block;
-	font-weight: 700;
+	font-weight: 300;
 	padding: 0 0 10px;
-	color: #2a2a30;
+	/*color: #2a2a30;*/
+	color: #764ebe;
 	background: transparent;
 	text-transform: uppercase;
 	/*letter-spacing: .06em;*/
@@ -31547,7 +31551,7 @@ html:not(.lt-ie10) .not-animated {
 	top: 50%;
 	left: 0%;
 	z-index: -1;
-	width: 96px;
+	width: 100%;
 	height: 3px;
 	margin-top: 5px;
 	background: #764ebe;
@@ -31561,13 +31565,15 @@ html:not(.lt-ie10) .not-animated {
 .rd-navbar-static .rd-navbar-nav > li > a:hover,
 .rd-navbar-fullwidth .rd-navbar-nav > li.focus > a,
 .rd-navbar-fullwidth .rd-navbar-nav > li > a:hover {
-	color: #79d5ca;
+	/*color: #79d5ca;*/
+	color: #764ebe;
 	background: transparent;
 }
 
 .rd-navbar-static .rd-navbar-nav > li.active > a,
 .rd-navbar-fullwidth .rd-navbar-nav > li.active > a {
-	color: #2a2a30;
+	/*color: #2a2a30;*/
+	color: #764ebe;
 	background: transparent;
 }
 

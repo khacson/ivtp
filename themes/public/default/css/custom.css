@@ -1,0 +1,135 @@
+footer {
+    margin-top: 100px;
+}
+.pricing .plan.popular {
+    border-radius: 5px;
+}
+.pricing .plan.popular .header {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.plan.popular {
+    border-radius: 5px;
+    box-shadow: 0 0 15px #aaa;
+    position: relative;
+    z-index: 99;
+}
+.plan.popular .header {
+    background-color: #764ebe;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #fff;
+}
+.plan.popular .header h2 {
+    color: #fff
+}
+.plan {
+    background: #fff none repeat scroll 0 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 2px #aaa;
+    margin: 20px 0;
+    min-height: 90px;
+    padding-bottom: 25px;
+    text-align: center;
+}
+.plan .header {
+    background: #eee none repeat scroll 0 0;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    color: #999;
+    padding: 12px 15px;
+}
+.plan .header h1, .plan .header h2, .plan .header h3 {
+    font-weight: 100;
+    margin: 0;
+    padding: 0;
+}
+.plan .header h2{
+    font-size: 30px;
+	color: #999;
+}
+.plan .price {
+    border-top: 1px dashed #ddd;
+    margin: 0 auto 15px;
+    width: 90%;
+}
+.plan .price h3 {
+    font-size: 40px;
+    line-height: 1;
+    vertical-align: top;
+	font-weight: 500;
+	margin-bottom: 10px;
+    margin-top: 20px;
+}
+.plan .price h3 span {
+    display: inline-block;
+    font-size: 40px;
+    margin: 6px 0 0 -7px;
+    position: relative;
+    vertical-align: top;
+}
+.plan .price h4 {
+    font-size: 50px;
+    line-height: 1;
+    vertical-align: top;
+}
+.plan .price h4 span {
+    display: inline-block;
+    font-size: 30px;
+    margin: 6px 0 0 -7px;
+    position: relative;
+    vertical-align: top;
+}
+.plan .price h5 {
+    font-size: 40px;
+    line-height: 1;
+    vertical-align: top;
+}
+.plan .price h5 span {
+    display: inline-block;
+    font-size: 20px;
+    margin: 6px 0 0 -7px;
+    position: relative;
+    vertical-align: top;
+}
+.plan .price h6 {
+    color: #aaa;
+    font-size: 14px;
+}
+.plan ul {
+    list-style-type: none;
+    margin-top: 2px;
+    padding: 20px;
+}
+.plan ul li {
+    line-height: 22px;
+    margin-bottom: 9px;
+}
+.plan ul li a {
+    color: #e6e9ed;
+    text-decoration: underline;
+}
+.plan ul li:last-child {
+    border-bottom: medium none;
+}
+@media (min-width: 768px) {
+	.pricing .plan{
+		margin-bottom: 20px;
+	}
+}
+@media (min-width: 992px) {
+	.plan.popular{
+		margin-top: 0;
+	}
+	.pricing .plan.popular .header {
+		margin-bottom: 0px;
+	}
+}
+@media (min-width: 1200px) {
+	.plan.popular{
+		margin-top: -20px;
+	}
+	.pricing .plan.popular .header{
+		margin-bottom: 20px;
+	}
+}

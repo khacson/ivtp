@@ -10,9 +10,8 @@ class ServiceModel extends CI_Model
 	}
 	function getService(){
 		$query = $this->model->table('ivt_service')
-					  ->where('isdelete',0)
-					  ->order_by('ordering','asc')
-					  ->find_all();
+					  ->where('id',8)
+					  ->find();
 		return $query;
 	}
 	function getFindDetail($url){
