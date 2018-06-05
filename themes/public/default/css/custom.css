@@ -1,3 +1,6 @@
+.clear{
+	clear: both;
+}
 footer {
     margin-top: 100px;
 }
@@ -133,3 +136,13 @@ footer {
 		margin-bottom: 20px;
 	}
 }
+/*Danh muc tang truong*/
+th {
+    background-color: #764ebe;
+    color: #fff;
+    font-weight: normal;
+    padding: 3px 5px;
+    text-align: center;
+	border: 1px solid #7d7d7d;
+}
+/*Danh muc tang truong*/

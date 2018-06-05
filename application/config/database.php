@@ -64,10 +64,17 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
+	
+	/*'hostname' => 'sql12.freemysqlhosting.net',
+	'username' => 'sql12241528',
+	'password' => 'jkDMtiINlw',
+	'database' => 'sql12241528',*/
+	
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
 	'database' => 'investor',
+	
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

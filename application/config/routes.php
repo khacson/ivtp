@@ -71,6 +71,8 @@ $route['xu-huong-thi-truong/(:any)'] = "markettrend/$1";
 
 
 $route['danh-muc-dau-tu'] = "investment";
+$route['danh-muc-dau-tu/danh-muc-tang-truong'] = "increasecatalog";
+$route['danh-muc-dau-tu/danh-muc-tang-truong/(:any)'] = "increasecatalog/$1";
 $route['danh-muc-dau-tu/(:any)'] = "investment/$1";
 
 $route['thiet-ke-web'] = "web";
