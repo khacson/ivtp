@@ -80,9 +80,10 @@
                 </div>
             </div>
         </div>
-		<div class="text-left">
-			<br><br>
-			<?=$services->description_long;?>
+		<div class="range range-xs-center text-left pricing">
+			<div class="cell-md-10 cell-lg-10 text-justify">
+				<?=$services->description_long;?>
+			</div>
 		</div>
 	</div>
 </div>
