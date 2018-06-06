@@ -10,7 +10,7 @@
                       <li><a class="text-gray-lighter" href="#comments">12 Comments</a></li>
                     </ul>
 				</div>
-				<div class="offset-top-30">
+				<div class="offset-top-30 increasecatalog-table-detail">
 					<table id="tbheader" width="100%" cellspacing="0" border="1" >
 						<tr>
 							<th>STT</th>

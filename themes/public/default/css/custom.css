@@ -137,6 +137,9 @@ footer {
 	}
 }
 /*Danh muc tang truong*/
+img.cotuc {
+    max-width: 360px;
+}
 th {
     background-color: #764ebe;
     color: #fff;
@@ -144,5 +147,23 @@ th {
     padding: 3px 5px;
     text-align: center;
 	border: 1px solid #7d7d7d;
+}
+td {
+    padding: 3px 5px;
+	border: 1px solid #7d7d7d;
+}
+.increasecatalog-table-detail table{
+	width: 1200px;
+	overflow: auto;
+}
+.increasecatalog-table-detail{
+	margin: auto;
+	overflow: auto;
+}
+.red {
+	color: red;
+}
+.green {
+	color: green;
 }
 /*Danh muc tang truong*/

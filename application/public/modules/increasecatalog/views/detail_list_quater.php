@@ -72,8 +72,6 @@ foreach ($dataQuater as $item) {
 		
 		<?php if ($i == 29) $bg = 'bgcolor="yellow"'; ?>
 		<td align="right" <?=$bg?> <?=$color8?> ><?=$t8?></td>
-		
-		<td></td>
 	</tr>
 <?php	
 $i++;

@@ -70,7 +70,7 @@
                     <li><a href="<?=base_url();?>danh-muc-dau-tu.html">Danh mục đầu tư</a>
                       <!-- RD Navbar Dropdown-->
                       <ul class="rd-navbar-dropdown">
-					    <li><a href="<?=base_url();?>danh-muc-dau-tu/cai-nay-load-tu-danh-muc-nhe.html">Danh mục tăng trưởng</a></li>
+					    <li><a href="<?=base_url();?>danh-muc-tang-truong.html">Danh mục tăng trưởng</a></li>
                         <li><a href="<?=base_url();?>danh-muc-dau-tu/cai-nay-load-tu-danh-muc-nhe.html">Danh mục khuyến nghị IPPro</a></li>
                         <li><a href="<?=base_url();?>danh-muc-dau-tu/cai-nay-load-tu-danh-muc-nhe.html">Báo cáo phân tích tổng hợp</a></li>
                       </ul>

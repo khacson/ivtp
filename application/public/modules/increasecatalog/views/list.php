@@ -14,7 +14,7 @@ foreach ($datas as $item) {
 		<td align="center"><?=$i;?></td>
 		
 		<td align="center">
-			<a href="<?=base_url();?>increasecatalog/<?=strtolower($item->mcp)?>-dt<?=$item->id?>.html"><?=$item->mcp?></a>
+			<a href="<?=base_url();?>danh-muc-tang-truong/<?=strtolower($item->mcp)?>-dt<?=$item->id?>.html"><?=$item->mcp?></a>
 		</td>
 		<td align="right"><?=number_format($item->curr_price)?></td>
 		<td align="right"><?=round($item->pe, 2)?></td>

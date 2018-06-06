@@ -76,14 +76,13 @@ foreach ($dataYear as $item) {
 				</td>';
 			}
 		} elseif ($i == 16) {
-			echo '<td align="center" colspan="3">'.$item->spend.'<td>';
+			echo '<td align="center" colspan="3">'.$item->spend.'</td>';
 		} else {
 		?>
 			<td><?=$item->spend?></td>
 			<td align="center"><?=$curr_year?></td>
 			<td align="center"><?=$finish?></td>
 		<?php } ?>
-		<td></td>
 	</tr>
 <?php	
 $i++;

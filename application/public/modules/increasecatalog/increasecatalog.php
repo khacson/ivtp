@@ -52,16 +52,16 @@ class Increasecatalog extends CI_Controller {
 		$this->site->write('description',$finds->mete_description,true);
         $this->site->render();
 	}
-	function _detail($mcp_id){
+	function detail($mcp_id){
 		$data = new stdClass();
-		$finds = $this->model->getFindNews($mcp_id);
+		/*$finds = $this->model->getFindNews($mcp_id);
 		if(!empty($finds->id)){
 			$this->site->write('title',$finds->meta_title,true);
 			$this->site->write('description',$finds->meta_keyword,true);
 			$this->site->write('keywords',$finds->mete_description,true);
 			$this->site->write('title_page',$finds->title,true);
 		}
-		$data->finds = $finds;
+		$data->finds = $finds;*/
 		
 		$data->mcp = $this->model->getMcp($mcp_id);
         $data->titleYear = $this->model->getTitles(2);
