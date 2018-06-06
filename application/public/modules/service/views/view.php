@@ -80,7 +80,7 @@
                 </div>
             </div>
         </div>
-		<div class="range range-xs-center text-left pricing">
+		<div class="range range-xs-center">
 			<div class="cell-md-10 cell-lg-10 text-justify">
 				<?=$services->description_long;?>
 			</div>
