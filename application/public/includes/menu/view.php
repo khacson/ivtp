@@ -34,8 +34,8 @@
                 </div>
                 <div class="right-side">
                   <ul class="list-inline list-inline-2 list-primary">
-                    <li><a class="text-gray-lighter" href="#"><i class="icon icon-xs icon-circle fa fa-facebook text-gray-lighter" href="dangnhap.html"></i> Đăng nhập<a></li>
-                    <li><a class="text-gray-lighter" href="#"><i class="icon icon-xs icon-circle fa fa-twitter text-gray-lighter" href="dangky.html"></i> Đăng ký</a></li>
+                    <li><a class="text-gray-lighter" href="<?=base_url();?>dang-nhap.html"><i class="icon icon-xs icon-circle fa fa-facebook text-gray-lighter" href="dangnhap.html"></i> Đăng nhập<a></li>
+                    <li><a class="text-gray-lighter" href="<?=base_url();?>dang-ky.html"><i class="icon icon-xs icon-circle fa fa-twitter text-gray-lighter" href="dangky.html"></i> Đăng ký</a></li>
                   </ul>
                 </div>
               </div>
