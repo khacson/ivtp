@@ -78,8 +78,11 @@ $route['danh-muc-tang-truong/(:any)'] = "increasecatalog/$1";
 $route['thiet-ke-web'] = "web";
 $route['thiet-ke-web/(:any)'] = "web/$1";
 
-$route['khach-hang'] = "customer";
-$route['khach-hang/(:any)'] = "customer/$1";
+$route['dang-nhap'] = "member/login";
+$route['dang-nhap/(:any)'] = "member/login/$1";
+
+$route['dang-ky'] = "member/register";
+$route['dang-ky/(:any)'] = "member/register/$1";
 
 
 $route['translate_uri_dashes'] = FALSE;

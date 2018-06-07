@@ -296,6 +296,9 @@ th {
 	padding: 0;
 }
 
+.mtop10{ margin-top:10px;}
+.mtop20{ margin-top:20px;}
+.mtop30{ margin-top:30px;}
 /*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 @media print {
 	*,
