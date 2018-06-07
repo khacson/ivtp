@@ -23,7 +23,7 @@
 		return $sql;
 	}
 	function getList($search,$page,$numrows){
-		$sql = " SELECT u.id,u.username, u.fullname, u.groupid, u.image, 
+		$sql = " SELECT u.id,u.username, u.fullname, u.groupid, u.signature, 
 				 u.mobile, u.email, u.datecreate,
 				 g.groupname,g.grouptype
 				FROM ivt_users AS u 

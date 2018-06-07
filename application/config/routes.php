@@ -69,6 +69,8 @@ $route['gioi-thieu/(:any)'] = "aboutus/$1";
 $route['xu-huong-thi-truong'] = "markettrend";
 $route['xu-huong-thi-truong/(:any)'] = "markettrend/$1";
 
+$route['tu-van'] = "helpdesk";
+$route['tu-van/(:any)'] = "helpdesk/$1";
 
 $route['danh-muc-dau-tu'] = "investment";
 $route['danh-muc-dau-tu/(:any)'] = "investment/$1";

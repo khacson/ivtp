@@ -67,7 +67,11 @@
                         <li><a href="<?=base_url();?>xu-huong-thi-truong/cai-nay-load-tu-danh-muc-nhe.html">Dự báo xu hướng IPPro</a></li>
                       </ul>
                     </li>
-					<li><a href="tu-van.html">Tổ tư vấn độc lập</a> </li>
+					<li><a href="tu-van.html">Tổ tư vấn độc lập</a> 
+						<ul class="rd-navbar-dropdown">
+					    <li><a href="<?=base_url();?>tu-van/dt2.html">Tư vấn</a></li>
+                      </ul>
+					</li>
                     <li><a href="<?=base_url();?>danh-muc-dau-tu.html">Danh mục đầu tư</a>
                       <!-- RD Navbar Dropdown-->
                       <ul class="rd-navbar-dropdown">

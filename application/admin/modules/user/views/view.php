@@ -224,8 +224,8 @@
                     }
                     var reader = new FileReader();
                     reader.onload = (function(theFile) {
-                        return function(e) { //size e = e.tatal
-                            $('#show').html('<img src="' + e.target.result + '" style="width:60px; height:40px" />');
+                        return function(e) {
+                            $('#show').html('<img src="' + e.target.result + '" style="height:40px; border-radius: 50% !important;" />');
                             $("#img1").val(e.target.result);
                         };
                     })(f);
@@ -383,7 +383,7 @@
 				$('#mobile').val(mobile);
 				 
 				$('#groupid').multipleSelect('setSelects', groupid.split(','));
-				$('#show').html('<img src="' + avatar + '" style="width:60px; height:40px" />');
+				$('#show').html('<img src="' + avatar + '" style="height:40px; border-radius: 50% !important" />');
 			});	
 		});	
 	}

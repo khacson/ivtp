@@ -3,7 +3,7 @@ $i= $start;
 foreach ($datas as $item) { 
 ?>
 
-	<tr class="content edit" groupid = <?=$item->groupid;?> avatar = "<?=$item->image;?>" id="<?=$item->id; ?>" >
+	<tr class="content edit" groupid = <?=$item->groupid;?> avatar = "<?=$item->signature;?>" id="<?=$item->id; ?>" >
 		<td style="text-align: center;">
 		<input class="noClick" type="checkbox" name="keys[]" id="<?=$item->id; ?>"></td>
 		<td class="center"><?=$i;?></td>
