@@ -1,6 +1,6 @@
 var prev_key_code = '';
 document.execCommand("enableObjectResizing", false, false);
-$("#input-msg").keyup(function(e){ console.log(e);
+$("#input-msg").keyup(function(e){ 
 	if (e.keyCode == 8 && prev_key_code == 8) {
 		removeBr('#input-msg');
 	}

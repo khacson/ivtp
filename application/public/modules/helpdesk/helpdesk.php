@@ -63,8 +63,8 @@ class Helpdesk extends CI_Controller {
 			$this->site->write('title_page',$finds->title,true);
 		}
 		$data->finds = $finds;*/
-		$login->id = 20;
-		$login->fullname = 'Đặng Thu Huyền';
+		$login->id = 21;
+		$login->fullname = 'Nguyễn Gia Huy';
 		$login->signature = 'photo.jpg';
 		$data->login = $login;
 		$data->user_fullname = $this->model->get_user_fullname($user_id);
@@ -95,5 +95,10 @@ class Helpdesk extends CI_Controller {
 			echo base_url().'/upload/chat/'.$filename;
 		}
 	}
-	
+	function save_rating() {
+		$array['star'] = $page = $this->input->post('star');
+		$array['note'] = $page = $this->input->post('note');
+		$chat_code = $page = $this->input->post('chat_code');
+		$this->model->table('ivt_users_chat')->where('chat_code', $chat_code)->update($array);
+	}
 }

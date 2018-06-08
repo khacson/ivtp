@@ -3,12 +3,14 @@
             <div class="shell-wide shell-wide-custom">
               <div class="range range-xs-center range-lg-right range-xl-justify">
                 <div class="cell-sm-10 cell-md-8 cell-xl-7">
-                  <div class="inset-md-right-35 inset-xl-right-0">
-                    <h3 class="text-primary">Hỗ trợ tư vấn</h3>  
-                    <div class="offset-top-30">
-					
-                      <?php include 'kh_chat.php'; ?>
-					  
+                  <div class="inset-md-right-35 inset-xl-right-0">  
+                    <div class="range">
+						<div  class="cell-md-8">
+							<?php include 'kh_chat.php'; ?>
+						</div>
+						<div  class="cell-md-4">
+							<?php include 'rating_form.php'; ?>
+						</div>
                     </div>
                   </div>
                 </div>

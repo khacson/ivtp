@@ -34,14 +34,29 @@ use Firebase\JWT\JWT;
 		return json_decode($content);
 	}
 	function create_chatcode($user_id, $member_id, $firebasedb) {
-		$chat_code = uniqid();
-		$array['chat_code'] = $chat_code;
-		$array['user_id'] = $user_id;
-		$array['member_id'] = $member_id;
-		$array['firebasedb'] = $firebasedb;
-		$array['datecreate']  = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
-		$this->model->table('ivt_users_chat')->insert($array);	
+		//moi khach hang chat nhieu lan trong ngay thi dung chung 1 ma chat
+		$chat_code = gmdate('dmY', time() + 7 * 3600).$user_id.'T'.$member_id;
+		$check = $this->check_exist_chatcode($chat_code); 
+		if (empty($check)) {
+			$array['chat_code'] = $chat_code;
+			$array['user_id'] = $user_id;
+			$array['member_id'] = $member_id;
+			$array['firebasedb'] = $firebasedb;
+			$array['datecreate']  = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+			$this->model->table('ivt_users_chat')->insert($array);	
+		}
+		else {
+			$array['dateupdate']  = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+			$this->model->table('ivt_users_chat')->where('id', $check->id)->update($array);	
+		}
 		return $chat_code;
+	}
+	function check_exist_chatcode($chat_code) {	
+		$rs = $this->model->table('ivt_users_chat')
+						->select('id')
+						->where('chat_code', $chat_code)
+						->find();
+		return $rs;
 	}
 	function get_user_fullname($user_id) {
 		$sql = "SELECT * FROM ivt_users WHERE id = '$user_id'";

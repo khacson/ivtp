@@ -48,10 +48,11 @@
 				</div>
 				<form class="new-msg-form">
 					<span title="Chèn hình ảnh" id="insert-image" class="insert fright">
+						<span class="fa fa-camera"></span>
 						<input onchange="angular.element(this).scope().uploadImage()" ng-model="image" type="file" id="input-image" value="" accept="image/*" />
 					</span>
 					<span title="Chèn biểu tượng cảm xúc" id="insert-emotion" class="insert fright">
-						<i>&#9786;</i>
+						<span class="chaticon e1f60a" data="1f60a"></span>
 					</span>
 					<div id="input-msg" contenteditable="true" class="input-msg" ng-keyup="checkAndSendChat($event)"></div>
 					<button hidden type="submit" ng-click="sendChat()" data=""></button>
@@ -148,6 +149,7 @@
 	
 <script>
 var token = '<?=$token?>';
+var chat_code = '<?=$chat_code?>';
 var app = angular.module('app', ['firebase']);
 app.filter('unsafe', function($sce) { return $sce.trustAsHtml; });
 app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseAuth', function($scope, $firebase , $firebaseArray, $firebaseAuth) {
@@ -162,7 +164,6 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	var user_id = '<?=$user_id?>';
     var customername = '<?=$login->fullname?>';
     var customer_id = '<?=$login->id?>';
-    var chat_code = '<?=$chat_code?>';
 	var db = firebase.database().ref();
 	var dblog = db.child('log');
 	var dbping = db.child('ping');

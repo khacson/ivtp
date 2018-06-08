@@ -36,16 +36,17 @@
 			</div>
 			<div class="chat-header">
 				<span class="fleft">Hỗ trợ tư vấn khách hàng</span>
-				<span class="fright"><?=$login->fullname?></span>
+				<span class="fright" id="chat_code"></span>
 			</div>
             <div class="customerlist">
 				<ul class="customers"> 
-					<li class="customer-item" onclick="addActiveClass(this); showInputMsg()"  ng-repeat="chatCode in chatCodeList" ng-click="show_chat_log(chatCode.chat_code, chatCode.name, chatCode.avatar)">
+					<li class="customer-item" onclick="addActiveClass(this); showInputMsg()"  ng-repeat="chatCode in chatCodeList | orderBy: '-ping'" ng-click="show_chat_log(chatCode.chat_code, chatCode.name, chatCode.avatar)">
 						<div class="customer-avatar">
 							<span ng-bind-html="chatCode.avatar | unsafe"></span>
 							<span class="have-new-msg-icon {{chatCode.ping ? 'show' : 'hide'}}"></span>
 						</div>
 						<span class="customer-name">{{chatCode.name}}</span>
+						<span class="customer-chatcode">{{chatCode.chat_code}}</span>
 					</li>
 				</ul>
 			</div>
@@ -63,10 +64,11 @@
 				</div>
 				<form class="new-msg-form">
 					<span title="Đính kèm hình ảnh" id="insert-image" class="insert fright">
+						<span class="fa fa-camera"></span>
 						<input onchange="angular.element(this).scope().uploadImage()" ng-model="image" type="file" hidden id="input-image" value="" accept="image/*" />
 					</span>
 					<span title="Chèn biểu tượng cảm xúc" id="insert-emotion" class="insert fright">
-						<i>&#9786;</i>
+						<span class="chaticon e1f60a" data="1f60a"></span>
 					</span>
 					<div id="input-msg" contenteditable="true" class="input-msg" ng-keyup="checkAndSendChat($event)"></div>
 					<button hidden type="submit" ng-click="sendChat()" data=""></button>
@@ -220,6 +222,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		current_chat_code = chat_code;
 		current_customer = customername;
 		current_avatar = avatar;
+		$('#chat_code').text('Mã chat: ' + chat_code);
 	}
 	
 	$scope.sendChat = function() {

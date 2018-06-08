@@ -176,47 +176,21 @@
 	margin-bottom: 5px;
 }
 #insert-emotion {
-    height: 21px;
-    margin-right: 5px;
+    height: 27px;
+    margin-right: 15px;
     overflow: hidden;
-    width: 22px;
-}
-
-#insert-emotion i {
-    color: #666;
-    display: inline-block;
-    font-size: 30px;
-    margin-left: -4px;
-    margin-top: -11px;
-    padding: 0;
+    width: 29px;
 }
 #insert-image {
-    background-color: #999;
-    height: 20px;
-    width: 24px;
-    margin-right: 5px;
+    height: 27px;
+    margin-bottom: 5px;
+    margin-right: 15px;
+    margin-top: 5px;
+    width: 30px;
 }
-#insert-image::before {
-    border-bottom: 5px solid #fff;
-    border-left: 4px solid transparent;
-    border-right: 4px solid transparent;
-    content: "";
-    height: 0;
-    left: 4px;
-    position: absolute;
-    top: 10px;
-    width: 0;
-}
-#insert-image::after {
-    border-bottom: 7px solid #fff;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    content: "";
-    height: 0;
-    left: 11px;
-    position: absolute;
-    top: 8px;
-    width: 0;
+#insert-image .fa{
+    font-size: 25px !important;
+	color: #800000;
 }
 .icon-motion-container {
     background-color: #fff;
@@ -224,7 +198,7 @@
     padding: 10px;
     position: absolute;
     right: 18px;
-    top: -226px;
+    top: -230px;
     width: 410px;
 	max-width: 80%;
 }
@@ -236,7 +210,7 @@
     content: "";
     height: 0;
     position: absolute;
-    right: 12px;
+    right: 27px;
     width: 0;
 }
 .img-msg{
