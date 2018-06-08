@@ -46,7 +46,6 @@
 							<span class="have-new-msg-icon {{chatCode.ping ? 'show' : 'hide'}}"></span>
 						</div>
 						<span class="customer-name">{{chatCode.name}}</span>
-						<span class="customer-chatcode">{{chatCode.chat_code}}</span>
 					</li>
 				</ul>
 			</div>
