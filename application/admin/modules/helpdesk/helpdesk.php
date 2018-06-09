@@ -266,9 +266,19 @@ class Helpdesk extends CI_Controller {
 	}
 	function upload_image() {
 		if (isset($_FILES)) { 
-			$filename = $_FILES['image_file']['name'].'_'.date('dmYHis');
+			$filename = date('dmYHis').'_'.$_FILES['image_file']['name'];
 			move_uploaded_file($_FILES['image_file']['tmp_name'], 'upload/chat/'.$filename);
 			echo base_url().'upload/chat/'.$filename;
 		}
+	}
+	function save_chat() {
+		$array['chat_code'] = $this->input->post('chat_code');
+		$array['type'] = $this->input->post('type');
+		$array['name'] =  $this->input->post('name');
+		$array['avatar'] = $this->input->post('avatar');
+		$array['msg'] = $this->input->post('msg');
+		$date = $this->input->post('datecreate');
+		$array['datecreate'] = date('Y-m-d H:i:s', strtotime($date));
+		$this->model->table('ivt_users_chat_detail')->insert($array);
 	}
 }

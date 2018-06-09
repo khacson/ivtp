@@ -183,17 +183,6 @@ var token = '<?=$token?>';
 var app = angular.module('app', ['firebase']);
 app.filter('unsafe', function($sce) { return $sce.trustAsHtml; });
 app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseAuth', function($scope, $firebase , $firebaseArray, $firebaseAuth) {
-	
-	$scope.authObjMsg = $firebaseAuth();
-	$scope.authObjMsg.$signInWithCustomToken(token).then(function(firebaseUser) {
-		console.log("Signed in as:", firebaseUser.uid);	
-	}).catch(function(error) {
-		
-	});
-	
-	var db = firebase.database().ref();
-	var dblog = db.child('log');
-	var dbping = db.child('ping');
     var user_id = '<?=$login->id?>';
     var username = '<?=$login->fullname?>';
 	var current_chat_code = '';
@@ -203,10 +192,23 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	
     $scope.chatLogList = [];
 	
-	//lay danh sach khach hang dang chat voi nhan vien hien tai
-	ref = dbping.child(user_id);
-    $scope.chatCodeList = $firebaseArray(ref);
+	$scope.authObjMsg = $firebaseAuth();
+	$scope.authObjMsg.$signInWithCustomToken(token).then(function(firebaseUser) {
+		console.log("Signed in as:", firebaseUser.uid);	
+		$scope.init();
+	}).catch(function(error) {
+		console.log("Error:", error);	
+	});
 	
+	$scope.init = function() {
+		db = firebase.database().ref();
+		dblog = db.child('log');
+		dbping = db.child('ping');	
+		//lay danh sach khach hang dang chat voi nhan vien hien tai
+		ref = dbping.child(user_id);
+		$scope.chatCodeList = $firebaseArray(ref);
+	}
+
     $scope.show_chat_log = function(chat_code, customername, avatar) {
 		if (chat_code == current_chat_code) {
 			return;
@@ -232,17 +234,19 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		var msg = input_msg.html();
 		
 		ref = dblog.child(current_chat_code);
+		var avatars = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
 		$firebaseArray(ref).$add({
 			type : 1,//nhan vien gui tin nhan
 			msg : msg,
 			dateTime : dateTimeLog,
 			user_id : user_id,
 			name: username,
-			avatar: '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">'
+			avatar: avatars
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
 		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar);
+		$scope.save_chat_to_db(current_chat_code, username, avatars, msg, dateTimeLog);
     }
 	
 	$scope.sendChatImage = function(img_src) {
@@ -253,17 +257,19 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		var msg = '<img class="img-msg" src="'+ img_src +'" />';
 		
 		ref = dblog.child(current_chat_code);
+		var avatars = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
 		$firebaseArray(ref).$add({
 			type : 1,//nhan vien gui tin nhan
 			msg : msg,
 			dateTime : dateTimeLog,
 			user_id : user_id,
 			name: username,
-			avatar: '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">'
+			avatar: avatars
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
 		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar);
+		$scope.save_chat_to_db(current_chat_code, username, avatars, msg, dateTimeLog);
     }
 	
 	$scope.checkAndSendChat = function(e) {
@@ -306,6 +312,23 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	
 	$scope.move_to_bottom = function() {
 		move_to_bottom('.chat_log_list');
+	}
+	$scope.save_chat_to_db = function(chat_code, name, avatar, msg, datecreate) {
+		var data = {};
+		data['chat_code'] = chat_code;
+		data['type'] = 1;
+		data['name'] = name;
+		data['avatar'] = avatar;
+		data['msg'] = msg;
+		data['datecreate'] = datecreate;
+		$.ajax({
+		   url : controller + 'save_chat',
+		   type : 'POST',
+		   data : data,
+		   success : function(data) {
+			   
+		   }
+		});
 	}
 	
 }]);

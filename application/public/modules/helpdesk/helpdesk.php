@@ -63,8 +63,8 @@ class Helpdesk extends CI_Controller {
 			$this->site->write('title_page',$finds->title,true);
 		}
 		$data->finds = $finds;*/
-		$login->id = 21;
-		$login->fullname = 'Nguyễn Gia Huy';
+		$login->id = 20;
+		$login->fullname = 'Đặng Thu Huyền';
 		$login->signature = 'photo.jpg';
 		$data->login = $login;
 		$data->user_fullname = $this->model->get_user_fullname($user_id);
@@ -90,15 +90,27 @@ class Helpdesk extends CI_Controller {
 	}
 	function upload_image() {
 		if (isset($_FILES)) { 
-			$filename = $_FILES['image_file']['name'];
+			$filename = date('dmYHis').'_'.$_FILES['image_file']['name'];
 			move_uploaded_file($_FILES['image_file']['tmp_name'], 'upload/chat/'.$filename);
 			echo base_url().'/upload/chat/'.$filename;
 		}
 	}
 	function save_rating() {
-		$array['star'] = $page = $this->input->post('star');
-		$array['note'] = $page = $this->input->post('note');
-		$chat_code = $page = $this->input->post('chat_code');
+		$array['star'] = $this->input->post('star');
+		$array['note'] = $this->input->post('note');
+		$chat_code = $this->input->post('chat_code');
 		$this->model->table('ivt_users_chat')->where('chat_code', $chat_code)->update($array);
 	}
+	function save_chat() {
+		$array['chat_code'] = $this->input->post('chat_code');
+		$array['type'] = $this->input->post('type');
+		$array['name'] = $this->input->post('name');
+		$array['avatar'] = $this->input->post('avatar');
+		$array['msg'] = $this->input->post('msg');
+		$date = $this->input->post('datecreate');
+		$array['datecreate'] = date('Y-m-d H:i:s', strtotime($date));
+		$this->model->table('ivt_users_chat_detail')->insert($array);
+	}
+	
+
 }
