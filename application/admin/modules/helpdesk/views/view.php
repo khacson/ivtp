@@ -22,6 +22,10 @@
 .new-msg-form{
 	display: none;
 }
+#history a {
+    color: #fff;
+    font-size: 12px;
+}
 </style>
 
 <div ng-app="app">
@@ -36,6 +40,7 @@
 			</div>
 			<div class="chat-header">
 				<span class="fleft">Hỗ trợ tư vấn khách hàng</span>
+				<span class="fright" id="history"></span>
 				<span class="fright" id="chat_code"></span>
 			</div>
             <div class="customerlist">
@@ -46,6 +51,7 @@
 							<span class="have-new-msg-icon {{chatCode.ping ? 'show' : 'hide'}}"></span>
 						</div>
 						<span class="customer-name">{{chatCode.name}}</span>
+						<span class="end-chat" ng-click="end_chat($index)"></span>
 					</li>
 				</ul>
 			</div>
@@ -224,6 +230,9 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		current_customer = customername;
 		current_avatar = avatar;
 		$('#chat_code').text('Mã chat: ' + chat_code);
+		var m = chat_code.substr(chat_code.indexOf('T') + 1);
+		var link = '<a target="_blank" href="<?=admin_url()?>chathistory?m='+ m +'">Xem lịch sử</a>';
+		$('#history').html('&nbsp; -&nbsp; ' + link);
 	}
 	
 	$scope.sendChat = function() {
@@ -307,6 +316,24 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 			name: customername,
 			ping: 0,
 			avatar: avatar
+		});
+	}
+	
+	$scope.end_chat = function(index) {
+		$.msgBox({
+			title: 'Warning',
+			type: 'error',
+			content:'Bạn có chắc muốn kết thúc cuộc chat này?',
+			buttons: [{value: 'Yes'},{ value: 'No'}],
+			success: function(result) { 
+				if (result == 'Yes') {
+					$scope.chatCodeList.$remove(index);
+					$scope.chatLogList = [];
+					$('#chat_code').text('');
+					$('.new-msg-form').hide();
+					current_chat_code = '';
+				}
+			}
 		});
 	}
 	

@@ -192,6 +192,10 @@ class base_model extends CI_Model {
                         WHERE groupid = 2 AND isdelete=0";
         return $this->model->query($sql)->execute();
     }
+	function formatDate($date) {
+		$arr = explode('/', $date);
+		return $arr[2].'-'.$arr[0].'-'.$arr[1];
+	}
 
     function getAllCountry() {
         $sql = "SELECT id as countryid, country_name as countryname 

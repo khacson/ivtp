@@ -57,6 +57,8 @@ function toggleIconChat() {
 function addActiveClass(e) {
 	$(e).parent().find('li').removeClass('active');
 	$(e).addClass('active');
+	$('.end-chat').hide();
+	$(e).find('.end-chat').show();
 }
 function showInputMsg() {
 	$('.new-msg-form').show();

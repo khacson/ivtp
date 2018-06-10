@@ -28,6 +28,8 @@
 	color: #fff;
 	padding: 7px 10px;
 	overflow: auto;
+	border-top-left-radius: 5px !important;
+    border-top-right-radius: 5px !important;
 }
 .chat-header span {
     font-size: 12px;
@@ -52,7 +54,8 @@
 	width: 100%;
 	padding-bottom: 5px;
 	padding-top: 5px;
-	padding-left: 12px;
+	padding-left: 12px;    
+	position: relative;
 }
 .customerlist li.active, .log-msg.customer-active, .log-msg.customer-active .log-time{
 	background-color: #c2a5ff;
@@ -97,7 +100,7 @@
 	width: 70%;
 	height: 500px;
 	float: left;
-	background-color: #f9fafc;
+	background-color: #fff;
 	position: relative;
 }
 .chat_log_list{
@@ -263,4 +266,21 @@
 	height: 100%;
 	background-color: rgba(0,0,0, 0.3);
 	z-index: 1;
+}
+.end-chat {
+    background-color: #fff;
+    cursor: pointer;
+    height: 15px;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 15px;
+	display: none;
+}
+.end-chat::before {
+    color: red;
+    content: "x";
+    left: 4px;
+    position: absolute;
+    top: -4px;
 }

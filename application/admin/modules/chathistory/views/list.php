@@ -7,6 +7,10 @@ foreach ($datas as $item) {
 	if ($t < 1800) {
 		$status = 'Đang chat';
 	}
+	$rating = '';
+	if (isset($arrStar[$item->star])) {
+		$rating = $arrStar[$item->star];
+	}
 ?>
 
 	<tr class="content edit">
@@ -16,7 +20,7 @@ foreach ($datas as $item) {
 		<td align="center">
 			<a class="view_chat_code" chat_code="<?=$item->chat_code;?>" href="javascript:;"><?=$item->chat_code;?></a>
 		</td>
-		<td align="center"><?=$item->star;?></td>
+		<td align="center"><?=$rating?></td>
 		<td><?=$item->note;?></td>
 		<td><?=date('d/m/Y H:i:s', strtotime($item->last_response));?></td>
 		<td align="center"><?=$status?></td>

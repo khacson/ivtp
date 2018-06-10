@@ -3,7 +3,7 @@
  * @author 
  * @copyright 2015
  */
-class Chathistory extends CI_Controller {
+class Chatrating extends CI_Controller {
     private $route;
 	private $login;
 	function __construct(){
@@ -34,8 +34,6 @@ class Chathistory extends CI_Controller {
 		$data->login = $this->login;
 	    $data->controller = admin_url().($this->uri->segment(1));
 	    $data->userList = $this->base_model->getAllHelpDeskUser();
-	    $data->memberList = $this->base_model->getAllMember();
-	    $data->starList = $this->base_model->getStar();
 		
 		$content = $this->load->view('view',$data,true);
 		$this->admin->write('content',$content,true);
@@ -64,12 +62,6 @@ class Chathistory extends CI_Controller {
         $search['order'] = $order;
 		$query = $this->model->getList($search,$page,$numrows);
 		$data->start = empty($page) ? 1 : $page + 1;
-	    $starList = $this->base_model->getStar();
-		$arrStar = array();
-		foreach ($starList as $item) {
-			$arrStar[$item->id] = $item->name;
-		}
-		$data->arrStar = $arrStar;
 
 		$count = $this->model->getTotal($search);
 		$data->datas = $query;
