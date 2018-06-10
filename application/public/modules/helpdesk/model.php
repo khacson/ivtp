@@ -66,5 +66,9 @@ use Firebase\JWT\JWT;
 		}
 		return $rs[0]->fullname;
 	}
-	
+	function update_last_response($chat_code, $last_response) {
+		$array['last_response'] = $last_response;
+		$array['last_response_utc'] = gmdate('Y-m-d H:i:s', time());
+		$this->model->table('ivt_users_chat')->where('chat_code', $chat_code)->update($array);
+	}
 }

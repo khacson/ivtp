@@ -62,10 +62,6 @@
                     <li class="active"><a href="<?=base_url();?>trang-chu.html">Trang chủ</a></li>
                     <li><a href="<?=base_url();?>gioi-thieu.html">Giới thiệu</a> </li>
                     <li><a href="<?=base_url();?>xu-huong-thi-truong.html">Xu hướng thị trường</a>
-                      <!-- RD Navbar Dropdown-->
-                      <ul class="rd-navbar-dropdown">
-                        <li><a href="<?=base_url();?>xu-huong-thi-truong/cai-nay-load-tu-danh-muc-nhe.html">Dự báo xu hướng IPPro</a></li>
-                      </ul>
                     </li>
 					<li><a href="tu-van.html">Tổ tư vấn độc lập</a> 
 						<ul class="rd-navbar-dropdown">

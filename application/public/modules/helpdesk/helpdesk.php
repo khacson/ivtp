@@ -8,7 +8,7 @@ class Helpdesk extends CI_Controller {
     
 	function __construct(){
 		parent::__construct();			
-	    $this->load->model();
+	    $this->load->model(array('model','base_model'));
 		$this->rows = 20;
 	}
     function  _remap($method, $params = array()){
@@ -63,7 +63,7 @@ class Helpdesk extends CI_Controller {
 			$this->site->write('title_page',$finds->title,true);
 		}
 		$data->finds = $finds;*/
-		$login->id = 20;
+		$login->id = 1;
 		$login->fullname = 'Đặng Thu Huyền';
 		$login->signature = 'photo.jpg';
 		$data->login = $login;
@@ -80,6 +80,7 @@ class Helpdesk extends CI_Controller {
 		$data->chat_code = $chat_code;
 		$data->configdb = $dbinfo->config;
 		$data->token = $this->model->create_custom_token($login->id, $dbinfo2->client_email, $dbinfo2->private_key);
+	    $data->starList = $this->base_model->getStar();
 		
 		$data->controller = base_url() . ($this->uri->segment(1));
         $data->csrfName = $this->security->get_csrf_token_name();
@@ -110,6 +111,7 @@ class Helpdesk extends CI_Controller {
 		$date = $this->input->post('datecreate');
 		$array['datecreate'] = date('Y-m-d H:i:s', strtotime($date));
 		$this->model->table('ivt_users_chat_detail')->insert($array);
+		$this->model->update_last_response($array['chat_code'], $array['datecreate']);
 	}
 	
 

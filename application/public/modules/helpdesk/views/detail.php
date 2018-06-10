@@ -17,23 +17,9 @@
                 <div class="cell-sm-10 cell-md-4 offset-top-90 offset-md-top-0">
                   <div class="inset-md-left-30">
                     <!-- Aside-->
-                    <aside class="text-left inset-xl-right-50">  
-                      <!-- Categories-->
-                      <div class="">
-                        <hr class="divider hr-left-0 bg-bermuda">
-                        <h5 class="offset-top-15">Danh mục</h5>
-                      </div>
-                      <div class="offset-top-30">
-                        <div class="inset-xs-left-8">
-                          <!-- List Marked-->
-                          <ul class="list list-marked list-marked-icon">
-								<li><a href="xuhuong.html">Dự báo xu hướng I-Pro</a></li>
-								<li><a href="xuhuong.html">Đánh giá xu hướng CTCK</a></li>
-                          </ul>
-                        </div>
-                      </div>
+                    <aside class="text-left inset-xl-right-50"> 
                       <!-- Recent Posts-->
-                      <div class="offset-top-60 offset-md-top-90">
+                      <div class="">
                         <hr class="divider hr-left-0 bg-bermuda">
                         <h5 class="offset-top-15">Recent Posts</h5>
                       </div>

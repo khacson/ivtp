@@ -280,5 +280,6 @@ class Helpdesk extends CI_Controller {
 		$date = $this->input->post('datecreate');
 		$array['datecreate'] = date('Y-m-d H:i:s', strtotime($date));
 		$this->model->table('ivt_users_chat_detail')->insert($array);
+		$this->model->update_last_response($array['chat_code'], $array['datecreate']);
 	}
 }

@@ -177,6 +177,21 @@ class base_model extends CI_Model {
                         WHERE isdelete=0 and fullname <>''";
         return $this->model->query($sql)->execute();
     }
+	
+	function getStar() {
+        $sql = "SELECT id,name FROM ivt_star ORDER BY id";
+        return $this->model->query($sql)->execute();
+    }
+	function getAllUser() {
+        $sql = "SELECT id,username,fullname FROM ivt_users
+                        WHERE isdelete=0";
+        return $this->model->query($sql)->execute();
+    }
+	function getAllHelpDeskUser() {
+        $sql = "SELECT id,username,fullname FROM ivt_users
+                        WHERE groupid = 2 AND isdelete=0";
+        return $this->model->query($sql)->execute();
+    }
 
     function getAllCountry() {
         $sql = "SELECT id as countryid, country_name as countryname 

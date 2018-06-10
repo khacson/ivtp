@@ -31,7 +31,7 @@
 				</div>
 			</div>
 			<div class="chat-header">
-				<span class="fleft">NV - <?=$user_fullname?></span>
+				<span class="fleft">Nhân viên tư vấn: <?=$user_fullname?></span>
 			</div>
             
 			<div class="chat_log">
