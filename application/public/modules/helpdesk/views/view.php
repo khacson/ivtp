@@ -1,165 +1,147 @@
+<style>
+.user_info-container {
+    background-image: url('<?=base_url()?>files/user/success.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 5px;
+	margin-bottom: 30px !important;
+	position: relative;
+	overflow: hidden;
+}
+.user_info-container:hover .chatbtn{
+	top: calc(50% - 30px);
+}
+.user_info-container:hover .user_info{
+	background: rgba(19, 127, 221, 0.6);
+}
+.user_info {
+    background: rgba(19, 127, 221, 0.85);
+    border-radius: 5px;
+    color: #f7f8f9;
+    overflow: hidden;
+    padding: 10px;
+	transition: all ease 0.5s;
+}
+.user_info .user_img {
+    border-radius: 50%;
+    display: block;
+    height: 80px;
+    margin: auto;
+    width: 80px;
+	border: 2px solid #ccc;
+}
+.user_info p{
+	margin: 5px 0;
+	font-size: 13px;
+}
+.user_info p.username{
+	font-weight: bold;
+	font-size: 14px;
+	text-align: center;
+}
+.chatbtn {
+    background-color: #442a74;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    display: block;
+    height: 60px;
+    position: absolute;
+    left: 77%;
+    top: -60px;
+    width: 60px;
+	transition: all ease 0.5s;
+}
+.chatbtn::before {
+    content: "Chat";
+    font-size: 18px;
+    left: 10px;
+    position: absolute;
+    top: 16px;
+    width: 50px;
+	color: #fff;
+}
+</style>
 <section class="text-left section-40 section-md-60">
           <div class="inset-lg-left-45 inset-lg-right-45 inset-xl-left-130 inset-xl-right-85">
             <div class="shell-wide shell-wide-custom">
               <div class="range range-xs-center range-lg-right range-xl-justify">
-				<div class="cell-md-12 text-center">
-					<h3 class="text-primary">Danh Mục Tăng Trưởng</h3>
-                    <ul class="list list-inline list-inline-dashed list-inline-20 text-gray-lighter">
-                      <li>2 days ago</li>
-                      <li><span>by <a class="text-bermuda" href="#">Diana Hawkins</a></span></li>
-                      <li><a class="text-gray-lighter" href="#comments">12 Comments</a></li>
-                    </ul>
-				</div>
-				<div class="offset-top-30 increasecatalog-table-detail">
-					<table id="tbheader" width="100%" cellspacing="0" border="1" >
-						<tr>
-							<th>STT</th>
-							<?php foreach ($titles as $title) { ?>
-							<th><?=$title?></th>
-							<?php } ?>
-						</tr>
-						<tbody id="grid-rows">
-							<?php include 'list.php'; ?>
-						</tbody>
-					</table>
-				</div>
-				
-				<div class="clear"></div>
-				
                 <div class="cell-sm-10 cell-md-8 cell-xl-7">
                   <div class="inset-md-right-35 inset-xl-right-0">
-                    <div class="offset-top-60 offset-md-top-90">
-                      <hr class="divider hr-xs-left-0 bg-bermuda">
-                      <div class="offset-top-15">
-                        <h5 class="text-center text-xs-left">Author</h5>
-                      </div>
-                    </div>
-                    <div class="offset-top-30">
-                      <!-- Unit-->
-                      <div class="unit unit-xs unit-xs-horizontal">
-                        <div class="unit-left"><img class="img-circle img-responsive center-block" src="<?=url_tmpl();?>images/users/user-diana-hawkins-160x160.jpg" width="160" height="160" alt=""></div>
-                        <div class="unit-body">
-                          <h6 class="text-center text-xs-left"><a href="#">Diana Hawkins</a></h6>
-                          <div class="offset-top-15">
-                            <p>I am a professional blogger interested in everything taking place in cyberspace. I am running this website and try my best to make it a better place to visit. I post only the articles that are related to the topic and thoroughly analyze all visitors’ comments to cater to their needs better.</p>
-                            <ul class="list-inline list-inline-2 list-primary offset-top-15">
-                              <li><a class="icon icon-xs icon-circle fa fa-facebook text-gray-lighter" href="#"></a></li>
-                              <li><a class="icon icon-xs icon-circle fa fa-twitter text-gray-lighter" href="#"></a></li>
-                              <li><a class="icon icon-xs icon-circle fa fa-pinterest-p text-gray-lighter" href="#"></a></li>
-                              <li><a class="icon icon-xs icon-circle fa fa-vimeo text-gray-lighter" href="#"></a></li>
-                              <li><a class="icon icon-xs icon-circle fa fa-google text-gray-lighter" href="#"></a></li>
-                              <li><a class="icon icon-xs icon-circle fa fa-rss text-gray-lighter" href="#"></a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="offset-top-60 offset-md-top-90">
-                      <hr class="divider hr-left-0 bg-bermuda">
-                      <div class="offset-top-15">
-                        <h5>Comments</h5>
-                      </div>
-                    </div>
-                    <div class="offset-top-30">
-                      <!-- Unit-->
-                      <div class="unit unit-horizontal unit-spacing-sm">
-                        <div class="unit-left"><img class="img-circle img-responsive center-block" src="<?=url_tmpl();?>images/users/user-ryan-hayes-80x80.jpg" width="80" height="80" alt=""></div>
-                        <div class="unit-body">
-                          <h6><a href="#">Ryan Hayes</a></h6>
-                          <div class="offset-top-10 offset-md-top-15">
-                            <p class="text-italic text-gray-lighter">September 21, 2016 at 5:32pm</p>
-                          </div>
-                          <div class="offset-top-10">
-                            <p>Thanks a lot for such an interesting article! I have recently visited your mall. I must say, it was an unforgettable experience.</p>
-                          </div>
-                          <div class="offset-top-10"><span class="icon icon-sm fa fa-reply text-bermuda text-middle"></span><span class="text-middle text-bermuda inset-left-5"><a class="text-bermuda" href="#">Reply</a></span></div>
-                        </div>
-                      </div>
-                      <div class="offset-top-30 inset-left-35 inset-xs-left-50 inset-lg-left-115" id="comments">
-                        <!-- Unit-->
-                        <div class="unit unit-horizontal unit-spacing-sm">
-                          <div class="unit-left"><img class="img-circle img-responsive center-block" src="<?=url_tmpl();?>images/users/user-diana-hawkins-80x80.jpg" width="80" height="80" alt=""></div>
-                          <div class="unit-body">
-                            <h6><a href="#">Diana Hawkins</a></h6>
-                            <div class="offset-top-10 offset-md-top-15">
-                              <p class="text-italic text-gray-lighter">September 21, 2016 at 5:40pm</p>
-                            </div>
-                            <div class="offset-top-10">
-                              <p>Thank you!</p>
-                            </div>
-                            <div class="offset-top-10"><span class="icon icon-sm fa fa-reply text-bermuda text-middle"></span><span class="text-middle text-bermuda inset-left-5"><a class="text-bermuda" href="#">Reply</a></span></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="offset-top-60 offset-md-top-90">
-                      <hr class="divider hr-left-0 bg-bermuda">
-                      <div class="offset-top-15">
-                        <h5>Send a Comment</h5>
-                      </div>
-                      <div class="offset-top-15">
-                        <!-- RD Mailform-->
-                        <form class="rd-mailform text-left" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
-                          <div class="range range-xs-center">
-                            <div class="cell-sm-6">
-                              <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-first-name">First Name</label>
-                                <input class="form-control" id="contact-first-name" type="text" name="firstName" data-constraints="@Required">
-                              </div>
-                            </div>
-                            <div class="cell-sm-6 offset-top-10 offset-sm-top-0">
-                              <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-last-name">Last Name</label>
-                                <input class="form-control" id="contact-last-name" type="text" name="lastName" data-constraints="@Required">
-                              </div>
-                            </div>
-                            <div class="cell-sm-6 offset-top-10">
-                              <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-email">E-mail</label>
-                                <input class="form-control" id="contact-email" type="text" name="email" data-constraints="@Email @Required">
-                              </div>
-                            </div>
-                            <div class="cell-sm-6 offset-top-10">
-                              <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-phone">Phone</label>
-                                <input class="form-control" id="contact-phone" type="text" name="phone" data-constraints="@Numeric @Required">
-                              </div>
-                            </div>
-                            <div class="cell-sm-12 offset-top-10">
-                              <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-message">Message</label>
-                                <textarea class="form-control" id="contact-message" name="message" data-constraints="@Required"></textarea>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="text-center text-sm-left offset-top-20">
-                            <button class="btn btn-primary" type="submit">send</button>
-                          </div>
-                        </form>
-                      </div>
+                    <h3 class="text-primary text-center">Tổ Tư Vấn Độc Lập</h3>
+                    <div class="offset-top-40 range">
+						<div class="cell-md-6">
+							<a href="<?=base_url()?>/tu-van/dt2">
+								<div class="user_info-container">
+									<div class="user_info">
+										<img class="user_img" src="<?=base_url()?>files/user/photo2.jpg" />
+										<p class="username">Trịnh Khánh Linh</p>
+										<p>ID: linktk01</p>
+										<p>Trình độ: Thạc sĩ kinh tế</p>
+										<p>Bằng cấp: CFA LV2</p>
+										<p>Kinh Nghiệm: 5 năm MGCK, 2 năm quỹ đầu tư</p>
+										<p>Quan điểm: Đầu tư hay đầu cơ đều tốt, quan trọng là phải biết mình đang đầu cơ hay đầu tư và phải kiểm soát được nó</p>
+									</div>
+									<span class="chatbtn" href="javascript:;"></span>
+								</div>
+							</a>
+						</div>
+						<div class="cell-md-6">
+							<a href="<?=base_url()?>/tu-van/dt2">
+								<div class="user_info-container">
+									<div class="user_info">
+										<img class="user_img" src="<?=base_url()?>files/user/photo2.jpg" />
+										<p class="username">Trịnh Khánh Linh</p>
+										<p>ID: linktk01</p>
+										<p>Trình độ: Thạc sĩ kinh tế</p>
+										<p>Bằng cấp: CFA LV2</p>
+										<p>Kinh Nghiệm: 5 năm MGCK, 2 năm quỹ đầu tư</p>
+										<p>Quan điểm: Đầu tư hay đầu cơ đều tốt, quan trọng là phải biết mình đang đầu cơ hay đầu tư và phải kiểm soát được nó</p>
+									</div>
+									<span class="chatbtn" href="javascript:;"></span>
+								</div>
+							</a>
+						</div>
+						<div class="cell-md-6">
+							<a href="<?=base_url()?>/tu-van/dt2">
+								<div class="user_info-container">
+									<div class="user_info">
+										<img class="user_img" src="<?=base_url()?>files/user/photo2.jpg" />
+										<p class="username">Trịnh Khánh Linh</p>
+										<p>ID: linktk01</p>
+										<p>Trình độ: Thạc sĩ kinh tế</p>
+										<p>Bằng cấp: CFA LV2</p>
+										<p>Kinh Nghiệm: 5 năm MGCK, 2 năm quỹ đầu tư</p>
+										<p>Quan điểm: Đầu tư hay đầu cơ đều tốt, quan trọng là phải biết mình đang đầu cơ hay đầu tư và phải kiểm soát được nó</p>
+									</div>
+									<span class="chatbtn" href="javascript:;"></span>
+								</div>
+							</a>
+						</div>
+						<div class="cell-md-6">
+							<a href="<?=base_url()?>/tu-van/dt2">
+								<div class="user_info-container">
+									<div class="user_info">
+										<img class="user_img" src="<?=base_url()?>files/user/photo2.jpg" />
+										<p class="username">Trịnh Khánh Linh</p>
+										<p>ID: linktk01</p>
+										<p>Trình độ: Thạc sĩ kinh tế</p>
+										<p>Bằng cấp: CFA LV2</p>
+										<p>Kinh Nghiệm: 5 năm MGCK, 2 năm quỹ đầu tư</p>
+										<p>Quan điểm: Đầu tư hay đầu cơ đều tốt, quan trọng là phải biết mình đang đầu cơ hay đầu tư và phải kiểm soát được nó</p>
+									</div>
+									<span class="chatbtn" href="javascript:;"></span>
+								</div>
+							</a>
+						</div>
                     </div>
                   </div>
                 </div>
-                <div class="cell-sm-10 cell-md-4 offset-top-90">
+                <div class="cell-sm-10 cell-md-4 offset-top-90 offset-md-top-0">
                   <div class="inset-md-left-30">
                     <!-- Aside-->
-                    <aside class="text-left inset-xl-right-50">  
-                      <!-- Categories-->
-                      <div class="">
-                        <hr class="divider hr-left-0 bg-bermuda">
-                        <h5 class="offset-top-15">Danh mục</h5>
-                      </div>
-                      <div class="offset-top-30">
-                        <div class="inset-xs-left-8">
-                          <!-- List Marked-->
-                          <ul class="list list-marked list-marked-icon">
-								<li><a href="xuhuong.html">Dự báo xu hướng I-Pro</a></li>
-								<li><a href="xuhuong.html">Đánh giá xu hướng CTCK</a></li>
-                          </ul>
-                        </div>
-                      </div>
+                    <aside class="text-left inset-xl-right-50">
                       <!-- Recent Posts-->
-                      <div class="offset-top-60 offset-md-top-90">
+                      <div class="">
                         <hr class="divider hr-left-0 bg-bermuda">
                         <h5 class="offset-top-15">Recent Posts</h5>
                       </div>

@@ -39,11 +39,7 @@ class Helpdesk extends CI_Controller {
 		$finds = $this->model->getInfor();
 		$data = new stdClass();
 		
-		$updateInfo = $this->model->getUpdateInfo();
-		$data->titles = $this->model->getTitles(1);
-        $data->datecreate = date('d/m/Y H:i:s', strtotime($updateInfo->datecreate));
-		$data->datas = $this->model->getList();
-		$data->inc_des_avg = $this->model->get_inc_des_avg();
+	    $data->userList = $this->base_model->getAllHelpDeskUser();
 		
         $content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);

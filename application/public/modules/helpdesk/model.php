@@ -7,7 +7,12 @@ use Firebase\JWT\JWT;
 		parent::__construct();
 		
 	}
-	
+	function getInfor(){
+		$query = $this->model->table('ivt_contact')
+					  ->where('isdelete',0)
+					  ->find();
+		return $query;
+	}
 	function create_custom_token($uid, $service_account_email, $private_key) {
 		$now_seconds = time();
 		$payload = array(

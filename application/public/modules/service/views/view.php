@@ -1,6 +1,6 @@
-<div class="inset-md-left-35 inset-xl-left-125 inset-md-right-35 inset-xl-right-125">
+<div class="inset-md-left-35 inset-xl-left-125 inset-md-right-35 inset-xl-right-125 section-40 section-md-60">
     <div class="shell-wide shell-wide-custom">
-        <div class="offset-top-20">
+        <div class="">
             <h3>BẢNG GIÁ DỊCH VỤ</h3>
         </div>
         <div class="range range-xs-center range-lg-left text-left pricing">
