@@ -182,16 +182,24 @@ class base_model extends CI_Model {
         $sql = "SELECT id,name FROM ivt_star ORDER BY id";
         return $this->model->query($sql)->execute();
     }
+	
+	function getFirebaseDB() {
+        $sql = "SELECT * FROM ivt_firebasedb";
+        return $this->model->query($sql)->execute();
+    }
+	
 	function getAllUser() {
         $sql = "SELECT id,username,fullname FROM ivt_users
                         WHERE isdelete=0";
         return $this->model->query($sql)->execute();
     }
+	
 	function getAllHelpDeskUser() {
         $sql = "SELECT id,username,fullname FROM ivt_users
                         WHERE groupid = 2 AND isdelete=0";
         return $this->model->query($sql)->execute();
     }
+	
 	function formatDate($date) {
 		$arr = explode('/', $date);
 		return $arr[2].'-'.$arr[0].'-'.$arr[1];

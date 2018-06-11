@@ -17,17 +17,32 @@
 		if (!empty($search['mobile'])) {
 			$sql .= " AND u.mobile LIKE '%".$search['mobile']."%' ";
 		}
+		if (!empty($search['level'])) {
+			$sql .= " AND u.level LIKE '%".$search['level']."%' ";
+		}
+		if (!empty($search['degree'])) {
+			$sql .= " AND u.degree LIKE '%".$search['degree']."%' ";
+		}
+		if (!empty($search['experience'])) {
+			$sql .= " AND u.experience LIKE '%".$search['experience']."%' ";
+		}
+		if (!empty($search['views'])) {
+			$sql .= " AND u.views LIKE '%".$search['views']."%' ";
+		}
+		if (!empty($search['firebasedb'])) {
+			$sql .= " AND u.firebasedb = '".$search['firebasedb']."' ";
+		}
 		if (!empty($search['groupid'])) {
 			$sql .= " AND u.groupid = '".$search['groupid']."' ";
 		}
 		return $sql;
 	}
 	function getList($search,$page,$numrows){
-		$sql = " SELECT u.id,u.username, u.fullname, u.groupid, u.signature, 
-				 u.mobile, u.email, u.datecreate,
+		$sql = " SELECT u.*, d.name as db_name,
 				 g.groupname,g.grouptype
 				FROM ivt_users AS u 
 				LEFT JOIN ivt_groups AS g ON g.id = u.groupid
+				LEFT JOIN ivt_firebasedb AS d ON d.id = u.firebasedb
 				WHERE u.isdelete = 0 ";
 		$sql.= $this->getSearch($search);
 		if(empty($search['order'])){
@@ -44,6 +59,7 @@
 		$sql = " SELECT COUNT(1) AS total
 				FROM ivt_users AS u 
 				LEFT JOIN ivt_groups AS g ON g.id = u.groupid
+				LEFT JOIN ivt_firebasedb AS d ON d.id = u.firebasedb
 				WHERE u.isdelete = 0 ";
 		$sql.= $this->getSearch($search);
 		$query = $this->model->query($sql)->execute();

@@ -1,12 +1,17 @@
 <style title="" type="text/css">
 	table col.c1 { width: 45px; }
 	table col.c2 { width: 60px; }
-	table col.c3 { width: 180px; }
+	table col.c3 { width: 100px; }
 	table col.c4 { width: 180px; }
-	table col.c5 { width: 150px; }
-	table col.c6 { width: 150px; }
-	table col.c7 { width: 250px; }
-	table col.c8 {  width: auto; }
+	table col.c5 { width: 120px; }
+	table col.c6 { width: 120px; }
+	table col.c7 { width: 220px; }
+	table col.c8 { width: 150px; }
+	table col.c9 { width: 150px; }
+	table col.c10 { width: 300px; }
+	table col.c11 { width: 300px; }
+	table col.c12 { width: 120px; }
+	table col.c13 {  width: auto; }
 </style>
 <!-- BEGIN PORTLET-->
 <form method="post" enctype="multipart/form-data">
@@ -59,7 +64,7 @@
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
-					<label class="control-label col-md-4">Điện thoái</label>
+					<label class="control-label col-md-4">Điện thoại</label>
 					<div class="col-md-8">
 						<input type="text" name="mobile" id="mobile" class="searchs form-control" />
 					</div>
@@ -79,6 +84,55 @@
 				</div>
 			</div>
 		</div>	
+		<div class="row mtop10">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label col-md-4">Trình độ</label>
+					<div class="col-md-8">
+						<input placeholder="Tối đa 50 ký tự" type="text" name="level" id="level" class="searchs form-control" maxlength="50" />
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label col-md-4">Bằng cấp</label>
+					<div class="col-md-8">
+						<input placeholder="Tối đa 50 ký tự" type="text" name="degree" id="degree" class="searchs form-control" maxlength="50" />
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label col-md-5">Database (<span class="red">*</span>)</label>
+					<div class="col-md-7" >
+						<select name="firebasedb" id="firebasedb" class="combos" >
+							<option value=""></option>
+							<?php foreach ($firebasedb as $item) { ?>
+								<option value="<?=$item->id;?>"><?=$item->name?></option>
+							<?php } ?>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mtop10">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label col-md-4">Kinh nghiệm</label>
+					<div class="col-md-8">
+						<input placeholder="Tối đa 50 ký tự" type="text" name="experience" id="experience" class="searchs form-control" maxlength="50" />
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label col-md-4">Quan điểm</label>
+					<div class="col-md-8">
+						<input placeholder="Tối đa 110 ký tự" type="text" name="views" id="views" class="searchs form-control" maxlength="110" />
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="row mtop10">
 			<div class="col-md-4">
 				<div class="form-group">
@@ -161,7 +215,7 @@
 				<div id="cHeader">
 					<div id="tHeader">    	
 						<table width="100%" cellspacing="0" border="1" id="tbheader" >
-							<?php for($i=1; $i< 9; $i++){?>
+							<?php for($i=1; $i< 14; $i++){?>
 								<col class="c<?=$i;?>">
 							<?php }?>
 							<tr>
@@ -172,6 +226,11 @@
 								<th id="ord_g.groupname">Nhóm quyền</th>
 								<th id="ord_u.mobile">Điện thoại</th>
 								<th id="ord_u.email">Email</th>
+								<th id="ord_u.level">Trình độ</th>
+								<th id="ord_u.degree">Bằng cấp</th>
+								<th id="ord_u.experience">Kinh nghiệm</th>
+								<th id="ord_u.views">Quan điểm</th>
+								<th id="ord_u.firebasedb">Database</th>
 								<th></th>
 							</tr>
 						</table>
@@ -182,7 +241,7 @@
 				<div id="data">
 					<div id="gridView">
 						<table  id="tbbody" width="100%" cellspacing="0" border="1">
-							<?php for($i=1; $i< 9; $i++){?>
+							<?php for($i=1; $i< 14; $i++){?>
 								<col class="c<?=$i;?>">
 							<?php }?>
 							<tbody id="grid-rows"></tbody>
@@ -241,6 +300,11 @@
 		$('#groupid').multipleSelect({
         	filter: true,
 			placeholder:"Chọn nhóm quyền",
+            single: true
+        });
+		$('#firebasedb').multipleSelect({
+        	filter: true,
+			placeholder:"Chọn database",
             single: true
         });
 		refresh();
@@ -324,8 +388,15 @@
 		}			
 		if(obj.groupid == ""){
 			error("Nhóm quyền <?=getLanguage('user','empty')?>"); 
-			$("#username").focus();
+			$("#groupid").focus();
 			return false;		
+		}		
+		if(obj.groupid == 2){
+			if(obj.firebasedb == ''){
+				error("Database <?=getLanguage('user','empty')?>"); 
+				$("#firebasedb").focus();
+				return false;		
+			}
 		}
 		
 		var data = new FormData();
@@ -370,10 +441,14 @@
 			$(this).click(function(){ 
 				var username = $('.uusername').eq(e).html().trim();
 				var groupid = $(this).attr('groupid');
+				var firebasedb = $(this).attr('firebasedb');
 				var fullname = $('.ufullname').eq(e).html().trim();
 				var email = $('.uemail').eq(e).html().trim();
 				var mobile = $('.umobile').eq(e).html().trim();
-				var avatar = '<?=base_url()?>files/user/'+$(this).attr('avatar'); 
+				var level = $('.ulevel').eq(e).html().trim();
+				var degree = $('.udegree').eq(e).html().trim();
+				var experience = $('.uexperience').eq(e).html().trim();
+				var views = $('.uviews').eq(e).html().trim(); 
 				
 				var id = $(this).attr('id');
 				$('#id').val(id);	
@@ -381,9 +456,18 @@
 				$('#fullname').val(fullname);	
 				$('#email').val(email);
 				$('#mobile').val(mobile);
+				$('#level').val(level);
+				$('#degree').val(degree);
+				$('#experience').val(experience);
+				$('#views').val(views);
 				 
+				$('#firebasedb').multipleSelect('setSelects', firebasedb.split(','));
 				$('#groupid').multipleSelect('setSelects', groupid.split(','));
-				$('#show').html('<img src="' + avatar + '" style="height:40px; border-radius: 50% !important" />');
+				
+				if ($(this).attr('avatar') != '') {
+					var avatar = '<?=base_url()?>files/user/'+$(this).attr('avatar');
+					$('#show').html('<img src="' + avatar + '" style="height:40px; border-radius: 50% !important" />');
+				}
 			});	
 		});	
 	}
@@ -391,7 +475,7 @@
 		$('.loading').show();
 		$('.searchs').val('');
 		$('#show').html('');
-		$('#schoolid,#groupid').multipleSelect('uncheckAll');
+		$('#schoolid,#groupid,#firebasedb').multipleSelect('uncheckAll');
 		if(schoolid != 0 && schoolid != ''){
 			$('#activate').multipleSelect('setSelects', schoolid.split(',')); 
 		}
