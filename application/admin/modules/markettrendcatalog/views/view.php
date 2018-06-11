@@ -285,7 +285,7 @@
                     }
                 }
                 else if (obj.status == -1) {
-                    error("Manufacture <?= getLanguage('all', 'exits') ?>");
+                    error("<?= getLanguage('all', 'exits') ?>");
                     return false;
                 }
                 else {

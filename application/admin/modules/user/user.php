@@ -34,6 +34,7 @@ class User extends CI_Controller {
 		$data->login = $this->login;
 	    $data->controller = admin_url().($this->uri->segment(1));
 	    $data->groups = $this->base_model->getGroup('');
+	    $data->firebasedb = $this->base_model->getFirebaseDB();
 		
 		$content = $this->load->view('view',$data,true);
 		$this->admin->write('content',$content,true);

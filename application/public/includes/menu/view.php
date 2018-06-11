@@ -61,18 +61,21 @@
                   <ul class="rd-navbar-nav">
                     <li class="active"><a href="<?=base_url();?>trang-chu.html">Trang chủ</a></li>
                     <li><a href="<?=base_url();?>gioi-thieu.html">Giới thiệu</a> </li>
-                    <li><a href="<?=base_url();?>xu-huong-thi-truong.html">Xu hướng thị trường</a>
+                    <li><a href="javascript:;">Xu hướng thị trường</a>
                       <!-- RD Navbar Dropdown-->
+					  <?php if (!empty($markettendCatalogs)) { ?>
                       <ul class="rd-navbar-dropdown">
 						<?php foreach($markettendCatalogs as $item){?>
                         <li><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
 						<?php }?>
                       </ul>
+					  <?php }?>
                     </li>
-					<li><a href="tu-van.html">Tổ tư vấn độc lập</a> </li>
-                    <li><a href="<?=base_url();?>danh-muc-dau-tu.html">Danh mục đầu tư</a>
+					<li><a href="<?=base_url();?>tu-van.html">Tổ tư vấn độc lập</a> </li>
+                    <li><a href="javascript:;">Danh mục đầu tư</a>
                       <!-- RD Navbar Dropdown-->
                       <ul class="rd-navbar-dropdown">
+						<li><a href="<?=base_url();?>danh-muc-tang-truong.html">Danh mục tăng trưởng</a></li>
 					    <?php foreach($investmentCatalogs as $item){?>
 							<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
 						<?php }?>
