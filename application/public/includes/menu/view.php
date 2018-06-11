@@ -12,7 +12,7 @@
 							<i class="fa fa-map-marker icon icon-sm" aria-hidden="true"></i>
 						</span>
 						<span class="unit-body">
-							<span class="text-gray-lighter">80/6 TX43, P. Thạnh Xuân, Q.12, TP. Hồ Chí Minh </span>
+							<span class="text-gray-lighter"><?=$finds->address;?></span>
 						</span>
 					</div>
 					<div class="reveal-inline-block">
@@ -20,7 +20,7 @@
 							 <i class="fa fa-clock-o icon icon-sm" aria-hidden="true"></i>
 						</span>
 						<span class="unit-body">
-							<span class="text-gray-lighter">Mon–Sun: 9:00am–9:00pm</span>
+							<span class="text-gray-lighter"><?=$finds->work_time;?></span>
 						</span>
 					</div>
                     <div class="reveal-inline-block">
@@ -28,7 +28,7 @@
 							<i class="fa fa-phone icon icon-sm " aria-hidden="true"></i>
 						</span>
 						<span class="unit-body">
-							<span class="text-gray-lighter">028 56789 888</span>
+							<span class="text-gray-lighter"><?=$finds->hotline;?></span>
 						</span>
 					</div>
                   </address>
@@ -48,7 +48,7 @@
                   <!-- RD Navbar Toggle-->
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                   <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand"><a class="brand-name" href="index.html"><img class="img-responsive center-block" src="<?=url_tmpl();?>images/logo.png"  height="50" style="margin-top:-5px;" alt=""></a></div>
+                  <div class="rd-navbar-brand"><a class="brand-name" href="<?=base_url();?>trang-chu.html"><img class="img-responsive center-block" src="<?=base_url();?>files/logo/<?=$finds->logo;?>"  height="50" style="margin-top:-5px;" alt=""></a></div>
                   <!-- RD Navbar Toggle-->
                   <button class="rd-navbar-toggle-search-fixed veil-md reveal-tablet" data-rd-navbar-toggle=".rd-navbar-search-wrap-fixed"></button>
                   <!-- RD Navbar Toggle-->
@@ -62,15 +62,20 @@
                     <li class="active"><a href="<?=base_url();?>trang-chu.html">Trang chủ</a></li>
                     <li><a href="<?=base_url();?>gioi-thieu.html">Giới thiệu</a> </li>
                     <li><a href="<?=base_url();?>xu-huong-thi-truong.html">Xu hướng thị trường</a>
+                      <!-- RD Navbar Dropdown-->
+                      <ul class="rd-navbar-dropdown">
+						<?php foreach($markettendCatalogs as $item){?>
+                        <li><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
+						<?php }?>
+                      </ul>
                     </li>
-					<li><a href="<?=base_url();?>tu-van.html">Tổ tư vấn độc lập</a>
-					</li>
+					<li><a href="tu-van.html">Tổ tư vấn độc lập</a> </li>
                     <li><a href="<?=base_url();?>danh-muc-dau-tu.html">Danh mục đầu tư</a>
                       <!-- RD Navbar Dropdown-->
                       <ul class="rd-navbar-dropdown">
-					    <li><a href="<?=base_url();?>danh-muc-tang-truong.html">Danh mục tăng trưởng</a></li>
-                        <li><a href="<?=base_url();?>danh-muc-dau-tu/cai-nay-load-tu-danh-muc-nhe.html">Danh mục khuyến nghị IPPro</a></li>
-                        <li><a href="<?=base_url();?>danh-muc-dau-tu/cai-nay-load-tu-danh-muc-nhe.html">Báo cáo phân tích tổng hợp</a></li>
+					    <?php foreach($investmentCatalogs as $item){?>
+							<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
+						<?php }?>
                       </ul>
                     </li>
 					<li><a href="<?=base_url();?>dich-vu.html">Dịch vụ</a></li>
