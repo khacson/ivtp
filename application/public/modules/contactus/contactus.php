@@ -33,6 +33,7 @@ class Contactus extends CI_Controller {
 		$arrInsert['phone'] = $this->input->post('phone');
 		$arrInsert['email'] = $this->input->post('email');
 		$arrInsert['description'] = $this->input->post('description');
+		$arrInsert['address'] = $this->input->post('address');
 		$arrInsert['datecreate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
 		$this->model->table('ivt_contacus')->insert($arrInsert);
 		echo 1;

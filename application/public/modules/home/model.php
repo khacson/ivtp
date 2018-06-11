@@ -19,10 +19,9 @@ class HomeModel extends CI_Model
 		return $query;
 	}
 	function getSlideList(){
-		$query = $this->model->table('mm_slide_product')
+		$query = $this->model->table('ivt_slide')
 					  ->select('id,slide_name,description,url,img')
 					  ->where('isdelete',0)
-					  //->order_by('ordering','asc')
 					  ->find_all();
 		return $query;
 	}

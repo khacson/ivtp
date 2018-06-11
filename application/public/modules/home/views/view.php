@@ -2,74 +2,33 @@
         <div class="swiper-container swiper-slider" data-height="" data-min-height="300px" data-simulate-touch="false" data-autoplay="5000">
 		   <!--S Slide-->
           <div class="swiper-wrapper">
-            <div class="swiper-slide" data-slide-bg="<?=url_tmpl();?>images/background-04-1920-1077.jpg">
+			<?php foreach($slides as $item){?>
+            <div class="swiper-slide" data-slide-bg="<?=base_url();?>files/slide/<?=$item->img;?>">
               <div class="swiper-slide-caption">
                 <div class="inset-lg-left-35 inset-xl-left-125">
                   <div class="shell-wide shell-wide-custom">
                     <div class="range range-xs-center range-lg-left text-lg-left">
                       <div class="cell-sm-10 cell-lg-7">
-                        <div class="text-big-84 text-italic font-monospace text-spacing-inverse-20 text-white">Season Sale</div>
+                        <div class="text-big-84 text-italic font-monospace text-spacing-inverse-20 text-white"><?=$item->slide_name;?></div>
                         <div class="veil reveal-lg-inline-block offset-top-25 offset-sm-top-30">
-                          <hr class="divider divider-mod divider-58 bg-white">
+                          <!--<hr class="divider divider-mod divider-58 bg-white">-->
                         </div>
                         <div class="reveal-inline-block text-top offset-top-10 offset-sm-top-15 inset-left-10">
-                          <h4 class="text-white">UP TO</h4>
+                          <h4 class="text-white"><?=$item->description;?></h4>
                         </div>
-                        <div class="reveal-inline-block text-top inset-left-10">
+                        <!--<div class="reveal-inline-block text-top inset-left-10">
                           <h1>70% OFF</h1>
-                        </div>
-                        <div class="offset-top-20"><a class="btn btn-width-165 btn-bermuda" href="shops.html">shop now</a></div>
+                        </div>-->
+						<?php if($item->url != '' && $item->url != '#'){?>
+                        <div class="offset-top-20"><a class="btn btn-width-165 btn-bermuda" href="<?=$item->url;?>">Xem</a></div>
+						<?php }?>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="swiper-slide" data-slide-bg="<?=url_tmpl();?>images/background-05-1920-710.jpg">
-              <div class="swiper-slide-caption">
-                <div class="inset-lg-left-35 inset-xl-left-125">
-                  <div class="shell-wide shell-wide-custom">
-                    <div class="range range-xs-center range-lg-left text-lg-left">
-                      <div class="cell-sm-10 cell-lg-7">
-                        <h4 class="text-uppercase text-white">New Collection</h4>
-                        <h1 class="text-uppercase text-spacing-100">always</h1>
-                        <div class="veil reveal-lg-inline-block offset-top-45">
-                          <hr class="divider divider-xl bg-white">
-                        </div>
-                        <div class="reveal-inline-block text-top inset-lg-left-35">
-                          <div class="text-big-84 font-monospace text-italic text-white text-spacing-inverse-20">in</div>
-                        </div>
-                        <div class="reveal-inline-block text-top inset-left-15">
-                          <h1 class="text-uppercase text-spacing-100 text-height-1">style</h1>
-                        </div>
-                        <div class="offset-top-15 offset-md-top-65"><a class="btn btn-width-165 btn-bermuda" href="shops.html">shop now</a></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide" data-slide-bg="<?=url_tmpl();?>images/background-08-1920-1025.jpg">
-              <div class="swiper-slide-caption">
-                <div class="inset-lg-left-35 inset-xl-left-125">
-                  <div class="shell-wide shell-wide-custom">
-                    <div class="range range-xs-center range-lg-left text-lg-left">
-                      <div class="cell-sm-10 cell-lg-7">
-                        <div class="text-big-84 text-italic font-monospace text-spacing-inverse-20 text-white">Friends & Family</div>
-                        <h1>30% OFF</h1>
-                        <div class="veil reveal-lg-inline-block offset-top-25">
-                          <hr class="divider divider-xl bg-white">
-                        </div>
-                        <div class="reveal-inline-block text-top offset-lg-top-10 inset-left-10">
-                          <h4 class="text-uppercase">EVERYTHING</h4>
-                        </div>
-                        <div class="offset-top-15 offset-md-top-65"><a class="btn btn-width-165 btn-bermuda" href="shops.html">shop now</a></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <?php }?>
           </div>
 		  <!--E Slide-->
           <div class="shell-wide shell-wide-custom">

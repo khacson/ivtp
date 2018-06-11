@@ -29,7 +29,7 @@ class Aboutus extends CI_Controller {
 		$finds = $this->model->getInfor();
 		$data = new stdClass();
 		//$data->news = $this->model->getNews();
-		$data->services = $this->model->getService();
+		//$data->abouts = $this->model->getAbout();
 		$data->finds = $finds;
 		
         $content = $this->load->view('view',$data,true);

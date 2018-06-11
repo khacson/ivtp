@@ -22,7 +22,7 @@ class Home extends CI_Controller {
 		$data = new stdClass();
 		$find = $this->model->getInfor();
 		$data->finds = $find;
-		
+		$data->slides = $this->model->getSlideList();
 		
 		
 		$content = $this->load->view('view',$data,true);
