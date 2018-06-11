@@ -1,0 +1,15 @@
+INSERT INTO `ivt_menus` (`name`, `name_en`, `route`, `parent`, `params`, `ordering`) VALUES ('Thành viên', 'Member', '#', '0', 'view', '18');
+
+INSERT INTO `ivt_menus` (`name`, `name_en`, `route`, `parent`, `params`, `ordering`) VALUES ('Trang chủ', 'Home', '#', '0', 'view', '0');
+
+INSERT INTO `ivt_menus` (`name`, `name_en`, `route`, `parent`, `params`, `ordering`) VALUES ('Silde', 'Silde', 'slide', '71', 'view,add,edit,delete', '1');
+
+
+
+INSERT INTO `ivt_menus` (`name`, `name_en`, `route`, `parent`, `params`, `ordering`) VALUES ('Danh sách thành viên', 'Member List', 'member', '69', 'view,add,edit,delete', '69');
+
+ALTER TABLE `ivt_contact` 
+ADD COLUMN `work_time` CHAR(50) NULL AFTER `searchkey`;
+
+ALTER TABLE `ivt_contacus` 
+ADD COLUMN `address` CHAR(100) NULL AFTER `description`;
