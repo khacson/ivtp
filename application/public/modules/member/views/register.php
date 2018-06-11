@@ -6,9 +6,39 @@
 				<span class="login-form-title p-b-49">
 					Đăng ký thành viên
 				</span>
-
 				<div class="wrap-input100 validate-input m-b-23" >
-					<span class="label-input100"><b>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span>
+					<span class="label-input100"><b>Họ tên</b></span>
+					<div class="fleft">
+						<i class="fa fa-user-o " aria-hidden="true"></i>
+					</div>
+					<div>
+						<input class="input100" type="text" id="fullname" name="fullname" placeholder="Nhập nhập họ tên" value="">
+						<span class="focus-input100"></span>
+					</div>
+				</div>
+				<div class="wrap-input100 validate-input m-b-23" >
+					<span class="label-input100"><b>Giới tính</b></span>
+					<div class="fleft">
+						<i class="fa fa-user-o " aria-hidden="true"></i>
+					</div>
+					<div>
+						<!--<label> Nam
+							<input  type="chekcbox" id="1" name="sex" value="1">
+						</label>-->
+					</div>
+				</div>
+				<div class="wrap-input100 validate-input m-b-23" >
+					<span class="label-input100"><b>Ngày sinh</b></span>
+					<div class="fleft">
+						<i class="fa fa-user-o " aria-hidden="true"></i>
+					</div>
+					<div>
+						<input class="input100" type="text" id="birthday" name="birthday" placeholder="dd/mm/yyyy" value="">
+						<span class="focus-input100"></span>
+					</div>
+				</div>
+				<div class="wrap-input100 validate-input m-b-23" >
+					<span class="label-input100"><b>Email</b></span>
 					<div class="fleft">
 						<i class="fa fa-envelope-o" aria-hidden="true"></i>
 					</div>
@@ -18,15 +48,16 @@
 					</div>
 				</div>
 				<div class="wrap-input100 validate-input m-b-23" >
-					<span class="label-input100"><b>Họ tên&nbsp;&nbsp;&nbsp;</b></span>
+					<span class="label-input100"><b>Điện thoại</b></span>
 					<div class="fleft">
-						<i class="fa fa-user-o " aria-hidden="true"></i>
+						<i class="fa fa-envelope-o" aria-hidden="true"></i>
 					</div>
 					<div>
-						<input class="input100" type="text" id="fullname" name="fullname" placeholder="Nhập nhập họ tên" value="">
+						<input class="input100" type="text" id="phone" name="phone" placeholder="Nhập điện thoại" value="">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
+				
 				<div class="wrap-input100 validate-input">
 					<span class="label-input100"><b>Mật khẩu</b></span>
 					<div class="fleft">
