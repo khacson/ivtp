@@ -33,7 +33,7 @@ class Import extends CI_Controller {
 		}
 		$permission = $this->base_model->getPermission($this->login, $this->route);
         if(!isset($permission['view'])) {
-            redirect('authorize');
+            redirect(admin_url().'home.html');
         }
 		$data->permission = $permission;
         $data->routes = $this->route; 
@@ -52,7 +52,7 @@ class Import extends CI_Controller {
     function getList() {
         $permission = $this->base_model->getPermission($this->login, $this->route);
         if (!isset($permission['view'])) {
-            //redirect('authorize');
+            //redirect(admin_url().'home.html');
         }
         $rows = 20; //$this->site->config['row'];
         $page = $this->input->post('page');

@@ -33,7 +33,7 @@ class Markettrendcatalog extends CI_Controller {
         $data = new stdClass();
         $permission = $this->base_model->getPermission($this->login, $this->route);
         if (!isset($permission['view'])) {
-            redirect('authorize');
+            redirect(admin_url().'home.html');
         }
         $data->permission = $permission;
         $data->csrfName = $this->security->get_csrf_token_name();
