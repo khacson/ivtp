@@ -195,8 +195,9 @@ class base_model extends CI_Model {
     }
 	
 	function getAllHelpDeskUser() {
-        $sql = "SELECT id,username,fullname FROM ivt_users
-                        WHERE groupid = 2 AND isdelete=0";
+        $sql = "SELECT * FROM ivt_users
+                WHERE groupid = 2 AND isdelete=0
+				ORDER BY fullname";
         return $this->model->query($sql)->execute();
     }
 	
