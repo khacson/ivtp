@@ -33,7 +33,7 @@ class Contactus extends CI_Controller {
         $data = new stdClass();
         $permission = $this->base_model->getPermission($this->login, $this->route);
         if (!isset($permission['view'])) {
-            redirect('authorize');
+            redirect(admin_url().'home.html');
         }
 		$contacus_check = $this->model->getContacus();
 		$data = $contacus_check[0];		

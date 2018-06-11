@@ -3,7 +3,7 @@
  * @author 
  * @copyright 2015
  */
-class User extends CI_Controller {
+class Changepass extends CI_Controller {
     private $route;
 	private $login;
 	function __construct(){
@@ -25,7 +25,7 @@ class User extends CI_Controller {
 		$data = new stdClass();
 		$permission = $this->base_model->getPermission($this->login, $this->route);
 		if (!isset($permission['view'])) {
-	    	redirect(admin_url().'home.html');
+	    	//redirect(admin_url().'home.html');
 	    }
 	    $data->permission = $permission;
 		$data->csrfName = $this->security->get_csrf_token_name();
@@ -35,7 +35,7 @@ class User extends CI_Controller {
 	    $data->controller = admin_url().($this->uri->segment(1));
 	    $data->groups = $this->base_model->getGroup('');
 	    $data->firebasedb = $this->base_model->getFirebaseDB();
-		
+		$data->userInfo = $this->model->getUserInfo($this->login);
 		$content = $this->load->view('view',$data,true);
 		$this->admin->write('content',$content,true);
 		$this->admin->write('title',$this->title,true);
@@ -113,11 +113,11 @@ class User extends CI_Controller {
 	function edit() {
 		$token =  $this->security->get_csrf_hash();
 		$permission = $this->base_model->getPermission($this->login, $this->route);
-		if (!isset($permission['edit'])){
+		/*if (!isset($permission['edit'])){
 			$result['status'] = 0;
 			$result['csrfHash'] = $token;
 			echo json_encode($result); exit;	
-		}
+		}*/
 		
 		$array = json_decode($this->input->post('search'),true);
 		$array = $this->model->changueSearch($array);
