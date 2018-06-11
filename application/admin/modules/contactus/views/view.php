@@ -334,6 +334,14 @@
 							</div>
 						</div>
 					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<label class="control-label col-md-4">Giờ làm việc</label>
+							<div class="col-md-8">
+								<input type="text" name="work_time" id="work_time" class="searchs form-control" value="<?=isset($work_time)?$work_time:""?>"/>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
         </div>
