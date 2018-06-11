@@ -73,7 +73,7 @@ $db['default'] = array(
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
-	'database' => 'investor',
+	'database' => 'investor_2',
 	
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
