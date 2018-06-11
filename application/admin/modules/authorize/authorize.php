@@ -64,7 +64,7 @@ class authorize extends CI_Controller {
 			$result['token'] = $this->security->get_csrf_hash();
 			echo json_encode($result); exit;
 		}
-		if (count($login) > 0) {
+		if (!empty($login->id)){
 			if ($pass == $login->password){ // compare password success
 				// set session
 				$login->logtime = $GMTTime;
