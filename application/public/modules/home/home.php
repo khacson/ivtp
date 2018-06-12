@@ -24,6 +24,8 @@ class Home extends CI_Controller {
 		$data->finds = $find;
 		$data->slides = $this->model->getSlideList();
 		
+		$data->supperliers = $this->model->getSupperlier();
+		$data->markettrends = $this->model->getMarkettrend();
 		
 		$content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);

@@ -1,0 +1,23 @@
+INSERT INTO `ivt_menus` (`name`, `name_en`, `route`, `parent`, `params`, `ordering`) VALUES ('Đối tác', 'supperlier', 'supperlier', '71', 'view,add,edit,delete', '2');
+
+CREATE TABLE `ivt_supperlier` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `supperlier_name` varchar(250) DEFAULT NULL,
+  `description` text,
+  `img` varchar(250) DEFAULT NULL,
+  `url` varchar(250) DEFAULT NULL,
+  `datecreate` datetime DEFAULT NULL,
+  `usercreate` char(70) DEFAULT NULL,
+  `dateupdate` datetime DEFAULT NULL,
+  `userupdate` char(70) DEFAULT NULL,
+  `isdelete` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+
+INSERT INTO `ivt_supperlier` (`id`, `supperlier_name`, `description`, `img`, `url`, `datecreate`, `usercreate`, `isdelete`) VALUES ('1', '1', '1', 'product-logo-21-127x69.png', '#', '2018-06-13 05:00:08', 'root', '0');
+INSERT INTO `ivt_supperlier` (`id`, `supperlier_name`, `description`, `img`, `url`, `datecreate`, `usercreate`, `isdelete`) VALUES ('2', '2', '', 'product-logo-22-87x87.png', '#', '2018-06-13 05:00:18', 'root', '0');
+INSERT INTO `ivt_supperlier` (`id`, `supperlier_name`, `description`, `img`, `url`, `datecreate`, `usercreate`, `isdelete`) VALUES ('3', '3', '', 'product-logo-23-121x81.png', '#', '2018-06-13 05:00:28', 'root', '0');
+INSERT INTO `ivt_supperlier` (`id`, `supperlier_name`, `description`, `img`, `url`, `datecreate`, `usercreate`, `isdelete`) VALUES ('4', '4', '', 'product-logo-24-203x36.png', '#', '2018-06-13 05:00:40', 'root', '0');
+INSERT INTO `ivt_supperlier` (`id`, `supperlier_name`, `description`, `img`, `url`, `datecreate`, `usercreate`, `isdelete`) VALUES ('5', '5', '', 'product-logo-25-124x61.png', '#', '2018-06-13 05:00:49', 'root', '0');
+INSERT INTO `ivt_supperlier` (`id`, `supperlier_name`, `description`, `img`, `url`, `datecreate`, `usercreate`, `isdelete`) VALUES ('6', '6', '', 'product-logo-26-134x55.png', '#', '2018-06-13 05:00:59', 'root', '0');

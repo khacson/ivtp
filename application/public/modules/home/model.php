@@ -18,6 +18,23 @@ class HomeModel extends CI_Model
 					  ->find_all();
 		return $query;
 	}
+	function getSupperlier(){
+		$query = $this->model->table('ivt_supperlier')
+					  ->select('id,supperlier_name,img,url')
+					  ->where('isdelete',0)
+					  ->limit(6)
+					  ->find_all();
+		return $query;
+	}
+	function getMarkettrend(){
+		$query = $this->model->table('ivt_markettrend')
+					  ->select('id,title,friendlyurl,description_sort,image,datecreate')
+					  ->where('isdelete',0)
+					  ->limit(3)
+					  ->order_by('id','desc')
+					  ->find_all();
+		return $query;
+	}
 	function getSlideList(){
 		$query = $this->model->table('ivt_slide')
 					  ->select('id,slide_name,description,url,img')

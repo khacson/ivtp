@@ -52,12 +52,9 @@
 		<!-- S Nhung co phieu tang truong tot nhat-->
         <section class="section-20">
           <div class="range range-condensed range-xs-middle range-xs-center range-md-justify list-inline-dashed-lg">
-            <div class="cell-xs-5 cell-md-4 cell-lg-2"><a class="reveal-inline-block" href="#"><img class="img-responsive center-block img-semi-transparent" src="<?=url_tmpl();?>images/products/product-logo-21-127x69.png" width="127" height="69" alt=""></a></div>
-            <div class="cell-xs-5 cell-md-4 cell-lg-2 offset-top-60 offset-xs-top-0"><a class="reveal-inline-block" href="#"><img class="img-responsive center-block img-semi-transparent" src="<?=url_tmpl();?>images/products/product-logo-22-87x87.png" width="87" height="87" alt=""></a></div>
-            <div class="cell-xs-5 cell-md-4 cell-lg-2 offset-top-60 offset-lg-top-0"><a class="reveal-inline-block" href="#"><img class="img-responsive center-block img-semi-transparent" src="<?=url_tmpl();?>images/products/product-logo-23-121x81.png" width="121" height="81" alt=""></a></div>
-            <div class="cell-xs-5 cell-md-4 cell-lg-2 offset-top-60 offset-lg-top-0"><a class="reveal-inline-block" href="#"><img class="img-responsive center-block img-semi-transparent" src="<?=url_tmpl();?>images/products/product-logo-24-203x36.png" width="203" height="36" alt=""></a></div>
-            <div class="cell-xs-5 cell-md-4 cell-lg-2 offset-top-60 offset-lg-top-0"><a class="reveal-inline-block" href="#"><img class="img-responsive center-block img-semi-transparent" src="<?=url_tmpl();?>images/products/product-logo-25-124x61.png" width="124" height="61" alt=""></a></div>
-            <div class="cell-xs-5 cell-md-4 cell-lg-2 offset-top-60 offset-lg-top-0"><a class="reveal-inline-block" href="#"><img class="img-responsive center-block img-semi-transparent" src="<?=url_tmpl();?>images/products/product-logo-26-134x55.png" width="134" height="55" alt=""></a></div>
+			<?php foreach($supperliers as $item){?>	
+				<div class="cell-xs-5 cell-md-4 cell-lg-2"><a target="_blank" class="reveal-inline-block" href="<?=$item->url;?>"><img class="img-responsive center-block img-semi-transparent" src="<?=base_url();?>files/supperlier/<?=$item->img;?>" width="127" height="69" alt=""></a></div>
+            <?php }?>
           </div>
         </section>
 		<!-- E Nhung co phieu tang truong tot nhat-->
@@ -120,50 +117,23 @@
               </div>
               <div class="range range-xs-center range-lg-left text-left">
                 <!--S Item 1-->
+				<?php foreach($markettrends as $item){?>
 				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-5">
                   <div class="post-box shadow-drop post-box-max-width-none reveal-block">
                     <div class="post-box-img-wrap"><a class="thumbnail-robben" href="blog-post.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=url_tmpl();?>images/blog/blog1.jpg" width="320" height="442" alt=""></span></a></div>
-                    <div class="post-box-caption post-box-bottom-radius bg-white"><a class="label-custom-wrap reveal-inline-block" href="#"><span class="label-custom label-bermuda">Article</span></a>
-                      <h5 class="offset-top-15"><a href="blog-post.html">Top 3 Reasons to Visit Audrey Mall at Any Season and How You Can Benefit From It</a></h5>
-                      <p class="offset-top-20">Regardless of what season it is now, there are always plenty of reasons to visit our mall. In this article, we decided to show you the list of Top 3 reasons to visit Audrey Mall. To begin with, people usually visit shopping malls to enjoy…</p>
+                    <div class="post-box-caption post-box-bottom-radius bg-white">
+                      <h5 class="offset-top-15"><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>.html"><?=$item->title;?></a></h5>
+                      <p class="offset-top-20"><?=$item->description_sort;?></p>
                       <ul class="list-inline list-inline-20 offset-top-22">
-                        <li><span class="icon icon-normal icon-sm mdi mdi-calendar text-bermuda text-middle"></span><span class="text-middle inset-left-10 text-italic">2 days ago</span></li>
-                        <li><span class="icon icon-normal icon-sm mdi mdi-comment-multiple-outline text-bermuda text-middle"></span><span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#">23 Comments</a></span></li>
+                        <li><span class="icon icon-normal icon-sm mdi mdi-calendar text-bermuda text-middle"></span><span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($item->datecreate));?> </span></li>
+                        <li><span class="icon icon-normal icon-sm mdi mdi-comment-multiple-outline text-bermuda text-middle"></span><span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#">0 Comments</a></span></li>
                       </ul>
                     </div>
                   </div>
                 </div>
 				<!--S Item 2-->
-                <div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-3">
-                  <div class="post-box shadow-drop post-box-max-width-none reveal-block">
-					<div class="post-box-img-wrap"><a class="thumbnail-robben" href="blog-post.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=url_tmpl();?>images/blog/blog1.jpg" width="320" height="442" alt=""></span></a></div>
-                    <div class="post-box-caption post-box-top-radius post-box-bottom-radius bg-white"><a class="label-custom-wrap reveal-inline-block" href="#"><span class="label-custom label-bermuda">Fashion</span></a>
-                      <h5 class="offset-top-15"><a href="blog-post.html">Perfect Clothes to Wear When It’s Hot</a></h5>
-                      <p class="offset-top-20">In the middle of a heatwave, your corporate uniform — the usual blazers, slacks, and button-downs—is the...</p>
-                      <ul class="list-inline list-inline-20 offset-top-25 offset-md-top-50">
-                        <li><span class="icon icon-normal icon-sm mdi mdi-calendar text-bermuda text-middle"></span><span class="text-middle inset-left-10 text-italic">2 days ago</span></li>
-                        <li><span class="icon icon-normal icon-sm mdi mdi-comment-multiple-outline text-bermuda text-middle"></span><span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#">23 Comments</a></span></li>
-                      </ul>
-                    </div>
-                  </div>
-                 
-                </div>
-				<!--S Item 2-->
-                <div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-3">
-                  <div class="post-box shadow-drop post-box-max-width-none reveal-block">
-					<div class="post-box-img-wrap"><a class="thumbnail-robben" href="blog-post.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=url_tmpl();?>images/blog/blog1.jpg" width="320" height="442" alt=""></span></a></div>
-                    <div class="post-box-caption post-box-top-radius post-box-bottom-radius bg-white"><a class="label-custom-wrap reveal-inline-block" href="#"><span class="label-custom label-bermuda">Fashion</span></a>
-                      <h5 class="offset-top-15"><a href="blog-post.html">Perfect Clothes to Wear When It’s Hot</a></h5>
-                      <p class="offset-top-20">In the middle of a heatwave, your corporate uniform — the usual blazers, slacks, and button-downs—is the...</p>
-                      <ul class="list-inline list-inline-20 offset-top-25 offset-md-top-50">
-                        <li><span class="icon icon-normal icon-sm mdi mdi-calendar text-bermuda text-middle"></span><span class="text-middle inset-left-10 text-italic">2 days ago</span></li>
-                        <li><span class="icon icon-normal icon-sm mdi mdi-comment-multiple-outline text-bermuda text-middle"></span><span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#">23 Comments</a></span></li>
-                      </ul>
-                    </div>
-                  </div>
-                  
-                </div>
-              </div><a class="btn btn-width-200 btn-primary offset-top-35 offset-md-top-65" href="blog-classic.html">Xem tất cả</a>
+                <?php }?>
+              </div><a class="btn btn-width-200 btn-primary offset-top-35 offset-md-top-65" href="<?=base_url();?>xu-huong-thi-truong/all.html">Xem tất cả</a>
             </div>
           </div>
         </section>
