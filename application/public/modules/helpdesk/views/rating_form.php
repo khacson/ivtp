@@ -1,12 +1,16 @@
 <style>
 #note {
-    border: 1px solid #999;
+    border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: none;
     margin-bottom: 5px;
     margin-top: 8px;
     padding: 5px;
     width: 100%;
+	resize: none;
+}
+#note:focus{
+	border: 1px solid #79d5ca;
 }
 #send_rating {
     border: 1px solid #764ebe;

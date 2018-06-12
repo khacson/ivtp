@@ -16,7 +16,7 @@ foreach ($datas as $item) {
 	<tr class="content edit">
 		<td class="center"><?=$i;?></td>
 		<td><?=$item->username;?> - <?=$item->u_fullname;?></td>
-		<td><?=$item->m_fullname;?></td>
+		<td><?=$item->member_id;?> - <?=$item->m_fullname;?></td>
 		<td align="center">
 			<a class="view_chat_code" chat_code="<?=$item->chat_code;?>" href="javascript:;"><?=$item->chat_code;?></a>
 		</td>

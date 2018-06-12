@@ -28,10 +28,11 @@
 		return $sql;
 	}
 	function getList($search,$page,$numrows){
-		$sql = "SELECT c.chat_code, c.star, c.note, c.last_response, u.username, u.fullname as u_fullname, m.fullname as m_fullname
+		$sql = "SELECT c.member_id, c.chat_code, c.star, c.note, c.last_response, u.username, u.fullname as u_fullname, m.fullname as m_fullname
 				FROM ivt_users_chat c
 				INNER JOIN ivt_users u ON u.id = c.user_id
-				INNER JOIN ivt_member m ON m.id = c.member_id";
+				INNER JOIN ivt_member m ON m.id = c.member_id
+				WHERE c.last_response IS NOT NULL ";
 		$sql.= $this->getSearch($search);
 		if(empty($search['order'])){
 			$sql .= " ORDER BY c.last_response DESC ";
@@ -47,7 +48,8 @@
 		$sql = "SELECT count(1) as total
 				FROM ivt_users_chat c
 				INNER JOIN ivt_users u ON u.id = c.user_id
-				INNER JOIN ivt_member m ON m.id = c.member_id";
+				INNER JOIN ivt_member m ON m.id = c.member_id
+				WHERE c.last_response IS NOT NULL ";
 		$sql.= $this->getSearch($search);
 		$query = $this->model->query($sql)->execute();
 		if(empty($query[0]->total)){
