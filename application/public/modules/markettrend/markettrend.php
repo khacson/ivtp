@@ -27,7 +27,7 @@ class Markettrend extends CI_Controller {
 			$key = substr($arr_id[$count-1],0,2);
 			$id = substr($arr_id[$count-1],2);
 			if($key == 'dt' && is_numeric($id)){
-				$this->detail($id);
+				$this->_detail($id);
 			}
 			else{
 				$this->_view($uri);
@@ -49,9 +49,9 @@ class Markettrend extends CI_Controller {
 		$this->site->write('description',$finds->mete_description,true);
         $this->site->render();
 	}
-	function _detail($url){
+	function _detail($id){
 		$data = new stdClass();
-		$finds = $this->model->getFindNews($url);
+		$finds = $this->model->getFind($id);
 		if(!empty($finds->id)){
 			$this->site->write('title',$finds->meta_title,true);
 			$this->site->write('description',$finds->meta_keyword,true);

@@ -30,6 +30,7 @@ class HomeModel extends CI_Model
 		$query = $this->model->table('ivt_markettrend')
 					  ->select('id,title,friendlyurl,description_sort,image,datecreate,thumb')
 					  ->where('isdelete',0)
+					  ->where('isshow',1)
 					  ->limit(3)
 					  ->order_by('id','desc')
 					  ->find_all();

@@ -66,7 +66,7 @@
 					  <?php if (!empty($markettendCatalogs)) { ?>
                       <ul class="rd-navbar-dropdown">
 						<?php foreach($markettendCatalogs as $item){?>
-                        <li><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
+                        <li><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->max_id;?>.html"><?=$item->catalog_name;?></a></li>
 						<?php }?>
                       </ul>
 					  <?php }?>

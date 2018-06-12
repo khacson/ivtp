@@ -8,10 +8,10 @@ class MarkettrendModel extends CI_Model
 	function __construct(){
 		parent::__construct('');
 	}
-	function getService(){
-		$query = $this->model->table('ivt_service')
-					  ->where('isdelete',0)
-					  ->find_all();
+	function getFind($id){
+		$query = $this->model->table('ivt_markettrend')
+					  ->where('id',$id)
+					  ->find();
 		return $query;
 	}
 	function getInfor(){
