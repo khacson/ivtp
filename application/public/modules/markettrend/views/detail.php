@@ -6,10 +6,10 @@
                   <div class="inset-md-right-35 inset-xl-right-0">
                     <h3 class="text-primary"><?=$finds->title;?></h3>
                     <ul class="list list-inline list-inline-dashed list-inline-20 text-gray-lighter offset-top-20">
-                      <li>2 days ago</li>
-                      <li class="text-italic"><a class="text-bermuda" href="#">Articles</a></li>
-                      <li><span>by <a class="text-bermuda" href="#">Diana Hawkins</a></span></li>
-                      <li><a class="text-gray-lighter" href="#comments">12 Comments</a></li>
+                      <li><i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
+						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($finds->datecreate));?> </span></li>
+               
+                      <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i><a class="text-gray-lighter" href="#"> 0 Comments</a></li>
                     </ul>
                     <div class="offset-top-30"><img class="img-responsive center-block" src="<?=url_tmpl();?>images/blog/post-01-960x550.jpg" width="960" height="550" alt=""></div>
                     <div class="offset-top-30">
@@ -146,64 +146,37 @@
                         <div class="inset-xs-left-8">
                           <!-- List Marked-->
                           <ul class="list list-marked list-marked-icon">
-								<li><a href="xuhuong.html">Dự báo xu hướng I-Pro</a></li>
-								<li><a href="xuhuong.html">Đánh giá xu hướng CTCK</a></li>
+								<?php foreach($catalogs as $item){?>
+								<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
+								<?php }?>
                           </ul>
                         </div>
                       </div>
                       <!-- Recent Posts-->
                       <div class="offset-top-60 offset-md-top-90">
                         <hr class="divider hr-left-0 bg-bermuda">
-                        <h5 class="offset-top-15">Recent Posts</h5>
+                        <h5 class="offset-top-15">Bài viết mới</h5>
                       </div>
-                      <div class="offset-top-30">
+					  <!----------------------->
+					  <?php foreach($listNew as $item){?>
+                      <div class="offset-top-20">
                         <!-- Unit-->
                         <div class="unit unit-horizontal">
-                          <div class="unit-left"><img class="img-responsive center-block" src="<?=url_tmpl();?>images/blog/post-04-80x80.jpg" width="80" height="80" alt=""></div>
+                          <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/markettrend/thumb/<?=$item->thumb;?>" width="100" height="100" alt=""></div>
                           <div class="unit-body">
-                            <h6><a href="blog-post.html">Top 3 Reasons to Visit Audrey Mall at Any Season</a></h6>
+                            <a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a>
                             <div class="offset-top-10">
                               <!-- List Inline-->
                               <ul class="list-inline list-inline-dashed list-inline-12 text-gray text-italic p">
-                                <li>2 days ago</li>
-                                <li><a class="text-bermuda" href="#">Articles</a></li>
+                                <li><i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
+						<span class="text-middle inset-left-10 text-italic font12"><?=date('d/m/Y',strtotime($item->datecreate));?> </span></li>
+                            
                               </ul>
                             </div>
                           </div>
                         </div>
                       </div>
-                      <div class="offset-top-30">
-                        <!-- Unit-->
-                        <div class="unit unit-horizontal">
-                          <div class="unit-left"><img class="img-responsive center-block" src="<?=url_tmpl();?>images/blog/post-05-80x80.jpg" width="80" height="80" alt=""></div>
-                          <div class="unit-body">
-                            <h6><a href="blog-post.html">Perfect Clothes to Wear When It’s Hot</a></h6>
-                            <div class="offset-top-10">
-                              <!-- List Inline-->
-                              <ul class="list-inline list-inline-dashed list-inline-12 text-gray text-italic p">
-                                <li>2 days ago</li>
-                                <li><a class="text-bermuda" href="#">Articles</a></li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="offset-top-30">
-                        <!-- Unit-->
-                        <div class="unit unit-horizontal">
-                          <div class="unit-left"><img class="img-responsive center-block" src="<?=url_tmpl();?>images/blog/post-06-80x80.jpg" width="80" height="80" alt=""></div>
-                          <div class="unit-body">
-                            <h6><a href="blog-post.html">Planning Your Weekend? Visit  Audrey Mall!</a></h6>
-                            <div class="offset-top-10">
-                              <!-- List Inline-->
-                              <ul class="list-inline list-inline-dashed list-inline-12 text-gray text-italic p">
-                                <li>2 days ago</li>
-                                <li><a class="text-bermuda" href="#">Articles</a></li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+						<?php }?>
                      
                     </aside>
                   </div>

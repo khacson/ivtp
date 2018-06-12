@@ -52,6 +52,8 @@ class Markettrend extends CI_Controller {
 	function _detail($id){
 		$data = new stdClass();
 		$finds = $this->model->getFind($id);
+		$data->catalogs = $this->model->getMarkettendCatalog();
+		$data->listNew = $this->model->getFindNew($id);
 		if(!empty($finds->id)){
 			$this->site->write('title',$finds->meta_title,true);
 			$this->site->write('description',$finds->meta_keyword,true);
