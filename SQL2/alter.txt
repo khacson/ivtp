@@ -13,3 +13,7 @@ ADD COLUMN `work_time` CHAR(50) NULL AFTER `searchkey`;
 
 ALTER TABLE `ivt_contacus` 
 ADD COLUMN `address` CHAR(100) NULL AFTER `description`;
+
+---------------------------------12/06----------------------------------
+
+
