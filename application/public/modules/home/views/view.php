@@ -120,13 +120,16 @@
 				<?php foreach($markettrends as $item){?>
 				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-5">
                   <div class="post-box shadow-drop post-box-max-width-none reveal-block">
-                    <div class="post-box-img-wrap"><a class="thumbnail-robben" href="blog-post.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=url_tmpl();?>images/blog/blog1.jpg" width="320" height="442" alt=""></span></a></div>
+                    <div class="post-box-img-wrap"><a class="thumbnail-robben" href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=base_url();?>files/markettrend/<?=$item->thumb;?>" width="320" height="442" alt=""></span></a></div>
                     <div class="post-box-caption post-box-bottom-radius bg-white">
                       <h5 class="offset-top-15"><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>.html"><?=$item->title;?></a></h5>
                       <p class="offset-top-20"><?=$item->description_sort;?></p>
                       <ul class="list-inline list-inline-20 offset-top-22">
-                        <li><span class="icon icon-normal icon-sm mdi mdi-calendar text-bermuda text-middle"></span><span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($item->datecreate));?> </span></li>
-                        <li><span class="icon icon-normal icon-sm mdi mdi-comment-multiple-outline text-bermuda text-middle"></span><span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#">0 Comments</a></span></li>
+                        <li>
+						<i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
+						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($item->datecreate));?> </span></li>
+                        <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i>
+<span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#">0 Comments</a></span></li>
                       </ul>
                     </div>
                   </div>

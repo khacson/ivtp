@@ -28,7 +28,7 @@ class HomeModel extends CI_Model
 	}
 	function getMarkettrend(){
 		$query = $this->model->table('ivt_markettrend')
-					  ->select('id,title,friendlyurl,description_sort,image,datecreate')
+					  ->select('id,title,friendlyurl,description_sort,image,datecreate,thumb')
 					  ->where('isdelete',0)
 					  ->limit(3)
 					  ->order_by('id','desc')
