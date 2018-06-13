@@ -24,7 +24,7 @@
 				FROM ivt_users_chat c
 				INNER JOIN ivt_users u ON u.id = c.user_id
 				INNER JOIN ivt_star s ON s.id = c.star
-				WHERE 1 $search
+				WHERE c.last_response IS NOT NULL $search
 				GROUP BY c.user_id";
 		if(empty($search['order'])){
 			$sql .= " ORDER BY u.username ";
@@ -37,12 +37,13 @@
 		return $this->model->query($sql)->execute();
 	}
 	function getTotal($search){
+		$search = $this->getSearch($search);
 		$sql = "SELECT 1
 				FROM ivt_users_chat c
 				INNER JOIN ivt_users u ON u.id = c.user_id
 				INNER JOIN ivt_star s ON s.id = c.star
+				WHERE c.last_response IS NOT NULL $search
 				GROUP BY c.user_id";
-		$sql.= $this->getSearch($search);
 		$query = $this->model->query($sql)->execute();
 		return count($query);
 	}

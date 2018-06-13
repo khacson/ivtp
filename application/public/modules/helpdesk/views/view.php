@@ -60,6 +60,9 @@
     width: 50px;
 	color: #fff;
 }
+.views{
+	min-height: 40px;
+}
 </style>
 <section class="text-left section-40 section-md-60">
           <div class="inset-lg-left-45 inset-lg-right-45 inset-xl-left-130 inset-xl-right-85">
@@ -69,70 +72,24 @@
                   <div class="inset-md-right-35 inset-xl-right-0">
                     <h3 class="text-primary text-center">Tổ Tư Vấn Độc Lập</h3>
                     <div class="offset-top-40 range">
+					<?php foreach ($userList as $item) { ?>
 						<div class="cell-md-6">
-							<a href="<?=base_url()?>/tu-van/dt2">
+							<a href="<?=base_url()?>/tu-van/dt<?=$item->id?>">
 								<div class="user_info-container">
 									<div class="user_info">
-										<img class="user_img" src="<?=base_url()?>files/user/photo2.jpg" />
-										<p class="username">Trịnh Khánh Linh</p>
-										<p>ID: linktk01</p>
-										<p>Trình độ: Thạc sĩ kinh tế</p>
-										<p>Bằng cấp: CFA LV2</p>
-										<p>Kinh Nghiệm: 5 năm MGCK, 2 năm quỹ đầu tư</p>
-										<p>Quan điểm: Đầu tư hay đầu cơ đều tốt, quan trọng là phải biết mình đang đầu cơ hay đầu tư và phải kiểm soát được nó</p>
+										<img class="user_img" src="<?=base_url()?>files/user/<?=$item->signature?>">
+										<p class="username"><?=$item->fullname?></p>
+										<!--<p>ID: <?=$item->username?></p>-->
+										<p>Trình độ: <?=$item->level?></p>
+										<p>Bằng cấp: <?=$item->degree?></p>
+										<p>Kinh Nghiệm: <?=$item->experience?></p>
+										<p class="views">Quan điểm: <?=$item->views?></p>
 									</div>
 									<span class="chatbtn" href="javascript:;"></span>
 								</div>
 							</a>
 						</div>
-						<div class="cell-md-6">
-							<a href="<?=base_url()?>/tu-van/dt2">
-								<div class="user_info-container">
-									<div class="user_info">
-										<img class="user_img" src="<?=base_url()?>files/user/photo2.jpg" />
-										<p class="username">Trịnh Khánh Linh</p>
-										<p>ID: linktk01</p>
-										<p>Trình độ: Thạc sĩ kinh tế</p>
-										<p>Bằng cấp: CFA LV2</p>
-										<p>Kinh Nghiệm: 5 năm MGCK, 2 năm quỹ đầu tư</p>
-										<p>Quan điểm: Đầu tư hay đầu cơ đều tốt, quan trọng là phải biết mình đang đầu cơ hay đầu tư và phải kiểm soát được nó</p>
-									</div>
-									<span class="chatbtn" href="javascript:;"></span>
-								</div>
-							</a>
-						</div>
-						<div class="cell-md-6">
-							<a href="<?=base_url()?>/tu-van/dt2">
-								<div class="user_info-container">
-									<div class="user_info">
-										<img class="user_img" src="<?=base_url()?>files/user/photo2.jpg" />
-										<p class="username">Trịnh Khánh Linh</p>
-										<p>ID: linktk01</p>
-										<p>Trình độ: Thạc sĩ kinh tế</p>
-										<p>Bằng cấp: CFA LV2</p>
-										<p>Kinh Nghiệm: 5 năm MGCK, 2 năm quỹ đầu tư</p>
-										<p>Quan điểm: Đầu tư hay đầu cơ đều tốt, quan trọng là phải biết mình đang đầu cơ hay đầu tư và phải kiểm soát được nó</p>
-									</div>
-									<span class="chatbtn" href="javascript:;"></span>
-								</div>
-							</a>
-						</div>
-						<div class="cell-md-6">
-							<a href="<?=base_url()?>/tu-van/dt2">
-								<div class="user_info-container">
-									<div class="user_info">
-										<img class="user_img" src="<?=base_url()?>files/user/photo2.jpg" />
-										<p class="username">Trịnh Khánh Linh</p>
-										<p>ID: linktk01</p>
-										<p>Trình độ: Thạc sĩ kinh tế</p>
-										<p>Bằng cấp: CFA LV2</p>
-										<p>Kinh Nghiệm: 5 năm MGCK, 2 năm quỹ đầu tư</p>
-										<p>Quan điểm: Đầu tư hay đầu cơ đều tốt, quan trọng là phải biết mình đang đầu cơ hay đầu tư và phải kiểm soát được nó</p>
-									</div>
-									<span class="chatbtn" href="javascript:;"></span>
-								</div>
-							</a>
-						</div>
+					<?php } ?>
                     </div>
                   </div>
                 </div>

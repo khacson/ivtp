@@ -1,12 +1,12 @@
 <style title="" type="text/css">
 	table col.c1 { width: 45px; }
-	table col.c2 { width: 200px; }
+	table col.c2 { width: 230px; }
 	table col.c3 { width: 180px; }
 	table col.c4 { width: 130px; }
 	table col.c5 { width: 100px; }
 	table col.c6 { width: 200px; }
 	table col.c7 { width: 180px; }
-	table col.c8 { width: 180px; }
+	table col.c8 { width: 150px; }
 	table col.c9 { width: auto; }
 	.btn-title-add {
 		float: right;
@@ -51,7 +51,7 @@
 						<select name="member_id" id="member_id" class="combos" >
 							<option value=""></option>
 							<?php foreach ($memberList as $item) { ?>
-								<option value="<?=$item->id;?>"><?=$item->fullname?></option>
+								<option value="<?=$item->id;?>"><?=$item->id;?> - <?=$item->fullname?></option>
 							<?php } ?>
 						</select>
 					</div>
