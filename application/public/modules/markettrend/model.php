@@ -14,6 +14,13 @@ class MarkettrendModel extends CI_Model
 					  ->find();
 		return $query;
 	}
+	function getFindCatalog($friendlyurl){
+		$query = $this->model->table('ivt_markettrendcatalog')
+					  ->select('catalog_name')
+					  ->where('friendlyurl',$friendlyurl)
+					  ->find();
+		return $query;
+	}
 	function getFindNew($id){
 		$query = $this->model->table('ivt_markettrend')
 					  ->where('id <>',$id)

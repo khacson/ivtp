@@ -1,4 +1,4 @@
-<section class="section-20 bg-selago">
+<section class="section-10 bg-selago">
         <div class="shell">
           <ul class="list-inline list-inline-12 list-inline-icon p tleft">
             <li><a href="<?=base_url();?>trang-chu.html"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;Trang chủ </a></li>

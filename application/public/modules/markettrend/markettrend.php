@@ -42,6 +42,7 @@ class Markettrend extends CI_Controller {
 		
 		$data->catalogs = $this->model->getMarkettendCatalog();
 		$data->listNew = $this->model->getFindNew(0);
+		$data->catalogFind = $this->model->getFindCatalog($uri);
 		$data->uri = $uri;
 		
         $content = $this->load->view('view',$data,true);

@@ -439,6 +439,11 @@ img {
 .ptop2{ padding-top:2px !important;}
 .ptop3{ padding-top:3px !important;}
 .ptop10{ padding-top:10px !important;}
+.breads{
+	margin-left:-30px !important;
+	padding-left:0 !important;
+}
+
 .img-responsive {
 	display: block;
 	max-width: 100%;
@@ -23472,7 +23477,10 @@ textarea.form-control {
 	padding-top: 0;
 	padding-bottom: 0;
 }
-
+.section-10 {
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
 .section-15 {
 	padding-top: 15px;
 	padding-bottom: 15px;
