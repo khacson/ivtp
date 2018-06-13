@@ -103,7 +103,7 @@
                           <!-- List Marked-->
                           <ul class="list list-marked list-marked-icon">
 								<?php foreach($catalogs as $item){?>
-								<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
+								<li><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
 								<?php }?>
                           </ul>
                         </div>

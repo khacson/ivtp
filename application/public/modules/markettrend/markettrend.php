@@ -34,13 +34,15 @@ class Markettrend extends CI_Controller {
 			}
 		}
     }
-	function _view(){
+	function _view($uri){
 		$login = $this->site->getSession('login');
 		$finds = $this->model->getInfor();
 		$data = new stdClass();
-		//$data->news = $this->model->getNews();
-		//$data->services = $this->model->getService();
-		//$data->finds = $finds;
+		
+		
+		$data->catalogs = $this->model->getMarkettendCatalog();
+		$data->listNew = $this->model->getFindNew(0);
+		$data->uri = $uri;
 		
         $content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);
