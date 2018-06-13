@@ -21648,6 +21648,9 @@ textarea.form-control {
 .unit-left i{
 	font-size:18px !important;
 }
+.unit-left{
+	margin-top:8px !important;
+}
 .unit-left,
 .unit-right {
 	-ms-flex: 0 0 auto;
@@ -21793,7 +21796,7 @@ textarea.form-control {
 .unit-horizontal > .unit-left + .unit-right,
 .unit-horizontal > .unit-left + .unit-body {
 	padding-top: 0;
-	padding-left: 30px;
+	padding-left: 10px;
 }
 
 .unit-horizontal > .unit-body + .unit-right {

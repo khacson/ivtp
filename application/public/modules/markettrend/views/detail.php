@@ -9,48 +9,16 @@
                       <li><i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
 						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($finds->datecreate));?> </span></li>
                
-                      <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i><a class="text-gray-lighter" href="#"> 0 Comments</a></li>
+                      <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i><a class="text-gray-lighter" href="#"> 0 Bình luận</a></li>
                     </ul>
-                    <div class="offset-top-30"><img class="img-responsive center-block" src="<?=url_tmpl();?>images/blog/post-01-960x550.jpg" width="960" height="550" alt=""></div>
+                    <div class="offset-top-30"><img class="img-responsive center-block" src="<?=base_url();?>files/markettrend/<?=$finds->image;?>" width="960" height="550" alt=""></div>
                     <div class="offset-top-30">
-                      <p>Regardless of what season it is now, there are always plenty of reasons to visit our mall. In this article, we decided to show you the list of Top 3 reasons to visit Audrey Mall. to begin with, people usually visit shopping malls to enjoy variety while shopping, for socialization and for entertainment. People also visit malls because they offer one-stop shopping convenience and save time.</p>
-                      <p>However, Audrey Mall has some additional attractions and reasons to visit it. For example, our mall’s main claim to fame is its sheer size.  An expansion will be opening soon, but for now, we already have a jaw-dropping number of 520 open stores. This means if you decided to spend just 10-minutes in each store, it would take you 86-hours to do it. That’s three and a half days!</p>
-                      <p>We also have about 100 events every year that feature celebrity appearances. A recent meet-and-greet with internet personality Tyler Oakley, held in conjunction with the release of his book “Binge,” drew a sell-out crowd.</p>
-                    </div>
-                    <div class="offset-top-25"><img class="img-responsive center-block" src="<?=url_tmpl();?>images/blog/post-08-960x550.jpg" width="960" height="550" alt=""></div>
-                    <div class="offset-top-30">
-                      <p>The last but not least reason to visit us is the variety of cafes and restaurant we have. Our 50+ restaurants will be glad to offer you an amazingly tasty menu. Rest assured you won’t go hungry at Audrey Mall, that’s for sure. And there is always more things to do at your favorite mall, so feel free to visit us at any season. We believe the time you spend here will become one of the best experiences in your life.</p>
-                    </div>
-                    <div class="offset-top-60 offset-md-top-90">
-                      <hr class="divider hr-xs-left-0 bg-bermuda">
-                      <div class="offset-top-15">
-                        <h5 class="text-center text-xs-left">Author</h5>
-                      </div>
-                    </div>
-                    <div class="offset-top-30">
-                      <!-- Unit-->
-                      <div class="unit unit-xs unit-xs-horizontal">
-                        <div class="unit-left"><img class="img-circle img-responsive center-block" src="<?=url_tmpl();?>images/users/user-diana-hawkins-160x160.jpg" width="160" height="160" alt=""></div>
-                        <div class="unit-body">
-                          <h6 class="text-center text-xs-left"><a href="#">Diana Hawkins</a></h6>
-                          <div class="offset-top-15">
-                            <p>I am a professional blogger interested in everything taking place in cyberspace. I am running this website and try my best to make it a better place to visit. I post only the articles that are related to the topic and thoroughly analyze all visitors’ comments to cater to their needs better.</p>
-                            <ul class="list-inline list-inline-2 list-primary offset-top-15">
-                              <li><a class="icon icon-xs icon-circle fa fa-facebook text-gray-lighter" href="#"></a></li>
-                              <li><a class="icon icon-xs icon-circle fa fa-twitter text-gray-lighter" href="#"></a></li>
-                              <li><a class="icon icon-xs icon-circle fa fa-pinterest-p text-gray-lighter" href="#"></a></li>
-                              <li><a class="icon icon-xs icon-circle fa fa-vimeo text-gray-lighter" href="#"></a></li>
-                              <li><a class="icon icon-xs icon-circle fa fa-google text-gray-lighter" href="#"></a></li>
-                              <li><a class="icon icon-xs icon-circle fa fa-rss text-gray-lighter" href="#"></a></li>
-                            </ul>
-                          </div>
-                        </div>
-                      </div>
+						<?=$finds->description_long;?>
                     </div>
                     <div class="offset-top-60 offset-md-top-90">
                       <hr class="divider hr-left-0 bg-bermuda">
                       <div class="offset-top-15">
-                        <h5>Comments</h5>
+                        <h5>Bình luận</h5>
                       </div>
                     </div>
                     <div class="offset-top-30">
@@ -88,7 +56,7 @@
                     <div class="offset-top-60 offset-md-top-90">
                       <hr class="divider hr-left-0 bg-bermuda">
                       <div class="offset-top-15">
-                        <h5>Send a Comment</h5>
+                        <h5>Gửi bình luận</h5>
                       </div>
                       <div class="offset-top-15">
                         <!-- RD Mailform-->
@@ -96,37 +64,25 @@
                           <div class="range range-xs-center">
                             <div class="cell-sm-6">
                               <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-first-name">First Name</label>
-                                <input class="form-control" id="contact-first-name" type="text" name="firstName" data-constraints="@Required">
+                                <label class="form-label form-label-outside" for="contact-first-name">Họ tên</label>
+                                <input class="form-control" id="fullname" type="text" name="fullname" >
                               </div>
                             </div>
-                            <div class="cell-sm-6 offset-top-10 offset-sm-top-0">
+                            <div class="cell-sm-6">
                               <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-last-name">Last Name</label>
-                                <input class="form-control" id="contact-last-name" type="text" name="lastName" data-constraints="@Required">
-                              </div>
-                            </div>
-                            <div class="cell-sm-6 offset-top-10">
-                              <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-email">E-mail</label>
-                                <input class="form-control" id="contact-email" type="text" name="email" data-constraints="@Email @Required">
-                              </div>
-                            </div>
-                            <div class="cell-sm-6 offset-top-10">
-                              <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-phone">Phone</label>
-                                <input class="form-control" id="contact-phone" type="text" name="phone" data-constraints="@Numeric @Required">
+                                <label class="form-label form-label-outside" for="contact-phone">Điện thoại</label>
+                                <input class="form-control" id="phone" type="text" name="phone" >
                               </div>
                             </div>
                             <div class="cell-sm-12 offset-top-10">
                               <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-message">Message</label>
+                                <label class="form-label form-label-outside" for="contact-message">Nội dung</label>
                                 <textarea class="form-control" id="contact-message" name="message" data-constraints="@Required"></textarea>
                               </div>
                             </div>
                           </div>
                           <div class="text-center text-sm-left offset-top-20">
-                            <button class="btn btn-primary" type="submit">send</button>
+                            <button class="btn btn-primary" type="submit">Gửi</button>
                           </div>
                         </form>
                       </div>
@@ -168,7 +124,7 @@
                             <div class="offset-top-10">
                               <!-- List Inline-->
                               <ul class="list-inline list-inline-dashed list-inline-12 text-gray text-italic p">
-                                <li><i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
+                                <li><i class="fa fa-calendar icon icon-normal icon-sm font12" aria-hidden="true"></i>
 						<span class="text-middle inset-left-10 text-italic font12"><?=date('d/m/Y',strtotime($item->datecreate));?> </span></li>
                             
                               </ul>
