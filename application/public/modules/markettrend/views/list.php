@@ -1,3 +1,6 @@
+ <?php if(count($datas) == 0){?>
+	<h6 class="center offset-md-top-30">Chuyên mục chưa có bài viết</h6>
+ <?php }?>
  <?php foreach($datas as $item){?>
 	  <div class="offset-top-30">
 		<!-- Unit-->

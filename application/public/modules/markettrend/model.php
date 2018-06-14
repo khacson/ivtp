@@ -23,7 +23,7 @@ class MarkettrendModel extends CI_Model
 	}
 	function getFindCatalog($friendlyurl){
 		$query = $this->model->table('ivt_markettrendcatalog')
-					  ->select('catalog_name')
+					  ->select('id,catalog_name')
 					  ->where('friendlyurl',$friendlyurl)
 					  ->find();
 		return $query;
@@ -54,8 +54,11 @@ class MarkettrendModel extends CI_Model
 	}
 	function getSearch($search){
 		$and = '';
-		if(!empty($search['productName'])){
-			$and.= " and m.friendlyurl = '".$search."' ";
+		if(!empty($search)){
+			$typeid = $this->getFindCatalog($search)->id;
+			if(!empty($typeid)){
+				$and.= " and m.typeid = '".$typeid."' ";
+			}
 		}
 		return $and;
 	}
@@ -85,7 +88,7 @@ class MarkettrendModel extends CI_Model
 			$and
 			order by m.datecreate desc
 		";
-		$sql.= ' limit '.$page.','.$numrows;
+		$sql.= ' limit '.$page.','.$numrows; 
 		return $this->model->query($sql)->execute();
 	}
 }

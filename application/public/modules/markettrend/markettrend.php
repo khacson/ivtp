@@ -46,7 +46,6 @@ class Markettrend extends CI_Controller {
 		
 		
 		
-		
         $content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);
 		$this->site->write('title',$finds->meta_title,true);
@@ -83,11 +82,7 @@ class Markettrend extends CI_Controller {
         $data = new stdClass();
 		$page = $this->input->post('page');
         $search = $this->input->post('search');
-		$uri = $this->input->post('uri');
-		$price = $this->input->post('price');
-		$productName = $this->input->post('productName');
-		$status = $this->input->post('status');
-		$index = $this->input->post('index');
+		
 
 		$count = $this->model->getTotal($search);
         $data->datas = $this->model->getList($search, $page, $numrows);
