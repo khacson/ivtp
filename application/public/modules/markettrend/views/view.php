@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?=url_tmpl();?>template.css">
 <section class="section-10 bg-selago">
         <div class="shell">
           <ul class="list-inline list-inline-12 list-inline-icon p tleft breads">
@@ -5,9 +6,11 @@
             <li><a href="<?=base_url();?>gioi-thieu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
 				Xu hướng thị trường</a></li>
             </li>
-			 <li><a href="<?=base_url();?>gioi-thieu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
-				<?=$catalogFind->catalog_name;?></a></li>
-            </li>
+			<?php if(!empty($catalogFind->catalog_name)){?>
+				<li><a href="<?=base_url();?>gioi-thieu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+					<?=$catalogFind->catalog_name;?></a></li>
+				</li>
+			<?php }?>
 			<input id="uri" type="hidden" name="uri" value="<?=$uri;?>" />
           </ul>
         </div>
@@ -16,28 +19,11 @@
           <div class="inset-lg-left-45 inset-lg-right-45 inset-xl-left-130 inset-xl-right-85">
             <div class="shell-wide shell-wide-custom">
               <div class="range range-xs-center range-lg-right range-xl-justify">
-                <div class="cell-sm-10 cell-md-8 cell-xl-7" id="grids">
+                <div class="cell-sm-10 cell-md-8 cell-xl-7">
 					<!--S Item-->
-					 <?php foreach($listNew as $item){?>
-                      <div class="offset-top-30">
-                        <!-- Unit-->
-                        <div class="unit unit-horizontal">
-                          <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/markettrend/thumb/<?=$item->thumb;?>" width="300" height="200" alt=""></div>
-                          <div class="unit-body">
-                            <a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a>
-                            <div class="offset-top-10">
-							   <?=$item->description_sort;?>
-                              <!-- List Inline-->
-                              <ul class="list-inline list-inline-dashed list-inline-12 text-gray text-italic p">
-                                <li><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Xem chi tiết</a></li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-						<?php }?>
+					<div  id="grid-rows"></div>
 					<!--E Item-->
-					<div class="cell-sm-10 cell-md-8 cell-xl-7">
+					<div class="cell-sm-10 cell-md-8 cell-xl-7 offset-md-top-20">
 						<div class="text-center" id="paging"></div>
 					</div>
                 </div>
@@ -96,3 +82,58 @@
 		<section class="text-left section-40 offset-md-top-50">
 		
 		</section>
+<div class="loadingpage" style="display: none;">
+    <div class="blockUI blockOverlay" style="width: 100%;height: 100%;top:0px;left:0px;position: absolute;background-color: rgb(0,0,0);opacity: 0.1;z-index: 1000;">
+    </div>
+    <div class="blockUI blockMsg blockElement" style="width: 30%;position: absolute;top: 15%;left:35%;text-align: center;">
+        <img src="<?=url_tmpl();?>images/loading2.gif" style="z-index: 2;position: absolute;"/>
+    </div>
+</div> 
+<script>
+	var controller = '<?=base_url();?>markettrend/';
+    var csrfHash = '';
+    var cpage = 0;
+    var search;
+	var order = '';
+	var index = 'asc';
+	var action = 'getList';
+	$(function(){
+		getListMore(cpage,csrfHash,action,'');
+	});
+	function getListMore(page,csrfHash,action,type){
+		loaddingPage = false;
+		var search = $('#uri').val();
+		$("#token").val('');
+		$('.loadingpage').show();
+		$('#hideClick').click();
+		$('.dropdown-toggle').attr('aria-expanded','false');
+		$.ajax({
+			  url:controller+action,
+			  async: true,
+			  type: 'POST',
+			  dataType: "json",
+			  data:{
+				  page:page,search:search,order:order,index:index
+			  },
+			  success:function(obj){
+				 var total = obj.viewtotal;
+				 var viewnumrows =  parseInt($('#viewnumrows').val());
+				 viewnumrows = viewnumrows + obj.numrows;
+				 $('#grid-rows').html(obj.content); 
+				 $('#paging').html(obj.paging);
+				 paging(obj.csrfHash);
+				 $('.loadingpage').hide();
+			  }
+		});
+	}
+	function paging(csrfHash){
+		$("#paging a").each(function(){
+			$(this).click(function(){
+				$('.loadingpage').show();
+				cpage = $(this).attr('name');
+				getListMore(cpage,csrfHash,action);
+				return false;
+			});
+		});
+	}
+</script>

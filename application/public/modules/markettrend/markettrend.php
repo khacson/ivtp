@@ -34,16 +34,18 @@ class Markettrend extends CI_Controller {
 			}
 		}
     }
-	function _view($uri){
+	function _view($uri=''){
 		$login = $this->site->getSession('login');
 		$finds = $this->model->getInfor();
 		$data = new stdClass();
-		
 		
 		$data->catalogs = $this->model->getMarkettendCatalog();
 		$data->listNew = $this->model->getFindNew(0);
 		$data->catalogFind = $this->model->getFindCatalog($uri);
 		$data->uri = $uri;
+		
+		
+		
 		
         $content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);
@@ -63,6 +65,12 @@ class Markettrend extends CI_Controller {
 			$this->site->write('keywords',$finds->mete_description,true);
 			$this->site->write('title_page',$finds->title,true);
 		}
+		$typeid = 0;
+		if(!empty($finds->typeid)){
+			$typeid = $finds->typeid;
+		}
+		$data->catalogFind =  $this->model->getFindC($typeid);
+		
 		$data->finds = $finds;
 		
 		$content = $this->load->view('detail',$data,true);
@@ -71,24 +79,16 @@ class Markettrend extends CI_Controller {
 	}
 	function getList(){
 		$param = array();
-        $numrows = 18;
+        $numrows = 10;
         $data = new stdClass();
 		$page = $this->input->post('page');
-        $search = '{}';//$this->input->post('search');
+        $search = $this->input->post('search');
 		$uri = $this->input->post('uri');
 		$price = $this->input->post('price');
 		$productName = $this->input->post('productName');
 		$status = $this->input->post('status');
 		$index = $this->input->post('index');
-		
-		$search = json_decode($search,true);
-		$search['price'] = $price;
-		$search['productName'] = $productName;
-		$search['status'] = $status;
-		$search['index'] = $index;
-		$search['manufacture'] = $uri;
-		
-		
+
 		$count = $this->model->getTotal($search);
         $data->datas = $this->model->getList($search, $page, $numrows);
         $page_view = $this->site->pagination($count, $numrows, 5, 'product/', $page);

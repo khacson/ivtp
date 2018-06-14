@@ -61,7 +61,7 @@
                   <ul class="rd-navbar-nav">
                     <li class="active"><a href="<?=base_url();?>trang-chu.html">Trang chủ</a></li>
                     <li><a href="<?=base_url();?>gioi-thieu.html">Giới thiệu</a> </li>
-                    <li><a href="javascript:;">Xu hướng thị trường</a>
+                    <li><a href="<?=base_url();?>xu-huong-thi-truong.html">Xu hướng thị trường</a>
                       <!-- RD Navbar Dropdown-->
 					  <?php if (!empty($markettendCatalogs)) { ?>
                       <ul class="rd-navbar-dropdown">

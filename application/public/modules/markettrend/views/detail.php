@@ -5,10 +5,15 @@
             <li><a href="<?=base_url();?>gioi-thieu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
 				Xu hướng thị trường</a></li>
             </li>
+			<?php if(!empty($catalogFind->catalog_name)){?>
+				<li><a href="<?=base_url();?>gioi-thieu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+					<?=$catalogFind->catalog_name;?></a></li>
+				</li>
+			<?php }?>
           </ul>
         </div>
       </section> 
-<section class="text-left section-40 section-md-60">
+<section class="text-left section-40 section-md-30">
           <div class="inset-lg-left-45 inset-lg-right-45 inset-xl-left-130 inset-xl-right-85">
             <div class="shell-wide shell-wide-custom">
               <div class="range range-xs-center range-lg-right range-xl-justify">

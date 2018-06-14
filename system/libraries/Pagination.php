@@ -245,7 +245,7 @@ class CI_Pagination {
 		}
 		$this->from = (($this->cur_page - 1) * $this->per_page ) + 1;
 		$this->to = ($this->from + $this->per_page - 1) < $this->total_rows ? ($this->from + $this->per_page - 1) : $this->total_rows;
-		$output .= '<span class="fright" style="margin-left:20px;">Show '.$this->from.' <span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></span> '.$this->to.' / '.$this->total_rows.'</span>';
+		$output .= '<span class="fright" style="margin-left:20px;">Hiển thị '.$this->from.' <i class="fa fa-angle-right" aria-hidden="true"></i> '.$this->to.' / '.$this->total_rows.'</span>';
 		// Kill double slashes.  Note: Sometimes we can end up with a double slash
 		// in the penultimate link so we'll kill all double slashes.
 		$output = preg_replace("#([^:])//+#", "\\1/", $output);

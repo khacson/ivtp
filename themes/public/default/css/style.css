@@ -23671,6 +23671,10 @@ textarea.form-control {
 		padding-top: 34px;
 		padding-bottom: 34px;
 	}
+	.section-md-30 {
+		padding-top: 30px;
+		padding-bottom: 30px;
+	}
 	.section-md-60 {
 		padding-top: 60px;
 		padding-bottom: 60px;
