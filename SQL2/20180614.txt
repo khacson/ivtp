@@ -6,7 +6,7 @@ CREATE TABLE `ivt_markettrend_comment` (
   `memberid` int(11) DEFAULT NULL,
   `blogid` int(11) DEFAULT NULL,
   `accept` tinyint(1) DEFAULT '0',
-  `datecreate` date DEFAULT NULL,
+  `datecreate` DATETIME DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `idx_member` (`memberid`),
   KEY `idx_post` (`blogid`)
