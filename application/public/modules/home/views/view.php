@@ -136,7 +136,7 @@
                 </div>
 				<!--S Item 2-->
                 <?php }?>
-              </div><a class="btn btn-width-200 btn-primary offset-top-35 offset-md-top-65" href="<?=base_url();?>xu-huong-thi-truong/all.html">Xem tất cả</a>
+              </div><a class="btn btn-width-200 btn-primary offset-top-35 offset-md-top-65" href="<?=base_url();?>xu-huong-thi-truong.html">Xem tất cả</a>
             </div>
           </div>
         </section>
