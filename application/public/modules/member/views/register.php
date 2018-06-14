@@ -19,7 +19,7 @@
 					<div class="ruby">
 						<table class="tbsex">
 							<tr>
-								<td><i class="fa fa-user-o " aria-hidden="true"></i></td>
+								
 								<td>
 									<label> Nam
 										 <input type="radio" name="sex" value="sex" value="1">
@@ -42,7 +42,7 @@
 				<div class="wrap-input100 validate-input m-b-23 " >
 					<span class="label-input100 mbta20"><b>Ngày sinh</b></span>
 					<div class="ruby">
-						<i class="fa fa-user-o " aria-hidden="true"></i>
+						<i class="fa fa-calendar" aria-hidden="true"></i>
 						<input class="input100" type="text" id="birthday" name="birthday" placeholder="dd/mm/yyyy" value="">
 						<span class="focus-input100"></span>
 					</div>
@@ -58,7 +58,7 @@
 				<div class="wrap-input100 validate-input m-b-23" >
 					<span class="label-input100 mbta20"><b>Điện thoại</b></span>
 					<div class="ruby">
-						<i class="fa fa-envelope-o" aria-hidden="true"></i>
+						<i class="fa fa-phone" aria-hidden="true"></i>
 						<input class="input100" type="text" id="phone" name="phone" placeholder="Nhập điện thoại" value="">
 						<span class="focus-input100"></span>
 					</div>
