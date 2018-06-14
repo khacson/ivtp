@@ -91,4 +91,8 @@ class MarkettrendModel extends CI_Model
 		$sql.= ' limit '.$page.','.$numrows; 
 		return $this->model->query($sql)->execute();
 	}
+	function updateHasChild($id) {
+		$array['has_child'] = 1;
+		$this->model->table('ivt_markettrend_comment')->save($id,$array);	
+	}
 }

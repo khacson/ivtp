@@ -1,0 +1,13 @@
+ALTER TABLE `ivt_markettrend_comment`   
+  ADD COLUMN `parent_id` INT(11) DEFAULT 0  NULL AFTER `id`,
+  ADD COLUMN `has_child` TINYINT(1) DEFAULT 0  NULL AFTER `parent_id`;
+  
+ALTER TABLE `ivt_investment_commets`  
+  ADD COLUMN `parent_id` INT(11) DEFAULT 0  NULL AFTER `id`,
+  ADD COLUMN `has_child` TINYINT(1) DEFAULT 0  NULL AFTER `parent_id`;
+
+ALTER TABLE `ivt_markettrend_comment`   
+  ADD COLUMN `level` TINYINT(1) DEFAULT 0  NULL AFTER `has_child`;
+  
+ALTER TABLE `ivt_investment_commets`  
+  ADD COLUMN `level` TINYINT(1) DEFAULT 0  NULL AFTER `has_child`;
