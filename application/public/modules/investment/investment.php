@@ -27,20 +27,22 @@ class Investment extends CI_Controller {
 			$key = substr($arr_id[$count-1],0,2);
 			$id = substr($arr_id[$count-1],2);
 			if($key == 'dt' && is_numeric($id)){
-				$this->detail($id);
+				$this->_detail($id);
 			}
 			else{
 				$this->_view($uri);
 			}
 		}
     }
-	function _view(){
+	function _view($uri=''){
 		$login = $this->site->getSession('login');
 		$finds = $this->model->getInfor();
 		$data = new stdClass();
-		//$data->news = $this->model->getNews();
-		//$data->services = $this->model->getService();
-		//$data->finds = $finds;
+		
+		$data->catalogs = $this->model->getInvestmentCatalog();
+		$data->listNew = $this->model->getFindNew(0);
+		$data->catalogFind = $this->model->getFindCatalog($uri);
+		$data->uri = $uri;
 		
         $content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);
@@ -49,19 +51,59 @@ class Investment extends CI_Controller {
 		$this->site->write('description',$finds->mete_description,true);
         $this->site->render();
 	}
-	function _detail($url){
+	function _detail($id){
 		$data = new stdClass();
-		$finds = $this->model->getFindNews($url);
+		$finds = $this->model->getFind($id);
+		$data->catalogs = $this->model->getInvestmentCatalog();
+		$data->listNew = $this->model->getFindNew($id);
 		if(!empty($finds->id)){
 			$this->site->write('title',$finds->meta_title,true);
 			$this->site->write('description',$finds->meta_keyword,true);
 			$this->site->write('keywords',$finds->mete_description,true);
 			$this->site->write('title_page',$finds->title,true);
 		}
+		$typeid = 0;
+		if(!empty($finds->typeid)){
+			$typeid = $finds->typeid;
+		}
+		$data->catalogFind =  $this->model->getFindC($typeid);
+		
 		$data->finds = $finds;
 		
 		$content = $this->load->view('detail',$data,true);
         $this->site->write('content',$content,true);
         $this->site->render();
+	}
+	function getList(){
+		$param = array();
+        $numrows = 10;
+        $data = new stdClass();
+		$page = $this->input->post('page');
+        $search = $this->input->post('search');
+		
+
+		$count = $this->model->getTotal($search);
+        $data->datas = $this->model->getList($search, $page, $numrows);
+        $page_view = $this->site->pagination($count, $numrows, 5, 'product/', $page);
+		
+        $result = new stdClass();
+		$result->numrows = $numrows;
+        $result->cPage = $page;
+        $result->viewtotal = $count;
+		if($count > $numrows){
+			 $result->paging = $page_view;	
+		}
+		else{
+			$result->paging = '';
+		}
+		if(empty($uri)){
+			$data->linkImg = '';
+		}
+		else{
+			$data->linkImg = '../';
+		}
+        $result->csrfHash = $this->security->get_csrf_hash();
+        $result->content = $this->load->view('list', $data, true);
+        echo json_encode($result);
 	}
 }
