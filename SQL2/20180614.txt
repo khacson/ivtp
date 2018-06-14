@@ -1,0 +1,20 @@
+CREATE TABLE `ivt_markettrend_comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fullname` char(50) DEFAULT NULL,
+  `phone` char(20) DEFAULT NULL,
+  `description` varchar(1000) DEFAULT NULL,
+  `memberid` int(11) DEFAULT NULL,
+  `blogid` int(11) DEFAULT NULL,
+  `accept` tinyint(1) DEFAULT '0',
+  `datecreate` date DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `idx_member` (`memberid`),
+  KEY `idx_post` (`blogid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+---------------------------------------------------
+
+ALTER TABLE `ivt_investment_commets` 
+ADD COLUMN `fullname` CHAR(50) NULL AFTER `id`,
+ADD COLUMN `phone` CHAR(20) NULL AFTER `fullname`,
+ADD COLUMN `accept` TINYINT(1) NULL DEFAULT 0 AFTER `description`;
