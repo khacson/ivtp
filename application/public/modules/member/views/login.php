@@ -32,7 +32,7 @@
 				<div class="container-login-form-btn mtop20">
 					<div class="wrap-login-form-btn">
 						<div class="login-form-bgbtn"></div>
-						<button class="login-form-btn">
+						<button id="clicklogin" class="login-form-btn">
 							Đăng nhập
 						</button>
 					</div>
@@ -64,5 +64,8 @@
 	$(function(){
 		$('#username').val('');
 		$('#password').val('');
+		$('#clicklogin').click(function(){
+			
+		});
 	});
 </script>
