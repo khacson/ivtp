@@ -8,22 +8,18 @@
 				</span>
 
 				<div class="wrap-input100 validate-input m-b-23" >
-					<span class="label-input100"><b>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span>
-					<div class="fleft">
+					<span class="label-input100 mbta20"><b>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span>
+					<div class="ruby">
 						<i class="fa fa-envelope-o" aria-hidden="true"></i>
-					</div>
-					<div>
 						<input class="input100" type="text" id="username" name="username" placeholder="Nhập tài email" value="">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
 
 				<div class="wrap-input100 validate-input">
-					<span class="label-input100"><b>Mật khẩu</b></span>
-					<div class="fleft">
+					<span class="label-input100 mbta20"><b>Mật khẩu</b></span>
+					<div class="ruby">
 						<i class="fa fa-lock" aria-hidden="true"></i>
-					</div>
-					<div >
 						<input class="input100" type="password" id="password" name="password" placeholder="Nhập mật khẩu">
 						<span class="focus-input100" ></span>
 					</div>

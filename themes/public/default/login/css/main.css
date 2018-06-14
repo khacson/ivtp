@@ -125,12 +125,11 @@ iframe {
 [ Input ]*/
 
 .wrap-input100 {
-  width: 100%;
+  width: 100% !important;;
   position: relative;
   border-bottom: 1px solid #764ebe;
   text-align:left;
   margin-top:20px;
-  display: flex;
 }
 
 .label-input100 {
@@ -138,6 +137,8 @@ iframe {
   color: #333333;
   line-height: 1.5;
   padding-left: 7px;
+  width:100% !important;
+  float:left;
 }
 
 .input100 {
@@ -146,13 +147,16 @@ iframe {
   line-height: 1.2;
 
   display: block;
-  width: 100%;
+  width: 100% !important;
   height: 45px;
   background: transparent;
   padding: 0 7px 0 20px;
 }
 
-
+.mtopa50{
+	margin-top:-0px;
+	float:left;
+}
 /*---------------------------------------------*/
 .focus-input100 {
   position: absolute;

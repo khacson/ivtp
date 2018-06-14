@@ -7,75 +7,77 @@
 					Đăng ký thành viên
 				</span>
 				<div class="wrap-input100 validate-input m-b-23" >
-					<span class="label-input100"><b>Họ tên</b></span>
-					<div class="fleft">
+					<span class="label-input100 mbta20"><b>Họ tên</b></span>
+					<div class="ruby">
 						<i class="fa fa-user-o " aria-hidden="true"></i>
-					</div>
-					<div>
 						<input class="input100" type="text" id="fullname" name="fullname" placeholder="Nhập nhập họ tên" value="">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
-				<div class="wrap-input100 validate-input m-b-23" >
-					<span class="label-input100"><b>Giới tính</b></span>
-					<div class="fleft">
-						<i class="fa fa-user-o " aria-hidden="true"></i>
-					</div>
-					<div>
-						<!--<label> Nam
-							<input  type="chekcbox" id="1" name="sex" value="1">
-						</label>-->
+				<div class="wrap-input100 validate-input m-b-23 ">
+					<span class="label-input100 mbta20"><b>Giới tính</b></span>
+					<div class="ruby">
+						<table class="tbsex">
+							<tr>
+								<td><i class="fa fa-user-o " aria-hidden="true"></i></td>
+								<td>
+									<label> Nam
+										 <input type="radio" name="sex" value="sex" value="1">
+									</label>
+								</td>
+								<td>
+									<label> Nữ
+										 <input type="radio" name="sex" value="sex" value="2">
+									</label>
+								</td>
+								<td>
+									<label> Giới tính khác
+										 <input type="radio" name="sex" value="sex" value="3">
+									</label>
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
-				<div class="wrap-input100 validate-input m-b-23" >
-					<span class="label-input100"><b>Ngày sinh</b></span>
-					<div class="fleft">
+				<div class="wrap-input100 validate-input m-b-23 " >
+					<span class="label-input100 mbta20"><b>Ngày sinh</b></span>
+					<div class="ruby">
 						<i class="fa fa-user-o " aria-hidden="true"></i>
-					</div>
-					<div>
 						<input class="input100" type="text" id="birthday" name="birthday" placeholder="dd/mm/yyyy" value="">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
 				<div class="wrap-input100 validate-input m-b-23" >
-					<span class="label-input100"><b>Email</b></span>
-					<div class="fleft">
+					<span class="label-input100 mbta20"><b>Email</b></span>
+					<div class="ruby">
 						<i class="fa fa-envelope-o" aria-hidden="true"></i>
-					</div>
-					<div>
 						<input class="input100" type="text" id="username" name="username" placeholder="Nhập tài email" value="">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
 				<div class="wrap-input100 validate-input m-b-23" >
-					<span class="label-input100"><b>Điện thoại</b></span>
-					<div class="fleft">
+					<span class="label-input100 mbta20"><b>Điện thoại</b></span>
+					<div class="ruby">
 						<i class="fa fa-envelope-o" aria-hidden="true"></i>
-					</div>
-					<div>
 						<input class="input100" type="text" id="phone" name="phone" placeholder="Nhập điện thoại" value="">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
 				
 				<div class="wrap-input100 validate-input">
-					<span class="label-input100"><b>Mật khẩu</b></span>
-					<div class="fleft">
+					<span class="label-input100 mbta20"><b>Mật khẩu</b></span>
+					<div class="ruby">
 						<i class="fa fa-lock" aria-hidden="true"></i>
-					</div>
-					<div >
 						<input class="input100" type="password" id="password" name="password" placeholder="Nhập mật khẩu">
-						<span class="focus-input100" ></span>
+						<span class="focus-input100"></span>
 					</div>
 				</div>
 				<div class="wrap-input100 validate-input">
-					<span class="label-input100"><b>Xác nhận khẩu</b></span>
-					<div class="fleft mlefa90">
-						<i class="fa fa-lock" aria-hidden="true"></i>
-					</div>
-					<div >
-						<input class="input100" type="password" id="cfpassword" name="cfpassword" placeholder="Nhập xác nhận mật khẩu">
-						<span class="focus-input100" ></span>
+					<span class="label-input100 mbta20"><b>Xác nhận mật khẩu</b></span>
+					<div class="ruby">
+						<i class="fa fa-lock " aria-hidden="true"></i>
+						<input class="input100" type="cpassword" id="cpassword" name="password" placeholder="Nhập mật khẩu">
+						<span class="focus-input100"></span>
 					</div>
 				</div>
 				<div class="container-login-form-btn mtop30">
