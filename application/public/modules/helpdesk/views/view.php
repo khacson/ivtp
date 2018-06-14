@@ -74,7 +74,7 @@
                     <div class="offset-top-40 range">
 					<?php foreach ($userList as $item) { ?>
 						<div class="cell-md-6">
-							<a href="<?=base_url()?>/tu-van/dt<?=$item->id?>">
+							<a href="<?=base_url()?>tu-van/dt<?=$item->id?>">
 								<div class="user_info-container">
 									<div class="user_info">
 										<img class="user_img" src="<?=base_url()?>files/user/<?=$item->signature?>">

@@ -63,13 +63,13 @@ use Firebase\JWT\JWT;
 						->find();
 		return $rs;
 	}
-	function get_user_fullname($user_id) {
+	function get_user_info($user_id) {
 		$sql = "SELECT * FROM ivt_users WHERE id = '$user_id'";
 		$rs = $this->model->query($sql)->execute();
 		if (empty($rs)) {
 			echo 'Vui lòng chọn nhân viên để được tư vấn'; die;
 		}
-		return $rs[0]->fullname;
+		return $rs[0];
 	}
 	function update_last_response($chat_code, $last_response) {
 		$array['last_response'] = $last_response;
