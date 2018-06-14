@@ -8,6 +8,12 @@ class InvestmentModel extends CI_Model
 	function __construct(){
 		parent::__construct('');
 	}
+	function getFind($id){
+		$query = $this->model->table('ivt_investment')
+					  ->where('id',$id)
+					  ->find();
+		return $query;
+	}
 	function getService(){
 		$query = $this->model->table('ivt_service')
 					  ->where('isdelete',0)

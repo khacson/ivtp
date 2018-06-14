@@ -2,11 +2,11 @@
         <div class="shell">
           <ul class="list-inline list-inline-12 list-inline-icon p tleft breads">
             <li><a href="<?=base_url();?>trang-chu.html"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;Trang chủ </a></li>
-            <li><a href="<?=base_url();?>gioi-thieu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
-				Xu hướng thị trường</a></li>
+            <li><a href="<?=base_url();?>danh-muc-dau-tu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+				Danh mục đầu tư</a></li>
             </li>
 			<?php if(!empty($catalogFind->catalog_name)){?>
-				<li><a href="<?=base_url();?>gioi-thieu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+				<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>
 					<?=$catalogFind->catalog_name;?></a></li>
 				</li>
 			<?php }?>
@@ -26,7 +26,7 @@
                
                       <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i><a class="text-gray-lighter" href="#"> 0 Bình luận</a></li>
                     </ul>
-                    <div class="offset-top-30"><img class="img-responsive center-block" src="<?=base_url();?>files/markettrend/<?=$finds->image;?>" width="960" height="550" alt=""></div>
+                    <div class="offset-top-30"><img class="img-responsive center-block" src="<?=base_url();?>files/investment/<?=$finds->image;?>" width="960" height="550" alt=""></div>
                     <div class="offset-top-30">
 						<?=$finds->description_long;?>
                     </div>
@@ -118,7 +118,7 @@
                           <!-- List Marked-->
                           <ul class="list list-marked list-marked-icon">
 								<?php foreach($catalogs as $item){?>
-								<li><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
+								<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
 								<?php }?>
                           </ul>
                         </div>
@@ -133,9 +133,9 @@
                       <div class="offset-top-20">
                         <!-- Unit-->
                         <div class="unit unit-horizontal">
-                          <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/markettrend/thumb/<?=$item->thumb;?>" width="100" height="100" alt=""></div>
+                          <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="100" height="100" alt=""></div>
                           <div class="unit-body">
-                            <a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a>
+                            <a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a>
                             <div class="offset-top-10">
                               <!-- List Inline-->
                               <ul class="list-inline list-inline-dashed list-inline-12 text-gray text-italic p">

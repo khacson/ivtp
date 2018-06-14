@@ -42,7 +42,7 @@
                           <!-- List Marked-->
                           <ul class="list list-marked list-marked-icon">
 								<?php foreach($catalogs as $item){?>
-								<li><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
+								<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
 								<?php }?>
                           </ul>
                         </div>
@@ -56,9 +56,9 @@
                       <div class="offset-top-20">
                         <!-- Unit-->
                         <div class="unit unit-horizontal">
-                          <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/markettrend/thumb/<?=$item->thumb;?>" width="100" height="100" alt=""></div>
+                          <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="100" height="100" alt=""></div>
                           <div class="unit-body">
-                            <a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a>
+                            <a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a>
                             <div class="offset-top-10">
                               <!-- List Inline-->
                               <ul class="list-inline list-inline-dashed list-inline-12 text-gray text-italic p">
@@ -90,7 +90,7 @@
     </div>
 </div> 
 <script>
-	var controller = '<?=base_url();?>markettrend/';
+	var controller = '<?=base_url();?>investment/';
     var csrfHash = '';
     var cpage = 0;
     var search;

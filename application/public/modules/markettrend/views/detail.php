@@ -2,11 +2,11 @@
         <div class="shell">
           <ul class="list-inline list-inline-12 list-inline-icon p tleft breads">
             <li><a href="<?=base_url();?>trang-chu.html"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;Trang chủ </a></li>
-            <li><a href="<?=base_url();?>gioi-thieu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+            <li><a href="<?=base_url();?>danh-muc-dau-tu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
 				Xu hướng thị trường</a></li>
             </li>
 			<?php if(!empty($catalogFind->catalog_name)){?>
-				<li><a href="<?=base_url();?>gioi-thieu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+				<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>
 					<?=$catalogFind->catalog_name;?></a></li>
 				</li>
 			<?php }?>

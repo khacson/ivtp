@@ -5,14 +5,14 @@
 	  <div class="offset-top-30">
 		<!-- Unit-->
 		<div class="unit unit-horizontal">
-		  <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/markettrend/thumb/<?=$item->thumb;?>" width="300" height="200" alt=""></div>
+		  <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="300" height="200" alt=""></div>
 		  <div class="unit-body">
-			<a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a>
+			<a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a>
 			<div class="offset-top-10">
 			   <?=$item->description_sort;?>
 			  <!-- List Inline-->
 			  <ul class="list-inline list-inline-dashed list-inline-12 text-gray text-italic p">
-				<li><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Xem chi tiết</a></li>
+				<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Xem chi tiết</a></li>
 			  </ul>
 			</div>
 		  </div>
