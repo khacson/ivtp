@@ -39,7 +39,6 @@
 <link rel="stylesheet" href="<?=url_tmpl();?>toast/toastr.min.css">
 <script src="<?=url_tmpl();?>toast/toastr.min.js"></script>
 <script src="<?=url_tmpl();?>toast/notifications.js"></script>
-
 <script>
 $(function(){ 
 	$('#send').click(function(){
@@ -63,14 +62,14 @@ $(function(){
 			 $('#description').focus(); return false;
 		 }
 		 $.ajax({
-			url : '<?=base_url()?>markettrend/save_comment',
+			url : '<?=base_url()?>investment/save_comment',
 			type: 'POST',
 			async: false,
 			data:{fullname:fullname,phone:phone,description:description,parid:parid,level:level,blogid:blogid},  
 			success:function(datas){
 				success('Cảm ơn bạn đã đóng góp ý kiến. Chúng tôi sẽ phản hồi bạn trong vòng 24 giờ.');
 				$('#fullname').val('');  
-				$('#phone').val('');  
+				$('#phone').val(''); 
 				$('#description').val('');
 				$('input[name=parid]').val('');
 				$('input[name=level]').val('');

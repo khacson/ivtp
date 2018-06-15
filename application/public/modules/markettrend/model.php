@@ -93,6 +93,6 @@ class MarkettrendModel extends CI_Model
 	}
 	function updateHasChild($id) {
 		$array['has_child'] = 1;
-		$this->model->table('ivt_markettrend_comment')->save($id,$array);	
+		$this->model->table('ivt_markettrend_comment')->where('id', $id)->update($array);	
 	}
 }

@@ -27,7 +27,7 @@ class Increasecatalog extends CI_Controller {
 			$key = substr($arr_id[$count-1],0,2);
 			$id = substr($arr_id[$count-1],2);
 			if($key == 'dt' && is_numeric($id)){
-				$this->detail($id);
+				$this->_detail($id);
 			}
 			else{
 				$this->_view($uri);
@@ -41,10 +41,17 @@ class Increasecatalog extends CI_Controller {
 		
 		$updateInfo = $this->model->getUpdateInfo();
 		$data->titles = $this->model->getTitles(1);
-        $data->datecreate = date('d/m/Y H:i:s', strtotime($updateInfo->datecreate));
+        $data->info = $updateInfo;
 		$data->datas = $this->model->getList();
 		$data->inc_des_avg = $this->model->get_inc_des_avg();
 		
+		$id = -1;
+		$array = array('postId'=>$id);
+		$data->commentForm = $this->load->view('comment_form',$array,true);
+		
+		$array['commentList'] = $this->getCommentList($id);
+		$data->commentList = $this->load->view('comment_list',$array,true);
+		$data->commentCount = count($array['commentList']);
         $content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);
 		$this->site->write('title',$finds->meta_title,true);
@@ -52,7 +59,7 @@ class Increasecatalog extends CI_Controller {
 		$this->site->write('description',$finds->mete_description,true);
         $this->site->render();
 	}
-	function detail($mcp_id){
+	function _detail($mcp_id){
 		$data = new stdClass();
 		/*$finds = $this->model->getFindNews($mcp_id);
 		if(!empty($finds->id)){
@@ -63,15 +70,50 @@ class Increasecatalog extends CI_Controller {
 		}
 		$data->finds = $finds;*/
 		
+		$updateInfo = $this->model->getUpdateInfo();
 		$data->mcp = $this->model->getMcp($mcp_id);
         $data->titleYear = $this->model->getTitles(2);
         $data->titleQuater = $this->model->getTitles(3);
 		$data->dataYear = $this->model->getDataYear($mcp_id);
 		$data->dataQuater = $this->model->getDataQuater($mcp_id);
 		$data->image = $this->model->getImage($mcp_id);
+		$data->info = $updateInfo;
+		$id = -1;
+		$array = array('postId'=>$id);
+		$data->commentForm = $this->load->view('comment_form',$array,true);
 		
+		$array['commentList'] = $this->getCommentList($id);
+		$data->commentList = $this->load->view('comment_list',$array,true);
+		$data->commentCount = count($array['commentList']);
 		$content = $this->load->view('detail',$data,true);
         $this->site->write('content',$content,true);
         $this->site->render();
+	}
+	function getCommentList($blogid) {
+		//get level 0
+		$sql = "SELECT * FROM ivt_investment_commets 
+				WHERE blogid = $blogid AND parent_id = 0 AND accept = 1
+				ORDER BY id DESC";
+		$rs = $this->model->query($sql)->execute();
+		$arr = array();
+		foreach ($rs as $item) {
+			$arr[] = $item;
+			if ($item->has_child == 1) {
+				$this->getCommentChild($arr, $item->id);
+			}
+		}
+		return $arr;	
+	}
+	function getCommentChild(&$arr, $parent_id) {
+		$sql = "SELECT * FROM ivt_investment_commets 
+				WHERE parent_id = $parent_id AND accept = 1
+				ORDER BY id DESC";
+		$rs = $this->model->query($sql)->execute();
+		foreach ($rs as $item) {
+			$arr[] = $item;
+			if ($item->has_child == 1) {
+				$this->getCommentChild($arr, $item->id);
+			}
+		}
 	}
 }

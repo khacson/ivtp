@@ -1,3 +1,13 @@
+<section class="section-10 bg-selago">
+<div class="shell">
+  <ul class="list-inline list-inline-12 list-inline-icon p tleft breads">
+	<li><a href="<?=base_url();?>trang-chu.html"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;Trang chủ </a></li>
+	<li><i class="fa fa-angle-right" aria-hidden="true"></i> <a href="<?=base_url();?>tu-van.html">Chat với nhân viên</a></li>
+	</li>
+	<input id="uri" type="hidden" name="uri" value="" />
+  </ul>
+</div>
+</section> 
 <section class="text-left section-40 section-md-60">
           <div class="inset-lg-left-45 inset-lg-right-45 inset-xl-left-130 inset-xl-right-85">
             <div class="shell-wide shell-wide-custom">

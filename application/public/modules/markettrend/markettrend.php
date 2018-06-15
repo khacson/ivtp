@@ -77,7 +77,7 @@ class Markettrend extends CI_Controller {
 		
 		$array['commentList'] = $this->getCommentList($id);
 		$data->commentList = $this->load->view('comment_list',$array,true);
-		
+		$data->commentCount = count($array['commentList']);
 		$content = $this->load->view('detail',$data,true);
         $this->site->write('content',$content,true);
         $this->site->render();
@@ -142,11 +142,12 @@ class Markettrend extends CI_Controller {
 		}
 	}
 	function save_comment() {
+		$level = $this->input->post('level');
 		$arr['fullname'] = $this->input->post('fullname');
-		$arr['level'] = intval($this->input->post('level')) + 1;
-		$arr['description'] = $this->input->post('message');
+		$arr['level'] = $level === '' ? 0 : $level + 1;
+		$arr['description'] = $this->input->post('description');
 		$arr['parent_id'] = $this->input->post('parid');
-		$arr['blogid'] = $this->input->post('pid');
+		$arr['blogid'] = $this->input->post('blogid');
 		$arr['phone'] = $this->input->post('phone');
 		$arr['datecreate'] = gmdate('Y-m-d H:i:s', time() + 7*3600);
 		$this->model->table('ivt_markettrend_comment')->insert($arr);
