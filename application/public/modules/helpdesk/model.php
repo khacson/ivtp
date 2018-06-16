@@ -63,17 +63,28 @@ use Firebase\JWT\JWT;
 						->find();
 		return $rs;
 	}
-	function get_user_fullname($user_id) {
+	function get_user_info($user_id) {
 		$sql = "SELECT * FROM ivt_users WHERE id = '$user_id'";
 		$rs = $this->model->query($sql)->execute();
 		if (empty($rs)) {
 			echo 'Vui lòng chọn nhân viên để được tư vấn'; die;
 		}
-		return $rs[0]->fullname;
+		return $rs[0];
 	}
 	function update_last_response($chat_code, $last_response) {
 		$array['last_response'] = $last_response;
 		$array['last_response_utc'] = gmdate('Y-m-d H:i:s', time());
 		$this->model->table('ivt_users_chat')->where('chat_code', $chat_code)->update($array);
+	}
+	function getFindNew($id, $typeid = 0){
+		$query = $this->model->table('ivt_markettrend')
+					  ->where('id <>',$id);
+		if (!empty($typeid)) {
+			$query = $query->where('typeid',$typeid);
+		}
+		$query = $query->order_by('datecreate','desc')
+				 ->limit(10)
+				 ->find_all();
+		return $query;
 	}
 }

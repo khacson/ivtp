@@ -28,12 +28,15 @@ class MarkettrendModel extends CI_Model
 					  ->find();
 		return $query;
 	}
-	function getFindNew($id){
+	function getFindNew($id, $typeid = 0){
 		$query = $this->model->table('ivt_markettrend')
-					  ->where('id <>',$id)
-					  ->order_by('datecreate','desc')
-					  ->limit(10)
-					  ->find_all();
+					  ->where('id <>',$id);
+		if (!empty($typeid)) {
+			$query = $query->where('typeid',$typeid);
+		}
+		$query = $query->order_by('datecreate','desc')
+				 ->limit(10)
+				 ->find_all();
 		return $query;
 	}
 	function getMarkettendCatalog(){
@@ -90,5 +93,9 @@ class MarkettrendModel extends CI_Model
 		";
 		$sql.= ' limit '.$page.','.$numrows; 
 		return $this->model->query($sql)->execute();
+	}
+	function updateHasChild($id) {
+		$array['has_child'] = 1;
+		$this->model->table('ivt_markettrend_comment')->where('id', $id)->update($array);	
 	}
 }

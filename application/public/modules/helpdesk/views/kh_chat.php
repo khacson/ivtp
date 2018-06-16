@@ -31,11 +31,20 @@
 				</div>
 			</div>
 			<div class="chat-header">
-				<span class="fleft">Nhân viên tư vấn: <?=$user_fullname?></span>
+				<span class="fleft">Nhân viên tư vấn: <?=$userInfo->fullname?></span>
 			</div>
             
 			<div class="chat_log">
 				<div class="chat_log_list">
+					<div class="log-item fright">
+						<div class="customer-avatar">
+							<img class="avatar" src="<?=base_url()?>files/user/<?=$userInfo->signature?>" />
+						</div>
+						<div class="log-msg">
+							<div class="msg-content">Xin chào bạn, mình có thể giúp được gì cho bạn ạ?</div>
+						</div>
+					</div>
+					
 					<div class="log-item {{chatLog.type ? 'fright' : 'fleft'}}" ng-repeat="chatLog in chatLogList" ng-init="$last ? move_to_bottom() : null">
 						<div class="customer-avatar" ng-bind-html="chatLog.avatar | unsafe">
 							
@@ -163,7 +172,9 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		console.log("Signed in as:", firebaseUser.uid);	
 		$scope.init();
 	}).catch(function(error) {
-		console.log("Error:", error);	
+		console.log("Error:"+ error);	
+		console.log("token het han");	
+		$scope.getNewToken();
 	});
 	
 	$scope.init = function() {
@@ -276,6 +287,16 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   data : data,
 		   success : function(data) {
 			   
+		   }
+		});
+	}
+	$scope.getNewToken = function() {
+		$.ajax({
+		   url : controller + 'getNewToken',
+		   type : 'POST',
+		   data : {},
+		   success : function(data) {
+				token = data;
 		   }
 		});
 	}

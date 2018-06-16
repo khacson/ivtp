@@ -97,4 +97,8 @@ class InvestmentModel extends CI_Model
 		$sql.= ' limit '.$page.','.$numrows; 
 		return $this->model->query($sql)->execute();
 	}
+	function updateHasChild($id) {
+		$array['has_child'] = 1;
+		$this->model->table('ivt_investment_commets')->where('id', $id)->update($array);	
+	}
 }

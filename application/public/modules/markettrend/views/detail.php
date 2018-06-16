@@ -24,84 +24,16 @@
                       <li><i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
 						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($finds->datecreate));?> </span></li>
                
-                      <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i><a class="text-gray-lighter" href="#"> 0 Bình luận</a></li>
+                      <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i><a class="text-gray-lighter" href="#"> <?=$commentCount?> bình luận</a></li>
                     </ul>
                     <div class="offset-top-30"><img class="img-responsive center-block" src="<?=base_url();?>files/markettrend/<?=$finds->image;?>" width="960" height="550" alt=""></div>
                     <div class="offset-top-30">
 						<?=$finds->description_long;?>
                     </div>
-                    <div class="offset-top-60 offset-md-top-90">
-                      <hr class="divider hr-left-0 bg-bermuda">
-                      <div class="offset-top-15">
-                        <h5>Bình luận</h5>
-                      </div>
-                    </div>
-                    <div class="offset-top-30">
-                      <!-- Unit-->
-                      <div class="unit unit-horizontal unit-spacing-sm">
-                        <div class="unit-left"><img class="img-circle img-responsive center-block" src="<?=url_tmpl();?>images/users/user-ryan-hayes-80x80.jpg" width="80" height="80" alt=""></div>
-                        <div class="unit-body">
-                          <h6><a href="#">Ryan Hayes</a></h6>
-                          <div class="offset-top-10 offset-md-top-15">
-                            <p class="text-italic text-gray-lighter">September 21, 2016 at 5:32pm</p>
-                          </div>
-                          <div class="offset-top-10">
-                            <p>Thanks a lot for such an interesting article! I have recently visited your mall. I must say, it was an unforgettable experience.</p>
-                          </div>
-                          <div class="offset-top-10"><span class="icon icon-sm fa fa-reply text-bermuda text-middle"></span><span class="text-middle text-bermuda inset-left-5"><a class="text-bermuda" href="#">Reply</a></span></div>
-                        </div>
-                      </div>
-                      <div class="offset-top-30 inset-left-35 inset-xs-left-50 inset-lg-left-115" id="comments">
-                        <!-- Unit-->
-                        <div class="unit unit-horizontal unit-spacing-sm">
-                          <div class="unit-left"><img class="img-circle img-responsive center-block" src="<?=url_tmpl();?>images/users/user-diana-hawkins-80x80.jpg" width="80" height="80" alt=""></div>
-                          <div class="unit-body">
-                            <h6><a href="#">Diana Hawkins</a></h6>
-                            <div class="offset-top-10 offset-md-top-15">
-                              <p class="text-italic text-gray-lighter">September 21, 2016 at 5:40pm</p>
-                            </div>
-                            <div class="offset-top-10">
-                              <p>Thank you!</p>
-                            </div>
-                            <div class="offset-top-10"><span class="icon icon-sm fa fa-reply text-bermuda text-middle"></span><span class="text-middle text-bermuda inset-left-5"><a class="text-bermuda" href="#">Reply</a></span></div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="offset-top-60 offset-md-top-90">
-                      <hr class="divider hr-left-0 bg-bermuda">
-                      <div class="offset-top-15">
-                        <h5>Gửi bình luận</h5>
-                      </div>
-                      <div class="offset-top-15">
-                        <!-- RD Mailform-->
-                        <form class="rd-mailform text-left" data-form-output="form-output-global" data-form-type="contact" method="post" action="bat/rd-mailform.php">
-                          <div class="range range-xs-center">
-                            <div class="cell-sm-6">
-                              <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-first-name">Họ tên</label>
-                                <input class="form-control" id="fullname" type="text" name="fullname" >
-                              </div>
-                            </div>
-                            <div class="cell-sm-6">
-                              <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-phone">Điện thoại</label>
-                                <input class="form-control" id="phone" type="text" name="phone" >
-                              </div>
-                            </div>
-                            <div class="cell-sm-12 offset-top-10">
-                              <div class="form-group form-group-outside">
-                                <label class="form-label form-label-outside" for="contact-message">Nội dung</label>
-                                <textarea class="form-control" id="contact-message" name="message" data-constraints="@Required"></textarea>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="text-center text-sm-left offset-top-20">
-                            <button class="btn btn-primary" type="submit">Gửi</button>
-                          </div>
-                        </form>
-                      </div>
-                    </div>
+					
+					<?=$commentForm?>
+					<?=$commentList?>
+                    
                   </div>
                 </div>
                 <div class="cell-sm-10 cell-md-4 offset-top-90 offset-md-top-0">

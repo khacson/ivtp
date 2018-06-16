@@ -41,6 +41,7 @@ class Helpdesk extends CI_Controller {
 		
 	    $data->userList = $this->base_model->getAllHelpDeskUser();
 		
+		$data->listNew = $this->model->getFindNew(0);
         $content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);
 		$this->site->write('title',$finds->meta_title,true);
@@ -59,13 +60,14 @@ class Helpdesk extends CI_Controller {
 			$this->site->write('title_page',$finds->title,true);
 		}
 		$data->finds = $finds;*/
-		$login->id = 1;
+		$login->id = 111;
 		$login->fullname = 'Đặng Thu Huyền';
 		$login->signature = 'photo.jpg';
 		$data->login = $login;
-		$data->user_fullname = $this->model->get_user_fullname($user_id);
+		$data->userInfo = $this->model->get_user_info($user_id);
 		$data->user_id = $user_id;
 		
+		$data->listNew = $this->model->getFindNew(0);
 		$dbinfo = $this->model->get_firebasedb_info($user_id);
 		$dbinfo2 = $this->model->get_firebasedb_info2($dbinfo->name);
 		//echo '<pre>'; print_r($dbinfo);die;
@@ -109,6 +111,17 @@ class Helpdesk extends CI_Controller {
 		$this->model->table('ivt_users_chat_detail')->insert($array);
 		$this->model->update_last_response($array['chat_code'], $array['datecreate']);
 	}
-	
+	function getNewToken() {
+		$login->id = 111;
+		$login->fullname = 'Đặng Thu Huyền';
+		$login->signature = 'photo.jpg';
+		
+		$dbinfo = $this->model->get_firebasedb_info($user_id);
+		$dbinfo2 = $this->model->get_firebasedb_info2($dbinfo->name);
+		//echo '<pre>'; print_r($dbinfo);die;
+		
+		$token = $this->model->create_custom_token($login->id, $dbinfo2->client_email, $dbinfo2->private_key);
+		echo $token;die;
+	}
 
 }

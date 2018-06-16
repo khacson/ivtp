@@ -27,14 +27,14 @@ function warning(text){
 	   positionClass: "toast-top-center",
 	   preventDuplicates: true,
 	   onclick: null,
-	   showDuration: "500",
-	   hideDuration: 5000,
-	   timeOut: 5000,
-	   extendedTimeOut: 5000,
+	   showDuration: 500,
+	   hideDuration: 500,
+	   timeOut: 4000,
+	   extendedTimeOut: 4000,
 	   showEasing: "swing",
 	   hideEasing: "linear",
-	   showMethod: "fadeIn",
-	   hideMethod: "fadeOut"
+	   showMethod: "slideDown",
+	   hideMethod: "slideUp"
 	});
 }
 function success(text){
@@ -47,14 +47,14 @@ function success(text){
 	   positionClass: "toast-top-center",
 	   preventDuplicates: true,
 	   onclick: null,
-	   showDuration: "300",
-	   hideDuration: 1000,
-	   timeOut: 1000,
-	   extendedTimeOut: 1000,
+	   showDuration: 500,
+	   hideDuration: 500,
+	   timeOut: 4000,
+	   extendedTimeOut: 4000,
 	   showEasing: "swing",
 	   hideEasing: "linear",
-	   showMethod: "fadeIn",
-	   hideMethod: "fadeOut"
+	   showMethod: "slideDown",
+	   hideMethod: "slideUp"
 	});
 }
 var ids = '';

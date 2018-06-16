@@ -45,6 +45,9 @@
 		</li>
 	</ul>
 </div>
+<link rel="stylesheet" href="<?=url_tmpl();?>toast/toastr.min.css">
+<script src="<?=url_tmpl();?>toast/toastr.min.js"></script>
+<script src="<?=url_tmpl();?>toast/notifications.js"></script>
 <script>
 var running = 0;
 $('#send_rating').click(function(){
@@ -58,12 +61,9 @@ $('#send_rating').click(function(){
 	var note = $('textarea[name=note]').val().trim();
 	
 	if (star == undefined) {
-		$('.validation').show();
+		warning('Bạn vui lòng đánh giá trước khi gửi');
 		running = 0;
 		return;
-	}
-	else {
-		$('.validation').hide();
 	}
 	
 	$.ajax({
@@ -72,7 +72,7 @@ $('#send_rating').click(function(){
 		data: {star: star, note: note, chat_code: chat_code},
 		success: function(data) {
 			$('#send_rating').val('Gửi lại đánh giá');
-			$('#thank_rating').show();
+			success('Cảm ơn bạn đã đánh giá');
 			running = 0;
 		}
 	})

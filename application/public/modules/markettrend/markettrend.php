@@ -57,7 +57,7 @@ class Markettrend extends CI_Controller {
 		$data = new stdClass();
 		$finds = $this->model->getFind($id);
 		$data->catalogs = $this->model->getMarkettendCatalog();
-		$data->listNew = $this->model->getFindNew($id);
+		$data->listNew = $this->model->getFindNew($id, $finds->typeid);
 		if(!empty($finds->id)){
 			$this->site->write('title',$finds->meta_title,true);
 			$this->site->write('description',$finds->meta_keyword,true);
@@ -72,6 +72,12 @@ class Markettrend extends CI_Controller {
 		
 		$data->finds = $finds;
 		
+		$array = array('postId'=>$id);
+		$data->commentForm = $this->load->view('comment_form',$array,true);
+		
+		$array['commentList'] = $this->getCommentList($id);
+		$data->commentList = $this->load->view('comment_list',$array,true);
+		$data->commentCount = count($array['commentList']);
 		$content = $this->load->view('detail',$data,true);
         $this->site->write('content',$content,true);
         $this->site->render();
@@ -108,4 +114,54 @@ class Markettrend extends CI_Controller {
         $result->content = $this->load->view('list', $data, true);
         echo json_encode($result);
 	}
+	function getCommentList($blogid) {
+		//get level 0
+		$sql = "SELECT * FROM ivt_markettrend_comment 
+				WHERE blogid = $blogid AND parent_id = 0 AND accept = 1
+				ORDER BY id DESC";
+		$rs = $this->model->query($sql)->execute();
+		$arr = array();
+		foreach ($rs as $item) {
+			$arr[] = $item;
+			if ($item->has_child == 1) {
+				$this->getCommentChild($arr, $item->id);
+			}
+		}
+		return $arr;	
+	}
+	function getCommentChild(&$arr, $parent_id) {
+		$sql = "SELECT * FROM ivt_markettrend_comment 
+				WHERE parent_id = $parent_id AND accept = 1
+				ORDER BY id DESC";
+		$rs = $this->model->query($sql)->execute();
+		foreach ($rs as $item) {
+			$arr[] = $item;
+			if ($item->has_child == 1) {
+				$this->getCommentChild($arr, $item->id);
+			}
+		}
+	}
+	function save_comment() {
+		$level = $this->input->post('level');
+		$arr['fullname'] = $this->input->post('fullname');
+		$arr['level'] = $level === '' ? 0 : $level + 1;
+		$arr['description'] = $this->input->post('description');
+		$arr['parent_id'] = $this->input->post('parid');
+		$arr['blogid'] = $this->input->post('blogid');
+		$arr['phone'] = $this->input->post('phone');
+		$arr['datecreate'] = gmdate('Y-m-d H:i:s', time() + 7*3600);
+		$this->model->table('ivt_markettrend_comment')->insert($arr);
+		$this->model->updateHasChild($arr['parent_id']);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
