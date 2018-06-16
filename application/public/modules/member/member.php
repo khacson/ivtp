@@ -52,8 +52,8 @@ class Member extends CI_Controller {
 		$pass = md5($password).md5(md5('ivt').md5($password));
 		$query = $this->model->table('ivt_member')
 					  ->where('email',$email)
-					  ->where('isdelete',1)
-					  ->find();
+					  ->where('isdelete',0)
+					  ->find(); 
 		if(empty($query->id)){
 			echo 0; exit;
 		}
@@ -63,7 +63,7 @@ class Member extends CI_Controller {
 				echo 0; exit;
 			}
 			else{
-				$this->admin->SetSession("pblogin", $query);
+				$this->site->SetSession("pblogin", $query);
 				echo 1; exit;
 			}
 		}

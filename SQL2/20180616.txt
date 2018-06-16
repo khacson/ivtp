@@ -1,0 +1,2 @@
+ALTER TABLE `ivt_member` 
+CHANGE COLUMN `password` `password` CHAR(150) NULL DEFAULT NULL ;
