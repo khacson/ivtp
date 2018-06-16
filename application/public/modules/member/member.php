@@ -68,6 +68,80 @@ class Member extends CI_Controller {
 			}
 		}
 	}
+	function clickregistor(){
+		$fullname = $this->input->post('fullname');
+		$email = $this->input->post('email');
+		$password = $this->input->post('password');
+		$phone = $this->input->post('phone');
+		$sex =  $this->input->post('sex');
+		$birthday =  $this->input->post('birthday');
+		$address =  $this->input->post('address');
+		$working =  $this->input->post('working');
+		$hobby =  $this->input->post('hobby');
+
+		$insert = array();
+		$insert['fullname'] = $fullname;
+		$insert['email'] = $email;
+		$insert['password'] = $password;
+		$insert['sex'] = $sex;
+		$insert['birthday'] = date('Y-m-d',strtotime($birthday));
+		$insert['address'] = $address;
+		$insert['working'] = $working;
+		$insert['hobby'] = $hobby;
+		//Check Email
+		$query = $this->model->table('ivt_member')
+					  ->select('id')
+					  ->where('email',$email)
+					  ->find(); 
+		if(!empty($query->id)){
+			echo 0; exit;
+		}
+		else{
+			$this->sendEmail($email,$fullname);
+			echo 1; exit;
+		}
+	}
+	function sendEmail($email='',$fullname=''){	
+		$ci = get_instance();
+		$ci->load->library('email');
+		$ci->load->library('parser');
+		$config['useragent'] = 'CodeIgniter';
+		$config['protocol'] = "smtp"; //smtp
+		$config['smtp_host'] = "ssl://smtp.googlemail.com";
+		$config['smtp_port'] = "465";
+		$config['smtp_user'] = "swapphonevn@gmail.com"; 
+		$config['smtp_pass'] = "swapphonevn@123";
+		$config['charset'] = "utf-8";
+		$config['mailtype'] = "html";
+		$config['newline'] = "\r\n";
+		$config['crlf'] = "\r\n";
+		$config['mailpath'] = '/usr/sbin/sendmail';
+		$config['priority'] = 3;
+		$config['wordwrap'] = TRUE;
+		$config['dsn'] = TRUE;
+		
+		$datecreate  = '20'.strtotime(gmdate("Y-m-d H:i:s", time() + 7 * 3600));
+		$ci->email->initialize($config);
+		$ci->email->clear(TRUE);
+		$ci->email->from('swapphonevn@gmail.com','Swapphone');
+		$list = array($email);
+		$ci->email->to($list); 
+		$ci->email->subject('Đăng ký tài khoản Investor'); 
+		
+		$url = base_url();
+		$message = '';
+		$message.= '<h2></h2>';
+		$message.= '<p>'.getLanguagePubic('xin-chao').': '.$fullname.'<b></b></p>';
+		$message.= '<p>'.getLanguagePubic('xin-chuc-mung-thanh-vien').'</p>';
+		$message.= '<p>'.getLanguagePubic('click-xac-nhan-mail').'</p>'; 
+		$message.= '<p><a href="'.$url.'register/active?e='.$email.'&t='.$datecreate.'">Click  </a></p><br>';
+		$message.= '<p>'.getLanguagePubic('tran-tong').',</p>';
+		$message.= '<p>Swapphone team</p>';
+		$ci->email->message($message);
+		//$ci->email->set_header('Đăng ký tài khoản', 'Đăng ký thành công');
+		$send = $ci->email->send();	
+		return $send;
+	}
 	function register(){
 		$data = new stdClass();
 		$content = $this->load->view('register',$data,true);
