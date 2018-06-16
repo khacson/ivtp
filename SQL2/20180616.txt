@@ -16,3 +16,10 @@ CREATE TABLE `ivt_sendmail` (
   `isdelete` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-----------------------------------------------------------
+ALTER TABLE `ivt_member` 
+ADD COLUMN `active` TINYINT(1) NULL DEFAULT 0 AFTER `avatar`;
+
+ALTER TABLE `ivt_member` 
+ADD COLUMN `dateactice` DATETIME NULL AFTER `active`;

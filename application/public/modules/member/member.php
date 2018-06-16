@@ -63,6 +63,9 @@ class Member extends CI_Controller {
 				echo 0; exit;
 			}
 			else{
+				if($query->active == 0){
+					echo -1; exit;
+				}
 				$this->site->SetSession("pblogin", $query);
 				echo 1; exit;
 			}
@@ -120,23 +123,31 @@ class Member extends CI_Controller {
 		$config['wordwrap'] = TRUE;
 		$config['dsn'] = TRUE;
 		
-		$datecreate  = '20'.strtotime(gmdate("Y-m-d H:i:s", time() + 7 * 3600));
+		$sendMail = $this->model->table('ivt_sendmail')->find();
+		$title_register = '';
+		if(!empty($sendMail->title_register)){
+			$title_register = $sendMail->title_register;
+		}
+		$send_register = '';
+		if(!empty($sendMail->send_register)){
+			$send_register = $sendMail->send_register;
+		}
+		
+		$datecreate  = strtotime(gmdate("Y-m-d H:i:s", time() + 7 * 3600));
 		$ci->email->initialize($config);
 		$ci->email->clear(TRUE);
 		$ci->email->from('swapphonevn@gmail.com','Swapphone');
 		$list = array($email);
 		$ci->email->to($list); 
-		$ci->email->subject('Đăng ký tài khoản Investor'); 
+		$ci->email->subject($title_register); 
 		
 		$url = base_url();
 		$message = '';
 		$message.= '<h2></h2>';
-		$message.= '<p>'.getLanguagePubic('xin-chao').': '.$fullname.'<b></b></p>';
-		$message.= '<p>'.getLanguagePubic('xin-chuc-mung-thanh-vien').'</p>';
-		$message.= '<p>'.getLanguagePubic('click-xac-nhan-mail').'</p>'; 
-		$message.= '<p><a href="'.$url.'register/active?e='.$email.'&t='.$datecreate.'">Click  </a></p><br>';
-		$message.= '<p>'.getLanguagePubic('tran-tong').',</p>';
-		$message.= '<p>Swapphone team</p>';
+		$message.= '<p>'.$send_register.'<b></b></p>';
+		$message.= '<p><a href="'.$url.'member/active?e='.$email.'&t='.$datecreate.'">Click</a></p><br>';
+		$message.= '<p>Trân trọng,</p>';
+		$message.= '<p>Investor</p>';
 		$ci->email->message($message);
 		//$ci->email->set_header('Đăng ký tài khoản', 'Đăng ký thành công');
 		$send = $ci->email->send();	
@@ -147,6 +158,48 @@ class Member extends CI_Controller {
 		$content = $this->load->view('register',$data,true);
         $this->site->write('content',$content,true);
         $this->site->render();
+	}
+	function active(){
+		$email = '';
+		if(isset($_GET['e'])){
+			$email = $_GET['e'];
+		}
+		$t = '';
+		if(isset($_GET['t'])){
+			$t = $_GET['t'];
+		}
+		$data = new stdClass();
+		$query = $this->model->table('ivt_member')
+					  ->select('id,datecreate')
+					  ->where('email',$email)
+					  ->find(); 
+		if(empty($query->id)){
+			$data->content = "Kích hoạt tài khoản không thành công.";
+			$content = $this->load->view('active',$data,true);
+			$this->site->write('content',$content,true);
+			$this->site->render();
+		}		
+		else{
+			$update = array();
+			$update['active'] = 1;
+			$update['dateactice'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+			$dateactice = strtotime($query->datecreate);
+			if($t - $dateactice > 86400){
+				$data->content = "Link kích hoạt tài khoản hết hạn.";
+				$content = $this->load->view('active',$data,true);
+				$this->site->write('content',$content,true);
+				$this->site->render();
+			}
+			else{
+				$this->model->table('ivt_member')
+						  ->where('id',$query->id)
+						  ->update($update); 
+				$data->content = "Kích hoạt tài khoản thành công.";
+				$content = $this->load->view('active',$data,true);
+				$this->site->write('content',$content,true);
+				$this->site->render();
+			}
+		}
 	}
 	function forgetpassword(){
 		$data = new stdClass();

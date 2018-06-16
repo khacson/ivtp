@@ -88,8 +88,11 @@
 						success("Đăng nhập thành công.");
 						window.location.href = '<?=base_url();?>trang-chu.html';
 					}
+					else if(datas == -1){
+						warning("Tài khoản chưa kích hoạt."); return false;
+					}
 					else{
-						error("Đăng nhập không thành công");
+						error("Đăng nhập không thành công."); return false;
 					}
 				}
 			});

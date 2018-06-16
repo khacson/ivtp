@@ -60,7 +60,8 @@ class Sendmail extends CI_Controller {
         $finds = $this->model->finds();
 		$id = $finds->id;
         $login = $this->login;
-		$array['title'] = $this->input->post('title');
+		$array['title_register'] = $this->input->post('title_register');
+		$array['title_forgot'] = $this->input->post('title_forgot');
 		$array['send_register'] = $this->input->post('send_register');
 		$array['send_forgot'] = $this->input->post('send_forgot');
 		
