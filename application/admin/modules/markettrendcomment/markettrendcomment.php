@@ -93,19 +93,8 @@ class Markettrendcomment extends CI_Controller {
             echo json_encode($result);
             exit;
         }
-        $login = $this->login;
-		$finds = $this->model->table('ivt_markettrend')
-					  ->select('image,thumb')
-					  ->where('id',$id)
-					  ->find();
-					  
-		if(file_exists('files/markettrend/'.$finds->image) && !empty($finds->image)){
-			unlink('files/markettrend/'.$finds->image);
-		}
-		if(file_exists('files/markettrend/thumb/'.$finds->thumb) && !empty($finds->thumb)){
-			unlink('files/markettrend/thumb/'.$finds->thumb);	
-		}
-		$this->model->table('ivt_markettrend')->where("id in ($id)")->delete();	
+
+		$this->model->table('ivt_markettrend_comment')->where("id in ($id)")->delete();	
 		
         $result['status'] = 1;
         $result['csrfHash'] = $token;
@@ -117,5 +106,37 @@ class Markettrendcomment extends CI_Controller {
 		$value = $this->input->post('value');
 		$array['isshow'] = $value * -1 + 1;
 		$this->model->table('ivt_markettrend')->save($id,$array);	
+	}
+	function edit() {
+		$token =  $this->security->get_csrf_hash();
+		$permission = $this->base_model->getPermission($this->login, $this->route);
+		if (!isset($permission['edit'])){
+			$result['status'] = 0;
+			$result['csrfHash'] = $token;
+			echo json_encode($result); exit;	
+		}
+		$search = json_decode($this->input->post('search'),true);
+		$id = $this->input->post('id');
+		$blogid = $this->input->post('blogid');
+		$level = $this->input->post('level');
+		
+		$login = $this->login;
+		if (!empty(trim($search['reply_msg'])) && $search['accept'] == 1) {
+			$reply_id = $this->model->saveComment($search, $id, $blogid, $level, $login);
+			$this->model->updateHasChild($id);
+			$array['reply_id'] = $reply_id;
+		}
+		
+		$array['dateupdate']  = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+		$array['userupdate'] = $login->username;
+		$array['accept'] = $search['accept'];
+		
+		$rs = $this->model->table('ivt_markettrend_comment')
+					->where('id', $id)
+					->update($array);
+		
+		$result['status'] =$rs;
+		$result['csrfHash'] = $token;
+		echo json_encode($result);
 	}
 }
