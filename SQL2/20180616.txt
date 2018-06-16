@@ -5,8 +5,9 @@ INSERT INTO `ivt_menus` (`name`, `name_en`, `route`, `parent`, `params`, `orderi
 
 CREATE TABLE `ivt_sendmail` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(300) DEFAULT NULL,
+  `title_register` varchar(300) DEFAULT NULL,
   `send_register` text,
+  `title_forgot` varchar(300) DEFAULT NULL,
   `send_forgot` text,
   `datecreate` datetime DEFAULT NULL,
   `usercreate` char(70) DEFAULT NULL,
@@ -15,4 +16,3 @@ CREATE TABLE `ivt_sendmail` (
   `isdelete` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
