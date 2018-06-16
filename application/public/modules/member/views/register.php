@@ -51,7 +51,7 @@
 					<span class="label-input100 mbta20"><b>Email</b></span>
 					<div class="ruby">
 						<i class="fa fa-envelope-o" aria-hidden="true"></i>
-						<input class="input100" type="text" id="username" name="username" placeholder="Nhập tài email" value="">
+						<input class="input100" type="text" id="email" name="email" placeholder="Nhập tài email" value="">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
@@ -97,11 +97,46 @@
 		</div>
 	</div>
 </div>
+
+  <link rel="stylesheet" href="<?=url_tmpl();?>toast/toastr.min.css">
+  <script src="<?=url_tmpl();?>toast/toastr.min.js"></script>
+  <script src="<?=url_tmpl();?>toast/notifications.js"></script>
 <Script>
 	$(function(){
-		$('#username').val('');
-		$('#password').val('');
 		$('#fullname').val('');
+		$('#birthday').val('');
+		$('#email').val('');
+		$('#phone').val('');
+		$('#password').val('');
 		$('#cfpassword').val('');
+		$('#send').click(function(){
+			var fullname = $('#fullname').val();  
+			var phone = $('#phone').val(); 
+			if(fullname == ''){
+				 warning('Họ tên không được trống.');
+				 $('#fullname').focus(); return false;
+			 }
+			 if(phone == ''){
+				 warning('Điện thoại không được trống.');
+				 $('#phone').focus(); return false;
+			 }
+			
+			 var email = $('#email').val();
+			 var address = $('#address').val();
+			 var description = $('#description').val();
+			 if(description == ''){
+				 warning('Liên hệ không được trống.');
+				 $('#description').focus(); return false;
+			 }
+			$.ajax({
+					url : '<?=base_url();?>contactus/' + 'save',
+					type: 'POST',
+					async: false,
+					data:{fullname:fullname,phone:phone,email:email,address:address,description:description},  
+					success:function(datas){
+						success('Cảm ơn bạn đã liên hệ với công ty chúng tôi. Chúng tôi sẽ phản hồi bạn trong thời gian sớm nhất');
+					}
+			});
+		});
 	});
 </script>

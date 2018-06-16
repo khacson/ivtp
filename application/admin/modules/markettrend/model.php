@@ -16,6 +16,9 @@
 		if (!empty($search['title'])) {
 			$sql .= " AND title LIKE '%".$search['title']."%' ";
 		}
+		if (!empty($search['typeid'])) {
+			$sql .= " AND typeid LIKE '%".$search['typeid']."%' ";
+		}
 		return $sql;
 	}
 	function getList($search,$page,$numrows){
