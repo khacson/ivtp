@@ -2,3 +2,17 @@ ALTER TABLE `ivt_member`
 CHANGE COLUMN `password` `password` CHAR(150) NULL DEFAULT NULL ;
 
 INSERT INTO `ivt_menus` (`name`, `name_en`, `route`, `parent`, `params`, `ordering`) VALUES ('Gửi mail', 'Send Mail', 'sendmail', '71', 'view,add,edit,delete', '3');
+
+CREATE TABLE `ivt_sendmail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(300) DEFAULT NULL,
+  `send_register` text,
+  `send_forgot` text,
+  `datecreate` datetime DEFAULT NULL,
+  `usercreate` char(70) DEFAULT NULL,
+  `dateupdate` datetime DEFAULT NULL,
+  `userupdate` char(70) DEFAULT NULL,
+  `isdelete` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
