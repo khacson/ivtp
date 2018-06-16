@@ -8,10 +8,10 @@
 				</span>
 
 				<div class="wrap-input100 validate-input m-b-23" >
-					<span class="label-input100 mbta20"><b>Email&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></span>
+					<span class="label-input100 mbta20"><b>Email</b></span>
 					<div class="ruby">
 						<i class="fa fa-envelope-o" aria-hidden="true"></i>
-						<input class="input100" type="text" id="username" name="username" placeholder="Nhập tài email" value="">
+						<input class="input100" type="text" id="email" name="email" placeholder="Nhập tài email" value="">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
@@ -60,12 +60,39 @@
 		</div>
 	</div>
 </div>
+  <link rel="stylesheet" href="<?=url_tmpl();?>toast/toastr.min.css">
+  <script src="<?=url_tmpl();?>toast/toastr.min.js"></script>
+  <script src="<?=url_tmpl();?>toast/notifications.js"></script>
 <Script>
 	$(function(){
-		$('#username').val('');
+		$('#email').val('');
 		$('#password').val('');
 		$('#clicklogin').click(function(){
-			
+			var email = $('#email').val();  
+			var password = $('#password').val(); 
+			if(email == ''){
+				warning('Email không được trống');
+				$('#email').focus(); return false;
+			}
+			if(password == ''){
+				warning('Mật khẩu không được trống.');
+				$('#password').focus(); return false;
+			}
+			$.ajax({
+				url : '<?=base_url();?>member/' + 'clicklogin',
+				type: 'POST',
+				async: false,
+				data:{email:email, password:password},  
+				success:function(datas){
+					if(datas == 1){
+						success("Đăng nhập thành công.");
+						window.location.href = '<?=base_url();?>trang-chu.html';
+					}
+					else{
+						error("Đăng nhập không thành công");
+					}
+				}
+			});
 		});
 	});
 </script>
