@@ -41,6 +41,7 @@ class Helpdesk extends CI_Controller {
 		
 	    $data->userList = $this->base_model->getAllHelpDeskUser();
 		
+		$data->listNew = $this->model->getFindNew(0);
         $content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);
 		$this->site->write('title',$finds->meta_title,true);
@@ -66,6 +67,7 @@ class Helpdesk extends CI_Controller {
 		$data->userInfo = $this->model->get_user_info($user_id);
 		$data->user_id = $user_id;
 		
+		$data->listNew = $this->model->getFindNew(0);
 		$dbinfo = $this->model->get_firebasedb_info($user_id);
 		$dbinfo2 = $this->model->get_firebasedb_info2($dbinfo->name);
 		//echo '<pre>'; print_r($dbinfo);die;

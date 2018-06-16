@@ -76,4 +76,15 @@ use Firebase\JWT\JWT;
 		$array['last_response_utc'] = gmdate('Y-m-d H:i:s', time());
 		$this->model->table('ivt_users_chat')->where('chat_code', $chat_code)->update($array);
 	}
+	function getFindNew($id, $typeid = 0){
+		$query = $this->model->table('ivt_markettrend')
+					  ->where('id <>',$id);
+		if (!empty($typeid)) {
+			$query = $query->where('typeid',$typeid);
+		}
+		$query = $query->order_by('datecreate','desc')
+				 ->limit(10)
+				 ->find_all();
+		return $query;
+	}
 }

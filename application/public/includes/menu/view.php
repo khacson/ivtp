@@ -35,8 +35,8 @@
                 </div>
                 <div class="right-side">
                   <ul class="list-inline list-inline-2 list-primary">
-                    <li><a class="text-gray-lighter" href="<?=base_url();?>dang-nhap.html"><i class="icon icon-xs icon-circle fa fa-facebook text-gray-lighter" href="dangnhap.html"></i> Đăng nhập<a></li>
-                    <li><a class="text-gray-lighter" href="<?=base_url();?>dang-ky.html"><i class="icon icon-xs icon-circle fa fa-twitter text-gray-lighter" href="dangky.html"></i> Đăng ký</a></li>
+                    <li><a class="text-gray-lighter" href="<?=base_url();?>dang-nhap.html"><i class="icon icon-xs icon-circle fa fa-user text-gray-lighter" href="dangnhap.html"></i> Đăng nhập<a></li>
+                    <li><a class="text-gray-lighter" href="<?=base_url();?>dang-ky.html"><i class="icon icon-xs icon-circle fa fa-edit text-gray-lighter" href="dangky.html"></i> Đăng ký</a></li>
                   </ul>
                 </div>
               </div>
@@ -48,7 +48,7 @@
                   <!-- RD Navbar Toggle-->
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                   <!-- RD Navbar Brand-->
-                  <div class="rd-navbar-brand"><a class="brand-name" href="<?=base_url();?>trang-chu.html"><img class="img-responsive center-block" src="<?=base_url();?>files/logo/<?=$finds->logo;?>"  height="50" style="margin-top:-5px;" alt=""></a></div>
+                  <div class="rd-navbar-brand"><a class="brand-name" href="<?=base_url();?>trang-chu.html"><img class="center-block" src="<?=base_url();?>files/logo/<?=$finds->logo;?>"  height="60" style="margin-top:-5px;" alt=""></a></div>
                   <!-- RD Navbar Toggle-->
                   <button class="rd-navbar-toggle-search-fixed veil-md reveal-tablet" data-rd-navbar-toggle=".rd-navbar-search-wrap-fixed"></button>
                   <!-- RD Navbar Toggle-->

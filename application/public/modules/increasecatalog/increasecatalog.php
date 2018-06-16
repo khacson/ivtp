@@ -44,6 +44,7 @@ class Increasecatalog extends CI_Controller {
         $data->info = $updateInfo;
 		$data->datas = $this->model->getList();
 		$data->inc_des_avg = $this->model->get_inc_des_avg();
+		$data->listNew = $this->model->getFindNew(0);
 		
 		$id = -1;
 		$array = array('postId'=>$id);
@@ -78,6 +79,7 @@ class Increasecatalog extends CI_Controller {
 		$data->dataQuater = $this->model->getDataQuater($mcp_id);
 		$data->image = $this->model->getImage($mcp_id);
 		$data->info = $updateInfo;
+		$data->listNew = $this->model->getFindNew(0);
 		$id = -1;
 		$array = array('postId'=>$id);
 		$data->commentForm = $this->load->view('comment_form',$array,true);
