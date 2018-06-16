@@ -21,18 +21,18 @@
 							<tr>
 								
 								<td>
-									<label> Nam
-										 <input type="radio" name="sex" value="1">
+									<label>
+										 <input type="radio" name="sex" value="1">  Nam
 									</label>
 								</td>
 								<td>
-									<label> Nữ
-										 <input type="radio" name="sex" value="2">
+									<label>
+										 <input type="radio" name="sex" value="2">  Nữ
 									</label>
 								</td>
 								<td>
-									<label> Giới tính khác
-										 <input type="radio" name="sex" value="3">
+									<label>
+										 <input type="radio" name="sex" value="3">  Giới tính khác
 									</label>
 								</td>
 							</tr>
@@ -51,7 +51,7 @@
 					<span class="label-input100 mbta20"><b>Email <span style="font-weight:300;">(<span class="red">*</span>)</b></span></span>
 					<div class="ruby">
 						<i class="fa fa-envelope-o" aria-hidden="true"></i>
-						<input class="input100" type="text" id="email" name="email" placeholder="Nhập tài email" value="">
+						<input class="input100" type="text" id="eemail" name="eemail" placeholder="Nhập tài email" value="">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
@@ -76,7 +76,7 @@
 					<span class="label-input100 mbta20"><b>Xác nhận mật khẩu <span style="font-weight:300;">(<span class="red">*</span>)</b></span></span>
 					<div class="ruby">
 						<i class="fa fa-lock " aria-hidden="true"></i>
-						<input class="input100" type="cfassword" id="cfassword" name="password" placeholder="Nhập mật khẩu">
+						<input class="input100" type="password" id="cfassword" name="cfassword" placeholder="Nhập mật khẩu">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
@@ -121,7 +121,13 @@
 		</div>
 	</div>
 </div>
-
+<div class="loading" style="display: none;">
+	<div class="blockUI blockOverlay" style="width: 100%;height: 100%;top:0px;left:0px;position: absolute;background-color: rgb(0,0,0);opacity: 0.1;z-index: 999999999999;">
+	</div>
+	<div class="blockUI blockMsg blockElement" style="width: 30%;position: absolute;top: 0%;left:35%;text-align: center; z-index: 999999999999;">
+		<img src="<?=url_tmpl()?>images/loading2.gif" style="z-index: 999999999999;position: absolute;"/>
+	</div>
+</div> 
   <link rel="stylesheet" href="<?=url_tmpl();?>toast/toastr.min.css">
   <script src="<?=url_tmpl();?>toast/toastr.min.js"></script>
   <script src="<?=url_tmpl();?>toast/notifications.js"></script>
@@ -138,7 +144,7 @@
 			var phone = $('#phone').val(); 
 			var sex = $('input[name="sex"]:checked').val();
 			var birthday = $('#birthday').val(); 
-			var email = $('#email').val(); 
+			var email = $('#eemail').val(); 
 			var password = $('#password').val(); 
 			var cfassword = $('#cfassword').val(); 
 			if(fullname == ''){
@@ -155,7 +161,7 @@
 			}
 			if(email == ''){
 				warning('Email không được trống.');
-				$('#email').focus(); return false;
+				$('#eemail').focus(); return false;
 			}
 			if(password == ''){
 				warning('Mật khẩu không được trống.');
@@ -168,13 +174,23 @@
 			var address = $('#address').val(); 
 			var working = $('#working').val(); 
 			var hobby = $('#hobby').val(); 
+			$('.loading').show();
 			$.ajax({
 				url : '<?=base_url();?>member/' + 'clickregistor',
 				type: 'POST',
 				async: false,
 				data:{fullname:fullname,phone:phone,email:email,sex:sex,password:password,birthday:birthday,address:address,working:working,hobby:hobby},  
 				success:function(datas){
-					
+					$('.loading').hide();
+					if(datas == 1){
+						success("Đăng ký tài khoản thành công. Vui lòng xác nhận email để kích hoạt tài khoản."); return false;
+					}
+					else if(datas == -1){
+						warning('Tài khoản đã tồn tại.'); return false;
+					}
+					else{
+						error("Tài khoản đã tồn tại.");
+					}
 				}
 			});
 		});

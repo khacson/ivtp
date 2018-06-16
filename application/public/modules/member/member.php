@@ -81,16 +81,19 @@ class Member extends CI_Controller {
 		$address =  $this->input->post('address');
 		$working =  $this->input->post('working');
 		$hobby =  $this->input->post('hobby');
-
+		$birthday = str_replace('/','-',$birthday);
+		$pass = md5($password).md5(md5('ivt').md5($password));
 		$insert = array();
 		$insert['fullname'] = $fullname;
+		$insert['phone'] = $phone;
 		$insert['email'] = $email;
-		$insert['password'] = $password;
+		$insert['password'] = $pass;
 		$insert['sex'] = $sex;
 		$insert['birthday'] = date('Y-m-d',strtotime($birthday));
 		$insert['address'] = $address;
 		$insert['working'] = $working;
 		$insert['hobby'] = $hobby;
+		$insert['datecreate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
 		//Check Email
 		$query = $this->model->table('ivt_member')
 					  ->select('id')
@@ -100,7 +103,9 @@ class Member extends CI_Controller {
 			echo 0; exit;
 		}
 		else{
+			$this->model->table('ivt_member')->insert($insert);
 			$this->sendEmail($email,$fullname);
+			
 			echo 1; exit;
 		}
 	}
@@ -113,7 +118,7 @@ class Member extends CI_Controller {
 		$config['smtp_host'] = "ssl://smtp.googlemail.com";
 		$config['smtp_port'] = "465";
 		$config['smtp_user'] = "swapphonevn@gmail.com"; 
-		$config['smtp_pass'] = "swapphonevn@123";
+		$config['smtp_pass'] = "swapphonevn@1111";
 		$config['charset'] = "utf-8";
 		$config['mailtype'] = "html";
 		$config['newline'] = "\r\n";
@@ -132,11 +137,12 @@ class Member extends CI_Controller {
 		if(!empty($sendMail->send_register)){
 			$send_register = $sendMail->send_register;
 		}
+		$tt = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+		$datecreate  = strtotime($tt);
 		
-		$datecreate  = strtotime(gmdate("Y-m-d H:i:s", time() + 7 * 3600));
 		$ci->email->initialize($config);
 		$ci->email->clear(TRUE);
-		$ci->email->from('swapphonevn@gmail.com','Swapphone');
+		$ci->email->from('swapphonevn@gmail.com','Investor');
 		$list = array($email);
 		$ci->email->to($list); 
 		$ci->email->subject($title_register); 
@@ -145,7 +151,7 @@ class Member extends CI_Controller {
 		$message = '';
 		$message.= '<h2></h2>';
 		$message.= '<p>'.$send_register.'<b></b></p>';
-		$message.= '<p><a href="'.$url.'member/active?e='.$email.'&t='.$datecreate.'">Click</a></p><br>';
+		$message.= '<p><a href="'.$url.'member/active?e='.$email.'&t='.$datecreate.'">Kích hoạt tài khoản</a></p><br>';
 		$message.= '<p>Trân trọng,</p>';
 		$message.= '<p>Investor</p>';
 		$ci->email->message($message);
@@ -184,6 +190,7 @@ class Member extends CI_Controller {
 			$update['active'] = 1;
 			$update['dateactice'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
 			$dateactice = strtotime($query->datecreate);
+			//print_r($query); exit;
 			if($t - $dateactice > 86400){
 				$data->content = "Link kích hoạt tài khoản hết hạn.";
 				$content = $this->load->view('active',$data,true);
