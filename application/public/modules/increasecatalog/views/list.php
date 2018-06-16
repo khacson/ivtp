@@ -10,7 +10,7 @@ foreach ($datas as $item) {
 	if ($item->t3 == 'x') $bg3 = 'bgcolor="#f9e8f9"';
 	if ($item->t4 == 'x') $bg4 = 'bgcolor="#f9e8f9"';
 ?>
-	<tr class="content edit" id="<?=$item->id; ?>" >
+	<tr class="content edit">
 		<td align="center"><?=$i;?></td>
 		
 		<td align="center">

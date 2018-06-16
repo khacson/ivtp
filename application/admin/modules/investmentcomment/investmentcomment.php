@@ -83,35 +83,7 @@ class Investmentcomment extends CI_Controller {
         $result->content = $this->load->view('list', $data, true);
         echo json_encode($result);
     }
-    function deletes() {
-        $token = $this->security->get_csrf_hash();
-        $id = $this->input->post('id');
-        $permission = $this->base_model->getPermission($this->login, $this->route);
-        if (!isset($permission['delete'])) {
-            $result['status'] = 0;
-            $result['csrfHash'] = $token;
-            echo json_encode($result);
-            exit;
-        }
-        $login = $this->login;
-		$finds = $this->model->table('ivt_markettrend')
-					  ->select('image,thumb')
-					  ->where('id',$id)
-					  ->find();
-					  
-		if(file_exists('files/markettrend/'.$finds->image) && !empty($finds->image)){
-			unlink('files/markettrend/'.$finds->image);
-		}
-		if(file_exists('files/markettrend/thumb/'.$finds->thumb) && !empty($finds->thumb)){
-			unlink('files/markettrend/thumb/'.$finds->thumb);	
-		}
-		$this->model->table('ivt_markettrend')->where("id in ($id)")->delete();	
-		
-        $result['status'] = 1;
-        $result['csrfHash'] = $token;
-        echo json_encode($result);
-    }
-	function isshow(){
+    function isshow(){
 		$array = array();
 		$id = $this->input->post('id');
 		$value = $this->input->post('value');
@@ -159,7 +131,7 @@ class Investmentcomment extends CI_Controller {
 		$array['userupdate'] = $login->username;
 		$array['accept'] = $search['accept'];
 		
-		$rs = $this->model->table('ivt_markettrend_comment')
+		$rs = $this->model->table('ivt_investment_commets')
 					->where('id', $id)
 					->update($array);
 		

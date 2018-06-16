@@ -4,9 +4,12 @@
 	table col.c3 { width: 150px; }
 	table col.c4 { width: 120px; }
 	table col.c5 { width: 300px; }
-	table col.c6 { width: 300px; }
+	table col.c6 { width: 230px; }
 	table col.c7 { width:150px; }
-	table col.c8 { width: auto; }
+	table col.c8 { width:80px; }
+	table col.c9 { width: 100px; }
+	table col.c10 { width: 230px; }
+	table col.c11 { width: auto; }
 </style>
 <!-- BEGIN PORTLET-->
 <form method="post" enctype="multipart/form-data">
@@ -48,14 +51,39 @@
                     </div>
                 </div>
             </div>
+			<div class="row mtop10">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="control-label col-md-3">Duyệt</label>
+						<div class="col-md-9" >
+							<select name="accept" id="accept" class="combos" >
+								<option value=""></option>
+								<option value="0">Chưa</option>
+								<option value="1">Rồi</option>
+							</select>
+						</div>
+					</div>
+				</div>
+                <div class="col-md-4">
+                     <div class="form-group">
+                        <label class="control-label col-md-3">Trả lời</label>
+                        <div class="col-md-9">
+                            <textarea rows="1" name="reply_msg" id="reply_msg" class="searchs form-control">
+							</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </form>
  <input type="hidden" name="id" id="id" />
+ <input type="hidden" name="blogid" id="blogid" />
+ <input type="hidden" name="level" id="level" />
 <div class="portlet box blue">
     <div class="portlet-title">
         <div class="caption" style="margin-top:4px;">
-            <i>Có <span class='viewtotal'>0</span> bài viết</i>
+            <i>Có <span class='viewtotal'>0</span> bình luận</i>
         </div>
         <div class="tools">
             <ul class="button-group pull-right" style="margin-top:-3px; margin-bottom:5px;">
@@ -71,6 +99,14 @@
                                     <?= getLanguage('all', 'Refresh') ?>
                                 </button>
                             </li>
+                            <?php if (isset($permission['edit'])) { ?>
+                                <li id="edit">
+                                    <button type="button" class="button">
+                                        <i class="fa fa-save"></i>
+                                        <?= getLanguage('all', 'Edit') ?>
+                                    </button>
+                                </li>
+                            <?php } ?>
                             <?php if (isset($permission['delete'])) { ?>
                                 <li id="delete">
                                     <button type="button" class="button">
@@ -90,7 +126,7 @@
                 <div id="cHeader">
                     <div id="tHeader">    	
                         <table id="tbheader" width="100%" cellspacing="0" border="1" >
-                            <?php for ($i = 1; $i < 9; $i++) { ?>
+                            <?php for ($i = 1; $i < 11; $i++) { ?>
                                 <col class="c<?= $i; ?>">
                             <?php } ?>
                             <tr>
@@ -101,6 +137,9 @@
 								<th id="">Nội dung bình luận</th>
                                 <th id="ord_blogid">Bài viết</th>
                                 <th id="ord_datecreate">Ngày bình luận</th>
+                                <th id="ord_accept">Duyệt</th>
+                                <th id="ord_parent">Bình luận cha</th>
+                                <th id="ord_parent">Trả lời</th>
                                 <th></th>
                             </tr>
                         </table>
@@ -111,7 +150,7 @@
                 <div id="data">
                     <div id="gridView">
                         <table id="tbbody" width="100%" cellspacing="0" border="1">
-                            <?php for ($i = 1; $i < 8; $i++) { ?>
+                            <?php for ($i = 1; $i < 11; $i++) { ?>
                                 <col class="c<?= $i; ?>">
                             <?php } ?>
                             <tbody id="grid-rows"></tbody>
@@ -167,9 +206,9 @@
                  }*/
             }
         });
-        $('#typeid').multipleSelect({
+        $('#accept').multipleSelect({
         	filter: true,
-			placeholder:"Chọn loại",
+			placeholder:"Chọn trạng thái duyệt",
             single: true
         });
         refresh();
@@ -279,25 +318,41 @@
 		});
 	}
     function funcList(obj) {
-        $('.isshow').each(function(e) {
-            $(this).click(function() {
-				$('.loading').show();
-                var id = $(this).attr('id');
-				var value = $(this).attr('value'); 
-                $.ajax({ 
-					url: controller + 'isshow',
-					type: 'POST',
-					async: false,
-					data: {id:id, value:value},
-					success: function(datas) { $('.loading').hide();}
-				 });
-            });
-        });
+        $('.edit').each(function(e){ 
+			$(this).click(function(){ 
+				var id = $(this).attr('id');
+				var fullname = $(this).attr('fullname');
+				var phone = $(this).attr('phone');
+				var accept = $(this).attr('accept');
+				var reply_id = $(this).attr('reply_id');
+				var blogid = $(this).attr('blogid');
+				var level = $(this).attr('level');
+				var reply_msg = $('.reply_msg').eq(e).html().trim();
+				var title = $('.title').eq(e).html().trim();
+				
+				$('#id').val(id);		
+				$('#blogid').val(blogid);		
+				$('#level').val(level);		
+				$('#fullname').val(fullname);
+				$('#phone').val(phone);	
+				$('#reply_msg').val(reply_msg);	
+				$('#title').val(title);	
+				$('#accept').multipleSelect('setSelects', accept.split(','));
+				
+				$('#fullname').attr('disabled', true);
+				$('#phone').attr('disabled', true);	
+				$('#title').attr('disabled', true);
+			})
+		})
     }
     function refresh() {
         $('.loading').show();
         $('.searchs').val('');
         $('#show').html('');
+		$('#blogid').val('');
+        $('#level').val('');
+        $('#id').val('');
+        $('#accept').multipleSelect('uncheckAll');
         document.getElementById("checkAll").checked=false;
         csrfHash = $('#token').val();
         search = getSearch();//alert(cpage);
@@ -320,6 +375,9 @@
     function getSearch() {
         var str = '';
         $('input.searchs').each(function() {
+            str += ',"' + $(this).attr('id') + '":"' + $(this).val().trim() + '"';
+        })
+        $('textarea.searchs').each(function() {
             str += ',"' + $(this).attr('id') + '":"' + $(this).val().trim() + '"';
         })
         $('select.combos').each(function() {

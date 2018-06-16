@@ -22,10 +22,15 @@
 		if (!empty($search['title'])) {
 			$sql .= " AND m.title LIKE '%".$search['description']."%' ";
 		}
+		if (!empty($search['accept'])) {
+			$sql .= " AND mc.accept = '".$search['accept']."' ";
+		}
 		return $sql;
 	}
 	function getList($search,$page,$numrows){
-		$sql = "SELECT mc.*, m.title
+		$sql = "SELECT mc.*, m.title, m.friendlyurl,
+				(SELECT description FROM ivt_investment_commets 
+				WHERE id = mc.reply_id) as reply_msg
 				FROM ivt_investment_commets mc
                 left join ivt_markettrend m on m.id = mc.blogid
                 WHERE 0 = 0";
@@ -80,5 +85,21 @@
 			$obj->$clm = $item->column_default;
 		}
 		return $obj;
+	}
+	function saveComment($seach, $parent_id, $blogid, $level, $login) {
+		$arr['fullname'] = $login->fullname.' - Admin';
+		$arr['description'] = $seach['reply_msg'];
+		$arr['parent_id'] = $parent_id;
+		$arr['blogid'] = $blogid;
+		$arr['level'] = $level + 1;
+		$arr['accept'] = 1;
+		$arr['is_admin'] = 1;
+		$arr['datecreate'] = gmdate('Y-m-d H:i:s', time() + 7*3600);
+		$this->model->table('ivt_investment_commets')->insert($arr);
+		return $this->db->insert_id();
+	}
+	function updateHasChild($id) {
+		$array['has_child'] = 1;
+		$this->model->table('ivt_investment_commets')->where('id', $id)->update($array);	
 	}
 }
