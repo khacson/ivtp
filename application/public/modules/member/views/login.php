@@ -32,7 +32,7 @@
 				<div class="container-login-form-btn mtop20">
 					<div class="wrap-login-form-btn">
 						<div class="login-form-bgbtn"></div>
-						<button id="clicklogin" class="login-form-btn">
+						<button id="clicklogin" type="button" class="login-form-btn">
 							Đăng nhập
 						</button>
 					</div>

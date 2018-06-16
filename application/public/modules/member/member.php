@@ -46,9 +46,30 @@ class Member extends CI_Controller {
         $this->site->write('content',$content,true);
         $this->site->render();
 	}
+	function clicklogin(){
+		$email = $this->input->post('email');
+		$password = $this->input->post('password');
+		$pass = md5($password).md5(md5('ivt').md5($password));
+		$query = $this->model->table('ivt_member')
+					  ->where('email',$email)
+					  ->where('isdelete',1)
+					  ->find();
+		if(empty($query->id)){
+			echo 0; exit;
+		}
+		else{
+			$password = $query->password;
+			if($password != $pass){
+				echo 0; exit;
+			}
+			else{
+				$this->admin->SetSession("pblogin", $query);
+				echo 1; exit;
+			}
+		}
+	}
 	function register(){
 		$data = new stdClass();
-		
 		$content = $this->load->view('register',$data,true);
         $this->site->write('content',$content,true);
         $this->site->render();
