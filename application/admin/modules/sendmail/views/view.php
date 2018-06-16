@@ -40,42 +40,56 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-group">
-                        <label class="control-label col-md-4">Tiêu đề đăng ký thành viên(<span class="red">*</span>)</label>
+                        <label class="control-label col-md-12">Tiêu đề đăng ký thành viên(<span class="red">*</span>)</label>
                     </div>
                 </div>
             </div>
             <div class="row">
 				<div class="col-md-12" style="padding-left:30px !important; padding-right:30px !important;">
                     <div class="form-group">
-						<input type="text" name="about_title" id="about_title" class="searchs form-control" value="<?=$finds->about_title;?>" />
+						<input type="text" name="title_register" id="title_register" class="searchs form-control" value="<?=$finds->title_register;?>" />
 					</div>
 				</div>
 			</div>
             <div class="row mtop10">
                 <div class="col-md-12">
 					<div class="form-group">
-						<label class="control-label col-md-2">Nội dung ngắn</label>
+						<label class="control-label col-md-12">Nội dung đăng ký thành viên</label>
 					</div>
                 </div>
             </div>
-			<div class="row" >
+			<div class="row " >
                 <div class="col-md-12" style="padding-left:30px !important; padding-right:30px !important;">
                     <div class="form-group">
-						 <textarea class="ckeditor form-control" id="description_short" name="description_short"><?=$finds->description_short;?></textarea>
+						 <textarea class="ckeditor form-control" id="send_register" name="send_register"><?=$finds->send_register;?></textarea>
+					</div>
+				</div>
+			</div>
+			 <div class="row mtop10">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Tiêu đề quên mật khẩu</label>
+                    </div>
+                </div>
+            </div>
+			<div class="row ">
+				<div class="col-md-12" style="padding-left:30px !important; padding-right:30px !important;">
+                    <div class="form-group">
+						<input type="text" name="title_forgot" id="title_forgot" class="searchs form-control" value="<?=$finds->title_forgot;?>" />
 					</div>
 				</div>
 			</div>
 			<div class="row mtop10">
                 <div class="col-md-12">
 					<div class="form-group">
-						<label class="control-label col-md-2">Nội dung chi tiết</label>
+						<label class="control-label col-md-12">Nội dung quên mật khẩu</label>
 					</div>
                 </div>
             </div>
 			<div class="row" >
                 <div class="col-md-12" style="padding-left:30px !important; padding-right:30px !important;">
                     <div class="form-group">
-						 <textarea class="ckeditor form-control" id="description_long" name="description_long"><?=$finds->description_long;?></textarea>
+						 <textarea class="ckeditor form-control" id="send_forgot" name="send_forgot"><?=$finds->send_forgot;?></textarea>
 					</div>
 				</div>
 			</div>
@@ -90,59 +104,6 @@
             </div>
         </div>
     </div>
-	<div class="portlet box blue">
-        <div class="portlet-title">
-            <div class="caption" style="margin-top:4px;">
-                <i class="fa fa-reorder"></i>
-                Thẻ meta
-            </div>
-            <div class="tools"></div>
-        </div>
-        <div class="portlet-body">
-			<div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Meta title</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-				<div class="col-md-12" style="padding-left:30px !important; padding-right:30px !important;">
-                    <div class="form-group">
-						<input type="text" name="meta_title" id="meta_title" class="searchs form-control" value="<?=$finds->meta_title;?>" />
-					</div>
-				</div>
-			</div>
-			<div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Meta keyword</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-				<div class="col-md-12" style="padding-left:30px !important; padding-right:30px !important;">
-                    <div class="form-group">
-						<input type="text" name="meta_keyword" id="meta_keyword" class="searchs form-control" value="<?=$finds->meta_keyword;?>" />
-					</div>
-				</div>
-			</div>
-			<div class="row">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Meta description</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-				<div class="col-md-12" style="padding-left:30px !important; padding-right:30px !important;">
-                    <div class="form-group">
-						<input type="text" name="mete_description" id="mete_description" class="searchs form-control" value="<?=$finds->mete_description;?>" />
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>	
 </form>
 <!-- END PORTLET-->
 <div class="loading" style="display: none;">
@@ -163,8 +124,8 @@
         //refresh();
         $('#refresh').click(function() {
             $(".loading").show();
-            CKEDITOR.instances['description_long'].setData("");
-            CKEDITOR.instances['description_short'].setData("");
+            CKEDITOR.instances['send_register'].setData("");
+            CKEDITOR.instances['send_forgot'].setData("");
             refresh();
         });
         $('#search').click(function() {
@@ -180,26 +141,24 @@
         var obj = $.evalJSON(search);
         var token = $('#token').val();
 
-        if (obj.about_title == '') {
-            error("Tiê đề <?= getLanguage('all', 'empty') ?>");
+        if (obj.title_register == '') {
+            error("Tiêu đề không được truống");
             return false;
         }
 		$('.loading').show();
-        var about_title = $('#about_title').val();
-		var meta_title = $('#meta_title').val();
+        var title_register = $('#title_register').val();
+		var title_forgot = $('#title_forgot').val();
 		var meta_keyword = $('#meta_keyword').val();
 		var mete_description = $('#mete_description').val();
-		var description_long = CKEDITOR.instances['description_long'].getData();
-		var description_short = CKEDITOR.instances['description_short'].getData();
+		var send_register = CKEDITOR.instances['send_register'].getData();
+		var send_forgot = CKEDITOR.instances['send_forgot'].getData();
 		//console.log(description_short); return false;
         var data = new FormData();
-        data.append('csrf_stock_name', token);
-        data.append('about_title', about_title);
-		data.append('meta_title', meta_title);
-		data.append('meta_keyword', meta_keyword);
-		data.append('mete_description', mete_description);
-		data.append('description_long', description_long);
-		data.append('description_short', description_short);
+        data.append('title_forgot', title_forgot);
+		data.append('title_register', title_register);
+
+		data.append('send_register', send_register);
+		data.append('send_forgot', send_forgot);
         data.append('id', id);
         $.ajax({
             url: controller + 'save',
