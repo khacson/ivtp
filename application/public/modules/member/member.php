@@ -218,13 +218,13 @@ class Member extends CI_Controller {
 		$message = '';
 		$message.= '<h2></h2>';
 		$message.= '<p>'.$send_forgot.'<b></b></p>';
-		$message.= '<p><a href="'.$url.'member/activeEmail?e='.$email.'&t='.$datecreate.'">Kích hoạt tài khoản</a></p><br>';
+		$message.= '<p><a href="'.$url.'member/activeEmail?e='.$email.'&t='.$datecreate.'">Click vào link để đổi mật khẩu</a></p><br>';
 		$message.= '<p>Trân trọng,</p>';
 		$message.= '<p>Investor</p>';
 		$ci->email->message($message);
 		//$ci->email->set_header('Đăng ký tài khoản', 'Đăng ký thành công');
 		$send = $ci->email->send();	
-		return $send;
+		echo 1;
 	}
 	function register(){
 		$data = new stdClass();
