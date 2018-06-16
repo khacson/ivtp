@@ -1,4 +1,4 @@
-<!--<link rel="stylesheet" href="<?=url_tmpl();?>template.css">-->
+<link rel="stylesheet" href="<?=url_tmpl();?>template.css">
 <section class="section-10 bg-selago">
         <div class="shell">
           <ul class="list-inline list-inline-12 list-inline-icon p tleft breads">
