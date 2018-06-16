@@ -25,7 +25,10 @@ class Member extends CI_Controller {
 		}
     }
 	function _view(){
-		$login = $this->site->getSession('login');
+		$login = $this->site->getSession('pblogin');
+		if(empty($login->id)){
+			redirect(base_url(), 'location');
+		}
 		$finds = $this->model->getInfor();
 		$data = new stdClass();
 		//$data->news = $this->model->getNews();
@@ -70,6 +73,10 @@ class Member extends CI_Controller {
 				echo 1; exit;
 			}
 		}
+	}
+	function logout(){
+		$this->site->DeleteSession("pblogin");
+		redirect(base_url(), 'location');
 	}
 	function clickregistor(){
 		$fullname = $this->input->post('fullname');

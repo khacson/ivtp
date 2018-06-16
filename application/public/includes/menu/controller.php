@@ -13,6 +13,7 @@ class incMenu extends CI_Include {
 		$data->uri = $this->uri->segment(1);
 		$data->markettendCatalogs = $this->model->getMarkettendCatalog();
 		$data->investmentCatalogs = $this->model->getInvestmentCatalog();
+		$data->logins = $this->site->GetSession("pblogin");
 		$data->finds = $this->model->getInfor();
 		$this->load->incView($data);
     }

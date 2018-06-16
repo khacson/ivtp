@@ -89,4 +89,7 @@ $route['dang-ky/(:any)'] = "member/register/$1";
 $route['quen-mat-khau'] = "member/forgetpassword";
 $route['quen-mat-khau/(:any)'] = "member/forgetpassword/$1";
 
+$route['ho-so'] = "member/profile";
+$route['ho-so/(:any)'] = "member/profile/$1";
+
 $route['translate_uri_dashes'] = FALSE;
