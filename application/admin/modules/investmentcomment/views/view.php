@@ -190,11 +190,10 @@
         $('#edit').click(function() {
             var id = $('#id').val();
             if (id == '') {
-                error('Please select a item.');
+                error('Vui lòng chọn bình luận cần sửa');
                 return false;
             }
-            //save('edit', id);			
-            location.href = '<?=base_url()."admin.php/markettrend/edits/"?>'+id;
+            save('edit', id);			
         });
         $('#delete').click(function() {
 			var id = getCheckedId();
@@ -238,6 +237,47 @@
             });
         });
     });
+	function save(func,id){
+		search = getSearch();
+		var obj = $.evalJSON(search); 
+		var token = $('#token').val();
+		var blogid = $('#blogid').val();
+		var level = $('#level').val();
+		
+		if(obj.accept == ''){
+			error("Vui lòng chọn trạng thái duyệt"); 
+			$("#accept").focus();
+			return false;		
+		}
+		
+		$.ajax({
+			url : controller + func,
+			type: 'POST',
+			async: false,
+			data:{search: search, id: id, blogid: blogid, level: level}, 
+			success:function(datas){
+				var obj = $.evalJSON(datas); 
+				$("#token").val(obj.csrfHash);
+				if(obj.status == 0){
+					if(id != ''){
+						error('Cập nhật không thành công'); return false;		
+					}
+					else{
+						error('Cập nhật không thành công'); return false;		
+					}
+				}
+				else if(obj.status == -1){
+					error("Cập nhật không thành công"); return false;		
+				}
+				else{
+					refresh();
+				}
+			},
+			error : function(){
+				
+			}
+		});
+	}
     function funcList(obj) {
         $('.isshow').each(function(e) {
             $(this).click(function() {

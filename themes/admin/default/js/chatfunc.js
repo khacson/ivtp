@@ -1,5 +1,11 @@
 var prev_key_code = '';
 document.execCommand("enableObjectResizing", false, false);
+$(document).mouseup(function(e) {
+    var container = $("#icon-motion-container");
+    if (!container.is(e.target) && container.has(e.target).length === 0) {
+        container.hide();
+    }
+});
 $("#input-msg").keyup(function(e){ 
 	if (e.keyCode == 8 && prev_key_code == 8) {
 		removeBr('#input-msg');
@@ -19,6 +25,9 @@ $('body').on('click', '#icon-motion-container .chaticon', function() {
 })
 $('body').on('click', '#insert-image', function() {
 	$('#input-image')[0].click();
+})
+$('body').on('click', '#insert-file', function() {
+	$('#input-file')[0].click();
 })
 function input_focus() {
 	$('#input-msg').focus();
@@ -47,6 +56,7 @@ function inserticon(e){
 	input_msg.append(img);
 	removeBr('#input-msg');
 	toggleIconChat();
+	placeCaretAtEnd( document.getElementById("input-msg") );
 }
 function removeBr(e) {
 	$(e).find('br').remove(); //console.log(111);
@@ -97,4 +107,21 @@ function getDateTime(key) {
     else {
 		return day+'/'+month+'/'+year+' '+hour+':'+minute;   
 	}
+}
+function placeCaretAtEnd(el) {
+    el.focus();
+    if (typeof window.getSelection != "undefined"
+            && typeof document.createRange != "undefined") {
+        var range = document.createRange();
+        range.selectNodeContents(el);
+        range.collapse(false);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+    } else if (typeof document.body.createTextRange != "undefined") {
+        var textRange = document.body.createTextRange();
+        textRange.moveToElementText(el);
+        textRange.collapse(false);
+        textRange.select();
+    }
 }

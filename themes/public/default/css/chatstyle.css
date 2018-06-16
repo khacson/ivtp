@@ -56,10 +56,10 @@
 	padding-left: 12px;
 }
 .customerlist li.active, .log-msg.customer-active, .log-msg.customer-active .log-time{
-	background-color: #c2a5ff;
+	background-color: #fff;
 }
 .log-msg.customer-active:before{
-	border-right-color: #c2a5ff;
+	border-right-color: #fff;
 }
 .customerlist li:first-child{
 	margin-top: 20px;
@@ -158,8 +158,8 @@
 .new-msg-form{
 	position: absolute;
 	bottom: 0;
-	width: 99%;
-	left: 5px;
+	width: 100%;
+	left: 0;
 }
 .input-msg {
     border: 1px solid #90b9f9;
@@ -199,6 +199,11 @@
     width: 30px;
 	color: #800000;
 }
+#insert-file {
+    color: #008080;
+    font-size: 21px;
+    margin-right: 21px;
+}
 .icon-motion-container {
     background-color: #fff;
     border: 1px solid #ccc;
@@ -217,14 +222,14 @@
     content: "";
     height: 0;
     position: absolute;
-    right: 31px;
+    right: 72px;
     width: 0;
 }
 .img-msg{
 	max-width: 100%;
 }
 .spinner {
-  margin: 200px auto 0;
+  margin: 200px auto 0 !important;
   width: 70px;
   text-align: center;
 }

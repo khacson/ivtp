@@ -19,7 +19,7 @@
 
 </script>
 <style>
-.new-msg-form{
+#input-image, #input-file {
 	display: none;
 }
 #history a {
@@ -68,6 +68,10 @@
 					</div>
 				</div>
 				<form class="new-msg-form">
+					<span title="Upload file" id="insert-file" class="insert fright">
+						<span class="fa fa-file"></span>
+						<input onchange="angular.element(this).scope().uploadFile()" ng-model="file" type="file" id="input-file" value="" accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf" />
+					</span>
 					<span title="Đính kèm hình ảnh" id="insert-image" class="insert fright">
 						<span class="fa fa-camera"></span>
 						<input onchange="angular.element(this).scope().uploadImage()" ng-model="image" type="file" hidden id="input-image" value="" accept="image/*" />
@@ -197,6 +201,8 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	var ref;
 	
     $scope.chatLogList = [];
+	$('.new-msg-form').hide();
+	$('.customers').hide();
 	
 	$scope.authObjMsg = $firebaseAuth();
 	$scope.authObjMsg.$signInWithCustomToken(token).then(function(firebaseUser) {
@@ -213,6 +219,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		//lay danh sach khach hang dang chat voi nhan vien hien tai
 		ref = dbping.child(user_id);
 		$scope.chatCodeList = $firebaseArray(ref);
+		$('.customers').show();
 	}
 
     $scope.show_chat_log = function(chat_code, customername, avatar) {
@@ -221,6 +228,8 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		} else {
 			$('#input-msg').html('');
 		}
+		
+		$('.new-msg-form').show();
 		$scope.showLoading();
 		
 		ref = dblog.child(chat_code);
@@ -263,7 +272,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		var dateTimeLog = getDateTime(false);
 		
 		removeBr('#input-msg');
-		var msg = '<img class="img-msg" src="'+ img_src +'" />';
+		var msg = '<a target="_blank" href="'+img_src+'"><img class="img-msg" src="'+ img_src +'" /></a>';
 		
 		ref = dblog.child(current_chat_code);
 		var avatars = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
@@ -280,7 +289,28 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar);
 		$scope.save_chat_to_db(current_chat_code, username, avatars, msg, dateTimeLog);
     }
-	
+	$scope.sendChatFile = function(file_src, filename) {
+		var input_msg = $('#input-msg');
+		var dateTimeLog = getDateTime(false);
+		
+		removeBr('#input-msg');
+		var msg = '<a target="_blank" href="'+file_src+'"><span class="fa fa-download"></span> '+ filename +'</a>';
+		
+		ref = dblog.child(current_chat_code);
+		var avatars = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
+		$firebaseArray(ref).$add({
+			type : 1,//nhan vien gui tin nhan
+			msg : msg,
+			dateTime : dateTimeLog,
+			user_id : user_id,
+			name: username,
+			avatar: avatars
+		});
+        input_msg.html('');
+		move_to_bottom('.chat_log_list');
+		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar);
+		$scope.save_chat_to_db(current_chat_code, username, avatars, msg, dateTimeLog);
+    }
 	$scope.checkAndSendChat = function(e) {
 		if (e.keyCode == 13) {
 			$scope.sendChat();
@@ -309,7 +339,24 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   }
 		});
 	}
-	
+	$scope.uploadFile = function() {
+		$('.loading-overplay').show();
+		var formData = new FormData();
+		formData.append('my_file', $('#input-file')[0].files[0]);
+
+		$.ajax({
+		   url : controller + '/upload_file',
+		   type : 'POST',
+		   data : formData,
+		   processData: false,  // tell jQuery not to process the data
+		   contentType: false,  // tell jQuery not to set contentType
+		   success : function(data) {
+			   var obj = JSON.parse(data);
+			   $scope.sendChatFile(obj.file_src, obj.filename);
+			   $('.loading-overplay').hide();
+		   }
+		});
+	}
 	$scope.hideAlertNewMessage = function(chat_code, customername, avatar) {
 		dbping.child(user_id).child(chat_code).set({
 			chat_code: chat_code,

@@ -16,8 +16,14 @@
 
 </script>
 <style>
-#input-image {
+#input-image, #input-file {
 	display: none;
+}
+#history a{
+	color: #fff;
+}
+#history a:Hover{
+	text-decoration: underline;
 }
 </style>
 <div ng-app="app">
@@ -32,6 +38,9 @@
 			</div>
 			<div class="chat-header">
 				<span class="fleft">Nhân viên tư vấn: <?=$userInfo->fullname?></span>
+				<span class="fright" id="history" ng-click="get_chat_history()">
+					<a data-toggle="modal" href="#myModal">Xem lịch sử chat</a>
+				</span>
 			</div>
             
 			<div class="chat_log">
@@ -56,6 +65,10 @@
 					</div>
 				</div>
 				<form class="new-msg-form">
+					<span title="Upload file" id="insert-file" class="insert fright">
+						<span class="fa fa-file"></span>
+						<input onchange="angular.element(this).scope().uploadFile()" ng-model="file" type="file" id="input-file" value="" accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf" />
+					</span>
 					<span title="Chèn hình ảnh" id="insert-image" class="insert fright">
 						<span class="fa fa-camera"></span>
 						<input onchange="angular.element(this).scope().uploadImage()" ng-model="image" type="file" id="input-image" value="" accept="image/*" />
@@ -143,6 +156,27 @@
     </div>
 	
 </div>	
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h6 class="modal-title">Lịch sử chat</h6>
+      </div>
+      <div id="modal_content" class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 	
 <script>
     var controller = '<?= $controller; ?>/';
@@ -217,7 +251,30 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		var dateTimeLog = getDateTime(false);
 		
 		removeBr('#input-msg');
-		var msg = '<img class="img-msg" src="'+ img_src +'" />';
+		var msg = '<a target="_blank" href="'+img_src+'"><img class="img-msg" src="'+ img_src +'" /></a>';
+		
+		ref = dblog.child(chat_code);
+		var avatar = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
+		$firebaseArray(ref).$add({
+			type : 0,//khach hang gui tin nhan
+			msg : msg,
+			dateTime : dateTimeLog,
+			user_id : customer_id,
+			name: customername,
+			avatar: avatar
+		});
+        input_msg.html('');
+		move_to_bottom('.chat_log_list');
+		$scope.save_chat_to_db(chat_code, customername, avatar, msg, dateTimeLog);
+    }
+	$scope.sendChatFile = function(file_src, filename) {
+		$scope.add_to_chat_list();
+		
+		var input_msg = $('#input-msg');
+		var dateTimeLog = getDateTime(false);
+		
+		removeBr('#input-msg');
+		var msg = '<a target="_blank" href="'+file_src+'"><span class="fa fa-download"></span> '+ filename +'</a>';
 		
 		ref = dblog.child(chat_code);
 		var avatar = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
@@ -248,6 +305,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
     }
 	
 	$scope.uploadImage = function() {
+		$('.loading-overplay').show();
 		var formData = new FormData();
 		formData.append('image_file', $('#input-image')[0].files[0]);
 
@@ -259,6 +317,25 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   contentType: false,  // tell jQuery not to set contentType
 		   success : function(data) {
 			   $scope.sendChatImage(data);
+			   $('.loading-overplay').hide();
+		   }
+		});
+	}
+	$scope.uploadFile = function() {
+		$('.loading-overplay').show();
+		var formData = new FormData();
+		formData.append('my_file', $('#input-file')[0].files[0]);
+
+		$.ajax({
+		   url : controller + '/upload_file',
+		   type : 'POST',
+		   data : formData,
+		   processData: false,  // tell jQuery not to process the data
+		   contentType: false,  // tell jQuery not to set contentType
+		   success : function(data) {
+			   var obj = JSON.parse(data);
+			   $scope.sendChatFile(obj.file_src, obj.filename);
+			   $('.loading-overplay').hide();
 		   }
 		});
 	}
@@ -297,6 +374,21 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   data : {},
 		   success : function(data) {
 				token = data;
+		   }
+		});
+	}
+	$scope.get_chat_history = function() {
+		var data = {};
+		data['member_id'] = customer_id;
+		data['user_id'] = user_id;
+
+		$.ajax({
+		   url : controller + 'get_chat_history',
+		   type : 'POST',
+		   data : data,
+		   success : function(datas) {
+				var obj = JSON.parse(datas);
+				$('#modal_content').html(obj.content);
 		   }
 		});
 	}

@@ -118,4 +118,53 @@ class Investmentcomment extends CI_Controller {
 		$array['isshow'] = $value * -1 + 1;
 		$this->model->table('ivt_markettrend')->save($id,$array);	
 	}
+	function deletes() {
+        $token = $this->security->get_csrf_hash();
+        $id = $this->input->post('id');
+        $permission = $this->base_model->getPermission($this->login, $this->route);
+        if (!isset($permission['delete'])) {
+            $result['status'] = 0;
+            $result['csrfHash'] = $token;
+            echo json_encode($result);
+            exit;
+        }
+
+		$this->model->table('ivt_investment_commets')->where("id in ($id)")->delete();	
+		
+        $result['status'] = 1;
+        $result['csrfHash'] = $token;
+        echo json_encode($result);
+    }
+	function edit() {
+		$token =  $this->security->get_csrf_hash();
+		$permission = $this->base_model->getPermission($this->login, $this->route);
+		if (!isset($permission['edit'])){
+			$result['status'] = 0;
+			$result['csrfHash'] = $token;
+			echo json_encode($result); exit;	
+		}
+		$search = json_decode($this->input->post('search'),true);
+		$id = $this->input->post('id');
+		$blogid = $this->input->post('blogid');
+		$level = $this->input->post('level');
+		
+		$login = $this->login;
+		if (!empty(trim($search['reply_msg'])) && $search['accept'] == 1) {
+			$reply_id = $this->model->saveComment($search, $id, $blogid, $level, $login);
+			$this->model->updateHasChild($id);
+			$array['reply_id'] = $reply_id;
+		}
+		
+		$array['dateupdate']  = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+		$array['userupdate'] = $login->username;
+		$array['accept'] = $search['accept'];
+		
+		$rs = $this->model->table('ivt_markettrend_comment')
+					->where('id', $id)
+					->update($array);
+		
+		$result['status'] =$rs;
+		$result['csrfHash'] = $token;
+		echo json_encode($result);
+	}
 }

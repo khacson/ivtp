@@ -195,6 +195,12 @@
     font-size: 25px !important;
 	color: #800000;
 }
+#insert-file span {
+    color: #008080;
+    font-size: 21px;
+    margin-right: 21px;
+    margin-top: 6px;
+}
 .icon-motion-container {
     background-color: #fff;
     border: 1px solid #ccc;
@@ -213,7 +219,7 @@
     content: "";
     height: 0;
     position: absolute;
-    right: 27px;
+    right: 70px;
     width: 0;
 }
 .img-msg{

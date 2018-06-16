@@ -87,4 +87,13 @@ use Firebase\JWT\JWT;
 				 ->find_all();
 		return $query;
 	}
+	function getChatHistory($member_id, $user_id) {
+		$sql = "SELECT * FROM ivt_users_chat_detail
+				WHERE chat_code IN (
+					SELECT chat_code FROM ivt_users_chat
+					WHERE user_id = $user_id AND member_id = $member_id
+				)
+				ORDER BY id";
+		return $this->query($sql)->execute();
+	}
 }

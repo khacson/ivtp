@@ -168,7 +168,33 @@ td {
 }
 /*Danh muc tang truong*/
 
-
+/*Modal*/
+.modal-backdrop {
+	z-index: 1000000000;
+	opacity: 0.6;
+}
+.modal {
+	z-index: 1000000001;
+}
+.modal.in .modal-dialog{
+	top:70px
+}
+.modal-header {
+    padding: 10px 15px;
+	background-color: #7036C1;
+}
+.modal-body {
+    max-height: 350px;
+    overflow: auto;
+}
+.modal-header h6{
+	color: #fff;
+}
+.modal-header button{
+	color: #fff;
+	opacity: 1;
+}
+/*Modal*/
 
 /*custom color*/
 
@@ -224,7 +250,6 @@ a {
 .rd-navbar-static .rd-navbar-nav > li.focus > a, .rd-navbar-static .rd-navbar-nav > li > a:hover, .rd-navbar-fullwidth .rd-navbar-nav > li.focus > a, .rd-navbar-fullwidth .rd-navbar-nav > li > a:hover {
     color: #79d5ca;
 }
-
 
 
 /*end custom color*/

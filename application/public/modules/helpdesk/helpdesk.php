@@ -60,7 +60,7 @@ class Helpdesk extends CI_Controller {
 			$this->site->write('title_page',$finds->title,true);
 		}
 		$data->finds = $finds;*/
-		$login->id = 111;
+		$login->id = 1;
 		$login->fullname = 'Đặng Thu Huyền';
 		$login->signature = 'photo.jpg';
 		$data->login = $login;
@@ -91,7 +91,19 @@ class Helpdesk extends CI_Controller {
 		if (isset($_FILES)) { 
 			$filename = date('dmYHis').'_'.$_FILES['image_file']['name'];
 			move_uploaded_file($_FILES['image_file']['tmp_name'], 'upload/chat/'.$filename);
-			echo base_url().'/upload/chat/'.$filename;
+			echo base_url().'upload/chat/'.$filename;
+		}
+	}
+	function upload_file() {
+		if (isset($_FILES)) { 
+			$filename = date('dmYHis').'_'.$_FILES['my_file']['name'];
+			move_uploaded_file($_FILES['my_file']['tmp_name'], 'upload/chat/files/'.$filename);
+			$file_src =  base_url().'upload/chat/files/'.$filename;
+			$arr = array(
+				'file_src' => $file_src,
+				'filename' => $_FILES['my_file']['name'],
+			);
+			echo json_encode($arr);die;
 		}
 	}
 	function save_rating() {
@@ -106,8 +118,7 @@ class Helpdesk extends CI_Controller {
 		$array['name'] = $this->input->post('name');
 		$array['avatar'] = $this->input->post('avatar');
 		$array['msg'] = $this->input->post('msg');
-		$date = $this->input->post('datecreate');
-		$array['datecreate'] = date('Y-m-d H:i:s', strtotime($date));
+		$array['datecreate'] = gmdate('Y-m-d H:i:s', time()  + 7*3600);
 		$this->model->table('ivt_users_chat_detail')->insert($array);
 		$this->model->update_last_response($array['chat_code'], $array['datecreate']);
 	}
@@ -123,5 +134,16 @@ class Helpdesk extends CI_Controller {
 		$token = $this->model->create_custom_token($login->id, $dbinfo2->client_email, $dbinfo2->private_key);
 		echo $token;die;
 	}
-
+	function get_chat_history() {
+		$member_id = $this->input->post('member_id');
+		$user_id = $this->input->post('user_id');
+		
+		$data = new stdClass();
+		$data->chatLog = $this->model->getChatHistory($member_id, $user_id);
+		
+		$result = new stdClass();
+		$result->csrfHash = $this->security->get_csrf_hash();
+        $result->content = $this->load->view('chat_history', $data, true);
+		echo json_encode($result);
+	}
 }
