@@ -24,11 +24,12 @@
 </div>
 <div class="offset-top-30">
 <?php foreach ($commentList as $item) { ?>
+	<?php if ($item->is_admin) {$bg_admin = 'admin_comment';} else {$bg_admin = '';} ?>
 	<?php if (!$item->parent_id) { ?>
 	  <!-- Unit-->
 	  <div class="comment_bg offset-top-20 unit unit-horizontal unit-spacing-sm" id="<?=$item->id?>">
 		<div class="unit-body">
-		  <a href="javascript:;"><?=$item->fullname?></a>
+		  <a href="javascript:;" class="<?=$bg_admin?>"><?=$item->fullname?></a>
 		  <a href="javascript:;" class="comment_id">#<?=$item->id?></a>
 		  <div class="offset-top-5 offset-md-top-5">
 			<p class="comment_date text-italic text-gray-lighter">
@@ -49,7 +50,7 @@
 			<!-- Unit-->
 			<div class="comment_bg unit unit-horizontal unit-spacing-sm" id="<?=$item->id?>">
 			  <div class="unit-body">
-				<a href="javascript:;"><?=$item->fullname?></a>
+				<a href="javascript:;" class="<?=$bg_admin?>"><?=$item->fullname?></a>
 				<a href="javascript:;"class="comment_id">#<?=$item->id?></a>
 				<div class="offset-top-5 offset-md-top-5">
 				  <p class="comment_date text-italic text-gray-lighter">
