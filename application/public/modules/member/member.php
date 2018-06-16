@@ -166,11 +166,123 @@ class Member extends CI_Controller {
 		$send = $ci->email->send();	
 		return $send;
 	}
+	function clickForgetpassword(){
+		$email = $this->input->post('email');
+		$query = $this->model->table('ivt_member')
+					  ->select('*')
+					  ->where('email',$email)
+					  ->find();
+		if(empty($query->id)){
+			echo -1; exit;
+		}
+		$fullname = $query->fullname;
+		
+		$ci = get_instance();
+		$ci->load->library('email');
+		$ci->load->library('parser');
+		$config['useragent'] = 'CodeIgniter';
+		$config['protocol'] = "smtp"; //smtp
+		$config['smtp_host'] = "ssl://smtp.googlemail.com";
+		$config['smtp_port'] = "465";
+		$config['smtp_user'] = "swapphonevn@gmail.com"; 
+		$config['smtp_pass'] = "swapphonevn@1111";
+		$config['charset'] = "utf-8";
+		$config['mailtype'] = "html";
+		$config['newline'] = "\r\n";
+		$config['crlf'] = "\r\n";
+		$config['mailpath'] = '/usr/sbin/sendmail';
+		$config['priority'] = 3;
+		$config['wordwrap'] = TRUE;
+		$config['dsn'] = TRUE;
+		
+		$sendMail = $this->model->table('ivt_sendmail')->find();
+		$title_forgot = '';
+		if(!empty($sendMail->title_forgot)){
+			$title_forgot = $sendMail->title_forgot;
+		}
+		$send_forgot = '';
+		if(!empty($sendMail->send_forgot)){
+			$send_forgot = $sendMail->send_forgot;
+		}
+		$tt = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+		$datecreate  = strtotime($tt);
+		
+		$ci->email->initialize($config);
+		$ci->email->clear(TRUE);
+		$ci->email->from('swapphonevn@gmail.com','Investor');
+		$list = array($email);
+		$ci->email->to($list); 
+		$ci->email->subject($title_forgot); 
+		
+		$url = base_url();
+		$message = '';
+		$message.= '<h2></h2>';
+		$message.= '<p>'.$send_forgot.'<b></b></p>';
+		$message.= '<p><a href="'.$url.'member/activeEmail?e='.$email.'&t='.$datecreate.'">Kích hoạt tài khoản</a></p><br>';
+		$message.= '<p>Trân trọng,</p>';
+		$message.= '<p>Investor</p>';
+		$ci->email->message($message);
+		//$ci->email->set_header('Đăng ký tài khoản', 'Đăng ký thành công');
+		$send = $ci->email->send();	
+		return $send;
+	}
 	function register(){
 		$data = new stdClass();
 		$content = $this->load->view('register',$data,true);
         $this->site->write('content',$content,true);
         $this->site->render();
+	}
+	function activeEmail(){
+		$email = '';
+		if(isset($_GET['e'])){
+			$email = $_GET['e'];
+		}
+		$t = '';
+		if(isset($_GET['t'])){
+			$t = $_GET['t'];
+		}
+		$data = new stdClass();
+		$query = $this->model->table('ivt_member')
+					  ->select('id,datecreate')
+					  ->where('email',$email)
+					  ->find(); 
+		if(empty($query->id)){
+			$data->content = "Xác nhận email không thành công.";
+			$content = $this->load->view('activeNone',$data,true);
+			$this->site->write('content',$content,true);
+			$this->site->render();
+		}		
+		else{
+			$update = array();
+			$update['active'] = 1;
+			$update['dateactice'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+			$dateactice = strtotime($query->datecreate);
+			//print_r($query); exit;
+			if($t - $dateactice > 86400){
+				$data->content = "Link Xác nhận email hết hạn.";
+				$content = $this->load->view('activeNone',$data,true);
+				$this->site->write('content',$content,true);
+				$this->site->render();
+			}
+			else{
+				$data->id = $query->id;
+				$content = $this->load->view('activeEmail',$data,true);
+				$this->site->write('content',$content,true);
+				$this->site->render();
+			}
+		}
+	}
+	function transPassword(){
+		$id =  $this->input->post('id');
+		$password = $this->input->post('password');
+		$pass = md5($password).md5(md5('ivt').md5($password));
+		$update = array();
+		$update['password'] = $pass;
+		$update['dateupdate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+		$this->model->table('ivt_member')
+						  ->where('id',$id)
+						  ->update($update); 
+		echo 1;
 	}
 	function active(){
 		$email = '';
