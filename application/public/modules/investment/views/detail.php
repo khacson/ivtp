@@ -24,7 +24,7 @@
                       <li><i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
 						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($finds->datecreate));?> </span></li>
                
-                      <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i><a class="text-gray-lighter" href="#"> 0 Bình luận</a></li>
+                      <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i><a class="text-gray-lighter" href="#"> <?=$totalComment;?> Bình luận</a></li>
                     </ul>
                     <div class="offset-top-30"><img class="img-responsive center-block" src="<?=base_url();?>files/investment/<?=$finds->image;?>" width="960" height="550" alt=""></div>
                     <div class="offset-top-30">

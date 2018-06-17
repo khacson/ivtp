@@ -97,6 +97,21 @@ class InvestmentModel extends CI_Model
 		$sql.= ' limit '.$page.','.$numrows; 
 		return $this->model->query($sql)->execute();
 	}
+	function getTotalComment($blogid){
+		$sql = "
+			SELECT count(1) total
+			FROM ivt_investment_commets c
+			where c.accept = 1
+			and c.blogid = '$blogid'
+			;
+		";
+		$query = $this->model->query($sql)->execute();
+		$total = 0;
+		if(!empty($query[0]->total)){
+			$total = $query[0]->total;
+		}
+		return $total;
+	}
 	function updateHasChild($id) {
 		$array['has_child'] = 1;
 		$this->model->table('ivt_investment_commets')->where('id', $id)->update($array);	

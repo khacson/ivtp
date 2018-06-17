@@ -7,7 +7,7 @@
 		<div class="unit unit-horizontal">
 		  <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/markettrend/thumb/<?=$item->thumb;?>" width="300" height="200" alt=""></div>
 		  <div class="unit-body">
-			<a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a>
+			<a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><b><?=$item->title;?></b></a>
 			<div class="offset-top-10">
 			   <?=$item->description_sort;?>
 			  <!-- List Inline-->

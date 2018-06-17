@@ -71,7 +71,7 @@ class Markettrend extends CI_Controller {
 		$data->catalogFind =  $this->model->getFindC($typeid);
 		
 		$data->finds = $finds;
-		
+		$data->totalComment = $this->model->getTotalComment($id);
 		$array = array('postId'=>$id);
 		$data->commentForm = $this->load->view('comment_form',$array,true);
 		
