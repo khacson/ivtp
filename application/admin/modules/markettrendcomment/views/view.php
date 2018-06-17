@@ -353,6 +353,7 @@
         $('#level').val('');
         $('#id').val('');
         $('#show').html('');
+        $('#accept').multipleSelect('uncheckAll');
 		$('#fullname').attr('disabled', false);
 		$('#phone').attr('disabled', false);	
 		$('#title').attr('disabled', false);

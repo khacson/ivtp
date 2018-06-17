@@ -22,10 +22,13 @@
 		if (!empty($search['title'])) {
 			$sql .= " AND m.title LIKE '%".$search['title']."%' ";
 		}
+		if (!empty($search['accept'])) {
+			$sql .= " AND mc.accept = '".$search['accept']."' ";
+		}
 		return $sql;
 	}
 	function getList($search,$page,$numrows){
-		$sql = "SELECT mc.*, m.title, m.friendlyurl, m.id as blogid,
+		$sql = "SELECT mc.*, m.title, m.friendlyurl,
 				(SELECT description FROM ivt_markettrend_comment 
 				WHERE id = mc.reply_id) as reply_msg
 				FROM ivt_markettrend_comment mc
