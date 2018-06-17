@@ -27,6 +27,7 @@ class Home extends CI_Controller {
 		$data->supperliers = $this->model->getSupperlier();
 		$data->markettrends = $this->model->getMarkettrend();
 		$data->cps = $this->model->getCP();
+		$data->cpTangs = $this->model->getCPTang();
 		
 		$content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);

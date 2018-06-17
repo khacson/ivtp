@@ -39,11 +39,16 @@
         </div>
         <div class="swiper-aside-right">
           <ul class="list list-background-minsk list-0 text-center section-xs-top-60 section-sm-top-0">
-            <li class="inset-xs-left-85 inset-xs-right-85 inset-sm-left-0 inset-sm-right-0"><a class="box-sm bg-primary reveal-block" href="directions.html"><span class="sprite sprite-icon-02-44x44 reveal-inline-block"></span><span class="text-bold text-white reveal-block">Directions</span></a></li>
-            <li class="inset-xs-left-85 inset-xs-right-85 inset-sm-left-0 inset-sm-right-0 offset-xs-top-30 offset-sm-top-0"><a class="box-sm bg-primary reveal-block" href="shops.html"><span class="sprite sprite-icon-06-44x44 reveal-inline-block"></span><span class="text-bold text-white reveal-block">Shops</span></a></li>
-            <li class="inset-xs-left-85 inset-xs-right-85 inset-sm-left-0 inset-sm-right-0 offset-xs-top-30 offset-sm-top-0"><a class="box-sm bg-primary reveal-block" href="food.html"><span class="sprite sprite-icon-05-44x44 reveal-inline-block"></span><span class="text-bold text-white reveal-block">Food</span></a></li>
-            <li class="inset-xs-left-85 inset-xs-right-85 inset-sm-left-0 inset-sm-right-0 offset-xs-top-30 offset-sm-top-0"><a class="box-sm bg-primary reveal-block" href="entertainment.html"><span class="sprite sprite-icon-04-45x44 reveal-inline-block"></span><span class="text-bold text-white reveal-block">Entertainment</span></a></li>
-            <li class="inset-xs-left-85 inset-xs-right-85 inset-sm-left-0 inset-sm-right-0 offset-xs-top-30 offset-sm-top-0"><a class="box-sm bg-primary reveal-block" href="parking.html"><span class="sprite sprite-icon-03-36x44 reveal-inline-block"></span><span class="text-bold text-white reveal-block">Parking</span></a></li>
+            <?php foreach($cpTangs as $item){
+				$des = $item->inc_des;
+				$inc_des = round($des * 100,2);
+				?>
+			<li class="inset-xs-left-85 inset-xs-right-85 inset-sm-left-0 inset-sm-right-0">
+				<a class="box-sm bg-primary reveal-block" href="<?=base_url();?>danh-muc-tang-truong/<?=$item->mcp;?>-dt<?=$item->id;?>.html">
+					<span class="text-bold"><?=$item->mcp;?></span>
+					<span class="text-white reveal-block"><?=$inc_des;?>%</span></a>
+				</li>
+			<?php }?>
           </ul>
         </div>
       </div>

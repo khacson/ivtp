@@ -82,6 +82,16 @@ class HomeModel extends CI_Model
 		";
 		return $this->model->query($sql)->execute();
 	}
+	function getCPTang(){
+		$sql = "
+			SELECT m.id, m.mcp, m.curr_price, m.open_price, m.inc_des
+			FROM ivt_increase_catalog m
+			where m.isdelete = 0
+			order by m.inc_des desc
+			limit 5
+		";
+		return $this->model->query($sql)->execute();
+	}
 	function getCatalogDetail(){
 		//ivt_increase_catalog_detail
 	}
