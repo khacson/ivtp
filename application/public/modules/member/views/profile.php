@@ -4,7 +4,7 @@
 		<div class="wrap-login100">
 			<form class="login-form ">
 				<span class="login-form-title p-b-49">
-					Đăng ký thành viên
+					Hồ sơ
 				</span>
 				<div class="wrap-input100 validate-input m-b-23" >
 					<span class="label-input100 mbta20"><b>Họ tên </span></b></span>

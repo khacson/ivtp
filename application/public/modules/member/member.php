@@ -154,6 +154,36 @@ class Member extends CI_Controller {
 		$send = $ci->email->send();	
 		return $send;
 	}
+	function clickregistorUpdate(){
+		$fullname = $this->input->post('fullname');
+		$email = $this->input->post('email');
+		$password = $this->input->post('password');
+		$phone = $this->input->post('phone');
+		$sex =  $this->input->post('sex');
+		$birthday =  $this->input->post('birthday');
+		$address =  $this->input->post('address');
+		$working =  $this->input->post('working');
+		$hobby =  $this->input->post('hobby');
+		$id =  $this->input->post('id');
+		
+		$birthday = str_replace('/','-',$birthday);
+		$pass = md5($password).md5(md5('ivt').md5($password));
+		$insert = array();
+		$insert['fullname'] = $fullname;
+		$insert['phone'] = $phone;
+		$insert['email'] = $email;
+		if(!empty($password)){
+			$insert['password'] = $pass;
+		}
+		$insert['sex'] = $sex;
+		$insert['birthday'] = date('Y-m-d',strtotime($birthday));
+		$insert['address'] = $address;
+		$insert['working'] = $working;
+		$insert['hobby'] = $hobby;
+		$insert['dateupdate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+		$this->model->table('ivt_member')->save($id,$insert);
+		echo 1;
+	}
 	function clickForgetpassword(){
 		$email = $this->input->post('email');
 		$query = $this->model->table('ivt_member')
