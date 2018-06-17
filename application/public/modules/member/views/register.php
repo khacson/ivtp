@@ -56,7 +56,7 @@
 					</div>
 				</div>
 				<div class="wrap-input100 validate-input m-b-23" >
-					<span class="label-input100 mbta20"><b>Điện thoại <span style="font-weight:300;">(<span class="red">*</span>)</b></span></span>
+					<span class="label-input100 mbta20"><b>Điện thoại </b></span>
 					<div class="ruby">
 						<i class="fa fa-phone" aria-hidden="true"></i>
 						<input class="input100" type="text" id="phone" name="phone" placeholder="Nhập điện thoại" value="">
@@ -77,30 +77,6 @@
 					<div class="ruby">
 						<i class="fa fa-lock " aria-hidden="true"></i>
 						<input class="input100" type="password" id="cfassword" name="cfassword" placeholder="Nhập mật khẩu">
-						<span class="focus-input100"></span>
-					</div>
-				</div>
-				<div class="wrap-input100 validate-input">
-					<span class="label-input100 mbta20"><b>Sở thích đầu tư</b></span>
-					<div class="ruby">
-						<i class="fa fa-lock " aria-hidden="true"></i>
-						<input class="input100" type="hobby" id="hobby" name="text" placeholder="Nhập sở thích">
-						<span class="focus-input100"></span>
-					</div>
-				</div>
-				<div class="wrap-input100 validate-input">
-					<span class="label-input100 mbta20"><b>Công việc</b></span>
-					<div class="ruby">
-						<i class="fa fa-lock " aria-hidden="true"></i>
-						<input class="input100" type="working" id="working" name="text" placeholder="Nhập công việc">
-						<span class="focus-input100"></span>
-					</div>
-				</div>
-				<div class="wrap-input100 validate-input">
-					<span class="label-input100 mbta20"><b>Địa chỉ liên hệ</b></span>
-					<div class="ruby">
-						<i class="fa fa-lock " aria-hidden="true"></i>
-						<input class="input100" type="address" id="address" name="text" placeholder="Nhập địa chỉ liên hệ">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
@@ -155,10 +131,6 @@
 				warning('Chọn giới tính.');
 				return false;
 			}
-			if(phone == ''){
-				warning('Điện thoại không được trống.');
-				$('#phone').focus(); return false;
-			}
 			if(email == ''){
 				warning('Email không được trống.');
 				$('#eemail').focus(); return false;
@@ -179,7 +151,7 @@
 				url : '<?=base_url();?>member/' + 'clickregistor',
 				type: 'POST',
 				async: false,
-				data:{fullname:fullname,phone:phone,email:email,sex:sex,password:password,birthday:birthday,address:address,working:working,hobby:hobby},  
+				data:{fullname:fullname,phone:phone,email:email,sex:sex,password:password,birthday:birthday,address:'',working:'',hobby:''},  
 				success:function(datas){
 					$('.loading').hide();
 					if(datas == 1){

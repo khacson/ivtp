@@ -153,10 +153,6 @@
 				warning('Chọn giới tính.');
 				return false;
 			}
-			if(phone == ''){
-				warning('Điện thoại không được trống.');
-				$('#phone').focus(); return false;
-			}
 			if(email == ''){
 				warning('Email không được trống.');
 				$('#eemail').focus(); return false;

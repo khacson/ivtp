@@ -16,7 +16,7 @@
                       </div>
                       <div class="cell-lg-6 offset-top-10 offset-lg-top-0">
                         <div class="form-group form-group-outside">
-                          <label class="form-label form-label-outside" for="contact-last-name">Điện thoại (<span class="red">*</span>)</label>
+                          <label class="form-label form-label-outside" for="contact-last-name">Điện thoại</label>
                           <input class="form-control" type="text" name="phone" id="phone">
                         </div>
                       </div>
@@ -119,11 +119,6 @@
 					 warning('Họ tên không được trống.');
 					 $('#fullname').focus(); return false;
 				 }
-				 if(phone == ''){
-					 warning('Điện thoại không được trống.');
-					 $('#phone').focus(); return false;
-				 }
-				
 				 var email = $('#email').val();
 				 var address = $('#address').val();
 				 var description = $('#description').val();
