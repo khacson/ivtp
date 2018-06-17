@@ -147,44 +147,45 @@
               <div class="box-lg box-contacts bg-white text-left center-block shadow-drop">
                 <hr class="divider hr-left-0 bg-bermuda">
                 <div class="offset-top-15">
-                  <h5>Contact Information</h5>
+                  <h5>Liên hệ</h5>
                   <address class="contact-info offset-top-35 p">
                     <div class="unit unit-horizontal unit-spacing-xs">
-                      <div class="unit-left ptop10">
+                      <div class="unit-left ">
 					  <i class="fa fa-map-marker icon-normal icon-sm text-primary" aria-hidden="true"></i>
 
 					  </div>
-                      <div class="unit-body"><a class="text-dove-gray" href="contacts.html">2130 Fulton Street, San Diego, CA 94117-1080 USA</a></div>
+                      <div class="unit-body"><a class="text-dove-gray" href="contacts.html"><?=$finds->address;?></a></div>
                     </div>
+					<?php if(!empty($finds->work_time)){?>
                     <div class="unit unit-horizontal unit-spacing-xs offset-top-20">
-                      <div class="unit-left ptop10">
+                      <div class="unit-left">
 						  <i class="fa fa-clock-o icon-normal icon-sm text-primary" aria-hidden="true"></i>
 					  </div>
                       <div class="unit-body">
-                        <p class="text-dove-gray">Opening Hours: 9:00am–9:00pm Supermarket: 7:00am–11:00pm</p>
+                        <p class="text-dove-gray"><?=$finds->work_time;?></p>
                       </div>
+                    </div>
+					<?php }?>
+                    <div class="unit unit-horizontal unit-spacing-xs offset-top-20">
+                      <div class="unit-left ">
+                        <i class="fa fa-phone icon-normal icon-sm text-primary mtopa3 fleft" aria-hidden="true"></i>
+                      </div>
+                      <div class="unit-body"><a class="text-dove-gray" href="callto:#"><?=$finds->phone;?></a></div>
                     </div>
                     <div class="unit unit-horizontal unit-spacing-xs offset-top-20">
                       <div class="unit-left">
-                        <i class="fa fa-phone icon-normal icon-sm text-primary" aria-hidden="true"></i>
-
+                          <i class="fa fa-envelope-o icon-normal icon-sm text-primary mtopa3 fleft" aria-hidden="true"></i>
                       </div>
-                      <div class="unit-body"><a class="text-dove-gray" href="callto:#">028 56789 888 - 0978 595949</a></div>
-                    </div>
-                    <div class="unit unit-horizontal unit-spacing-xs offset-top-20">
-                      <div class="unit-left">
-                          <i class="fa fa-envelope-o icon-normal icon-sm text-primary" aria-hidden="true"></i>
-                      </div>
-                      <div class="unit-body"><a class="text-dove-gray" href="mailto:#">sonnguyen@firefuma.vn</a></div>
+                      <div class="unit-body"><a class="text-dove-gray" href="mailto:#"><?=$finds->email;?></a></div>
                     </div>
                   </address>
                 </div>
               </div>
             </div>
-            <div class="google-map-container" data-zoom="15" data-center="9870 St Vincent Place, Glasgow, DC 45 Fr 45." data-styles="[{&quot;featureType&quot;:&quot;landscape.natural&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;color&quot;:&quot;#e0efef&quot;}]},{&quot;featureType&quot;:&quot;poi&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;hue&quot;:&quot;#1900ff&quot;},{&quot;color&quot;:&quot;#c0e8e8&quot;}]},{&quot;featureType&quot;:&quot;road&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;lightness&quot;:100},{&quot;visibility&quot;:&quot;simplified&quot;}]},{&quot;featureType&quot;:&quot;road&quot;,&quot;elementType&quot;:&quot;labels&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;off&quot;}]},{&quot;featureType&quot;:&quot;transit.line&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;lightness&quot;:700}]},{&quot;featureType&quot;:&quot;water&quot;,&quot;elementType&quot;:&quot;all&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#7dcdcd&quot;}]}]">
+            <div class="google-map-container" data-zoom="15" data-center="<?=$finds->address;?>, Việt nam" data-styles="[{&quot;featureType&quot;:&quot;landscape.natural&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;color&quot;:&quot;#e0efef&quot;}]},{&quot;featureType&quot;:&quot;poi&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;hue&quot;:&quot;#1900ff&quot;},{&quot;color&quot;:&quot;#c0e8e8&quot;}]},{&quot;featureType&quot;:&quot;road&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;lightness&quot;:100},{&quot;visibility&quot;:&quot;simplified&quot;}]},{&quot;featureType&quot;:&quot;road&quot;,&quot;elementType&quot;:&quot;labels&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;off&quot;}]},{&quot;featureType&quot;:&quot;transit.line&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;lightness&quot;:700}]},{&quot;featureType&quot;:&quot;water&quot;,&quot;elementType&quot;:&quot;all&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#7dcdcd&quot;}]}]">
               <div class="google-map"></div>
               <ul class="google-map-markers">
-                <li data-location="9870 St Vincent Place, Glasgow, DC 45 Fr 45." data-description="9870 St Vincent Place, Glasgow" data-icon="<?=url_tmpl();?>images/gmap_marker.png" data-icon-active="<?=url_tmpl();?>images/gmap_marker_active.png"></li>
+                <li data-location="<?=$finds->address;?>, Việt nam" data-description="<?=$finds->address;?>, Việt nam" data-icon="<?=url_tmpl();?>images/gmap_marker.png" data-icon-active="<?=url_tmpl();?>images/gmap_marker_active.png"></li>
               </ul>
             </div>
           </div>

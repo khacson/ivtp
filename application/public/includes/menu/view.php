@@ -15,12 +15,14 @@
 						</span>
 					</div>
 					<div class="reveal-inline-block">
+						<?php if(!empty($finds->work_time)){?>
 						<span class="unit-left ">
 							 <i class="fa fa-clock-o icon icon-sm" aria-hidden="true"></i>
 						</span>
 						<span class="unit-body">
 							<span class="text-gray-lighter"><?=$finds->work_time;?></span>
 						</span>
+						<?php }?>
 					</div>
                     <div class="reveal-inline-block">
 						<span class="unit-left ">
