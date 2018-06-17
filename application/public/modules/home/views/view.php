@@ -60,50 +60,109 @@
 		<!-- E Nhung co phieu tang truong tot nhat-->
         <section class="section-80 section-md-0 bg-shark">
           <div class="range range-condensed range-xs-center">
+		    <?php if(isset($cps[0]->id)){?>
             <div class="cell-xs-6 cell-sm-6 cell-lg-3 inset-left-15 inset-right-15 inset-md-left-0 inset-md-right-0">
               <figure class="thumbnail-terry thumbnail-terry-modern"><a href="sale-single.html"><img width="480" height="360" src="<?=url_tmpl();?>images/pages/sales-01-480x360.jpg" alt=""></a>
                 <figcaption class="text-left">
                   <div class="figcaption-caption">
-                    <h4 class="thumbnail-terry-title text-spacing-40">FREE COFFEE</h4>
-                    <p class="thumbnail-terry-desc text-white-07 offset-top-5">at Audrey Cafe for all Audrey Club members</p>
+                    <h4 class="thumbnail-terry-title text-spacing-40"><?=$cps[0]->mcp;?></h4>
+                    <p class="thumbnail-terry-desc text-white-07 offset-top-5">Giá hiện tại: <?=number_format($cps[0]->curr_price);?></p>
+					<p class="thumbnail-terry-desc text-white-07 offset-top-2">Giá mở cửa: <?=number_format($cps[0]->open_price);?></p>
+					<?php 
+						$des = $cps[0]->inc_des;
+						$inc_des = round($des * 100,2);
+						if($inc_des > 0){
+							$inc_dess = "<span class='green'>".$inc_des."</span>";
+						}
+						else{
+							$inc_dess = "<span class='red'>".$inc_des."</span>";
+						}
+					?>
+					<p class="thumbnail-terry-desc text-white-07 offset-top-2">%Tăng/Giảm: <b><?=$inc_dess;?></b></p>
                   </div>
-                  <div class="thumbnail-terry-btn-wrap text-md-right offset-top-10 offset-md-top-0"><a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" href="sale-single.html"><span class="icon icon-xs mdi mdi-arrow-right veil reveal-sm-inline-block"></span>Learn More</a></div>
+                  <div class="thumbnail-terry-btn-wrap text-md-right offset-top-10 offset-md-top-0"><a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" href="<?=base_url();?>danh-muc-tang-truong/<?=$cps[0]->mcp;?>-dt<?=$cps[0]->id;?>.html"><i class="icon icon-xs fa fa-angle-double-right" aria-hidden="true"></i>
+ </span>Xem chi tiết</a></div>
                 </figcaption>
               </figure>
             </div>
+			<?php }?>
+			<?php if(isset($cps[1]->id)){?>
             <div class="cell-xs-6 cell-sm-6 cell-lg-3 offset-top-40 offset-xs-top-0 inset-left-15 inset-right-15 inset-md-left-0 inset-md-right-0">
               <figure class="thumbnail-terry thumbnail-terry-modern"><a href="sale-single.html"><img width="480" height="360" src="<?=url_tmpl();?>images/pages/sales-02-480x360.jpg" alt=""></a>
                 <figcaption class="text-left">
                   <div class="figcaption-caption">
-                    <h4 class="thumbnail-terry-title text-spacing-40 text-uppercase">Save 30%</h4>
-                    <p class="thumbnail-terry-desc text-white-07 offset-top-5">at all jewelry stores of Audrey Mall</p>
+                    <h4 class="thumbnail-terry-title text-spacing-40"><?=$cps[1]->mcp;?></h4>
+                    <p class="thumbnail-terry-desc text-white-07 offset-top-5">Giá hiện tại: <?=number_format($cps[1]->curr_price);?></p>
+					<p class="thumbnail-terry-desc text-white-07 offset-top-2">Giá mở cửa: <?=number_format($cps[1]->open_price);?></p>
+					<?php 
+						$des = $cps[1]->inc_des;
+						$inc_des = round($des * 100,2);
+						if($inc_des > 0){
+							$inc_dess = "<span class='green'>".$inc_des."</span>";
+						}
+						else{
+							$inc_dess = "<span class='red'>".$inc_des."</span>";
+						}
+					?>
+					<p class="thumbnail-terry-desc text-white-07 offset-top-2">%Tăng/Giảm: <b><?=$inc_dess;?></b></p>
                   </div>
-                  <div class="thumbnail-terry-btn-wrap text-md-right offset-top-10 offset-md-top-0"><a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" href="sale-single.html"><span class="icon icon-xs mdi mdi-arrow-right veil reveal-sm-inline-block"></span>Learn More</a></div>
+                  <div class="thumbnail-terry-btn-wrap text-md-right offset-top-10 offset-md-top-0"><a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" href="<?=base_url();?>danh-muc-tang-truong/<?=$cps[1]->mcp;?>-dt<?=$cps[1]->id;?>.html"><i class="icon icon-xs fa fa-angle-double-right" aria-hidden="true"></i>
+ </span>Xem chi tiết</a></div>
                 </figcaption>
               </figure>
             </div>
+			<?php }?>
+			<?php if(isset($cps[2]->id)){?>
             <div class="cell-xs-6 cell-sm-6 cell-lg-3 offset-top-40 offset-md-top-0 inset-left-15 inset-right-15 inset-md-left-0 inset-md-right-0">
               <figure class="thumbnail-terry thumbnail-terry-modern"><a href="sale-single.html"><img width="480" height="360" src="<?=url_tmpl();?>images/pages/sales-03-480x360.jpg" alt=""></a>
                 <figcaption class="text-left">
                   <div class="figcaption-caption">
-                    <h4 class="thumbnail-terry-title text-spacing-40 text-uppercase">Save 25%</h4>
-                    <p class="thumbnail-terry-desc text-white-07 offset-top-5">at men’s clothes shops</p>
+                    <h4 class="thumbnail-terry-title text-spacing-40"><?=$cps[2]->mcp;?></h4>
+                    <p class="thumbnail-terry-desc text-white-07 offset-top-5">Giá hiện tại: <?=number_format($cps[2]->curr_price);?></p>
+					<p class="thumbnail-terry-desc text-white-07 offset-top-2">Giá mở cửa: <?=number_format($cps[2]->open_price);?></p>
+					<?php 
+						$des = $cps[2]->inc_des;
+						$inc_des = round($des * 100,2);
+						if($inc_des > 0){
+							$inc_dess = "<span class='green'>".$inc_des."</span>";
+						}
+						else{
+							$inc_dess = "<span class='red'>".$inc_des."</span>";
+						}
+					?>
+					<p class="thumbnail-terry-desc text-white-07 offset-top-2">%Tăng/Giảm: <b><?=$inc_dess;?></b></p>
                   </div>
-                  <div class="thumbnail-terry-btn-wrap text-md-right offset-top-10 offset-md-top-0"><a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" href="sale-single.html"><span class="icon icon-xs mdi mdi-arrow-right veil reveal-sm-inline-block"></span>Learn More</a></div>
+                  <div class="thumbnail-terry-btn-wrap text-md-right offset-top-10 offset-md-top-0"><a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" href="<?=base_url();?>danh-muc-tang-truong/<?=$cps[2]->mcp;?>-dt<?=$cps[2]->id;?>.html"><i class="icon icon-xs fa fa-angle-double-right" aria-hidden="true"></i>
+ </span>Xem chi tiết</a></div>
                 </figcaption>
-              </figure>
             </div>
+			<?php }?>
+			<?php if(isset($cps[3]->id)){?>
             <div class="cell-xs-6 cell-sm-6 cell-lg-3 offset-top-40 offset-md-top-0 inset-left-15 inset-right-15 inset-md-left-0 inset-md-right-0">
               <figure class="thumbnail-terry thumbnail-terry-modern"><a href="sale-single.html"><img width="480" height="360" src="<?=url_tmpl();?>images/pages/sales-04-480x360.jpg" alt=""></a>
                 <figcaption class="text-left">
                   <div class="figcaption-caption">
-                    <h4 class="thumbnail-terry-title text-spacing-40 text-uppercase">Save 10%</h4>
-                    <p class="thumbnail-terry-desc text-white-07 offset-top-5">at Audrey Mall Cinema Hall</p>
+                    <h4 class="thumbnail-terry-title text-spacing-40"><?=$cps[3]->mcp;?></h4>
+                    <p class="thumbnail-terry-desc text-white-07 offset-top-5">Giá hiện tại: <?=number_format($cps[3]->curr_price);?></p>
+					<p class="thumbnail-terry-desc text-white-07 offset-top-2">Giá mở cửa: <?=number_format($cps[3]->open_price);?></p>
+					<?php 
+						$des = $cps[3]->inc_des;
+						$inc_des = round($des * 100,2);
+						if($inc_des > 0){
+							$inc_dess = "<span class='green'>".$inc_des."</span>";
+						}
+						else{
+							$inc_dess = "<span class='red'>".$inc_des."</span>";
+						}
+					?>
+					<p class="thumbnail-terry-desc text-white-07 offset-top-2">%Tăng/Giảm: <b><?=$inc_dess;?></b></p>
                   </div>
-                  <div class="thumbnail-terry-btn-wrap text-md-right offset-top-10 offset-md-top-0"><a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" href="sale-single.html"><span class="icon icon-xs mdi mdi-arrow-right veil reveal-sm-inline-block"></span>Learn More</a></div>
+                  <div class="thumbnail-terry-btn-wrap text-md-right offset-top-10 offset-md-top-0"><a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" href="<?=base_url();?>danh-muc-tang-truong/<?=$cps[3]->mcp;?>-dt<?=$cps[3]->id;?>.html"><i class="icon icon-xs fa fa-angle-double-right" aria-hidden="true"></i>
+ </span>Xem chi tiết</a></div>
                 </figcaption>
               </figure>
             </div>
+			<?php }?>
           </div>
         </section>
         

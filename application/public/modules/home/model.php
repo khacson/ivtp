@@ -72,4 +72,17 @@ class HomeModel extends CI_Model
 					  ->find_all();
 		return $query;
 	}
+	function getCP(){
+		$sql = "
+			SELECT m.id, m.mcp, m.curr_price, m.open_price, m.inc_des
+			FROM ivt_increase_catalog m
+			where m.isdelete = 0
+			order by m.curr_price desc
+			limit 4
+		";
+		return $this->model->query($sql)->execute();
+	}
+	function getCatalogDetail(){
+		//ivt_increase_catalog_detail
+	}
 }

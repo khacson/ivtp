@@ -295,13 +295,16 @@ td,
 th {
 	padding: 0;
 }
-
-.mbta20{ margin-bottom:-20px; }
-.font12{ font-size:12px !important;;}
-.font14{ font-size:14px !important;;}
+.fleft{ float:left!important;}
+.mtopa3{ margin-top:-3px !important; }
+.mtopa5{ margin-top:-5px !important; }
+.mbta20{ margin-bottom:-20px !important; }
+.font12{ font-size:12px !important;}
+.font14{ font-size:14px !important;}
 .mtop10{ margin-top:10px;}
 .mtop20{ margin-top:20px;}
 .mtop30{ margin-top:30px;}
+
 .validate-input{
 	text-align: left !important;
 }
