@@ -25,21 +25,9 @@ class Member extends CI_Controller {
 		}
     }
 	function _view(){
-		$login = $this->site->getSession('pblogin');
-		if(empty($login->id)){
-			redirect(base_url(), 'location');
-		}
-		$finds = $this->model->getInfor();
 		$data = new stdClass();
-		//$data->news = $this->model->getNews();
-		//$data->services = $this->model->getService();
-		$data->finds = $finds;
-		
-        $content = $this->load->view('view',$data,true);
+		$content = $this->load->view('login',$data,true);
         $this->site->write('content',$content,true);
-		$this->site->write('title',$finds->meta_title,true);
-		$this->site->write('keywords',$finds->meta_keyword,true);
-		$this->site->write('description',$finds->mete_description,true);
         $this->site->render();
 	}
 	function login(){
@@ -229,6 +217,17 @@ class Member extends CI_Controller {
 	function register(){
 		$data = new stdClass();
 		$content = $this->load->view('register',$data,true);
+        $this->site->write('content',$content,true);
+        $this->site->render();
+	}
+	function profile(){
+		$pblogin = $this->site->GetSession("pblogin");
+		if(empty($pblogin->id)){
+			redirect(base_url().'dang-nhap', 'location');
+		}
+		$data = new stdClass();
+		$data->finds = $pblogin;
+		$content = $this->load->view('profile',$data,true);
         $this->site->write('content',$content,true);
         $this->site->render();
 	}
