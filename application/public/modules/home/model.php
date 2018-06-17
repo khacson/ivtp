@@ -27,14 +27,15 @@ class HomeModel extends CI_Model
 		return $query;
 	}
 	function getMarkettrend(){
-		$query = $this->model->table('ivt_markettrend')
-					  ->select('id,title,friendlyurl,description_sort,image,datecreate,thumb')
-					  ->where('isdelete',0)
-					  ->where('isshow',1)
-					  ->limit(3)
-					  ->order_by('id','desc')
-					  ->find_all();
-		return $query;
+		$sql = "
+			SELECT `id`, `title`, `friendlyurl`, `description_sort`, `image`, `datecreate`, `thumb`, 
+			(select count(1) total from ivt_markettrend_comment mc where mc.blogid = m.`id`) comment
+			FROM `ivt_markettrend` m  
+			WHERE m.`isdelete` =0 
+			AND m.`isshow` = 1 
+			ORDER BY m.`id` DESC LIMIT 3
+		";
+		return $this->model->query($sql)->execute();
 	}
 	function getSlideList(){
 		$query = $this->model->table('ivt_slide')

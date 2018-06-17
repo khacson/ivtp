@@ -193,7 +193,7 @@
 						<i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
 						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($item->datecreate));?> </span></li>
                         <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i>
-<span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#">0 Comments</a></span></li>
+<span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#"><?=$item->comment;?> Comments</a></span></li>
                       </ul>
                     </div>
                   </div>
