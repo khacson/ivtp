@@ -149,8 +149,9 @@ th {
 	border: 1px solid #7d7d7d;
 }
 td {
-    padding: 3px 5px;
-	border: 1px solid #7d7d7d;
+    border: 1px solid #7d7d7d;
+    font-size: 13px;
+    padding: 3px 4px;
 }
 .increasecatalog-table-detail table{
 	width: 1200px;
@@ -217,6 +218,9 @@ a {
     border-radius: 2px;
     padding: 3px 7px;
 }
+.rd-navbar-static .rd-navbar-nav > li + li {
+    margin-left: 25px;
+}
 .rd-navbar .rd-navbar-inner{
     background: #733272;
 }
@@ -231,6 +235,7 @@ a {
 .rd-navbar-static .rd-navbar-nav > li.active > a,
 .rd-navbar-fullwidth .rd-navbar-nav > li > a {
     color: #eee;
+	font-weight: 600;
 }
 .rd-navbar-static .rd-navbar-nav > .rd-navbar-submenu > a::after, .rd-navbar-fullwidth .rd-navbar-nav > .rd-navbar-submenu > a::after {
     color: #eee;
@@ -251,5 +256,21 @@ a {
     color: #79d5ca;
 }
 
-
+/*phone*/
+.rd-navbar-fixed .rd-navbar-panel::before {
+    background: #733272;
+}
+.rd-navbar-collapse-toggle span, .rd-navbar-collapse-toggle span::before, .rd-navbar-collapse-toggle span::after, .rd-navbar-info-toggle span, .rd-navbar-info-toggle span::before, .rd-navbar-info-toggle span::after {
+    background: #fff;
+}
+.rd-navbar-toggle span::after, .rd-navbar-toggle span::before, .rd-navbar-toggle span {
+    background-color: #fff;
+}
+.rd-navbar-toggle-search-fixed {
+    display: none;
+}
+.rd-navbar-fixed .rd-navbar-brand img {
+    height: 60px;
+    width: auto;
+}
 /*end custom color*/
