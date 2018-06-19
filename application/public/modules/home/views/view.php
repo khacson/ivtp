@@ -55,7 +55,7 @@
       <main class="page-content">
 	  
 		<!-- S Nhung co phieu tang truong tot nhat-->
-        <section class="section-20">
+        <section class="section-20 hide">
           <div class="range range-condensed range-xs-middle range-xs-center range-md-justify list-inline-dashed-lg">
 			<?php foreach($supperliers as $item){?>	
 				<div class="cell-xs-5 cell-md-4 cell-lg-2"><a target="_blank" class="reveal-inline-block" href="<?=$item->url;?>"><img class="img-responsive center-block img-semi-transparent" src="<?=base_url();?>files/supperlier/<?=$item->img;?>" width="127" height="69" alt=""></a></div>
@@ -63,8 +63,14 @@
           </div>
         </section>
 		<!-- E Nhung co phieu tang truong tot nhat-->
-        <section class="section-80 section-md-0 bg-shark">
-          <div class="range range-condensed range-xs-center">
+        <section class="section-80 bg-selago">
+			<div class="shell-wide shell-wide-custom">
+			  <hr class="divider bg-bermuda">
+			  <div class="offset-top-20">
+				<h3>Cổ phiếu tiềm năng</h3>
+			  </div>
+		  </div>
+          <div class="range range-condensed range-xs-center bg-shark">
 		    <?php if(isset($cps[0]->id)){?>
             <div class="cell-xs-6 cell-sm-6 cell-lg-3 inset-left-15 inset-right-15 inset-md-left-0 inset-md-right-0">
               <figure class="thumbnail-terry thumbnail-terry-modern"><a href="sale-single.html"><img width="480" height="360" src="<?=url_tmpl();?>images/pages/sales-01-480x360.jpg" alt=""></a>

@@ -10,6 +10,8 @@ class Service extends CI_Controller {
 		parent::__construct();			
 	    $this->load->model();
 		$this->rows = 20;
+		$this->normal_price = 2000000;
+		$this->vip_price = 4000000;
 	}
     function  _remap($method, $params = array()){
         if(method_exists($this, $method))
@@ -24,13 +26,18 @@ class Service extends CI_Controller {
 			$this->_detail($url);
 		}
     }
-	function _view(){
-		$login = $this->site->getSession('login');
+	function _view(){ 
+		$login = $this->site->getSession('pblogin');
 		$finds = $this->model->getInfor();
 		$data = new stdClass();
 		//$data->news = $this->model->getNews();
 		$data->services = $this->model->getService();
 		$data->finds = $finds;
+		$data->login = $login;
+		$data->normal_price = $this->normal_price;
+		$data->vip_price = $this->vip_price;
+		
+	
 		
         $content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);

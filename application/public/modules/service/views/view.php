@@ -35,7 +35,7 @@
 								</h3>
 								<h6>VNĐ/tháng</h6>
 							</div>
-							<a href="#"
+							<a href="<?=base_url()?>dang-ky.html"
 								class="btn btn-warning btn-normal">Đăng ký</a>
 						</div>
 					</div>
@@ -55,13 +55,13 @@
 								<li>0 addon domain</li>
 							</ul>
 							<div class="price">
-								<h3>2.000.000
+								<h3><?=number_format($normal_price)?>
 									<span style="margin: 6px -7px 0 0;" class="symbol"></span>
 								</h3>
 								<h6>VNĐ/tháng</h6>
 							</div>
-							<a href="#"
-								class="btn btn-warning btn-normal">Đăng ký</a>
+							<a href="javascript:;" type="1"
+								class="btn btn-warning btn-normal btn-reg">Đăng ký</a>
 						</div>
 					</div>
 				</div>
@@ -80,13 +80,13 @@
 								<li>0 addon domain</li>
 							</ul>
 							<div class="price">
-								<h3>4.000.000
+								<h3><?=number_format($vip_price)?>
 									<span style="margin: 6px -7px 0 0;" class="symbol"></span>
 								</h3>
 								<h6>VNĐ/tháng</h6>
 							</div>
-							<a href="#"
-								class="btn btn-warning btn-normal">Đăng ký</a>
+							<a href="javascript:;" type="2"
+								class="btn btn-warning btn-normal btn-reg">Đăng ký</a>
 						</div>
 					</div>
 				</div>
@@ -99,3 +99,136 @@
 		</div>
 	</div>
 </section>
+<!-- Modal -->
+<a id="showModal" class="hide" data-toggle="modal" href="#myModal"> </a>
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h6 class="modal-title text-left">Thông tin đăng ký</h6>
+      </div>
+      <div id="modal_content" class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div id="infor" class="hide">
+	<div class="text-left">
+		<div class="row">
+			<label class="col-md-4">Gói dịch vụ: </label>
+			<div class="col-md-5">
+				<span class="select_service  btn-success">VIP</span>
+			</div>
+		</div>
+		<div class="row">
+			<label class="col-md-4">Giá: </label>
+			<div class="col-md-5">
+				<span class="service_price"></span> đồng/tháng
+			</div>
+		</div>
+		<div class="row">
+			<label class="col-md-4">Thời gian sử dụng: </label>
+			<select onchange="getTotalPrice(this.value)" class="col-md-5">
+			<?php for($i=1; $i<12; $i++){ ?>
+				<option value="<?=$i?>"><?=$i?> tháng</option>
+			<?php } ?>
+				<option value="12">1 năm</option>
+				<option value="24">2 năm</option>
+				<option value="36">3 năm</option>
+			</select>
+		</div>
+		<div class="row">
+			<label class="col-md-4">Tổng hóa đơn: </label>
+			<div class="col-md-5">
+				<b><span class="total_price"></span> đồng</b>
+			</div>
+		</div>
+		<div class="row-centered offset-top-20">
+			<a href="<?=base_url()?>dang-ky.html"><button type="button" class="btn btn-primary">Đăng ký</button></a>
+		</div>
+	</div>
+</div>
+
+<div id="login-needed" class="hide">
+	<div class="text-center">
+		<p>Bạn vui lòng đăng ký thành viên trước khi đăng ký dịch vụ.</p>
+		<div class="row-centered">
+			<div class="col-md-4 col-centered">
+				<a href="<?=base_url()?>dang-nhap.html"><button type="button" class="btn btn-primary">Đăng nhập</button></a>
+			</div>
+			<div class="col-md-4 col-centered">
+				<a href="<?=base_url()?>dang-ky.html"><button type="button" class="btn btn-primary">Đăng ký</button></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="reg-success" class="hide">
+	<div class="text-center">
+		<p class="btn-success"><b>Đăng ký thành công</b></p>
+		<p>Email hướng dẫn đã được gửi đến bạn, bạn vui lòng làm theo hướng dẫn trong email để kích hoạt gói dịch vụ.</p>
+	</div>
+</div>
+
+
+
+
+<script>
+var login = <?=empty($login) ? 0 : 1?>;
+var n = <?=$normal_price?>;
+var v = <?=$vip_price?>;
+var price_per_mon;
+var type;
+
+$('.btn-reg').click(function(){
+	/*$('.modal-title').text('Thông báo');
+	var content = $('#reg-success').html();
+	$('#modal_content').html(content);
+	$('#showModal').get(0).click();
+	return;*/
+	
+	if (login == 0) {
+		$('.modal-title').text('Thông báo');
+		var content = $('#login-needed').html();
+		$('#modal_content').html(content);
+		$('#showModal').get(0).click();
+		return;
+	}
+	
+	$('.modal-title').text('Thông tin đăng ký');
+	type = $(this).attr('type');
+	if (type == 1) {
+		price_per_mon = n;
+		setContent('Normal');
+		return;
+	}
+	else {
+		price_per_mon = v;
+		setContent('VIP');
+		return;
+	}
+})
+function setContent(service_name) {
+	$('.select_service').text(service_name);
+	$('.service_price').text(price_per_mon.toLocaleString('en'));
+	$('.total_price').text(price_per_mon.toLocaleString('en'));
+	var content = $('#infor').html();
+	$('#modal_content').html(content);
+	$('#showModal').get(0).click();
+}
+function getTotalPrice(val) {
+	var total = price_per_mon * val;
+	$('.total_price').text(total.toLocaleString('en'));
+}
+
+
+
+
+
+</script>
