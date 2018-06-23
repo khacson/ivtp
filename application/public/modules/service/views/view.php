@@ -1,3 +1,25 @@
+<style>
+#modal_content label {
+    width: 160px;
+}
+#modal_content .pull-left {
+    margin-left: 20px;
+}
+#modal_content .select_mon {
+   width: 150px;
+}
+@media screen and (max-width: 380px) {
+	#modal_content label {
+		width: auto;
+	}
+	#modal_content .pull-left {
+		margin-left: 8px;
+	}
+	#modal_content .select_mon {
+	   width: 100px;
+	}
+}
+</style>
 <section class="section-10 bg-selago">
 <div class="shell">
   <ul class="list-inline list-inline-12 list-inline-icon p tleft breads">
@@ -121,20 +143,20 @@
 <div id="infor" class="hide">
 	<div class="text-left">
 		<div class="row">
-			<label class="col-md-4">Gói dịch vụ: </label>
-			<div class="col-md-5">
+			<label class="pull-left">Gói dịch vụ: </label>
+			<div class="pull-left">
 				<span class="select_service  btn-success">VIP</span>
 			</div>
 		</div>
 		<div class="row">
-			<label class="col-md-4">Giá: </label>
-			<div class="col-md-5">
+			<label class="pull-left">Giá: </label>
+			<div class="pull-left">
 				<span class="service_price"></span> đồng/tháng
 			</div>
 		</div>
 		<div class="row">
-			<label class="col-md-4">Thời gian sử dụng: </label>
-			<select onchange="getTotalPrice(this.value)" class="col-md-5">
+			<label class="pull-left">Thời gian sử dụng: </label>
+			<select class="pull-left select_mon" onchange="getTotalPrice(this.value)">
 			<?php for($i=1; $i<12; $i++){ ?>
 				<option value="<?=$i?>"><?=$i?> tháng</option>
 			<?php } ?>
@@ -144,13 +166,13 @@
 			</select>
 		</div>
 		<div class="row">
-			<label class="col-md-4">Tổng hóa đơn: </label>
-			<div class="col-md-5">
+			<label class="pull-left">Tổng hóa đơn: </label>
+			<div class="pull-left">
 				<b><span class="total_price"></span> đồng</b>
 			</div>
 		</div>
 		<div class="row-centered offset-top-20">
-			<a href="<?=base_url()?>dang-ky.html"><button type="button" class="btn btn-primary">Đăng ký</button></a>
+			<a href="javascript:;" id="reg_service"><button type="button" class="btn btn-primary">Đăng ký</button></a>
 		</div>
 	</div>
 </div>
@@ -185,14 +207,37 @@ var n = <?=$normal_price?>;
 var v = <?=$vip_price?>;
 var price_per_mon;
 var type;
-
-$('.btn-reg').click(function(){
-	/*$('.modal-title').text('Thông báo');
-	var content = $('#reg-success').html();
-	$('#modal_content').html(content);
-	$('#showModal').get(0).click();
-	return;*/
-	
+$('body').on('click', '#reg_service', function() {
+	$('#myModal').modal('toggle');
+	var level = type;
+	var select_mon = $('#modal_content .select_mon').val();
+	$('.loading').show();
+	$.ajax({
+		url : '<?=base_url();?>member/' + 'regservice',
+		type: 'POST',
+		async: false,
+		data:{level: level,select_mon:select_mon},  
+		success:function(datas){
+			if (datas == 1) {
+				$('.loading').hide();
+				$('.modal-title').text('Thông báo');
+				var content = $('#reg-success').html();
+				$('#modal_content').html(content);
+				$('#showModal').get(0).click();
+				return;
+			}
+			else {
+				$('.loading').hide();
+				warning('Có lỗi xảy ra vui lòng thử lại.');
+			}
+		},
+		error: function() {
+			$('.loading').hide();
+			warning('Có lỗi xảy ra vui lòng thử lại.');
+		}
+	});
+})
+$('.btn-reg').click(function(){	
 	if (login == 0) {
 		$('.modal-title').text('Thông báo');
 		var content = $('#login-needed').html();

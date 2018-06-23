@@ -154,7 +154,7 @@
         });
 		$('#member_id').multipleSelect({
         	filter: true,
-			placeholder:"Chọn khách hàng",
+			placeholder:"Chọn thành viên",
             single: true
         });
 		$('#star').multipleSelect({

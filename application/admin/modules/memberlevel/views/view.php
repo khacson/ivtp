@@ -1,19 +1,28 @@
 <style title="" type="text/css">
-	table col.c1 { width: 45px; }
-	table col.c2 { width: 230px; }
-	table col.c3 { width: 180px; }
-	table col.c4 { width: 130px; }
-	table col.c5 { width: 100px; }
-	table col.c6 { width: 200px; }
-	table col.c7 { width: 180px; }
-	table col.c8 { width: 150px; }
-	table col.c9 { width: auto; }
+	table col.c1 { width: 35px; }
+	table col.c2 { width: 130px; }
+	table col.c3 { width: 150px; }
+	table col.c4 { width: 190px; }
+	table col.c5 { width: 90px; }
+	table col.c6 { width: 100px; }
+	table col.c7 { width: 150px; }
+	table col.c8 { width: 110px; }
+	table col.c9 { width: 110px; }
+	table col.c10 { width: 150px; }
+	table col.c11 { width: 150px; }
+	table col.c12 { width: 150px; }
+	table col.c13 { width: 150px; }
+	table col.c14 { width: 100px; }
+	table col.c15 { width: auto; }
 	.btn-title-add {
 		float: right;
 		font-size: 10px !important;
 		font-style: normal;
 		margin-right: 20px;
 		margin-top: 2px;
+	}
+	#gridView .btn {
+		min-width: 50px;
 	}
 </style>
 <!-- BEGIN PORTLET-->
@@ -33,14 +42,9 @@
 		<div class="row">
 			<div class="col-md-4">
 				<div class="form-group">
-					<label class="control-label col-md-4">Nhân viên</label>
-					<div class="col-md-8" >
-						<select name="user_id" id="user_id" class="combos" >
-							<option value=""></option>
-							<?php foreach ($userList as $item) { ?>
-								<option value="<?=$item->id;?>"><?=$item->username?> - <?=$item->fullname?></option>
-							<?php } ?>
-						</select>
+					<label class="control-label col-md-4">Mã kích hoạt</label>
+					<div class="col-md-8">
+						<input type="text" name="active_code" id="active_code" class="searchs form-control" />
 					</div>
 				</div>
 			</div>
@@ -59,13 +63,16 @@
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
-					<label class="control-label col-md-4">Đánh giá</label>
+					<label class="control-label col-md-4">Thời gian ĐK</label>
 					<div class="col-md-8" >
-						<select name="star" id="star" class="combos" >
+						<select name="time_use" id="time_use" class="combos" >
 							<option value=""></option>
-							<?php foreach ($starList as $item) { ?>
-								<option value="<?=$item->id;?>"><?=$item->name?></option>
+							<?php for ($i=1; $i<12; $i++) { ?>
+								<option value="<?=$i?>"><?=$i?> tháng</option>
 							<?php } ?>
+							<option value="12">1 năm</option>
+							<option value="24">2 năm</option>
+							<option value="36">3 năm</option>
 						</select>
 					</div>
 				</div>
@@ -74,25 +81,56 @@
 		<div class="row mtop10">
 			<div class="col-md-4">
 				<div class="form-group">
-					<label class="control-label col-md-4">Mã chat</label>
-					<div class="col-md-8">
-						<input type="text" name="chat_code" id="chat_code" class="searchs form-control" />
+					<label class="control-label col-md-4">Kích hoạt</label>
+					<div class="col-md-8" >
+						<select name="active_status" id="active_status" class="combos" >
+							<option value=""></option>
+							<option value="1">Rồi</option>
+							<option value="0">Chưa</option>
+							<option value="2">Hết hạn</option>
+						</select>
 					</div>
 				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
-					<label class="control-label col-md-4">Trạng thái</label>
+					<label class="control-label col-md-4">Thanh toán</label>
 					<div class="col-md-8" >
-						<select name="status" id="status" class="combos" >
+						<select name="paid_status" id="paid_status" class="combos" >
 							<option value=""></option>
-							<option value="1">Đang chat</option>
-							<option value="2">Kết thúc</option>
+							<option value="1">Rồi</option>
+							<option value="0">Chưa</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label col-md-4">Bỏ trùng</label>
+					<div class="col-md-8" >
+						<select name="no_dup" id="no_dup" class="combos" >
+							<option value=""></option>
+							<option value="1">Có</option>
+							<option value="0">Không</option>
 						</select>
 					</div>
 				</div>
 			</div>
 		</div>	
+		<div class="row mtop10">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label class="control-label col-md-4">Gói dịch vụ</label>
+					<div class="col-md-8" >
+						<select name="level" id="level" class="combos" >
+							<option value=""></option>
+							<option value="1">Normal</option>
+							<option value="2">VIP</option>
+						</select>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="row mtop10">
 			<div class="col-md-8">
 				<div class="mright10" >
@@ -108,7 +146,7 @@
 <div class="portlet box blue">
 	<div class="portlet-title">
         <div class="caption" style="margin-top:4px;">
-            <i>Có <span class='viewtotal'>0</span> cuộc chat</i>
+            <i>Có <span class='viewtotal'>0</span> mã kích hoạt</i>
         </div>
         <div class="tools">
            <ul class="button-group pull-right" style="margin-top:-3px; margin-bottom:5px;">
@@ -135,18 +173,23 @@
 				<div id="cHeader">
 					<div id="tHeader">    	
 						<table width="100%" cellspacing="0" border="1" id="tbheader" >
-							<?php for($i=1; $i< 9; $i++){?>
+							<?php for($i=1; $i< 14; $i++){?>
 								<col class="c<?=$i;?>">
 							<?php }?>
 							<tr>
 								<th>STT</th>
-								<th id="ord_c.user_id">Nhân viên</th>
-								<th id="ord_c.member_id">Thành viên</th>
-								<th id="ord_c.chat_code">Mã chat</th>
-								<th id="ord_c.star">Đánh giá</th>
-								<th id="ord_c.note">Góp ý</th>
-								<th id="ord_c.datecreate">Ngày chat</th>
-								<th id="ord_c.datecreate">Trạng thái</th>
+								<th>Mã kích hoạt</th>
+								<th>Ngày tạo</th>
+								<th>Thành viên</th>
+								<th>Gói dịch vụ</th>
+								<th>Thời gian ĐK</th>
+								<th>Tổng tiền</th>
+								<th>Thanh toán</th>
+								<th>Kích hoạt</th>
+								<th>Từ ngày</th>
+								<th>Đến ngày</th>
+								<th>Người cập nhật</th>
+								<th>Ngày cập nhật</th>
 								<th></th>
 							</tr>
 						</table>
@@ -157,7 +200,7 @@
 				<div id="data">
 					<div id="gridView">
 						<table  id="tbbody" width="100%" cellspacing="0" border="1">
-							<?php for($i=1; $i< 9; $i++){?>
+							<?php for($i=1; $i< 14; $i++){?>
 								<col class="c<?=$i;?>">
 							<?php }?>
 							<tbody id="grid-rows"></tbody>
@@ -191,24 +234,34 @@
 	var schoolid = 0;
 	var curr_chat_code;
 	$(function(){
-		$('#user_id').multipleSelect({
-        	filter: true,
-			placeholder:"Chọn nhân viên",
-            single: true
-        });
 		$('#member_id').multipleSelect({
         	filter: true,
 			placeholder:"Chọn thành viên",
             single: true
         });
-		$('#star').multipleSelect({
+		$('#time_use').multipleSelect({
         	filter: true,
-			placeholder:"Chọn đánh giá",
+			placeholder:"Chọn thời gian",
             single: true
         });
-		$('#status').multipleSelect({
+		$('#paid_status').multipleSelect({
         	filter: true,
 			placeholder:"Chọn trạng thái",
+            single: true
+        });
+		$('#active_status').multipleSelect({
+        	filter: true,
+			placeholder:"Chọn trạng thái",
+            single: true
+        });
+		$('#no_dup').multipleSelect({
+        	filter: true,
+			placeholder:"Chọn trạng thái",
+            single: true
+        });
+		$('#level').multipleSelect({
+        	filter: true,
+			placeholder:"Chọn gói dịch vụ",
             single: true
         });
 		refresh();
@@ -233,6 +286,52 @@
 		});
 		$('#refreshchatlog').live('click', function(){
 			get_chat_history();
+		});
+		$('.paid_status .btn').live('click', function(){ 
+			var status = $(this).parent().attr('paid_status');
+			var idR = $(this).parent().attr('idR');
+			if (status == 0) {
+				var new_status = 1;
+				var msg = 'Bạn có chắc tài khoản này <b>ĐÃ ĐƯỢC</b> thanh toán?';
+			}
+			else {
+				var new_status = 0;
+				var msg = 'Bạn có chắc tài khoản này <b>CHƯA ĐƯỢC</b> thanh toán?';
+			}
+			$.msgBox({
+				title: 'Thông báo',
+				type: 'warning',
+				content: msg,
+				buttons: [{value: 'Yes'},{ value: 'No'}],
+				success: function(result) { 
+					if (result == 'Yes') {
+						changeStatus('paid_status', new_status,idR );
+					}
+				}
+			});
+		});
+		$('.active_status .btn').live('click', function(){ 
+			var status = $(this).parent().attr('active_status');
+			var idR = $(this).parent().attr('idR');
+			if (status == 0) {
+				var new_status = 1;
+				var msg = 'Bạn có chắc muốn <b>KÍCH HOẠT</b> tài khoản này?';
+			}
+			else {
+				var new_status = 0;
+				var msg = 'Bạn có chắc muốn <b>HỦY</b> kích hoạt tài khoản này?';
+			}
+			$.msgBox({
+				title: 'Thông báo',
+				type: 'warning',
+				content: msg,
+				buttons: [{value: 'Yes'},{ value: 'No'}],
+				success: function(result) { 
+					if (result == 'Yes') {
+						changeStatus('active_status', new_status, idR);
+					}
+				}
+			});
 		});
 		$('#delete').click(function(){ 
 			$.msgBox({
@@ -278,6 +377,25 @@
 		
 		$(".dialog-title-add").children(".ui-dialog-titlebar").append("<button id='refreshchatlog' class='btn-title-add'>Refresh</button>");
 	});
+	function changeStatus(type, new_status, idR) {
+		$('.loading').show();
+		var token = $("#token").val();
+		$.ajax({
+			url : controller + 'changeStatus',
+			type: 'POST',
+			async: false,
+			data: {csrf_stock_name:token, type:type, new_status:new_status, idR:idR},
+			success:function(datas){
+				var obj = $.evalJSON(datas); 
+				$("#token").val(obj.csrfHash); 
+				$('.loading').hide();
+				searchList();
+			},
+			error : function(){
+				$('.loading').hide();
+			}
+		});
+	}
 	function save(func,id){
 		search = getSearch();
 		var obj = $.evalJSON(search); 

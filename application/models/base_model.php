@@ -201,6 +201,14 @@ class base_model extends CI_Model {
         return $this->model->query($sql)->execute();
     }
 	
+	function getAllCustomerServiceUser() {
+        $sql = "SELECT * FROM ivt_users
+                WHERE groupid = 3 AND isdelete=0
+				ORDER BY fullname";
+        return $this->model->query($sql)->execute();
+    }
+	
+	
 	function formatDate($date) {
 		$arr = explode('/', $date);
 		return $arr[2].'-'.$arr[0].'-'.$arr[1];
@@ -244,4 +252,55 @@ class base_model extends CI_Model {
         return 'success';
     }
 
+	function getPrice($level) {
+		$rs = $this->model->table('ivt_service_price')
+							->select('price')
+							->where('level', $level)
+							->find();
+		return $rs->price;
+	}
+
+	function sendEmail2($from, $to, $sub, $msg){	
+		$ci = get_instance();
+		$ci->load->library('email');
+		$ci->load->library('parser');
+		$config['useragent'] = 'CodeIgniter';
+		$config['protocol'] = "smtp"; //smtp
+		$config['smtp_host'] = "ssl://smtp.googlemail.com";
+		$config['smtp_port'] = "465";
+		$config['smtp_user'] = "investorprovn@gmail.com"; 
+		$config['smtp_pass'] = "DRBL2018";
+		$config['charset'] = "utf-8";
+		$config['mailtype'] = "html";
+		$config['newline'] = "\r\n";
+		$config['crlf'] = "\r\n";
+		$config['mailpath'] = '/usr/sbin/sendmail';
+		$config['priority'] = 3;
+		$config['wordwrap'] = TRUE;
+		$config['dsn'] = TRUE;
+		
+		$sendMail = $this->model->table('ivt_sendmail')->find();
+		$title_register = '';
+		if(!empty($sendMail->title_register)){
+			$title_register = $sendMail->title_register;
+		}
+		$send_register = '';
+		if(!empty($sendMail->send_register)){
+			$send_register = $sendMail->send_register;
+		}
+		$tt = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+		$datecreate  = strtotime($tt);
+		
+		$ci->email->initialize($config);
+		$ci->email->clear(TRUE);
+		$ci->email->from($from,'Investor');
+		$list = array($to);
+		$ci->email->to($list); 
+		$ci->email->subject($sub); 
+		
+		$ci->email->message($msg);
+		//$ci->email->set_header('Ğãng k? tài kho?n', 'Ğãng k? thành công');
+		$send = $ci->email->send();	
+		return $send;
+	}
 }

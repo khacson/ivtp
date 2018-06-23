@@ -22,13 +22,19 @@
     padding: 10px;
 	transition: all ease 0.5s;
 }
+.user_info-container:hover .user_info.cskh{
+	background: rgba(107, 8, 117, 0.65);
+}
+.user_info.cskh {
+    background: rgba(107, 8, 117, 0.8);
+}
 .user_info .user_img {
     border-radius: 50%;
     display: block;
     height: 80px;
     margin: auto;
     width: 80px;
-	border: 2px solid #ccc;
+	border: 2px solid #eee;
 }
 .user_info p{
 	margin: 5px 0;
@@ -54,9 +60,9 @@
 .chatbtn::before {
     content: "Chat";
     font-size: 18px;
-    left: 10px;
+    left: 9px;
     position: absolute;
-    top: 16px;
+    top: 13px;
     width: 50px;
 	color: #fff;
 }
@@ -78,12 +84,35 @@
   <div class="inset-lg-left-45 inset-lg-right-45 inset-xl-left-130 inset-xl-right-85">
 	<div class="shell-wide shell-wide-custom">
 	  <div class="range range-xs-center range-lg-right range-xl-justify">
-		<div class="cell-sm-10 cell-md-8 cell-xl-7">
+		<div class="cell-sm-12 cell-md-12 cell-xl-12">
 		  <div class="inset-md-right-35 inset-xl-right-0">
+			<h3 class="text-primary text-center">Chăm Sóc Khách Hàng</h3>
+			<div class="offset-top-40 range range-xs-center">
+			<?php foreach ($userServiceList as $item) { ?>
+				<div class="cell-md-4">
+					<a href="<?=base_url()?>tu-van/dt<?=$item->id?>">
+						<div class="user_info-container">
+							<div class="user_info cskh">
+								<img class="user_img" src="<?=base_url()?>files/user/<?=$item->signature?>">
+								<p class="username"><?=$item->fullname?></p>
+								<p class="views text-center">
+									Bạn có thắc mắc về dịch vụ của chúng tôi?
+									<br>Bạn có những bức xúc về nhân viên tư vấn?
+									<br>Hãy chat với chúng tôi, chúng tôi sẽ cố hết sức để giúp bạn.
+								</p>
+							</div>
+							<span class="chatbtn" href="javascript:;"></span>
+						</div>
+					</a>
+				</div>
+			<?php break;} ?>
+			</div>
+		  </div>
+		  <div class="inset-md-right-35 inset-xl-right-0 offset-top-40">
 			<h3 class="text-primary text-center">Tổ Tư Vấn Độc Lập</h3>
 			<div class="offset-top-40 range">
 			<?php foreach ($userList as $item) { ?>
-				<div class="cell-md-6">
+				<div class="cell-md-4">
 					<a href="<?=base_url()?>tu-van/dt<?=$item->id?>">
 						<div class="user_info-container">
 							<div class="user_info">
@@ -101,14 +130,6 @@
 				</div>
 			<?php } ?>
 			</div>
-		  </div>
-		</div>
-		<div class="cell-sm-10 cell-md-4 offset-top-0 offset-md-top-0">
-		  <div class="inset-md-left-30">
-			<!-- Aside-->
-			<aside class="text-left inset-xl-right-50">  
-			  <?php include 'new_post.php' ?>
-			</aside>
 		  </div>
 		</div>
 	  </div>

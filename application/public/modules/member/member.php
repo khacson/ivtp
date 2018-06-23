@@ -8,7 +8,7 @@ class Member extends CI_Controller {
     
 	function __construct(){
 		parent::__construct();			
-	    $this->load->model();
+	    $this->load->model(array('model','base_model'));
 		$this->rows = 20;
 	}
     function  _remap($method, $params = array()){
@@ -362,5 +362,36 @@ class Member extends CI_Controller {
 		$content = $this->load->view('forgetpassword',$data,true);
         $this->site->write('content',$content,true);
         $this->site->render();
+	}
+	function regservice() {
+		$login = $this->site->getSession('pblogin');
+		$level = $this->input->post('level');
+		$time_use = $this->input->post('select_mon');
+		$price_per_mon = $this->base_model->getPrice($level);
+		$total_paid = $price_per_mon * $time_use;
+		$active_code = strtoupper(uniqid());
+		
+		$array['member_id'] = $login->id;
+		$array['level'] = $level;
+		$array['active_code'] = $active_code;
+		$array['time_use'] = $time_use;
+		$array['total_paid'] = $total_paid;
+		$array['is_new'] = 1;
+		$array['datecreate'] = gmdate('Y-m-d H:i:s', time() + 7*3600);
+		$this->model->table('ivt_member_level')->insert($array);
+		$insert_id = $this->db->insert_id();
+		
+		$arr = array('is_new' => 0);
+		$this->model->table('ivt_member_level')
+					->where('member_id', $login->id)
+					->where('id <>'. $insert_id)
+					->update($arr);
+		
+		$from = 'ndkhuong89@gmail.com';
+		$to = $login->email;
+		$sub = 'Hướng dẫn kích hoạt dịch vụ';
+		$msg = 'Bạn vui lòng chuyển '.number_format($total_paid).' đồng đến số tài khoản ABCXYZ với nội dung là: '.$active_code.' để kích hoạt gói dịch vụ.';
+		$this->base_model->sendEmail2($from, $to, $sub, $msg);
+		echo 1;die;
 	}
 }

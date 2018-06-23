@@ -40,6 +40,6 @@
     <!-- Java script-->
     <script src="<?=url_tmpl();?>js/core.js"></script>
     <script src="<?=url_tmpl();?>js/script.js"></script>
-	
-
+	<div class="loading-overplay-full loading" style="display: none"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div>
+  </body>
 </html>

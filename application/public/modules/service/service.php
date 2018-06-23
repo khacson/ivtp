@@ -7,11 +7,11 @@
 class Service extends CI_Controller {
     
 	function __construct(){
-		parent::__construct();			
-	    $this->load->model();
+		parent::__construct();	
+	    $this->load->model(array('model','base_model'));
 		$this->rows = 20;
-		$this->normal_price = 2000000;
-		$this->vip_price = 4000000;
+		$this->normal_price = $this->base_model->getPrice(1);
+		$this->vip_price = $this->base_model->getPrice(2);
 	}
     function  _remap($method, $params = array()){
         if(method_exists($this, $method))

@@ -40,6 +40,7 @@ class Helpdesk extends CI_Controller {
 		$data = new stdClass();
 		
 	    $data->userList = $this->base_model->getAllHelpDeskUser();
+	    $data->userServiceList = $this->base_model->getAllCustomerServiceUser();
 		
 		$data->listNew = $this->model->getFindNew(0);
         $content = $this->load->view('view',$data,true);
