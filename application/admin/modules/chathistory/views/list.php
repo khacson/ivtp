@@ -11,12 +11,16 @@ foreach ($datas as $item) {
 	if (isset($arrStar[$item->star])) {
 		$rating = $arrStar[$item->star];
 	}
+	$memberName = $item->member_id.' - '. $item->m_fullname;
+	if (strpos($item->member_id, '-') !== false) {
+		$memberName = 'Guest'.$item->member_id;
+	}
 ?>
 
 	<tr class="content edit">
 		<td class="center"><?=$i;?></td>
 		<td><?=$item->username;?> - <?=$item->u_fullname;?></td>
-		<td><?=$item->member_id;?> - <?=$item->m_fullname;?></td>
+		<td><?=$memberName;?></td>
 		<td align="center">
 			<a class="view_chat_code" chat_code="<?=$item->chat_code;?>" href="javascript:;"><?=$item->chat_code;?></a>
 		</td>

@@ -82,13 +82,6 @@
 		<section class="text-left section-40 offset-md-top-50">
 		
 		</section>
-<div class="loadingpage" style="display: none;">
-    <div class="blockUI blockOverlay" style="width: 100%;height: 100%;top:0px;left:0px;position: absolute;background-color: rgb(0,0,0);opacity: 0.1;z-index: 1000;">
-    </div>
-    <div class="blockUI blockMsg blockElement" style="width: 30%;position: absolute;top: 15%;left:35%;text-align: center;">
-        <img src="<?=url_tmpl();?>images/loading2.gif" style="z-index: 2;position: absolute;"/>
-    </div>
-</div> 
 <script>
 	var controller = '<?=base_url();?>markettrend/';
     var csrfHash = '';
@@ -104,7 +97,7 @@
 		loaddingPage = false;
 		var search = $('#uri').val();
 		$("#token").val('');
-		$('.loadingpage').show();
+		$('.loading').show();
 		$('#hideClick').click();
 		$('.dropdown-toggle').attr('aria-expanded','false');
 		$.ajax({
@@ -122,7 +115,7 @@
 				 $('#grid-rows').html(obj.content); 
 				 $('#paging').html(obj.paging);
 				 paging(obj.csrfHash);
-				 $('.loadingpage').hide();
+				 $('.loading').hide();
 				 $("html, body").stop().animate({scrollTop:0},1000, 'easeInOutQuad');
 			  }
 		});

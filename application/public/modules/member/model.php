@@ -20,4 +20,17 @@ class MemberModel extends CI_Model
 					  ->find();
 		return $query;
 	}
+	function getActiveCode() {
+		$code = $this->base_model->rand_string(5);
+		$rs = $this->model->table('ivt_member_level')
+						  ->select('id')
+						  ->where('active_code', $code)
+						  ->find();
+		if (empty($rs)) {
+			return $code;
+		}
+		else {
+			return $this->getActiveCode();
+		}
+	}	
 }

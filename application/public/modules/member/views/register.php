@@ -1,8 +1,24 @@
+<style>
+.avatar-container #userfile {
+    height: 35px;
+    margin-bottom: 5px;
+    padding-left: 0;
+}
+.avatar-container {
+    overflow: hidden;
+    padding-bottom: 5px;
+}
+</style>
+<link rel="stylesheet" href="<?=url_tmpl()?>jcrop/jquery.Jcrop.min.css" />
 <link rel="stylesheet" type="text/css" href="<?=url_tmpl();?>login/css/main.css">
 <div class="limiter">
 	<div class="container-login100" style="background-image: url('<?=url_tmpl();?>login/images/bg-01.jpg');">
 		<div class="wrap-login100">
 			<form class="login-form ">
+				<input type="hidden" class="searchs" id="x" name="x" />
+				<input type="hidden" class="searchs" id="y" name="y" />
+				<input type="hidden" class="searchs" id="w" name="w" />
+				<input type="hidden" class="searchs" id="h" name="h" />
 				<span class="login-form-title p-b-49">
 					Đăng ký thành viên
 				</span>
@@ -30,11 +46,6 @@
 										 <input type="radio" name="sex" value="2">  Nữ
 									</label>
 								</td>
-								<td>
-									<label>
-										 <input type="radio" name="sex" value="3">  Giới tính khác
-									</label>
-								</td>
 							</tr>
 						</table>
 					</div>
@@ -51,7 +62,7 @@
 					<span class="label-input100 mbta20"><b>Email <span style="font-weight:300;">(<span class="red">*</span>)</b></span></span>
 					<div class="ruby">
 						<i class="fa fa-envelope-o" aria-hidden="true"></i>
-						<input class="input100" type="text" id="eemail" name="eemail" placeholder="Nhập tài email" value="">
+						<input class="input100" type="text" id="eemail" name="eemail" placeholder="Nhập email" value="">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
@@ -80,6 +91,13 @@
 						<span class="focus-input100"></span>
 					</div>
 				</div>
+				<div class="wrap-input100 validate-input m-b-23 avatar-container" >
+					<span class="label-input100 mbta20"><b>Avatar </b></span><br>
+					<div class="ruby">
+						<input class="input100" type="file" id="userfile" name="userfile" value="">
+					</div>
+					<div id="show"></div>
+				</div>
 				<div class="container-login-form-btn mtop30">
 					<div class="wrap-login-form-btn">
 						<div class="login-form-bgbtn"></div>
@@ -97,17 +115,12 @@
 		</div>
 	</div>
 </div>
-<div class="loading" style="display: none;">
-	<div class="blockUI blockOverlay" style="width: 100%;height: 100%;top:0px;left:0px;position: absolute;background-color: rgb(0,0,0);opacity: 0.1;z-index: 999999999999;">
-	</div>
-	<div class="blockUI blockMsg blockElement" style="width: 30%;position: absolute;top: 0%;left:35%;text-align: center; z-index: 999999999999;">
-		<img src="<?=url_tmpl()?>images/loading2.gif" style="z-index: 999999999999;position: absolute;"/>
-	</div>
-</div> 
   <link rel="stylesheet" href="<?=url_tmpl();?>toast/toastr.min.css">
   <script src="<?=url_tmpl();?>toast/toastr.min.js"></script>
   <script src="<?=url_tmpl();?>toast/notifications.js"></script>
-<Script>
+<script>
+	
+    var rate;
 	$(function(){
 		$('#fullname').val('');
 		$('#birthday').val('');
@@ -146,25 +159,108 @@
 			var address = $('#address').val(); 
 			var working = $('#working').val(); 
 			var hobby = $('#hobby').val(); 
+			
+			var data = new FormData();
+			var objectfile = document.getElementById('userfile').files;
+			data.append('userfile', objectfile[0]);
+			data.append('fullname', fullname);
+			data.append('phone',phone);
+			data.append('email',email);
+			data.append('sex',sex);
+			data.append('password',password);
+			data.append('birthday',birthday);
+			data.append('address', '');
+			data.append('working', '');
+			data.append('hobby', '');
+			data.append('x', $('#x').val());
+			data.append('y', $('#y').val());
+			data.append('w', $('#w').val());
+			data.append('h', $('#h').val());
+			
 			$('.loading').show();
 			$.ajax({
 				url : '<?=base_url();?>member/' + 'clickregistor',
 				type: 'POST',
 				async: false,
-				data:{fullname:fullname,phone:phone,email:email,sex:sex,password:password,birthday:birthday,address:'',working:'',hobby:''},  
+				data:data,
+				enctype: 'multipart/form-data',
+				processData: false,  
+				contentType: false, 
 				success:function(datas){
 					$('.loading').hide();
 					if(datas == 1){
-						success("Đăng ký tài khoản thành công. Vui lòng xác nhận email để kích hoạt tài khoản."); return false;
+						success("Đăng ký tài khoản thành công. <br>Vui lòng xác nhận email để kích hoạt tài khoản.<br>Bạn sẽ được chuyển đến trang đăng nhập sau 5 giây."); 
+						setTimeout(function(){
+							window.location = '<?=base_url()?>dang-nhap.html';
+						}, 6000);
+						
+						return false;
 					}
 					else if(datas == -1){
 						warning('Tài khoản đã tồn tại.'); return false;
 					}
+					else if(datas == -2){
+						warning('Vui lòng chỉ upload file hình.'); return false;
+					}
+					else if(datas == 0){
+						error("Email đã tồn tại. Vui lòng nhập email khác.");
+					}
 					else{
-						error("Tài khoản đã tồn tại.");
+						error("Có lỗi xảy ra. Vui lòng thử lại hoặc liên hệ với chúng tôi");
 					}
 				}
 			});
 		});
+		
+		$('#userfile').change(function(evt) {
+            var files = evt.target.files;
+            for (var i = 0, f; f = files[i]; i++){
+                var size = f.size;
+                if (size < 2048000){
+                    if (!f.type.match('image.*'))
+                    {
+						error("Vui lòng chỉ upload file hình");
+                        return false;
+                    }
+                    var reader = new FileReader();
+                    reader.onload = (function(theFile) {
+                        return function(e) {
+							$('#show').html('');
+                            $('#show').append('<img class="cropimage" src="' + e.target.result + '" style="max-width:100%; float:left; margin-left:5px;" />');
+							var src = $('.cropimage').attr("src");
+							var img = new Image();//tinh original width
+							img.src = src;
+							img.onload = function() {
+								var curr_with = $('.cropimage').width();//co css
+								rate = this.width / curr_with;//ti le thu nho
+								//console.log(this.width);console.log(curr_with);
+								$('.cropimage').Jcrop({
+									aspectRatio: 1,
+									setSelect: [0,0,60,60],
+									aspectRatio: 100/100,
+									allowSelect : false,
+									onSelect: updateCoords,
+									onRelease: updateCoords
+								});
+							}
+                        };
+                    })(f);
+                    reader.readAsDataURL(f);
+                }
+                else{
+                    $('#userfile').val('');
+                    error("Dung lượng file phải nhỏ hơn 2Mb.");
+					return false;
+                }
+            }
+        });
 	});
+	function updateCoords(c){
+		//console.log(rate);
+		$('#x').val(c.x * rate);
+		$('#y').val(c.y * rate);
+		$('#w').val(c.w * rate);
+		$('#h').val(c.h * rate);
+	};
 </script>
+<script src="<?= url_tmpl(); ?>jcrop/jquery.Jcrop.min.js" type="text/javascript"></script>

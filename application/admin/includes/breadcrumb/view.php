@@ -5,7 +5,7 @@
 		<ul class="page-breadcrumb breadcrumb">
 			<li>
 				<i class="fa fa-home"></i>
-				<a href="<?=base_url()?>home.html">
+				<a href="<?=admin_url()?>home.html">
 					Home
 				</a>
 				<i class="fa fa-angle-right"></i>

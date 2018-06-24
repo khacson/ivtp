@@ -104,7 +104,7 @@
 		loaddingPage = false;
 		var search = $('#uri').val();
 		$("#token").val('');
-		$('.loadingpage').show();
+		$('.loading').show();
 		$('#hideClick').click();
 		$('.dropdown-toggle').attr('aria-expanded','false');
 		$.ajax({
@@ -122,7 +122,7 @@
 				 $('#grid-rows').html(obj.content); 
 				 $('#paging').html(obj.paging);
 				 paging(obj.csrfHash);
-				 $('.loadingpage').hide();
+				 $('.loading').hide();
 			  }
 		});
 	}

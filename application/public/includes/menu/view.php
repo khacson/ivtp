@@ -65,9 +65,9 @@
                 <div class="rd-navbar-nav-wrap reveal-inline-block">
                   <!-- RD Navbar Nav-->
                   <ul class="rd-navbar-nav">
-                    <li class="active"><a href="<?=base_url();?>trang-chu.html">Trang chủ</a></li>
-                    <li><a href="<?=base_url();?>gioi-thieu.html">Giới thiệu</a> </li>
-                    <li><a href="<?=base_url();?>xu-huong-thi-truong.html">Xu hướng thị trường</a>
+                    <li class="<?=$arrActive['trang-chu']?>"><a href="<?=base_url();?>trang-chu.html">Trang chủ</a></li>
+                    <li class="<?=$arrActive['gioi-thieu']?>"><a href="<?=base_url();?>gioi-thieu.html">Giới thiệu</a> </li>
+                    <li class="<?=$arrActive['xu-huong-thi-truong']?>"><a href="<?=base_url();?>xu-huong-thi-truong.html">Xu hướng thị trường</a>
                       <!-- RD Navbar Dropdown-->
 					  <?php if (!empty($markettendCatalogs)) { ?>
                       <ul class="rd-navbar-dropdown">
@@ -77,18 +77,18 @@
                       </ul>
 					  <?php }?>
                     </li>
-					<li><a href="<?=base_url();?>tu-van.html">Tổ tư vấn độc lập</a> </li>
-                    <li><a href="javascript:;">Danh mục đầu tư</a>
+					<li class="<?=$arrActive['tu-van']?>"><a href="<?=base_url();?>tu-van.html">Tổ tư vấn độc lập</a> </li>
+                    <li class="<?=$arrActive['danh-muc-dau-tu']?>"><a href="javascript:;">Danh mục đầu tư</a>
                       <!-- RD Navbar Dropdown-->
                       <ul class="rd-navbar-dropdown">
 						<li><a href="<?=base_url();?>danh-muc-tang-truong.html">Danh mục tăng trưởng</a></li>
 					    <?php foreach($investmentCatalogs as $item){?>
-							<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
+							<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->max_id;?>.html"><?=$item->catalog_name;?></a></li>
 						<?php }?>
                       </ul>
                     </li>
-					<li><a href="<?=base_url();?>dich-vu.html">Dịch vụ</a></li>
-                    <li><a href="<?=base_url();?>lien-he.html">Liên hệ</a></li>
+					<li class="<?=$arrActive['dich-vu']?>"><a href="<?=base_url();?>dich-vu.html">Dịch vụ</a></li>
+                    <li class="<?=$arrActive['lien-he']?>"><a href="<?=base_url();?>lien-he.html">Liên hệ</a></li>
                   </ul>
                 </div>
               </div>

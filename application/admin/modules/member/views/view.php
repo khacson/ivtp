@@ -5,7 +5,7 @@
 	table col.c4 { width: 80px; }
 	table col.c5 { width: 100px; }
 	table col.c6 { width: 120px; }
-	table col.c7 { width: 150px; }
+	table col.c7 { width: 200px; }
 	table col.c8 { width: 180px; }
 	table col.c9 { width: 150px; }
 	table col.c10 { width: 150px; }
@@ -59,7 +59,7 @@
 <div class="portlet box blue">
     <div class="portlet-title">
         <div class="caption" style="margin-top:4px;">
-            <i>Có <span class='viewtotal'>0</span> danh sách thành viên</i>
+            <i>Có <span class='viewtotal'>0</span> thành viên</i>
         </div>
         <div class="tools">
            <ul class="button-group pull-right" style="margin-top:-3px; margin-bottom:5px;">
@@ -75,22 +75,6 @@
                                     <?= getLanguage('all', 'Refresh') ?>
                                 </button>
                             </li>
-                            <?php if (isset($permission['add'])) { ?>
-                                <li id="save">
-                                    <button type="button" class="button">
-                                        <i class="fa fa-plus"></i>
-                                        <?= getLanguage('all', 'Add') ?>
-                                    </button>
-                                </li>
-                            <?php } ?>
-                            <?php if (isset($permission['edit'])) { ?>
-                                <li id="edit">
-                                    <button type="button" class="button">
-                                        <i class="fa fa-save"></i>
-                                        <?= getLanguage('all', 'Edit') ?>
-                                    </button>
-                                </li>
-                            <?php } ?>
                             <?php if (isset($permission['delete'])) { ?>
                                 <li id="delete">
                                     <button type="button" class="button">

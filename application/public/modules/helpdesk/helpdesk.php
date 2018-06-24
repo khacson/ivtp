@@ -52,30 +52,37 @@ class Helpdesk extends CI_Controller {
 	}
 	function detail($user_id){
 		$data = new stdClass();
-		$login = new stdClass();
-		/*$finds = $this->model->getFindNews($mcp_id);
-		if(!empty($finds->id)){
-			$this->site->write('title',$finds->meta_title,true);
-			$this->site->write('description',$finds->meta_keyword,true);
-			$this->site->write('keywords',$finds->mete_description,true);
-			$this->site->write('title_page',$finds->title,true);
-		}
-		$data->finds = $finds;*/
-		$login->id = 1;
-		$login->fullname = 'Đặng Thu Huyền';
-		$login->signature = 'photo.jpg';
-		$data->login = $login;
+
 		$data->userInfo = $this->model->get_user_info($user_id);
 		$data->user_id = $user_id;
 		
 		$data->listNew = $this->model->getFindNew(0);
 		$dbinfo = $this->model->get_firebasedb_info($user_id);
 		$dbinfo2 = $this->model->get_firebasedb_info2($dbinfo->name);
-		//echo '<pre>'; print_r($dbinfo);die;
 		
-		
-		$chat_code = $this->model->create_chatcode($user_id, $login->id, $dbinfo->id);
+		$login = $this->site->getSession('pblogin');
+		if (empty($login)) {
+			if ($data->userInfo->groupid != 3) {
+				$content = $this->load->view('404',$data,true);
+				$this->site->write('content',$content,true);
+				$this->site->render();
+				return;
+			}
+			else {
+				$login = new stdClass();
+				$login->id = $this->model->getGuestId() * (-1);
+				$login->fullname = 'Guest'.$login->id;
+				$login->signature = 'noavatar.png';
+			}
+			$isGuest = 1;
+		}
+		else {
+			$isGuest = 0;
+			$login->signature = $login->avatar;
+		}
 
+		$chat_code = $this->model->create_chatcode($user_id, $login->id, $dbinfo->id, $isGuest);
+		$data->login = $login;
 		$data->chat_code = $chat_code;
 		$data->configdb = $dbinfo->config;
 		$data->token = $this->model->create_custom_token($login->id, $dbinfo2->client_email, $dbinfo2->private_key);

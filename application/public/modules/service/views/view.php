@@ -277,3 +277,6 @@ function getTotalPrice(val) {
 
 
 </script>
+  <link rel="stylesheet" href="<?=url_tmpl();?>toast/toastr.min.css">
+  <script src="<?=url_tmpl();?>toast/toastr.min.js"></script>
+  <script src="<?=url_tmpl();?>toast/notifications.js"></script>

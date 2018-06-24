@@ -21,6 +21,9 @@ body{
 .slogan{
 	top:60px;	
 }
+.page-content {
+    width: 100%;
+}
 .lowercase{ text-transform:lowercase !important; }
 .cursor{ cursor:pointer !important;}
 .red{ color:red !important;}

@@ -12,7 +12,7 @@ class incModelMenu extends CI_Model{
 		$sql = "
 			select m.id, m.catalog_name, m.friendlyurl,
 				(
-					select concat(mt.friendlyurl,'-','-dt',mt.id)
+					select concat(mt.friendlyurl,'-','dt',mt.id)
 					from ivt_markettrend mt 
 					where mt.typeid = m.id
 					order by mt.datecreate desc
@@ -25,6 +25,30 @@ class incModelMenu extends CI_Model{
 		$query = $this->model->query($sql)->execute();
 		return $query;
 	}
+	function getInvestmentCatalogMenu(){
+		$sql = "
+			select m.id, m.catalog_name, m.friendlyurl,
+				(
+					select concat(mt.friendlyurl,'-','dt',mt.id)
+					from ivt_investment mt 
+					where mt.typeid = m.id
+					and is_top = 1
+					limit 1
+				) as max_id
+				from ivt_investmentcatalog  m
+				where m.isdelete = 0
+				order by m.catalog_name asc
+		";
+		$query = $this->model->query($sql)->execute();
+		return $query;
+		
+		$query = $this->model->table('ivt_investmentcatalog')
+							->select('id,catalog_name,friendlyurl')
+							->where('isdelete',0)
+							->order_by('catalog_name','asc')
+							->find_all();
+		return $query;
+	}
 	function getInvestmentCatalog(){
 		$query = $this->model->table('ivt_investmentcatalog')
 							->select('id,catalog_name,friendlyurl')
@@ -32,6 +56,31 @@ class incModelMenu extends CI_Model{
 							->order_by('catalog_name','asc')
 							->find_all();
 		return $query;
+	}
+	function getActiveMenu() {
+		$uri = $this->uri->segment(1);
+		if ($uri == 'danh-muc-tang-truong') {
+			return $this->setActiveMenu('danh-muc-dau-tu');
+		}
+		else {
+			return $this->setActiveMenu($uri);
+		}
+	}
+	function getArrMenu() {
+		return array(
+			'trang-chu' => '',
+			'gioi-thieu' => '',
+			'xu-huong-thi-truong' => '',
+			'tu-van' => '',
+			'danh-muc-dau-tu' => '',
+			'dich-vu' => '',
+			'lien-he' => '',
+		);
+	}
+	function setActiveMenu($key) {
+		$arr = $this->getArrMenu();
+		$arr[$key] = 'active';
+		return $arr;
 	}
 	function getInfor(){
 		$query = $this->model->table('ivt_contact')

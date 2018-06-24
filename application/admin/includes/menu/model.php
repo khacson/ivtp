@@ -40,7 +40,7 @@ class incModelMenu extends CI_Model{
 						$menuName = $lang['menu'][trim($item->keylang)];
 					}
 					$menu.= '<li class="classic-menu-dropdown">';
-					$menu.= '<a data-toggle="dropdown" data-hover="dropdown" data-close-others="true" href="">';
+					$menu.= '<a data-toggle="dropdown" data-hover="dropdown" data-close-others="true" href="javascript:;">';
 					$menu.= '<i class="fa '.($item->classicon).'"></i>'.$menuName.'<i class="fa fa-angle-down"></i>';
 					$menu.= '</a>';
 					$menu.= '<ul class="dropdown-menu">';

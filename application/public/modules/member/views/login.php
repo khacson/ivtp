@@ -11,7 +11,7 @@
 					<span class="label-input100 mbta20"><b>Email</b></span>
 					<div class="ruby">
 						<i class="fa fa-envelope-o" aria-hidden="true"></i>
-						<input class="input100" type="text" id="email" name="email" placeholder="Nhập tài email" value="">
+						<input onkeyup="clickLogin(event.keyCode)" class="input100" type="text" id="email" name="email" placeholder="Nhập email" value="">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
@@ -20,7 +20,7 @@
 					<span class="label-input100 mbta20"><b>Mật khẩu</b></span>
 					<div class="ruby">
 						<i class="fa fa-lock" aria-hidden="true"></i>
-						<input class="input100" type="password" id="password" name="password" placeholder="Nhập mật khẩu">
+						<input onkeyup="clickLogin(event.keyCode)" class="input100" type="password" id="password" name="password" placeholder="Nhập mật khẩu">
 						<span class="focus-input100" ></span>
 					</div>
 				</div>
@@ -85,17 +85,22 @@
 				data:{email:email, password:password},  
 				success:function(datas){
 					if(datas == 1){
-						success("Đăng nhập thành công.");
+						success("Đăng nhập thành công. Vui lòng kiểm tra lại email và mật khẩu.");
 						window.location.href = '<?=base_url();?>trang-chu.html';
 					}
 					else if(datas == -1){
 						warning("Tài khoản chưa kích hoạt."); return false;
 					}
 					else{
-						error("Đăng nhập không thành công."); return false;
+						error("Đăng nhập không thành công. Vui lòng kiểm tra lại email và mật khẩu."); return false;
 					}
 				}
 			});
 		});
 	});
+	function clickLogin(keyCode) {
+		if (keyCode == 13) {
+			$('#clicklogin').trigger('click');
+		}
+	}
 </script>

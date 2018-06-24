@@ -303,4 +303,61 @@ class base_model extends CI_Model {
 		$send = $ci->email->send();	
 		return $send;
 	}
+
+	function isImage($filename, $fileUrl){
+		$allowed =  $this->getAllowType();
+		$ext = pathinfo($filename, PATHINFO_EXTENSION);
+		$ext = strtolower($ext);
+		if(!in_array($ext,$allowed) ) {
+			//check ext
+			return false;
+		}
+		//truong hop nguoi dung doi ext bang cach go vao
+		if(@is_array(getimagesize($fileUrl))){
+			$image = true;
+		} else {
+			$image = false;
+		}
+		return $image;		
+	}
+	
+	function getAllowType(){
+		return array('gif','png' ,'jpg','jpeg');
+	}
+	
+	function resizeImg($width, $height, $src_path, $new_path, $x, $y, $w, $h, $ext){
+		$x = (float) $x;
+		$y = (float) $y;
+		$w = (float) $w;
+		$h = (float) $h;
+		if(strtolower($ext) == 'png'){
+			$quality = 9;
+			$img_r = imagecreatefrompng($src_path);
+			$dst_r = ImageCreateTrueColor( $width, $height );
+
+			imagecopyresampled($dst_r,$img_r,0,0,$x,$y,
+			$width,$height,$w,$h);
+
+			imagepng($dst_r,$new_path,$quality);
+		}
+		elseif(strtolower($ext) == 'jpg'){
+			$quality = 100;
+			$img_r = imagecreatefromjpeg($src_path);
+			$dst_r = ImageCreateTrueColor( $width, $height );
+
+			imagecopyresampled($dst_r,$img_r,0,0,$x,$y,
+			$width,$height,$w,$h);
+
+			imagejpeg($dst_r,$new_path,$quality);
+		}
+	}
+	function rand_string($length) {
+		$str = '';
+		$chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+		$size = strlen( $chars );
+		for( $i = 0; $i < $length; $i++ ) {
+			$str .= $chars[ rand( 0, $size - 1 ) ];
+		}
+		return $str;
+	}
 }

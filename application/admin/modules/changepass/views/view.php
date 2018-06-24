@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?=url_tmpl()?>jcrop/jquery.Jcrop.min.css" />
 <style title="" type="text/css">
 	.button-group li:last-child .button {
 		border-radius: 0 !important;
@@ -135,8 +136,8 @@
 							</ul>
 							<input style='display:none;' accept="image/*" id ="imageEnable" type="file" name="userfile">
 						</div>
-						<div class="col-md-6" >
-							 <span id="show"></span> 
+						<div class="pull-left">
+							 <span id="show" style="display: inline-block" class="mtop10"></span> 
 						</div>
 					</div>
 				</div>
@@ -146,6 +147,10 @@
 					<input type="hidden" name="id" id="id" value="<?=$userInfo->id?>" />
 					<input type="hidden" id="token" name="<?=$csrfName;?>" value="<?=$csrfHash;?>" />
 					
+					<input type="hidden" class="searchs" id="x" name="x" />
+					<input type="hidden" class="searchs" id="y" name="y" />
+					<input type="hidden" class="searchs" id="w" name="w" />
+					<input type="hidden" class="searchs" id="h" name="h" />
 				</div>		
 			</div>
 		</div>
@@ -177,6 +182,7 @@
 	var controller = '<?=$controller;?>/';
 	var csrfHash = '<?=$csrfHash;?>';
 	var cpage = 0;
+	var rate;
 	var search;
 	var schoolid = 0;
 	$(function(){
@@ -192,8 +198,24 @@
                     var reader = new FileReader();
                     reader.onload = (function(theFile) {
                         return function(e) {
-                            $('#show').html('<img src="' + e.target.result + '" style="height:40px; border-radius: 50% !important;" />');
-                            $("#img1").val(e.target.result);
+                            $('#show').html('');
+                            $('#show').append('<img class="cropimage" src="' + e.target.result + '" style="max-width:100%; float:left; margin-left:5px;" />');
+							var src = $('.cropimage').attr("src");
+							var img = new Image();//tinh original width
+							img.src = src;
+							img.onload = function() {
+								var curr_with = $('.cropimage').width();//co css
+								rate = this.width / curr_with;//ti le thu nho
+								//console.log(this.width);console.log(curr_with);
+								$('.cropimage').Jcrop({
+									aspectRatio: 1,
+									setSelect: [0,0,60,60],
+									aspectRatio: 100/100,
+									allowSelect : false,
+									onSelect: updateCoords,
+									onRelease: updateCoords
+								});
+							}
                         };
                     })(f);
                     reader.readAsDataURL(f);
@@ -223,8 +245,8 @@
 		
 		var avatar = '<?=$userInfo->signature?>';
 		if (avatar != '') {
-			var avatar = '<?=base_url()?>files/user/'+avatar;
-			$('#show').html('<img src="' + avatar + '" style="height:40px; border-radius: 50% !important" />');
+			var avatar = '<?=base_url()?>files/user/'+avatar+ '?t=' + new Date().getTime();
+			$('#show').html('<img src="' + avatar + '" style="height:60px; border-radius: 50% !important" />');
 		}
 		
 		
@@ -279,6 +301,13 @@
 			});
 		});
 	});
+	function updateCoords(c){
+		//console.log(rate);
+		$('#x').val(c.x * rate);
+		$('#y').val(c.y * rate);
+		$('#w').val(c.w * rate);
+		$('#h').val(c.h * rate);
+	};
 	function save(func,id){
 		search = getSearch();
 		var obj = $.evalJSON(search); 
@@ -436,3 +465,4 @@
 	}
 </script>
 <script src="<?=url_tmpl();?>assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="<?= url_tmpl(); ?>jcrop/jquery.Jcrop.min.js" type="text/javascript"></script>

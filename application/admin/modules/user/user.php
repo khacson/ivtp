@@ -96,13 +96,36 @@ class User extends CI_Controller {
 			$result['csrfHash'] = $token;
 			echo json_encode($result); exit;	
 		}
-		if(isset($_FILES['userfile']) && $_FILES['userfile']['name'] != "") {
-			$imge_name = $_FILES['userfile']['name'];
-			$this->upload->initialize($this->set_upload_options());
-			$image_data = $this->upload->do_upload('userfile', $imge_name); //Ten hinh 
-			$array['signature']  = $image_data;
-			$resize = $this->resizeImg($image_data);	
+		
+		if(!empty($_FILES['userfile']) && $_FILES['userfile']['name'] != ''){
+			$isImage = $this->base_model->isImage($_FILES['userfile']['name'], $_FILES['userfile']['tmp_name']);
+			if($isImage === false) {
+				$result['status'] = 0;
+				$result['mgs'] = 'mime';
+				$result['csrfHash'] = $token;
+				echo json_encode($result);
+				exit;
+			}
+			
+			$temp = explode('.', $_FILES['userfile']['name']);
+			$ext = end($temp);
+			$filename = 'u'.$this->login->username.'-'.$this->login->id.'.'.$ext;
+			$src_path = $_FILES['userfile']['tmp_name'];
+			$new_path = 'files/user/'.$filename;
+			
+			$this->base_model->resizeImg($this->thumbnail_width, $this->thumbnail_height, $src_path, $new_path, $array['x'], $array['y'], $array['w'], $array['h'], $ext);
+			
+			$array['signature'] = $filename;
 		}
+		unset($array['x']);
+		unset($array['y']);
+		unset($array['w']);
+		unset($array['h']);
+		
+		if (empty($array['signature'])) {
+			$array['signature'] = 'noavatar.png';
+		}
+		
 		$login = $this->login;
 		$array['datecreate']  = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
 		$array['usercreate'] = $login->username;
@@ -123,13 +146,36 @@ class User extends CI_Controller {
 		$array = $this->model->changueSearch($array);
 		$id = $this->input->post('id');
 		$login = $this->login;
-		if(isset($_FILES['userfile']) && $_FILES['userfile']['name'] != "") {
-			$imge_name = $_FILES['userfile']['name'];
-			$this->upload->initialize($this->set_upload_options());
-			$image_data = $this->upload->do_upload('userfile', $imge_name); //Ten hinh 
-			$array['signature']  = $image_data;
-			$resize = $this->resizeImg($image_data);	
+		if(!empty($_FILES['userfile']) && $_FILES['userfile']['name'] != ''){
+			$isImage = $this->base_model->isImage($_FILES['userfile']['name'], $_FILES['userfile']['tmp_name']);
+			if($isImage === false) {
+				$result['status'] = 0;
+				$result['mgs'] = 'mime';
+				$result['csrfHash'] = $token;
+				echo json_encode($result);
+				exit;
+			}
+			
+			$temp = explode('.', $_FILES['userfile']['name']);
+			$ext = end($temp);
+			$filename = 'u'.$this->login->username.'.'.$ext;
+			$src_path = $_FILES['userfile']['tmp_name'];
+			$new_path = 'files/user/'.$filename;
+			
+			$this->base_model->resizeImg(AVATAR_WIDTH, AVATAR_HEIGHT, $src_path, $new_path, $array['x'], $array['y'], $array['w'], $array['h'], $ext);
+			
+			$array['signature'] = $filename;
+			
 		}
+		unset($array['x']);
+		unset($array['y']);
+		unset($array['w']);
+		unset($array['h']);
+		
+		if (empty($array['signature'])) {
+			$array['signature'] = 'noavatar.png';
+		}
+		
 		if(empty($array['password'])){
 			 unset($array['password']);
 		}
@@ -184,4 +230,7 @@ class User extends CI_Controller {
 		$result['csrfHash'] = $token;
 		echo json_encode($result);
 	}
+
+	
+	
 }

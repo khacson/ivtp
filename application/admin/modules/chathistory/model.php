@@ -31,7 +31,7 @@
 		$sql = "SELECT c.member_id, c.chat_code, c.star, c.note, c.last_response, u.username, u.fullname as u_fullname, m.fullname as m_fullname
 				FROM ivt_users_chat c
 				INNER JOIN ivt_users u ON u.id = c.user_id
-				INNER JOIN ivt_member m ON m.id = c.member_id
+				LEFT JOIN ivt_member m ON m.id = c.member_id
 				WHERE c.last_response IS NOT NULL ";
 		$sql.= $this->getSearch($search);
 		if(empty($search['order'])){
@@ -48,7 +48,7 @@
 		$sql = "SELECT count(1) as total
 				FROM ivt_users_chat c
 				INNER JOIN ivt_users u ON u.id = c.user_id
-				INNER JOIN ivt_member m ON m.id = c.member_id
+				LEFT JOIN ivt_member m ON m.id = c.member_id
 				WHERE c.last_response IS NOT NULL ";
 		$sql.= $this->getSearch($search);
 		$query = $this->model->query($sql)->execute();
@@ -68,5 +68,12 @@
 					->where('chat_code', $chat_code)
 					->find_all();
 		return $rs;
+	}
+	function clearEmptyChat() {
+		$date = gmdate('Y-m-d H:i:s', strtotime('-1 days'));
+		$sql = "DELETE FROM ivt_users_chat 
+				WHERE last_response_utc IS NULL 
+				AND datecreate < '$date'";
+		$this->model->executeQuery($sql);
 	}
 }

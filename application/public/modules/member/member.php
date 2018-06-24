@@ -78,6 +78,20 @@ class Member extends CI_Controller {
 		$hobby =  $this->input->post('hobby');
 		$birthday = str_replace('/','-',$birthday);
 		$pass = md5($password).md5(md5('ivt').md5($password));
+		$x =  $this->input->post('x');
+		$y =  $this->input->post('y');
+		$w =  $this->input->post('w');
+		$h =  $this->input->post('h');
+		
+		//Check Email
+		$query = $this->model->table('ivt_member')
+					  ->select('id')
+					  ->where('email',$email)
+					  ->find(); 
+		if(!empty($query->id)){
+			echo 0; exit;
+		}
+		
 		$insert = array();
 		$insert['fullname'] = $fullname;
 		$insert['phone'] = $phone;
@@ -89,20 +103,31 @@ class Member extends CI_Controller {
 		$insert['working'] = $working;
 		$insert['hobby'] = $hobby;
 		$insert['datecreate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
-		//Check Email
-		$query = $this->model->table('ivt_member')
-					  ->select('id')
-					  ->where('email',$email)
-					  ->find(); 
-		if(!empty($query->id)){
-			echo 0; exit;
-		}
-		else{
-			$this->model->table('ivt_member')->insert($insert);
-			$this->sendEmail($email,$fullname);
+
+		if(!empty($_FILES['userfile'])){
+			$isImage = $this->base_model->isImage($_FILES['userfile']['name'], $_FILES['userfile']['tmp_name']);
+			if($isImage === false) {
+				echo -2; exit;
+			}
 			
-			echo 1; exit;
+			$temp = explode('.', $_FILES['userfile']['name']);
+			$ext = end($temp);
+			$filename = 'm'.gmdate('dmYHis').'.'.$ext;
+			$src_path = $_FILES['userfile']['tmp_name'];
+			$new_path = 'files/user/'.$filename;
+			
+			$this->base_model->resizeImg(AVATAR_WIDTH, AVATAR_HEIGHT, $src_path, $new_path, $x, $y, $w, $h, $ext);
+			
+			$insert['avatar'] = $filename;
 		}
+		if (empty($insert['avatar'])) {
+			$insert['avatar'] = 'noavatar.png';
+		}
+		
+		$this->model->table('ivt_member')->insert($insert);
+		$this->sendEmail($email,$fullname);
+		
+		echo 1; exit;
 	}
 	function sendEmail($email='',$fullname=''){	
 		$ci = get_instance();
@@ -165,6 +190,10 @@ class Member extends CI_Controller {
 		$working =  $this->input->post('working');
 		$hobby =  $this->input->post('hobby');
 		$id =  $this->input->post('id');
+		$x =  $this->input->post('x');
+		$y =  $this->input->post('y');
+		$w =  $this->input->post('w');
+		$h =  $this->input->post('h');
 		
 		$birthday = str_replace('/','-',$birthday);
 		$pass = md5($password).md5(md5('ivt').md5($password));
@@ -181,7 +210,33 @@ class Member extends CI_Controller {
 		$insert['working'] = $working;
 		$insert['hobby'] = $hobby;
 		$insert['dateupdate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+		
+		if(!empty($_FILES['userfile'])){
+			$isImage = $this->base_model->isImage($_FILES['userfile']['name'], $_FILES['userfile']['tmp_name']);
+			if($isImage === false) {
+				echo -2; exit;
+			}
+			
+			$temp = explode('.', $_FILES['userfile']['name']);
+			$ext = end($temp);
+			$filename = 'm'.$id.'.'.$ext;
+			$src_path = $_FILES['userfile']['tmp_name'];
+			$new_path = 'files/user/'.$filename;
+			
+			$this->base_model->resizeImg(AVATAR_WIDTH, AVATAR_HEIGHT, $src_path, $new_path, $x, $y, $w, $h, $ext);
+			
+			$insert['avatar'] = $filename;
+		}
+		if (empty($insert['avatar'])) {
+			$insert['avatar'] = 'noavatar.png';
+		}
+		
 		$this->model->table('ivt_member')->save($id,$insert);
+		$query = $this->model->table('ivt_member')
+					  ->where('email',$email)
+					  ->where('isdelete',0)
+					  ->find(); 
+		$this->site->SetSession("pblogin", $query);
 		echo 1;
 	}
 	function clickForgetpassword(){
@@ -369,7 +424,7 @@ class Member extends CI_Controller {
 		$time_use = $this->input->post('select_mon');
 		$price_per_mon = $this->base_model->getPrice($level);
 		$total_paid = $price_per_mon * $time_use;
-		$active_code = strtoupper(uniqid());
+		$active_code = $this->model->getActiveCode();
 		
 		$array['member_id'] = $login->id;
 		$array['level'] = $level;

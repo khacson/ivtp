@@ -38,9 +38,14 @@ use Firebase\JWT\JWT;
 		$content = file_get_contents(APPPATH."\libraries\\$dbname.json");
 		return json_decode($content);
 	}
-	function create_chatcode($user_id, $member_id, $firebasedb) {
+	function create_chatcode($user_id, $member_id, $firebasedb, $isGuest) {
 		//moi khach hang chat nhieu lan trong ngay thi dung chung 1 ma chat
-		$chat_code = gmdate('dmY', time() + 7 * 3600).$user_id.'T'.$member_id;
+		if ($isGuest) {
+			$chat_code = gmdate('dmY', time() + 7 * 3600).$user_id.'G'.$member_id;
+		}
+		else {
+			$chat_code = gmdate('dmY', time() + 7 * 3600).$user_id.'M'.$member_id;
+		}
 		$check = $this->check_exist_chatcode($chat_code); 
 		if (empty($check)) {
 			$array['chat_code'] = $chat_code;
@@ -95,5 +100,21 @@ use Firebase\JWT\JWT;
 				)
 				ORDER BY id";
 		return $this->query($sql)->execute();
+	}
+	function getGuestId() {
+		$ip = $this->base_model->getMacAddress();
+		$rs = $this->model->table('ivt_guest')
+						  ->select('id')
+						  ->where('ip', $ip)
+						  ->find();
+		if (!empty($rs)) {
+			return $rs->id;
+		}
+		else {
+			$arr['ip'] = $ip;
+			$arr['datecreate']  = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+			$this->table('ivt_guest')->insert($arr);
+			return $this->db->insert_id();
+		}
 	}
 }

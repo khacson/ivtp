@@ -409,3 +409,4 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 
 </script>
 <script src="<?= url_tmpl(); ?>js/chatfunc.js" type="text/javascript"></script>
+<script src="<?=url_tmpl();?>assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
