@@ -65,7 +65,7 @@
 					</div>
 				</div>
 			</div>
-			 <div class="row mtop10">
+			<div class="row mtop10">
                 <div class="col-md-12">
                     <div class="form-group">
                         <label class="control-label col-md-12">Tiêu đề quên mật khẩu</label>
@@ -90,6 +90,63 @@
                 <div class="col-md-12" style="padding-left:30px !important; padding-right:30px !important;">
                     <div class="form-group">
 						 <textarea class="ckeditor form-control" id="send_forgot" name="send_forgot"><?=$finds->send_forgot;?></textarea>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row mtop10">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Tiêu đề đăng ký dịch vụ</label>
+                    </div>
+                </div>
+            </div>
+			<div class="row ">
+				<div class="col-md-12" style="padding-left:30px !important; padding-right:30px !important;">
+                    <div class="form-group">
+						<input type="text" name="title_reg_service" id="title_reg_service" class="searchs form-control" value="<?=$finds->title_reg_service;?>" />
+					</div>
+				</div>
+			</div>
+			<div class="row mtop10">
+                <div class="col-md-12">
+					<div class="form-group">
+						<label class="control-label col-md-12">Nội dung đăng ký dịch vụ</label>
+					</div>
+                </div>
+            </div>
+			<div class="row" >
+                <div class="col-md-12" style="padding-left:30px !important; padding-right:30px !important;">
+                    <div class="form-group">
+						 <textarea class="ckeditor form-control" id="send_reg_service" name="send_forgot"><?=$finds->send_reg_service;?></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="row mtop10">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="control-label col-md-12">Tiêu đề kích hoạt dịch vụ</label>
+                    </div>
+                </div>
+            </div>
+			<div class="row ">
+				<div class="col-md-12" style="padding-left:30px !important; padding-right:30px !important;">
+                    <div class="form-group">
+						<input type="text" name="title_active_service" id="title_active_service" class="searchs form-control" value="<?=$finds->title_active_service;?>" />
+					</div>
+				</div>
+			</div>
+			<div class="row mtop10">
+                <div class="col-md-12">
+					<div class="form-group">
+						<label class="control-label col-md-12">Nội dung kích hoạt dịch vụ</label>
+					</div>
+                </div>
+            </div>
+			<div class="row" >
+                <div class="col-md-12" style="padding-left:30px !important; padding-right:30px !important;">
+                    <div class="form-group">
+						 <textarea class="ckeditor form-control" id="send_active_service" name="send_forgot"><?=$finds->send_active_service;?></textarea>
 					</div>
 				</div>
 			</div>
@@ -126,6 +183,8 @@
             $(".loading").show();
             CKEDITOR.instances['send_register'].setData("");
             CKEDITOR.instances['send_forgot'].setData("");
+            CKEDITOR.instances['send_reg_service'].setData("");
+            CKEDITOR.instances['send_active_service'].setData("");
             refresh();
         });
         $('#search').click(function() {
@@ -142,23 +201,43 @@
         var token = $('#token').val();
 
         if (obj.title_register == '') {
-            error("Tiêu đề không được truống");
+            error("Tiêu đề đăng ký thành viên không được trống");
+            return false;
+        }
+        if (obj.title_forgot == '') {
+            error("Tiêu đề quên mật khẩu không được trống");
+            return false;
+        }
+        if (obj.title_reg_service == '') {
+            error("Tiêu đề đăng ký dịch vụ không được trống");
+            return false;
+        }
+        if (obj.title_active_service == '') {
+            error("Tiêu đề kích hoạt dịch vụ không được trống");
             return false;
         }
 		$('.loading').show();
         var title_register = $('#title_register').val();
 		var title_forgot = $('#title_forgot').val();
+		var title_reg_service = $('#title_reg_service').val();
+		var title_active_service = $('#title_active_service').val();
 		var meta_keyword = $('#meta_keyword').val();
 		var mete_description = $('#mete_description').val();
 		var send_register = CKEDITOR.instances['send_register'].getData();
 		var send_forgot = CKEDITOR.instances['send_forgot'].getData();
+		var send_reg_service = CKEDITOR.instances['send_reg_service'].getData();
+		var send_active_service = CKEDITOR.instances['send_active_service'].getData();
 		//console.log(description_short); return false;
         var data = new FormData();
         data.append('title_forgot', title_forgot);
 		data.append('title_register', title_register);
+		data.append('title_reg_service', title_reg_service);
+		data.append('title_active_service', title_active_service);
 
 		data.append('send_register', send_register);
 		data.append('send_forgot', send_forgot);
+		data.append('send_reg_service', send_reg_service);
+		data.append('send_active_service', send_active_service);
         data.append('id', id);
         $.ajax({
             url: controller + 'save',

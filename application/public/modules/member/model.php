@@ -32,5 +32,5 @@ class MemberModel extends CI_Model
 		else {
 			return $this->getActiveCode();
 		}
-	}	
+	}
 }

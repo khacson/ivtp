@@ -123,6 +123,33 @@
                 </div>
             </div>
             <div class="row mtop10">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="control-label col-md-4">Show on top</label>
+						<div class="col-md-8">
+							<select name="is_top" id="is_top" class="combos" >
+								<option value=""></option>
+								<option value="1">Có</option>
+								<option value="0">Không</option>
+							</select>
+						</div>
+					</div>
+                </div>
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="control-label col-md-4">Gói dịch vụ</label>
+						<div class="col-md-8">
+							<select name="level" id="level" class="combos" >
+								<option value=""></option>
+								<option value="0">Free</option>
+								<option value="1">Normal</option>
+								<option value="2">VIP</option>
+							</select>
+						</div>
+					</div>
+                </div>
+			</div>
+            <div class="row mtop10">
                 <div class="col-md-12">
                         <div class="form-group">
                                 <label class="control-label col-md-1">Nội dung ngắn</label>
@@ -229,7 +256,7 @@
                 var reader = new FileReader();
                 reader.onload = (function(theFile) {
                     return function(e) { //size e = e.tatal
-                       $('#show2').html('<img src="' + e.target.result + '" style="width:60px; height:40px" />');
+                       $('#show2').html('<img src="' + e.target.result + '" style="height:50px" />');
                     };
                 })(f);
                 reader.readAsDataURL(f);
@@ -253,7 +280,7 @@
                 var reader = new FileReader();
                 reader.onload = (function(theFile) {
                     return function(e) { //size e = e.tatal
-                        $('#show').html('<img src="' + e.target.result + '" style="width:60px; height:40px" />');
+                        $('#show').html('<img src="' + e.target.result + '" style="height:50px" />');
                         //$("#img1").val(e.target.result);
                     };
                 })(f);
@@ -270,6 +297,16 @@
 		$('#typeid').multipleSelect({
         	filter: true,
 			placeholder:"Chọn loại",
+            single: true
+        });     
+		$('#is_top').multipleSelect({
+        	filter: true,
+			placeholder:"Chọn trạng thái",
+            single: true
+        }); 
+		$('#level').multipleSelect({
+        	filter: true,
+			placeholder:"Chọn gói dịch vụ",
             single: true
         });
         refresh();addform();
@@ -406,10 +443,14 @@
 		$('#meta_keyword').val('<?=$finds->meta_keyword;?>');
 		$('#mete_description').val('<?=$finds->mete_description;?>');
 		var typeid = '<?=$finds->typeid;?>';
+		var is_top = '<?=$finds->is_top;?>';
+		var level = '<?=$finds->level;?>';
 		$('#typeid').multipleSelect('setSelects', typeid.split(','));
+		$('#is_top').multipleSelect('setSelects', is_top.split(','));
+		$('#level').multipleSelect('setSelects', level.split(','));
 		if(id!=''){
-			$('#show').html('<img src="' + img + '" style="width:100px; height:50px" />');
-			$('#show2').html('<img src="' + thumb + '" style="width:100px; height:50px" />');
+			$('#show').html('<img src="' + img + '" style="height:50px" />');
+			$('#show2').html('<img src="' + thumb + '" style="height:50px" />');
 		}
 		
 	}

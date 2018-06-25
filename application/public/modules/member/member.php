@@ -442,11 +442,29 @@ class Member extends CI_Controller {
 					->where('id <>'. $insert_id)
 					->update($arr);
 		
-		$from = 'ndkhuong89@gmail.com';
 		$to = $login->email;
-		$sub = 'Hướng dẫn kích hoạt dịch vụ';
-		$msg = 'Bạn vui lòng chuyển '.number_format($total_paid).' đồng đến số tài khoản ABCXYZ với nội dung là: '.$active_code.' để kích hoạt gói dịch vụ.';
-		$this->base_model->sendEmail2($from, $to, $sub, $msg);
+		$arrMailInfo = $this->base_model->getSendMailInfo();
+		$sub = $arrMailInfo->title_reg_service;
+		
+		if ($time_use < 12 ) {
+			$time_use = $time_use.' tháng';
+		}
+		elseif ($time_use >= 12 ) {
+			$time_use = $time_use/12 .' năm';
+		}
+		$gender = $login->sex == 1 ? 'anh' : 'chị';
+		$arrTrans['{gender}'] = $gender;
+		$arrTrans['{Gender}'] = ucfirst($gender);
+		$arrTrans['{fullname}'] = $login->fullname;
+		$arrTrans['{email}'] = $login->email;
+		$arrTrans['{service_name}'] = $this->base_model->getServiceName($level);
+		$arrTrans['{time_use}'] = $time_use;
+		$arrTrans['{total_paid}'] = number_format($total_paid);
+		$arrTrans['{active_code}'] = $active_code;	
+		
+		$msg = $this->base_model->translateEmail($arrTrans, $arrMailInfo->send_reg_service);
+		
+		$send = $this->base_model->sendEmail2($to, $sub, $msg);
 		echo 1;die;
 	}
 }

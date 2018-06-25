@@ -218,10 +218,10 @@
 <!-- END PORTLET-->
 <!-- END PORTLET-->
 <div class="loading" style="display: none;">
-	<div class="blockUI blockOverlay" style="width: 100%;height: 100%;top:0px;left:0px;position: absolute;background-color: rgb(0,0,0);opacity: 0.1;z-index: 1000;">
+	<div class="blockUI blockOverlay" style="width: 100%;height: 100%;top:0px;left:0px;position: absolute;background-color: rgb(0,0,0);opacity: 0.1;z-index: 100000000;">
 	</div>
 	<div class="blockUI blockMsg blockElement" style="width: 30%;position: absolute;top: 15%;left:35%;text-align: center;">
-		<img src="<?=url_tmpl()?>img/ajax_loader.gif" style="z-index: 2;position: absolute;"/>
+		<img src="<?=url_tmpl()?>img/ajax_loader.gif" style="z-index: 999999999;position: absolute;"/>
 	</div>
 </div> 
 <!-- ui-dialog -->

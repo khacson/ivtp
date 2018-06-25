@@ -180,7 +180,6 @@ class Investment extends CI_Controller {
 		$array['description_long'] = $this->input->post('description_long');
         $array['dateupdate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
         $array['userupdate'] = $login->username;
-//print_r($array);exit;
         $result['status'] = $this->model->edits($array, $id);
         $result['csrfHash'] = $token;
         echo json_encode($result);

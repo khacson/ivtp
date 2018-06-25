@@ -98,7 +98,7 @@ class Memberlevel extends CI_Controller {
 		$id = $this->input->post('idR');
 		
 		$rs = $this->model->table('ivt_member_level')
-					->select('time_use')
+					->select('*')
 					->where('id', $id)
 					->find();
 		if (empty($rs)) {
@@ -108,6 +108,10 @@ class Memberlevel extends CI_Controller {
 			echo json_encode($result);die;
 		}
 		$time_use = $rs->time_use;
+		$level = $rs->level;
+		$total_paid = $rs->total_paid;
+		$active_code = $rs->active_code;
+		$memberId = $rs->member_id;
 		
 		if ($type == 'active_status') {
 			if ($new_status == 1) {
@@ -126,6 +130,37 @@ class Memberlevel extends CI_Controller {
 		$this->model->table('ivt_member_level')
 					->where('id', $id)
 					->update($array);
+		
+		if ($type == 'active_status') {
+			if ($new_status == 1) {
+				$to = $login->email;
+				$arrMailInfo = $this->base_model->getSendMailInfo();
+				$sub = $arrMailInfo->title_active_service;
+				
+				if ($time_use < 12 ) {
+					$time_use = $time_use.' tháng';
+				}
+				elseif ($time_use >= 12 ) {
+					$time_use = $time_use/12 .' năm';
+				}
+				$memberInfo = $this->base_model->getMemberInfo($memberId);
+				$gender = $memberInfo->sex == 1 ? 'anh' : 'chị';
+				$arrTrans['{gender}'] = $gender;
+				$arrTrans['{Gender}'] = ucfirst($gender);
+				$arrTrans['{fullname}'] = $memberInfo->fullname;
+				$arrTrans['{email}'] = $memberInfo->email;
+				$arrTrans['{service_name}'] = $this->base_model->getServiceName($level);
+				$arrTrans['{time_use}'] = $time_use;
+				$arrTrans['{total_paid}'] = number_format($total_paid);
+				$arrTrans['{active_code}'] = $active_code;	
+				$arrTrans['{from_date}'] = date('d/m/Y H:i', strtotime($array['from_date']));	
+				$arrTrans['{to_date}'] = date('d/m/Y H:i', strtotime($array['to_date']));	
+				
+				$msg = $this->base_model->translateEmail($arrTrans, $arrMailInfo->send_active_service);
+				
+				$send = $this->base_model->sendEmail2($to, $sub, $msg);
+			}
+		}
 		
 		$result = new stdClass();
 		$result->csrfHash = $this->security->get_csrf_hash();

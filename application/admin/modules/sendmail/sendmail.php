@@ -62,8 +62,12 @@ class Sendmail extends CI_Controller {
         $login = $this->login;
 		$array['title_register'] = $this->input->post('title_register');
 		$array['title_forgot'] = $this->input->post('title_forgot');
+		$array['title_reg_service'] = $this->input->post('title_reg_service');
+		$array['title_active_service'] = $this->input->post('title_active_service');
 		$array['send_register'] = $this->input->post('send_register');
 		$array['send_forgot'] = $this->input->post('send_forgot');
+		$array['send_reg_service'] = $this->input->post('send_reg_service');
+		$array['send_active_service'] = $this->input->post('send_active_service');
 		
         $array['datecreate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
         $array['usercreate'] = $login->username;

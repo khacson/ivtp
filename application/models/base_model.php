@@ -260,7 +260,7 @@ class base_model extends CI_Model {
 		return $rs->price;
 	}
 
-	function sendEmail2($from, $to, $sub, $msg){	
+	function sendEmail2($to, $sub, $msg){	
 		$ci = get_instance();
 		$ci->load->library('email');
 		$ci->load->library('parser');
@@ -293,7 +293,7 @@ class base_model extends CI_Model {
 		
 		$ci->email->initialize($config);
 		$ci->email->clear(TRUE);
-		$ci->email->from($from,'Investor');
+		$ci->email->from('investorprovn@gmail.com','Investor');
 		$list = array($to);
 		$ci->email->to($list); 
 		$ci->email->subject($sub); 
@@ -351,6 +351,37 @@ class base_model extends CI_Model {
 			imagejpeg($dst_r,$new_path,$quality);
 		}
 	}
+	
+	function translateEmail($arrTrans, $msg) {
+		foreach ($arrTrans as $k=>$v) {
+			$msg = str_replace($k, $v, $msg);
+		}
+		return $msg;
+	}
+	
+	function getServiceName($level) {
+		$rs = $this->model->table('ivt_service_price')
+						  ->select('name')
+						  ->where('level', $level)
+						  ->find();
+		return $rs->name;
+	}
+		
+	function getSendMailInfo() {
+		$rs = $this->model->table('ivt_sendmail')
+						  ->select('*')
+						  ->find();
+		return $rs;
+	}
+	
+	function getMemberInfo($memberID) {
+		$rs = $this->model->table('ivt_member')
+						  ->select('*')
+						  ->where('id', $memberID)
+						  ->find();
+		return $rs;
+	}
+	
 	function rand_string($length) {
 		$str = '';
 		$chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

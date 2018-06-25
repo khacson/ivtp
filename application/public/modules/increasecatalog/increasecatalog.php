@@ -47,7 +47,20 @@ class Increasecatalog extends CI_Controller {
 		$data->listNew = $this->model->getFindNew(0);
 		
 		$id = -1;
-		$array = array('postId'=>$id);
+		$login = $this->site->getSession('pblogin');
+		if (empty($login)) {
+			$m_fullname = '';
+			$m_email = '';
+		}
+		else {
+			$m_fullname = $login->fullname;
+			$m_email = $login->email;
+		}
+		$array = array();
+		$array['postId'] = $id;
+		$array['m_fullname'] = $m_fullname;
+		$array['m_email'] = $m_email;
+		
 		$data->commentForm = $this->load->view('comment_form',$array,true);
 		
 		$array['commentList'] = $this->getCommentList($id);
@@ -81,7 +94,20 @@ class Increasecatalog extends CI_Controller {
 		$data->info = $updateInfo;
 		$data->listNew = $this->model->getFindNew(0);
 		$id = -1;
-		$array = array('postId'=>$id);
+		
+		$login = $this->site->getSession('pblogin');
+		if (empty($login)) {
+			$m_fullname = '';
+			$m_email = '';
+		}
+		else {
+			$m_fullname = $login->fullname;
+			$m_email = $login->email;
+		}
+		$array = array();
+		$array['postId'] = $id;
+		$array['m_fullname'] = $m_fullname;
+		$array['m_email'] = $m_email;
 		$data->commentForm = $this->load->view('comment_form',$array,true);
 		
 		$array['commentList'] = $this->getCommentList($id);

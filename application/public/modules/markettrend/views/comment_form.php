@@ -1,3 +1,9 @@
+<?php 
+$readonly = '';
+if (!empty($m_fullname)) {
+	$readonly = 'readonly';
+}
+?>
 <div class="offset-top-60 offset-md-top-90">
   <hr class="divider hr-left-0 bg-bermuda">
   <div class="offset-top-15">
@@ -13,13 +19,14 @@
 		<div class="cell-sm-6">
 		  <div class="form-group form-group-outside">
 			<label class="form-label form-label-outside" for="contact-first-name">Họ tên (<span class="red">*</span>)</label>
-			<input class="form-control" id="fullname" type="text" name="fullname" >
+			<input value="<?=$m_fullname?>" <?=$readonly?> class="form-control" id="fullname" type="text" name="fullname" >
 		  </div>
 		</div>
 		<div class="cell-sm-6">
 		  <div class="form-group form-group-outside">
-			<label class="form-label form-label-outside" for="contact-phone">Điện thoại</label>
-			<input class="form-control" id="phone" type="text" name="phone" >
+			<label class="form-label form-label-outside" for="contact-email">Email(
+			<span class="red">*</span>)</label>
+			<input value="<?=$m_email?>" <?=$readonly?> class="form-control" id="email" type="text" name="email" >
 		  </div>
 		</div>
 		<div class="cell-sm-12 offset-top-10">
@@ -44,7 +51,7 @@
 $(function(){ 
 	$('#send').click(function(){
 		 var fullname = $('#fullname').val();  
-		 var phone = $('#phone').val(); 
+		 var email = $('#email').val(); 
 		 var parid = $('input[name=parid]').val();
 		 var level = $('input[name=level]').val();
 		 var blogid = $('input[name=pid]').val();
@@ -52,9 +59,13 @@ $(function(){
 			 warning('Họ tên không được trống.');
 			 $('#fullname').focus(); return false;
 		 }
-		 if(phone == ''){
-			 //warning('Điện thoại không được trống.');
-			 //$('#phone').focus(); return false;
+		 if(email == ''){
+			 warning('Email không được trống.');
+			 $('#email').focus(); return false;
+		 }
+		 if(!validateEmail(email)){
+			 warning('Vui lòng nhập đúng định dạng email.');
+			 $('#email').focus(); return false;
 		 }
 		
 		 var description = $('#description').val();
@@ -66,11 +77,11 @@ $(function(){
 			url : '<?=base_url()?>markettrend/save_comment',
 			type: 'POST',
 			async: false,
-			data:{fullname:fullname,phone:phone,description:description,parid:parid,level:level,blogid:blogid},  
+			data:{fullname:fullname,email:email,description:description,parid:parid,level:level,blogid:blogid},  
 			success:function(datas){
 				success('Cảm ơn bạn đã đóng góp ý kiến. Chúng tôi sẽ phản hồi bạn trong vòng 24 giờ.');
-				$('#fullname').val('');  
-				$('#phone').val('');  
+				$('#fullname').val('<?=$m_fullname?>');  
+				$('#email').val('<?=$m_email?>');  
 				$('#description').val('');
 				$('input[name=parid]').val('');
 				$('input[name=level]').val('');
@@ -78,5 +89,9 @@ $(function(){
 		});
 	});
 });
+function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
 
 </script>

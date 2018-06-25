@@ -13,8 +13,12 @@
 			 $arr = array();
 			 $arr['title_register'] = '';
 			 $arr['title_forgot'] = '';
+			 $arr['title_reg_service'] = '';
+			 $arr['title_active_service'] = '';
 			 $arr['send_register'] = '';
 			 $arr['send_forgot'] = '';
+			 $arr['send_reg_service'] = '';
+			 $arr['send_active_service'] = '';
 			 $arr['datecreate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
 			 $arr['usercreate'] = $this->login->username;
 			 $this->model->table('ivt_sendmail')->insert($arr);
