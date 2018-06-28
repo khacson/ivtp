@@ -12,7 +12,8 @@
 	table col.c10 { width: 300px; }
 	table col.c11 { width: 300px; }
 	table col.c12 { width: 120px; }
-	table col.c13 {  width: auto; }
+	table col.c13 {  width: 100px; }
+	table col.c14 {  width: auto; }
 </style>
 <!-- BEGIN PORTLET-->
 <form method="post" enctype="multipart/form-data">
@@ -219,7 +220,7 @@
 				<div id="cHeader">
 					<div id="tHeader">    	
 						<table width="100%" cellspacing="0" border="1" id="tbheader" >
-							<?php for($i=1; $i< 14; $i++){?>
+							<?php for($i=1; $i< 15; $i++){?>
 								<col class="c<?=$i;?>">
 							<?php }?>
 							<tr>
@@ -235,6 +236,7 @@
 								<th id="ord_u.experience">Kinh nghiệm</th>
 								<th id="ord_u.views">Quan điểm</th>
 								<th id="ord_u.firebasedb">Database</th>
+								<th id="ord_u.is_full">Full status</th>
 								<th></th>
 							</tr>
 						</table>
@@ -245,7 +247,7 @@
 				<div id="data">
 					<div id="gridView">
 						<table  id="tbbody" width="100%" cellspacing="0" border="1">
-							<?php for($i=1; $i< 14; $i++){?>
+							<?php for($i=1; $i< 15; $i++){?>
 								<col class="c<?=$i;?>">
 							<?php }?>
 							<tbody id="grid-rows"></tbody>
@@ -382,6 +384,46 @@
 				}
 			});
 		});
+		$('.change_status').live('click', function(e){
+			var id = $(this).parents('tr').attr('id');
+			var status = $(this).attr('is_full');
+			if (status == 0) {
+				var newStatus = 1;
+			}
+			else {
+				var newStatus = 0;
+			}
+			var token = $('#token').val();
+			$('.loading').show();
+			$.ajax({
+				url : controller + 'changeStatus',
+				type: 'POST',
+				async: false,
+				data: {csrf_stock_name:token,id:id, status: newStatus},
+				success:function(datas){
+					$('.loading').hide();
+					var obj = $.evalJSON(datas); 
+					$('#token').val(obj.csrfHash);
+					if(obj.status == 0){
+						error('Có lỗi xảy ra, chuyển trạng thái thất bại'); return false;		
+					}
+					else{
+						$('.loading').show();
+						$('.searchs').val('');
+						$('#show').html('');
+						$('#schoolid,#groupid').multipleSelect('uncheckAll');
+						csrfHash = $('#token').val();
+						search = getSearch();//alert(cpage);
+						getList(cpage,csrfHash);	
+					}
+					
+				},
+				error : function(){
+					$('.loading').hide();
+					error('Có lỗi xảy ra, chuyển trạng thái thất bại'); return false;
+				}
+			});
+		});
 	});
 	
 	function updateCoords(c){
@@ -427,10 +469,12 @@
 				return false;		
 			}
 		}
-		if($("#imageEnable").val() == ""){
-			error("Vui lòng upload hình đại diện"); 
-			return false;		
-		}	
+		if (id == '') {
+			if($("#imageEnable").val() == ""){
+				error("Vui lòng upload hình đại diện"); 
+				return false;		
+			}
+		}		
 		
 		var data = new FormData();
 		var objectfile = document.getElementById('imageEnable').files;
@@ -470,8 +514,12 @@
 		});
 	}
     function funcList(obj){
-		$('.edit').each(function(e){ 
-			$(this).click(function(){ 
+		$('.edit').each(function(e){
+			var _this = $(this);
+			$(this).click(function(el){
+				if ($(el.target).hasClass('change_status')) {
+					return;
+				}
 				var username = $('.uusername').eq(e).html().trim();
 				var groupid = $(this).attr('groupid');
 				var firebasedb = $(this).attr('firebasedb');
@@ -500,6 +548,9 @@
 				if ($(this).attr('avatar') != '') {
 					var avatar = '<?=base_url()?>files/user/'+$(this).attr('avatar') + '?t=' + new Date().getTime();
 					$('#show').html('<img src="' + avatar + '" style="height:60px; border-radius: 50% !important" />');
+				}
+				else {
+					$('#show').html('');
 				}
 			});	
 		});	

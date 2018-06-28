@@ -47,7 +47,7 @@ class User extends CI_Controller {
 			//show_404();
 		}
 		$param = array();
-		$numrows = 20; 
+		$numrows = 200; 
 		$data = new stdClass();
 		///
 		$index = $this->input->post('index');
@@ -125,6 +125,9 @@ class User extends CI_Controller {
 		if (empty($array['signature'])) {
 			$array['signature'] = 'noavatar.png';
 		}
+		if ($array['groupid'] != 2 && $array['groupid'] != 3) {
+			unset($array['firebasedb']);
+		}
 		
 		$login = $this->login;
 		$array['datecreate']  = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
@@ -172,8 +175,8 @@ class User extends CI_Controller {
 		unset($array['w']);
 		unset($array['h']);
 		
-		if (empty($array['signature'])) {
-			$array['signature'] = 'noavatar.png';
+		if ($array['groupid'] != 2 && $array['groupid'] != 3) {
+			unset($array['firebasedb']);
 		}
 		
 		if(empty($array['password'])){
@@ -230,7 +233,30 @@ class User extends CI_Controller {
 		$result['csrfHash'] = $token;
 		echo json_encode($result);
 	}
+	function changeStatus() {
+		$login = $this->login;
+		if (empty($login) || empty($login->id)) {
+			$result = new stdClass();
+			$result->csrfHash = $this->security->get_csrf_hash();
+			$result->status = 0;
+			echo json_encode($result);die;
+		}
+		$status = $this->input->post('status');
+		$id = $this->input->post('id');
 
+		$array['is_full'] = $status;
+		$array['dateupdate'] = gmdate('Y-m-d H:i:s', time() + 7*3600);
+		$array['userupdate'] = $login->username;
+		
+		$this->model->table('ivt_users')
+					->where('id', $id)
+					->update($array);
+		
+		$result = new stdClass();
+		$result->csrfHash = $this->security->get_csrf_hash();
+		$result->status = 1;
+		echo json_encode($result);
+	}
 	
 	
 }

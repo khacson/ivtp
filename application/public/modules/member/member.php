@@ -32,7 +32,8 @@ class Member extends CI_Controller {
 	}
 	function login(){
 		$data = new stdClass();
-		
+		$data->pbemail = $this->site->GetCookie("pbemail");
+		$data->pbpass = $this->site->GetCookie("pbpass");
 		$content = $this->load->view('login',$data,true);
         $this->site->write('content',$content,true);
         $this->site->render();
@@ -40,6 +41,8 @@ class Member extends CI_Controller {
 	function clicklogin(){
 		$email = $this->input->post('email');
 		$password = $this->input->post('password');
+		$pw = $password;
+		$remember = $this->input->post('remember');
 		$pass = md5($password).md5(md5('ivt').md5($password));
 		$query = $this->model->table('ivt_member')
 					  ->where('email',$email)
@@ -58,6 +61,10 @@ class Member extends CI_Controller {
 					echo -1; exit;
 				}
 				$this->site->SetSession("pblogin", $query);
+				if (!empty($remember)) {
+					$this->site->CreateCookie("pbemail", $email, 360);
+					$this->site->CreateCookie("pbpass", $pw, 360);
+				}
 				echo 1; exit;
 			}
 		}
@@ -423,7 +430,7 @@ class Member extends CI_Controller {
 		$level = $this->input->post('level');
 		$time_use = $this->input->post('select_mon');
 		$price_per_mon = $this->base_model->getPrice($level);
-		$total_paid = $price_per_mon * $time_use;
+		$total_paid = $this->model->getTotalPaid($price_per_mon, $time_use);
 		$active_code = $this->model->getActiveCode();
 		
 		$array['member_id'] = $login->id;

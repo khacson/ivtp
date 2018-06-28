@@ -8,6 +8,19 @@
 #modal_content .select_mon {
    width: 150px;
 }
+#modal_content .after_discount {
+	color: #53338c;
+}
+#modal_content ul {
+    list-style: inside none disc;
+    padding-left: 15px;
+}
+#modal_content .promote {
+    color: #53338c;
+    font-style: italic;
+    font-weight: bold;
+    text-decoration: underline;
+}
 @media screen and (max-width: 380px) {
 	#modal_content label {
 		width: auto;
@@ -32,13 +45,16 @@
 </section> 
 <section class="text-left section-40 section-md-30">
 	<div class="inset-lg-left-45 inset-lg-right-45 inset-xl-left-130 inset-xl-right-85">
-		<div class="shell-wide shell-wide-custom">
+		<div class="cell-md-12">
 			<div class="cell-md-12 text-center">
 				<h3 class="text-primary">Bảng Giá Dịch Vụ</h3>
 			</div>
-			<div class="range range-xs-center range-lg-left text-left pricing">
+			<div class="range range-xs-center pricing">
+				<div class="cell-sm-12 cell-md-12 cell-lg-9 cell-xl-8 table_service_container">
+					<?php include 'table_pricing.php'; ?>
+				</div>
 				<!--S Item 1-->
-				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-5">
+				<div class="hide cell-sm-10 cell-md-6 cell-lg-4 cell-xl-5">
 					<div class="post-box shadow-drop post-box-max-width-none reveal-block">
 						<div class="plan ">
 							<div class="header">
@@ -63,7 +79,7 @@
 					</div>
 				</div>
 				<!--S Item 2-->
-				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-5">
+				<div class="hide cell-sm-10 cell-md-6 cell-lg-4 cell-xl-5">
 					<div class="post-box shadow-drop post-box-max-width-none reveal-block">
 						<div class="plan popular">
 							<div class="header">
@@ -88,7 +104,7 @@
 					</div>
 				</div>
 				<!--S Item 3-->
-				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-5">
+				<div class="hide cell-sm-10 cell-md-6 cell-lg-4 cell-xl-5">
 					<div class="post-box shadow-drop post-box-max-width-none reveal-block">
 						<div class="plan">
 							<div class="header">
@@ -168,7 +184,17 @@
 		<div class="row">
 			<label class="pull-left">Tổng hóa đơn: </label>
 			<div class="pull-left">
-				<b><span class="total_price"></span> đồng</b>
+				<b><span class="total_price"></span> đồng</b> <i class="after_discount"></i>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<p></p>
+				<div class="promote">Ưu đãi:</div>
+				<ul>
+					<li><i>Giảm <b><?=DISCOUNT_RATE_1 * 100?>%</b> khi đăng ký từ 6 tháng đến 11 tháng.</i></li>
+					<li><i>Giảm <b><?=DISCOUNT_RATE_2 * 100?>%</b> khi đăng ký từ 12 tháng trở lên.</i></li>
+				</ul>
 			</div>
 		</div>
 		<div class="row-centered offset-top-20">
@@ -207,6 +233,8 @@ var n = <?=$normal_price?>;
 var v = <?=$vip_price?>;
 var price_per_mon;
 var type;
+var discount_rate_1 = '<?=DISCOUNT_RATE_1?>';
+var discount_rate_2 = '<?=DISCOUNT_RATE_2?>';
 $('body').on('click', '#reg_service', function() {
 	$('#myModal').modal('toggle');
 	var level = type;
@@ -247,6 +275,7 @@ $('.btn-reg').click(function(){
 	}
 	
 	$('.modal-title').text('Thông tin đăng ký');
+	$('.after_discount').text('');
 	type = $(this).attr('type');
 	if (type == 1) {
 		price_per_mon = n;
@@ -267,8 +296,19 @@ function setContent(service_name) {
 	$('#modal_content').html(content);
 	$('#showModal').get(0).click();
 }
-function getTotalPrice(val) {
-	var total = price_per_mon * val;
+function getTotalPrice(mon) {
+	if (mon < 6) {
+		var total = price_per_mon * mon;
+		$('.after_discount').text('');
+	}
+	else if (mon >= 6 && mon < 12) {
+		var total = price_per_mon * mon * (1 - discount_rate_1);
+		$('.after_discount').text('(đã giảm '+ discount_rate_1 * 100 +'%)');
+	}
+	else if (mon >= 12) {
+		var total = price_per_mon * mon * (1 - discount_rate_2);
+		$('.after_discount').text('(đã giảm '+ discount_rate_2 * 100 +'%)');
+	}
 	$('.total_price').text(total.toLocaleString('en'));
 }
 

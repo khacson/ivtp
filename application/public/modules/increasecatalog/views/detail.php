@@ -92,7 +92,12 @@ table col.c11 { width: auto; }
 		<div class="cell-sm-10 cell-md-4 offset-top-90">
 		  <div class="inset-md-left-30">
 			<!-- Aside-->
-			<aside class="text-left inset-xl-right-50">  
+			<aside class="text-left inset-xl-right-50"> 
+				<!-- Recent Posts-->
+				<div class="offset-top-60 offset-md-top-90">
+					<hr class="divider hr-left-0 bg-bermuda">
+					<h5 class="offset-top-15">Bài viết mới</h5>
+				</div>
 			  <?php include 'new_post.php' ?>
 			</aside>
 		  </div>

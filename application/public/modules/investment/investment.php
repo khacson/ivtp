@@ -8,8 +8,9 @@ class Investment extends CI_Controller {
     
 	function __construct(){
 		parent::__construct();			
-	    $this->load->model();
+	    $this->load->model(array('model','base_model'));
 		$this->rows = 20;
+		$this->postLevel = 1;
 	}
     function  _remap($method, $params = array()){
         if(method_exists($this, $method))
@@ -44,7 +45,18 @@ class Investment extends CI_Controller {
 		$data->catalogFind = $this->model->getFindCatalog($uri);
 		$data->uri = $uri;
 		
-        $content = $this->load->view('view',$data,true);
+		if ($data->catalogFind->id == 13) {
+			$this->postLevel = 2;
+		}
+		
+		$memberLevel = $this->base_model->getMemberLevel();
+		if ($memberLevel >= $this->postLevel) {
+			$content = $this->load->view('view',$data,true);
+		}
+		else {
+			$content = $this->load->view('404',$data,true);
+		}
+		
         $this->site->write('content',$content,true);
 		$this->site->write('title',$finds->meta_title,true);
 		$this->site->write('keywords',$finds->meta_keyword,true);
@@ -88,7 +100,18 @@ class Investment extends CI_Controller {
 		$array['commentList'] = $this->getCommentList($id);
 		$data->commentList = $this->load->view('comment_list',$array,true);
 		
-		$content = $this->load->view('detail',$data,true);
+		if ($typeid == 13) {
+			$this->postLevel = 2;
+		}
+		
+		$memberLevel = $this->base_model->getMemberLevel();
+		if ($memberLevel >= $this->postLevel) {
+			$content = $this->load->view('detail',$data,true);
+		}
+		else {
+			$content = $this->load->view('404',$data,true);
+		}
+		
         $this->site->write('content',$content,true);
         $this->site->render();
 	}

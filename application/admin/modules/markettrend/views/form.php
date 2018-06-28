@@ -122,21 +122,6 @@
                     </div>
                 </div>
             </div>
-			<div class="row mtop10">
-				<div class="col-md-4">
-					<div class="form-group">
-						<label class="control-label col-md-4">Gói dịch vụ</label>
-						<div class="col-md-8">
-							<select name="level" id="level" class="combos" >
-								<option value=""></option>
-								<option value="0">Free</option>
-								<option value="1">Normal</option>
-								<option value="2">VIP</option>
-							</select>
-						</div>
-					</div>
-                </div>
-			</div>
             <div class="row mtop10">
                 <div class="col-md-12">
                         <div class="form-group">
@@ -287,11 +272,6 @@
 			placeholder:"Chọn loại",
             single: true
         });
-		$('#level').multipleSelect({
-        	filter: true,
-			placeholder:"Chọn gói dịch vụ",
-            single: true
-        });
         refresh();addform();
 		//CKEDITOR.instances['description'].setData("111");
         $('#refresh').click(function() {
@@ -426,9 +406,7 @@
 		$('#meta_keyword').val('<?=$finds->meta_keyword;?>');
 		$('#mete_description').val('<?=$finds->mete_description;?>');
 		var typeid = '<?=$finds->typeid;?>';
-		var level = '<?=$finds->level;?>';
 		$('#typeid').multipleSelect('setSelects', typeid.split(','));
-		$('#level').multipleSelect('setSelects', level.split(','));
 		if(id!=''){
 			$('#show').html('<img src="' + img + '" style="width:100px; height:50px" />');
 			$('#show2').html('<img src="' + thumb + '" style="width:100px; height:50px" />');

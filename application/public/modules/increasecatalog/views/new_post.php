@@ -1,8 +1,4 @@
-<!-- Recent Posts-->
-<div class="offset-top-60 offset-md-top-90">
-<hr class="divider hr-left-0 bg-bermuda">
-<h5 class="offset-top-15">Bài viết mới</h5>
-</div>
+
 <?php foreach($listNew as $item){?>
 <div class="offset-top-20">
 <!-- Unit-->

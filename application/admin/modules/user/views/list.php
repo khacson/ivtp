@@ -1,6 +1,15 @@
 <?php 
 $i= $start;
 foreach ($datas as $item) { 
+	$fullStatus = '';
+	if ($item->groupid == 2 || $item->groupid == 3) {
+		if ($item->is_full == 1) {
+			$fullStatus = '<button is_full="1" class="btn-danger btn btn-sm change_status">Full</button>';
+		}
+		else {
+			$fullStatus = '<button is_full="0" class="btn-success btn btn-sm change_status">Free</button>';
+		}
+	}
 ?>
 
 	<tr class="content edit" groupid="<?=$item->groupid;?>" level="<?=$item->level;?>" degree="<?=$item->degree;?>" experience="<?=$item->experience;?>" views="<?=$item->views;?>" firebasedb="<?=$item->firebasedb;?>" avatar="<?=$item->signature;?>" id="<?=$item->id;?>" >
@@ -17,6 +26,7 @@ foreach ($datas as $item) {
 		<td class="uexperience"><?=$item->experience;?></td>
 		<td class="uviews"><?=$item->views;?></td>
 		<td align="center" class="udb_name"><?=$item->db_name;?></td>
+		<td align="center" class="uis_full"><?=$fullStatus;?></td>
 		<td></td>
 	</tr>
 <?php	

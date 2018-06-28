@@ -11,7 +11,7 @@
 					<span class="label-input100 mbta20"><b>Email</b></span>
 					<div class="ruby">
 						<i class="fa fa-envelope-o" aria-hidden="true"></i>
-						<input onkeyup="clickLogin(event.keyCode)" class="input100" type="text" id="email" name="email" placeholder="Nhập email" value="">
+						<input onkeyup="clickLogin(event.keyCode)" class="input100" type="text" id="email" name="email" placeholder="Nhập email" value="<?=$pbemail?>">
 						<span class="focus-input100"></span>
 					</div>
 				</div>
@@ -20,16 +20,24 @@
 					<span class="label-input100 mbta20"><b>Mật khẩu</b></span>
 					<div class="ruby">
 						<i class="fa fa-lock" aria-hidden="true"></i>
-						<input onkeyup="clickLogin(event.keyCode)" class="input100" type="password" id="password" name="password" placeholder="Nhập mật khẩu">
+						<input value="<?=$pbpass?>" onkeyup="clickLogin(event.keyCode)" class="input100" type="password" id="password" name="password" placeholder="Nhập mật khẩu">
 						<span class="focus-input100" ></span>
 					</div>
 				</div>
-				<div class="text-right mtop30">
-					<a href="<?=base_url();?>quen-mat-khau.html">
-						Quên mật khẩu?
-					</a>
+				<div class="mtop30">
+					<div class="rememberlogin">
+						<label>
+							<input type="checkbox" value="" id="remember" />
+							Ghi nhớ
+						</label>
+					</div>
+					<div class="forgetpass">
+						<a href="<?=base_url();?>quen-mat-khau.html">
+							Quên mật khẩu?
+						</a>
+					</div>
 				</div>
-				<div class="container-login-form-btn mtop20">
+				<div class="container-login-form-btn mtop20 clear">
 					<div class="wrap-login-form-btn">
 						<div class="login-form-bgbtn"></div>
 						<button id="clicklogin" type="button" class="login-form-btn">
@@ -38,12 +46,12 @@
 					</div>
 				</div>
 
-				<div class="txt1 text-center mtop20">
+				<div class="txt1 text-center mtop20 hide">
 					<span>
 						Đăng nhập bằng mạng xã hội
 					</span>
 				</div>
-				<div class="flex-c-m mtop10">
+				<div class="flex-c-m mtop10 hide">
 					<a href="#" class="login100-social-item bg1">
 						<i class="fa fa-facebook"></i>
 					</a>
@@ -65,11 +73,12 @@
   <script src="<?=url_tmpl();?>toast/notifications.js"></script>
 <Script>
 	$(function(){
-		$('#email').val('');
-		$('#password').val('');
+		//$('#email').val('');
+		//$('#password').val('');
 		$('#clicklogin').click(function(){
 			var email = $('#email').val();  
 			var password = $('#password').val(); 
+			var remember = $('#remember').is(':checked'); 
 			if(email == ''){
 				warning('Email không được trống');
 				$('#email').focus(); return false;
@@ -82,11 +91,14 @@
 				url : '<?=base_url();?>member/' + 'clicklogin',
 				type: 'POST',
 				async: false,
-				data:{email:email, password:password},  
+				data:{email:email, password:password, remember:remember},  
 				success:function(datas){
 					if(datas == 1){
-						success("Đăng nhập thành công. Vui lòng kiểm tra lại email và mật khẩu.");
-						window.location.href = '<?=base_url();?>trang-chu.html';
+						success("Đăng nhập thành công.");
+						setTimeout(function(){
+							window.location.href = '<?=base_url();?>trang-chu.html';
+						}, 1000)
+						
 					}
 					else if(datas == -1){
 						warning("Tài khoản chưa kích hoạt."); return false;

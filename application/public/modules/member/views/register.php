@@ -148,8 +148,17 @@
 				warning('Email không được trống.');
 				$('#eemail').focus(); return false;
 			}
+			if(!validateEmail(email) && email != ""){
+				warning('Email không đúng định dạng'); 
+				$("#eemail").focus();
+				return false;	
+			}
 			if(password == ''){
 				warning('Mật khẩu không được trống.');
+				$('#password').focus(); return false;
+			}
+			if(password.length < 8){
+				warning('Mật khẩu tối thiểu 8 ký tự.');
 				$('#password').focus(); return false;
 			}
 			if(password != cfassword){
@@ -262,5 +271,15 @@
 		$('#w').val(c.w * rate);
 		$('#h').val(c.h * rate);
 	};
+	function validateEmail(email){
+		var emailReg = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+		var valid = emailReg.test(email);
+
+		if(!valid) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 </script>
 <script src="<?= url_tmpl(); ?>jcrop/jquery.Jcrop.min.js" type="text/javascript"></script>

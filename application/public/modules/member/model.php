@@ -32,5 +32,16 @@ class MemberModel extends CI_Model
 		else {
 			return $this->getActiveCode();
 		}
+	}	
+	function getTotalPaid($price_per_mon, $time_use) {
+		if ($time_use < 6) {
+			return $price_per_mon * $time_use;
+		}
+		else if ($time_use >= 6 && $time_use < 12) {
+			return $price_per_mon * $time_use * (1 - DISCOUNT_RATE_1);
+		}
+		else if ($time_use >= 12) {
+			return $price_per_mon * $time_use * (1 - DISCOUNT_RATE_2);
+		}
 	}
 }

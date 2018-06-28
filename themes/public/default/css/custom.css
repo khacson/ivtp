@@ -348,3 +348,28 @@ body{
 	position: relative;
 }
 /*end loading*/
+
+/*login form*/
+.login-form .rememberlogin {
+	width: 50%;
+	float: left;
+	text-align: left;
+}
+.login-form .forgetpass {
+	width: 50%;
+	float: left;
+	text-align: right;
+	margin-bottom: 10px;
+}
+@media (max-width: 360px) {
+	.login-form .rememberlogin {
+		width: 100%;
+		text-align: left;
+	}
+	.login-form .forgetpass {
+		width: 100%;
+		text-align: left;
+		margin-top: 5px;
+	}
+}
+/*end login form*/

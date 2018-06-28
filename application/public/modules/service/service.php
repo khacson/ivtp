@@ -26,7 +26,7 @@ class Service extends CI_Controller {
 			$this->_detail($url);
 		}
     }
-	function _view(){ 
+	function _view(){ //echo $this->base_model->getMemberLevel();die;
 		$login = $this->site->getSession('pblogin');
 		$finds = $this->model->getInfor();
 		$data = new stdClass();
@@ -36,7 +36,7 @@ class Service extends CI_Controller {
 		$data->login = $login;
 		$data->normal_price = $this->normal_price;
 		$data->vip_price = $this->vip_price;
-		
+		$data->serviceInfo = $this->model->getServiceDetail();
 	
 		
         $content = $this->load->view('view',$data,true);

@@ -155,6 +155,9 @@
 	padding: 0 3px;
 	height: 17px;
 }
+.msg-content{
+	color: #000;
+}
 .new-msg-form{
 	position: absolute;
 	bottom: 0;

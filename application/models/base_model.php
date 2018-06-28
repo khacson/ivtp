@@ -194,9 +194,13 @@ class base_model extends CI_Model {
         return $this->model->query($sql)->execute();
     }
 	
-	function getAllHelpDeskUser() {
+	function getAllHelpDeskUser($online_status="") {
+		$search = '';
+		if ($online_status !== '') {
+			$search = " AND online_status = $online_status";
+		}
         $sql = "SELECT * FROM ivt_users
-                WHERE groupid = 2 AND isdelete=0
+                WHERE groupid = 2 AND isdelete=0 AND is_full = 0 $search
 				ORDER BY fullname";
         return $this->model->query($sql)->execute();
     }
@@ -204,10 +208,9 @@ class base_model extends CI_Model {
 	function getAllCustomerServiceUser() {
         $sql = "SELECT * FROM ivt_users
                 WHERE groupid = 3 AND isdelete=0
-				ORDER BY fullname";
+				ORDER BY online_status DESC";
         return $this->model->query($sql)->execute();
     }
-	
 	
 	function formatDate($date) {
 		$arr = explode('/', $date);
@@ -372,6 +375,37 @@ class base_model extends CI_Model {
 						  ->select('*')
 						  ->find();
 		return $rs;
+	}
+	
+	function getMemberLevel() {
+		$pblogin = $this->site->getSession('pblogin');
+		if (empty($pblogin)) {
+			return 0;
+		}
+		//mien phi 10 ngay
+		$today = gmdate('Y-m-d H:i:s', time() + 7*3600);
+		$rs = $this->model->table('ivt_member')
+						  ->select('dateactice')
+						  ->where('id', $pblogin->id)
+						  ->where('active', 1)
+						  ->find();
+		if (!empty($rs->dateactice)) {
+			$t = strtotime($today) - strtotime($rs->dateactice);
+			if ($t/84600 < 10) {
+				return 2;
+			}
+		}
+		//kiem tra co dk dich vu hay k
+		$rs = $this->model->table('ivt_member_level')
+						  ->select('level')
+						  ->where('member_id', $pblogin->id)
+						  ->where('active_status', 1)
+						  ->where("to_date >= '$today'")
+						  ->find();
+		if (!empty($rs->level)) {
+			return $rs->level;
+		}
+		return 0;
 	}
 	
 	function getMemberInfo($memberID) {

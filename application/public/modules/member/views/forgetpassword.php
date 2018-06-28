@@ -11,7 +11,7 @@
 					<span class="label-input100 mbta20"><b>Email <span style="font-weight:300;">(<span class="red">*</span>)</b></span></b></span>
 					<div class="ruby">
 						<i class="fa fa-envelope-o" aria-hidden="true"></i>
-						<input class="input100" type="text" id="email" name="email" placeholder="Nhập tài email" value="">
+						<input class="input100" type="text" id="email" name="email" placeholder="Nhập email" value="">
 						<span class="focus-input100"></span>
 					</div>
 				</div>

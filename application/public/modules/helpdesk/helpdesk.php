@@ -10,6 +10,7 @@ class Helpdesk extends CI_Controller {
 		parent::__construct();			
 	    $this->load->model(array('model','base_model'));
 		$this->rows = 20;
+		$this->postLevel = 2;
 	}
     function  _remap($method, $params = array()){
         if(method_exists($this, $method))
@@ -39,7 +40,7 @@ class Helpdesk extends CI_Controller {
 		$finds = $this->model->getInfor();
 		$data = new stdClass();
 		
-	    $data->userList = $this->base_model->getAllHelpDeskUser();
+	    $data->userList = $this->base_model->getAllHelpDeskUser(1);
 	    $data->userServiceList = $this->base_model->getAllCustomerServiceUser();
 		
 		$data->listNew = $this->model->getFindNew(0);
@@ -61,7 +62,8 @@ class Helpdesk extends CI_Controller {
 		$dbinfo2 = $this->model->get_firebasedb_info2($dbinfo->name);
 		
 		$login = $this->site->getSession('pblogin');
-		if (empty($login)) {
+		$memberLevel = $this->base_model->getMemberLevel();
+		if ($memberLevel < $this->postLevel) {
 			if ($data->userInfo->groupid != 3) {
 				$content = $this->load->view('404',$data,true);
 				$this->site->write('content',$content,true);
@@ -69,12 +71,18 @@ class Helpdesk extends CI_Controller {
 				return;
 			}
 			else {
-				$login = new stdClass();
-				$login->id = $this->model->getGuestId() * (-1);
-				$login->fullname = 'Guest'.$login->id;
-				$login->signature = 'noavatar.png';
+				if (empty($login)) {
+					$login = new stdClass();
+					$login->id = $this->model->getGuestId() * (-1);
+					$login->fullname = 'Guest'.$login->id;
+					$login->signature = 'noavatar.png';
+					$isGuest = 1;
+				}
+				else {
+					$isGuest = 0;
+					$login->signature = $login->avatar;
+				}
 			}
-			$isGuest = 1;
 		}
 		else {
 			$isGuest = 0;

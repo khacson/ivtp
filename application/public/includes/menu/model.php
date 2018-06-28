@@ -39,15 +39,26 @@ class incModelMenu extends CI_Model{
 				where m.isdelete = 0
 				order by m.catalog_name asc
 		";
-		$query = $this->model->query($sql)->execute();
-		return $query;
-		
-		$query = $this->model->table('ivt_investmentcatalog')
-							->select('id,catalog_name,friendlyurl')
-							->where('isdelete',0)
-							->order_by('catalog_name','asc')
-							->find_all();
-		return $query;
+		$rs = $this->model->query($sql)->execute();
+		if (empty($rs[0]->max_id)) {
+			$sql = "select m.id, m.catalog_name, m.friendlyurl,
+					(
+						select concat(mt.friendlyurl,'-','dt',mt.id)
+						from ivt_investment mt 
+						where mt.typeid = m.id
+						order by mt.datecreate desc
+						limit 1
+					) as max_id
+					from ivt_investmentcatalog m
+					where m.isdelete = 0
+					order by m.catalog_name asc
+					";
+			$rs2 = $this->model->query($sql)->execute();
+			return $rs2;
+		}
+		else {
+			return $rs;
+		}
 	}
 	function getInvestmentCatalog(){
 		$query = $this->model->table('ivt_investmentcatalog')

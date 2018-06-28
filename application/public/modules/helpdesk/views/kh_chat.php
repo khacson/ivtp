@@ -44,7 +44,7 @@
 			</div>
             
 			<div class="chat_log">
-				<div class="chat_log_list">
+				<div class="chat_log_list hide">
 					<div class="log-item fright">
 						<div class="customer-avatar">
 							<img class="avatar" src="<?=base_url()?>files/user/<?=$userInfo->signature?>" />
@@ -218,6 +218,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		//show noi dung chat
 		current_chat = dblog.child(chat_code);
 		$scope.chatLogList = $firebaseArray(current_chat);
+		$('.chat_log_list').removeClass('hide');
 	}
 
 	$scope.sendChat = function() {
@@ -378,6 +379,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		});
 	}
 	$scope.get_chat_history = function() {
+		$('.loading-overplay').show();
 		var data = {};
 		data['member_id'] = customer_id;
 		data['user_id'] = user_id;
@@ -389,6 +391,10 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   success : function(datas) {
 				var obj = JSON.parse(datas);
 				$('#modal_content').html(obj.content);
+				$('.loading-overplay').hide();
+		   },
+		   error: function() {
+			   $('.loading-overplay').hide();
 		   }
 		});
 	}

@@ -27,4 +27,9 @@ class ServiceModel extends CI_Model
 					  ->find();
 		return $query;
 	}
+	function getServiceDetail(){
+		$query = $this->model->table('ivt_service_detail')
+					  ->find_all();
+		return $query;
+	}
 }
