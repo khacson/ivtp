@@ -35,7 +35,7 @@ use Firebase\JWT\JWT;
 		return $rs[0];
 	}
 	function get_firebasedb_info2($dbname) {
-		$content = file_get_contents(APPPATH."\libraries\\$dbname.json");
+		$content = file_get_contents(APPPATH."libraries/firebasedb/$dbname.json");
 		return json_decode($content);
 	}
 	function create_chatcode($user_id, $member_id, $firebasedb, $isGuest) {

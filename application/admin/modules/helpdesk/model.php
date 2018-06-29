@@ -30,7 +30,7 @@ use Firebase\JWT\JWT;
 		return $rs[0];
 	}
 	function get_firebasedb_info2($dbname) {
-		$content = file_get_contents(APPPATH."\libraries\\$dbname.json");
+		$content = file_get_contents(APPPATH."libraries/firebasedb/$dbname.json");
 		return json_decode($content);
 	}
 	function update_last_response($chat_code, $last_response) {
