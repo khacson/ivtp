@@ -212,6 +212,13 @@ class base_model extends CI_Model {
         return $this->model->query($sql)->execute();
     }
 	
+	function updateOnlineStatus($id, $status) {
+		$sql = "UPDATE ivt_users
+				SET online_status = $status
+				WHERE id = $id";
+		$this->db->query($sql);
+	}
+	
 	function formatDate($date) {
 		$arr = explode('/', $date);
 		return $arr[2].'-'.$arr[0].'-'.$arr[1];

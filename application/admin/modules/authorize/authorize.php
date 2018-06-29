@@ -8,7 +8,7 @@ class authorize extends CI_Controller {
     
 	function __construct(){
 		parent::__construct();	
-		$this->load->model();
+		$this->load->model(array('model','base_model'));
 		//$lang = $this->admin->lang;
 		//$this->lang->load('message',$lang);
 		$this->admin->setTemplate('login');
@@ -104,6 +104,8 @@ class authorize extends CI_Controller {
         $captcha = $this->admin->createCapcha('captcha_lkn');   
     }
 	function logout(){
+		$login = $this->admin->getSession('login');
+		$this->base_model->updateOnlineStatus($login->id, 0);
 		$this->admin->DeleteSession("login");
 		$this->admin->DeleteSession("menus");
 		redirect(admin_url().'authorize');	

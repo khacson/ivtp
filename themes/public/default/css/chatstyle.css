@@ -220,12 +220,24 @@
 .icon-motion-container::before {
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-top: 15px solid #ccc;
+    border-top: 15px solid #fff;
     bottom: -15px;
     content: "";
     height: 0;
     position: absolute;
     right: 72px;
+    width: 0;
+	z-index: 1;
+}
+.icon-motion-container::after {
+    border-left: 11px solid transparent;
+    border-right: 11px solid transparent;
+    border-top: 16px solid #ccc;
+    bottom: -16px;
+    content: "";
+    height: 0;
+    position: absolute;
+    right: 71px;
     width: 0;
 }
 .img-msg{

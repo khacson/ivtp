@@ -35,6 +35,7 @@ class Helpdesk extends CI_Controller {
         if (!isset($permission['view'])) {
             redirect(admin_url().'home.html');
         }
+		$this->base_model->updateOnlineStatus($this->login->id, 1);
         $data->permission = $permission;
         $data->csrfName = $this->security->get_csrf_token_name();
         $data->csrfHash = $this->security->get_csrf_hash();
