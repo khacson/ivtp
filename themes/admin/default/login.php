@@ -3,14 +3,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Đăng nhập</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-
-<!-- BEGIN GLOBAL MANDATORY STYLES -->
-<!--link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&subset=all" rel="stylesheet" type="text/css"/-->
- <link rel='shortcut icon' type='image/ico' href='<?= url_tmpl() ?>favicon.ico' />
+<link rel='shortcut icon' type='image/ico' href='<?= url_tmpl() ?>favicon.ico' />
 <link href="<?=url_tmpl();?>assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="<?=url_tmpl();?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-<link href="<?=url_tmpl();?>assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
 <!-- END GLOBAL MANDATORY STYLES -->
 <!-- BEGIN PAGE LEVEL STYLES -->
 <link rel="stylesheet" type="text/css" href="<?=url_tmpl();?>assets/plugins/select2/select2.css" />
@@ -20,10 +17,8 @@
 <link href="<?=url_tmpl();?>assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
 <link href="<?=url_tmpl();?>assets/css/style.css" rel="stylesheet" type="text/css"/>
 <link href="<?=url_tmpl();?>assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
-<link href="<?=url_tmpl();?>assets/css/plugins.css" rel="stylesheet" type="text/css"/>
 <link href="<?=url_tmpl();?>assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
 <link href="<?=url_tmpl();?>assets/css/pages/login.css" rel="stylesheet" type="text/css"/>
-<link href="<?=url_tmpl();?>msgbox/Styles/msgBoxLight.css" rel="stylesheet" type="text/css"/>
 <link href="<?=url_tmpl();?>toast/toastr.css" rel="stylesheet" type="text/css"/>	
 	
 <!-- END THEME STYLES -->
@@ -32,7 +27,6 @@
 </script>
 <script src="<?=url_tmpl();?>assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
 <script src="<?=url_tmpl();?>js/jquery.json.js" type="text/javascript"></script>
-<script src="<?=url_tmpl();?>msgbox/Scripts/jquery.msgBox.js" type="text/javascript"></script>
 <script src="<?=url_tmpl();?>js/main.js" type="text/javascript"></script>
 	
 <link href="<?=url_tmpl();?>css/custom.css" rel="stylesheet">
@@ -62,14 +56,9 @@
 
 <script src="<?=url_tmpl();?>assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
 <script src="<?=url_tmpl();?>assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="<?=url_tmpl();?>assets/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js"type="text/javascript"></script>
 <script src="<?=url_tmpl();?>assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-<script src="<?=url_tmpl();?>assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
-<script src="<?=url_tmpl();?>assets/plugins/jquery.cokie.min.js" type="text/javascript"></script>
-<script src="<?=url_tmpl();?>assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
 <!-- END CORE PLUGINS -->
 <!-- BEGIN PAGE LEVEL PLUGINS -->
-<script src="<?=url_tmpl();?>assets/plugins/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="<?=url_tmpl();?>assets/plugins/select2/select2.min.js" ></script>
 <!-- END PAGE LEVEL PLUGINS -->
 <!-- BEGIN PAGE LEVEL SCRIPTS -->

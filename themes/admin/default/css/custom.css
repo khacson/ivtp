@@ -21,9 +21,6 @@ body{
 .slogan{
 	top:60px;	
 }
-.page-content {
-    width: 100%;
-}
 .lowercase{ text-transform:lowercase !important; }
 .cursor{ cursor:pointer !important;}
 .red{ color:red !important;}
@@ -380,7 +377,7 @@ a.btns{
 	margin-left:14px !important;
 }
 /*E Login*/
-@font-face {
+/*@font-face {
   font-family: 'Roboto Condensed';
   font-style: normal;
   font-weight: 300;
@@ -417,12 +414,15 @@ a.btns{
   font-weight: 700;
   src: local('Roboto Condensed Bold Italic'), local('RobotoCondensed-BoldItalic'), url(../fonts/google/mg0cGfGRUERshzBlvqxeAJP08bGTG88oqtoWiR2HUqc.woff2) format('woff2');
 }
+*/
 .nav.navbar-nav.pull-right{
 	height:26px;
 }
 .dropdown.user{
 	margin-top:-13px;
+	float:right;s
 }
+
 /*e buttons*/
 #contentlistdevice{
 	padding-right:0 !important;	

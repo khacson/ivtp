@@ -20,11 +20,9 @@ li {
      -moz-border-radius: 0 !important;
           border-radius: 0 !important;
 }
-
 /***
 Buttons & Dropdown Buttons
 ***/
-
 .btn {
 	border-width: 0;
 	padding: 7px 14px; 	
@@ -38,7 +36,6 @@ Buttons & Dropdown Buttons
           border-radius: 3px !important;
           text-shadow: none;
 }
-
 /* fix jumping group buttons */
 .btn-group.btn-group-solid .btn + .btn,
 .btn-group.btn-group-solid .btn + .btn-group.btn-group-solid,

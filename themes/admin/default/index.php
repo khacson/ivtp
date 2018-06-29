@@ -19,6 +19,7 @@
 <link href="<?=url_tmpl();?>multipleselect/multiple-select.css" rel="stylesheet" type="text/css"/>
 <link href="<?=url_tmpl();?>assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 <link href="<?=url_tmpl();?>assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css"/>
+
 <!--<link href="<?=url_tmpl();?>assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>-->
 
 <!-- END GLOBAL MANDATORY STYLES -->
@@ -76,9 +77,8 @@
 <div class="page-container" style="margin-top:10px;">
 	<div class="row" style="height:15px; margin-top:10px;">
 		<!---->
-		<div class="col-md-4"></div>
-		<div class="col-md-8">
-			<ul class="nav navbar-nav pull-right" style="margin-right:5px !important; margin-top:-10px; position:relative;  z-index: 1000;">
+		<div class="col-md-12">
+			<ul class="nav navbar-nav pull-right" style="margin-right:5px !important; margin-top:-10px; position:relative;  z-index: 1000; width:100%;">
 				<?php $this->load->inc('menuright');?>
 				<!-- END USER LOGIN DROPDOWN -->
 			</ul>
