@@ -1,6 +1,6 @@
 <!-- BEGIN PAGE HEADER-->
-<div class="row" style="margin-top:-25px;">
-	<div class="col-md-12" style="height:55px !important; margin-top:-12px;">
+<div class="row" >
+	<div class="col-md-12">
 		<!-- BEGIN PAGE TITLE & BREADCRUMB--> 
 		<ul class="page-breadcrumb breadcrumb">
 			<li>
