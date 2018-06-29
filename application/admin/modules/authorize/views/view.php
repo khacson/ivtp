@@ -46,8 +46,8 @@
     </div>
 </div>
 <div class="form-group" >
-    <div class="col-md-12" style="margin-top:0px; padding-left:0px;  padding-right:0px; ">
-        <label class="checkbox" style="margin-left:-5px;">
+    <div class="col-md-12" style="margin-top:0px; padding-right:0px; ">
+        <label class="checkbox" style="margin-left:5px;">
             <input <?php if (!empty($username)) { ?> checked <?php } ?> type="checkbox" id="remember" name="remember" value="1" /> Remember me</label>
         <button id="login" type="submit" class="btn green pull-right">
             Login <i class="m-icon-swapright m-icon-white"></i>

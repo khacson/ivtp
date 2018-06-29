@@ -481,6 +481,8 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d4e4ef', end
   box-shadow: none;
   color: #fff;
   border: 0;
+  margin-top: -38px;
+  margin-right: -10px;
 }
 
 .header.navbar .navbar-toggle:hover {
@@ -1109,6 +1111,8 @@ Page breadcrumb
   margin-top: 0px;
   border:0px !important;  
   margin-bottom:0 !important;  
+  position: static;
+  z-index: 99 !important;
 }
 
 .page-content .page-breadcrumb.breadcrumb > li > a, 
