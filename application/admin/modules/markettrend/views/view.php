@@ -211,13 +211,13 @@
         $('#delete').click(function() {
 			var id = getCheckedId();
 			 if (id == '') {
-                error('Please select a item.');
+                error('Vui lòng chọn mục để xóa.');
                 return false;
             }
             $.msgBox({
                 title: 'Message',
                 type: 'error',
-                content: 'Do you want to delete this item?',
+                content: 'Bạn có chắc muốn xóa mục này?',
                 buttons: [{value: 'Yes'}, {value: 'No'}],
                 success: function(result) {
                     if (result == 'Yes') {

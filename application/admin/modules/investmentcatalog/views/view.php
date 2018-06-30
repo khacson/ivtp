@@ -211,6 +211,16 @@
             save('edit', id);
         });
         $('#delete').click(function() {
+			var id = getCheckedId();
+			if (id == '') {
+				warning('Vui lòng chọn loại danh mục để xóa');
+				return;
+			}
+			var ids = ',' + id + ',';
+			if (ids.indexOf(',13,') != -1 || ids.indexOf(',14,') != -1) {
+				warning('Bạn không thể xóa Danh mục khuyến nghị IPPro và Báo cáo phân tích tổng hợp.');
+				return;
+			}
             $.msgBox({
                 title: 'Message',
                 type: 'error',
@@ -218,7 +228,6 @@
                 buttons: [{value: 'Yes'}, {value: 'No'}],
                 success: function(result) {
                     if (result == 'Yes') {
-                        var id = getCheckedId();
                         var token = $('#token').val();
                         $.ajax({
                             url: controller + 'deletes',

@@ -351,10 +351,15 @@
 			save('edit',id);
 		});
 		$('#delete').click(function(){ 
+			var id = getCheckedId();
+			if (id == '') {
+				warning('Vui lòng chọn mục để xóa');
+				return;
+			}
 			$.msgBox({
 				title: 'Message',
 				type: 'error',
-				content:'Do you want to delete this item?',
+				content:'Bạn có chắc muốn xóa người dùng này?',
 				buttons: [{value: 'Yes'},{ value: 'No'}],
 				success: function(result) { 
 					if (result == 'Yes') {
@@ -369,7 +374,7 @@
 								var obj = $.evalJSON(datas); 
 								$('#token').val(obj.csrfHash);
 								if(obj.status == 0){
-									error('<?=getLanguage('all','delete_suc')?>'); return false;		
+									error('Xóa thành công'); return false;		
 								}
 								else{
 									refresh();	

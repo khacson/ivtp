@@ -238,11 +238,20 @@
 		});
 		$("#delete").click(function(){ 
 			var id = getCheckedId();
+			if (id == '') {
+				warning('Vui lòng chọn mục để xóa');
+				return;
+			}
+			var ids = ',' + id + ',';
+			if (ids.indexOf(',1,') != -1 || ids.indexOf(',2,') != -1 || ids.indexOf(',3,') != -1) {
+				warning('Bạn không thể xóa nhóm Root, CSKH, Tư vấn.');
+				return;
+			}
 			if(id == ''){ return false;}
 			$.msgBox({
 				title: "Message",
 				type: "error",
-				content:'Do you want to delete this item?',
+				content:'Bạn có chắc muốn xóa mục này?',
 				buttons: [{value: 'Yes'},{ value: 'No'}],
 				success: function(result) { 
 					if (result == 'Yes') {
@@ -280,7 +289,7 @@
 	});
 	function getCheckedId(){
 		var strId = '';
-		$('#group').find('input:checked').each(function(){
+		$('#grid-rows').find('input:checked').each(function(){
 			var id = $(this).attr('id');
 			if(id != 'checkAll'){
 				strId += ',' + $(this).attr('id') ;

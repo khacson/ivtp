@@ -10,12 +10,12 @@ foreach ($datas as $item) {
 		$url = base_url().'danh-muc-dau-tu/'.$item->friendlyurl.'-dt'.$item->blogid.'.html#'.$item->parent_id;
 	}
 ?>
-	<tr class="content edit" id="<?=$item->id?>" blogid="<?=$item->blogid?>" fullname="<?=$item->fullname?>" phone="<?=$item->phone?>" accept="<?=$item->accept?>" reply_id="<?=$item->reply_id?>" level="<?=$item->level?>">
+	<tr class="content edit" id="<?=$item->id?>" blogid="<?=$item->blogid?>" fullname="<?=$item->fullname?>" phone="<?=$item->phone?>" email="<?=$item->email?>" accept="<?=$item->accept?>" reply_id="<?=$item->reply_id?>" level="<?=$item->level?>">
 		<td style="text-align: center;">
 		<input class="noClick" type="checkbox" name="keys[]" id="<?=$item->id;?>"></td>
 		<td class="center"><?=$i;?></td>
 		<td class="fullname"><?=$item->fullname;?></td>
-		<td class="phone"><?=$item->phone;?></td>
+		<td class="email"><?=$item->email;?></td>
 		<td class="description"><?=$item->description;?></td>
 		<td class="title"><?=$title;?></td>
 		<td class="usercreate"><?=date('d/m/Y H:i:s',strtotime($item->datecreate));?></td>

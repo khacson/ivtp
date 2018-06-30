@@ -2,8 +2,8 @@
 	table col.c1 { width: 45px; }
 	table col.c2 { width: 45px; }
 	table col.c3 { width: 150px; }
-	table col.c4 { width: 120px; }
-	table col.c5 { width: 300px; }
+	table col.c4 { width: 180px; }
+	table col.c5 { width: 250px; }
 	table col.c6 { width: 230px; }
 	table col.c7 { width:150px; }
 	table col.c8 { width:80px; }
@@ -36,9 +36,9 @@
                 </div>  
 				 <div class="col-md-4">
                     <div class="form-group">
-                        <label class="control-label col-md-3">Điện thoại</label>
+                        <label class="control-label col-md-3">Email</label>
                         <div class="col-md-9">
-                            <input type="text" name="phone" id="phone" class="searchs form-control" />
+                            <input type="text" name="email" id="email" class="searchs form-control" />
                         </div>
                     </div>
                 </div> 
@@ -134,7 +134,7 @@
                                 <th class="text-center"><input type="checkbox" name="checkAll" id="checkAll" /></th>
                                 <th>STT</th>
                                 <th id="ord_fullname">Họ tên</th>
-                                <th id="ord_phone">Điện thoại</th>
+                                <th id="ord_phone">Email</th>
 								<th id="">Nội dung bình luận</th>
                                 <th id="ord_blogid">Bài viết</th>
                                 <th id="ord_datecreate">Ngày bình luận</th>
@@ -324,6 +324,7 @@
 				var id = $(this).attr('id');
 				var fullname = $(this).attr('fullname');
 				var phone = $(this).attr('phone');
+				var email = $(this).attr('email');
 				var accept = $(this).attr('accept');
 				var reply_id = $(this).attr('reply_id');
 				var blogid = $(this).attr('blogid');
@@ -336,6 +337,7 @@
 				$('#level').val(level);		
 				$('#fullname').val(fullname);
 				$('#phone').val(phone);	
+				$('#email').val(email);	
 				$('#reply_msg').val(reply_msg);	
 				$('#title').val(title);	
 				$('#accept').multipleSelect('setSelects', accept.split(','));

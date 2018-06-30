@@ -19,6 +19,9 @@
 		if (!empty($search['phone'])) {
 			$sql .= " AND mc.phone LIKE '%".$search['phone']."%' ";
 		}
+		if (!empty($search['email'])) {
+			$sql .= " AND mc.email LIKE '%".$search['email']."%' ";
+		}
 		if (!empty($search['title'])) {
 			$sql .= " AND m.title LIKE '%".$search['description']."%' ";
 		}

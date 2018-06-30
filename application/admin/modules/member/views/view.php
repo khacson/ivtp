@@ -196,16 +196,21 @@
         $('#edit').click(function() {
             var id = $('#id').val();
             if (id == '') {
-                warning('Vui lòng chọn loại danh mục để sửa');
+                warning('Vui lòng chọn mục để sửa');
                 return false;
             }
             save('edit', id);
         });
         $('#delete').click(function() {
+			var id = getCheckedId();
+			if (id == '') {
+				warning('Vui lòng chọn thành viên để xóa');
+				return;
+			}
             $.msgBox({
                 title: 'Message',
                 type: 'error',
-                content: 'Bạn muốn xóa loại danh mục?',
+                content: 'Bạn có chắc muốn xóa thành viên này?',
                 buttons: [{value: 'Yes'}, {value: 'No'}],
                 success: function(result) {
                     if (result == 'Yes') {
@@ -299,52 +304,7 @@
     function funcList(obj) {
         $('.edit').each(function(e) {
             $(this).click(function() {
-                var catalog_name = $('.catalog_name').eq(e).html().trim();
-                var id = $(this).attr('id');
-				var parentid = $(this).attr('parentid');
-                $('#id').val(id);
-                $('#catalog_name').val(catalog_name);
-				$('#parentid').multipleSelect('setSelects', parentid.split(','));
-            });
-        });
-		$('.ishome').each(function(e) {
-            $(this).click(function() {
-				$('.loading').show();
-                var id = $(this).attr('id');
-				var value = $(this).attr('value'); 
-                $.ajax({ 
-					url: controller + 'isHome',
-					type: 'POST',
-					async: false,
-					data: {id:id, value:value},
-					success: function(datas) { $('.loading').hide();}
-				 });
-            });
-        });
-		$('.ordering').each(function(e) {
-            $(this).click(function() {
-				//$('.loading').show();
-                var id = $(this).attr('id');
-				var value = $(this).val(); 
-                $.ajax({ 
-					url: controller + 'ordering',
-					type: 'POST',
-					//async: false,
-					data: {id:id, value:value},
-					success: function(datas) { $('.loading').hide();}
-				 });
-            });
-			$(this).keyup(function() {
-				//$('.loading').show();
-                var id = $(this).attr('id');
-				var value = $(this).val(); 
-                $.ajax({ 
-					url: controller + 'ordering',
-					type: 'POST',
-					//async: false,
-					data: {id:id, value:value},
-					success: function(datas) { $('.loading').hide();}
-				 });
+                
             });
         });
     }
