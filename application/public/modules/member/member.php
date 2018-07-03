@@ -144,8 +144,8 @@ class Member extends CI_Controller {
 		$config['protocol'] = "smtp"; //smtp
 		$config['smtp_host'] = "ssl://smtp.googlemail.com";
 		$config['smtp_port'] = "465";
-		$config['smtp_user'] = "swapphonevn@gmail.com"; 
-		$config['smtp_pass'] = "swapphonevn@1111";
+		$config['smtp_user'] = "investorprovn@gmail.com"; 
+		$config['smtp_pass'] = "DRBL2018";
 		$config['charset'] = "utf-8";
 		$config['mailtype'] = "html";
 		$config['newline'] = "\r\n";
@@ -169,7 +169,7 @@ class Member extends CI_Controller {
 		
 		$ci->email->initialize($config);
 		$ci->email->clear(TRUE);
-		$ci->email->from('swapphonevn@gmail.com','Investor');
+		$ci->email->from('investorprovn@gmail.com','Investor');
 		$list = array($email);
 		$ci->email->to($list); 
 		$ci->email->subject($title_register); 

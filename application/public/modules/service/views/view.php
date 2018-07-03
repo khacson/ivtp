@@ -243,7 +243,7 @@ $('body').on('click', '#reg_service', function() {
 	$.ajax({
 		url : '<?=base_url();?>member/' + 'regservice',
 		type: 'POST',
-		async: false,
+		async: true,
 		data:{level: level,select_mon:select_mon},  
 		success:function(datas){
 			if (datas == 1) {

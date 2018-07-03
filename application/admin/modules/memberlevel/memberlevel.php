@@ -133,7 +133,6 @@ class Memberlevel extends CI_Controller {
 		
 		if ($type == 'active_status') {
 			if ($new_status == 1) {
-				$to = $login->email;
 				$arrMailInfo = $this->base_model->getSendMailInfo();
 				$sub = $arrMailInfo->title_active_service;
 				
@@ -144,6 +143,7 @@ class Memberlevel extends CI_Controller {
 					$time_use = $time_use/12 .' năm';
 				}
 				$memberInfo = $this->base_model->getMemberInfo($memberId);
+				$to = $memberInfo->email;
 				$gender = $memberInfo->sex == 1 ? 'anh' : 'chị';
 				$arrTrans['{gender}'] = $gender;
 				$arrTrans['{Gender}'] = ucfirst($gender);
