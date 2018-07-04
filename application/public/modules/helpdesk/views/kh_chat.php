@@ -170,7 +170,7 @@
         <h6 class="modal-title">Lịch sử chat</h6>
       </div>
       <div id="modal_content" class="modal-body">
-        <p>Some text in the modal.</p>
+        <p></p>
       </div>
     </div>
 

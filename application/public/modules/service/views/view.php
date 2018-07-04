@@ -149,7 +149,7 @@
         <h6 class="modal-title text-left">Thông tin đăng ký</h6>
       </div>
       <div id="modal_content" class="modal-body">
-        <p>Some text in the modal.</p>
+        <p></p>
       </div>
     </div>
 

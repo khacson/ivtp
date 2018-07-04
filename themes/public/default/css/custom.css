@@ -1,3 +1,6 @@
+img {
+    max-width: 100%;
+}
 .clear{
 	clear: both;
 }
@@ -379,3 +382,14 @@ body{
 	}
 }
 /*end login form*/
+
+/*homepage*/
+.thumbnail-terry {
+    height: 100%;
+    width: 100%;
+}
+.thumbnail-terry a img {
+    height: 100%;
+    width: 100%;
+}
+/*end homepage*/

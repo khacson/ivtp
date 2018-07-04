@@ -8,6 +8,23 @@
     overflow: hidden;
     padding-bottom: 5px;
 }
+.login-form .ruby {
+	display: block !important;
+}
+.login-form .label-input100 {
+	float: none;
+}
+.login-form .input100 {
+	margin-top: 0px !important;
+}
+.login-form .ruby i {
+    left: 5px;
+    position: absolute;
+    top: 39px;
+}
+.login-form .tbsex {
+    margin-top: 20px !important;
+}
 </style>
 <link rel="stylesheet" href="<?=url_tmpl()?>jcrop/jquery.Jcrop.min.css" />
 <link rel="stylesheet" type="text/css" href="<?=url_tmpl();?>login/css/main.css">

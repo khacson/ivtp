@@ -1,4 +1,23 @@
 <link rel="stylesheet" type="text/css" href="<?=url_tmpl();?>login/css/main.css">
+<style>
+.login-form .ruby {
+	display: block !important;
+}
+.login-form .label-input100 {
+	float: none;
+}
+.login-form .input100 {
+	margin-top: 0px !important;
+}
+.login-form .ruby i {
+    left: 5px;
+    position: absolute;
+    top: 39px;
+}
+.login-form .tbsex {
+    margin-top: 20px !important;
+}
+</style>
 <div class="limiter">
 	<div class="container-login100" style="background-image: url('<?=url_tmpl();?>login/images/bg-01.jpg');">
 		<div class="wrap-login100">
