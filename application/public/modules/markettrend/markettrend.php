@@ -50,6 +50,7 @@ class Markettrend extends CI_Controller {
 			$content = $this->load->view('view',$data,true);
 		}
 		else {
+			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
 			$content = $this->load->view('404',$data,true);
 		}
         
@@ -62,6 +63,15 @@ class Markettrend extends CI_Controller {
 	function _detail($id){
 		$data = new stdClass();
 		$finds = $this->model->getFind($id);
+		if (empty($finds)) {
+			$data->catalogs = array();
+			$data->listNew = array();
+			$data->msg = 'Bài viết này không có nội dung.';
+			$content = $this->load->view('404',$data,true);
+			$this->site->write('content',$content,true);
+			$this->site->render();
+			return;
+		}
 		$data->catalogs = $this->model->getMarkettendCatalog();
 		$data->listNew = $this->model->getFindNew($id, $finds->typeid);
 		if(!empty($finds->id)){
@@ -102,6 +112,7 @@ class Markettrend extends CI_Controller {
 			$content = $this->load->view('detail',$data,true);
 		}
 		else {
+			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
 			$content = $this->load->view('404',$data,true);
 		}
 		

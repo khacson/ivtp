@@ -45,6 +45,14 @@ class Investment extends CI_Controller {
 		$data->catalogFind = $this->model->getFindCatalog($uri);
 		$data->uri = $uri;
 		
+		if (empty($data->catalogFind)) {
+			$data->msg = 'Bài viết này không có nội dung.';
+			$content = $this->load->view('404',$data,true);
+			$this->site->write('content',$content,true);
+            $this->site->render();
+			return;
+		}
+		
 		if ($data->catalogFind->id == 13) {
 			$this->postLevel = 2;
 		}
@@ -54,6 +62,7 @@ class Investment extends CI_Controller {
 			$content = $this->load->view('view',$data,true);
 		}
 		else {
+			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
 			$content = $this->load->view('404',$data,true);
 		}
 		
@@ -66,6 +75,15 @@ class Investment extends CI_Controller {
 	function _detail($id){
 		$data = new stdClass();
 		$finds = $this->model->getFind($id);
+		if (empty($finds)) {
+			$data->catalogs = array();
+			$data->listNew = array();
+			$data->msg = 'Bài viết này không có nội dung.';
+			$content = $this->load->view('404',$data,true);
+			$this->site->write('content',$content,true);
+			$this->site->render();
+			return;
+		}
 		$data->catalogs = $this->model->getInvestmentCatalog();
 		$data->listNew = $this->model->getFindNew($id);
 		if(!empty($finds->id)){
@@ -109,6 +127,7 @@ class Investment extends CI_Controller {
 			$content = $this->load->view('detail',$data,true);
 		}
 		else {
+			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
 			$content = $this->load->view('404',$data,true);
 		}
 		

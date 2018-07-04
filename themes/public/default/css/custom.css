@@ -202,6 +202,12 @@ td {
 a {
     color: #733272;
 }
+#show > img {
+    max-width: 100%;
+}
+.page-content {
+    min-height: 440px;
+}
 .page .text-primary{
     color: #733272;
 }
