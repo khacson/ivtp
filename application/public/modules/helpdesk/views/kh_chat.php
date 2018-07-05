@@ -181,6 +181,7 @@
 <script>
     var controller = '<?= $controller; ?>/';
     var csrfHash = '<?= $csrfHash; ?>';
+    var isGuest = '<?= $isGuest; ?>';
     var cpage = 0;
     var search;
     var schoolid = 0;
@@ -294,7 +295,25 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	
 	$scope.checkAndSendChat = function(e) {
 		if (e.keyCode == 13) {
-			$scope.sendChat();
+			if (isGuest == 1) {
+				//khach chua dang nhap thi ko chan email va phone
+				$scope.sendChat();
+				return;
+			}
+			else {
+				var input_msg = $('#input-msg').text();
+				var hasEmail = checkEmail(input_msg);
+				var hasPhone = checkPhone(input_msg);
+				if (hasEmail) {
+					warning('Bạn vui lòng bỏ Email ra khỏi tin nhắn');
+					return;
+				}
+				if (hasPhone) {
+					warning('Bạn vui lòng bỏ Số ĐT ra khỏi tin nhắn');
+					return;
+				}
+				$scope.sendChat();
+			}
 		}
     }
 	

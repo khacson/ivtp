@@ -1,5 +1,5 @@
 <?php
-include APPPATH.'\libraries\vendor\autoload.php';
+include APPPATH.'libraries/vendor/autoload.php';
 use Firebase\JWT\JWT;
 
  class HelpdeskModel extends CI_Model{

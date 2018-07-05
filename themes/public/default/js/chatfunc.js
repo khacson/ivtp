@@ -129,3 +129,41 @@ function placeCaretAtEnd(el) {
         textRange.select();
     }
 }
+function checkEmail(str) {
+	var arr = str.split(' ');
+	for (var i in arr) {
+		if(arr[i].indexOf('@') != -1 && arr[i].length > 5) {
+			return true;
+		}
+	}
+	return false;
+}
+function checkPhone(str) {
+	str = str.replace(/\+/g, '');
+	str = str.replace(/\./g, '');
+	str = str.replace(/\,/g, '');
+	var arr = str.split(' ');
+	for (var i in arr) {
+		var t = arr[i].replace(/[^0-9\.]+/g, "");
+		if(t.length == 10 || t.length == 11) {
+			return true;
+		}
+	}
+	for (var i = 0; i < arr.length; i++) {
+		if (arr[i].indexOf('0') != -1 || arr[i].indexOf('84') != -1) {
+			var t = getNextNumber(i, arr); console.log(t);
+			if(t.length == 10 || t.length == 11) {
+				return true;
+			}
+		}
+	}
+	return false;
+}
+function getNextNumber(i, arr) {
+	var str = arr[i];
+	while (i < arr.length - 1 && (arr[i+1] == parseInt(arr[i+1]) || arr[i+1].indexOf('0') != -1)) {
+		str += arr[i+1];
+		i++;
+	}
+	return str;
+}
