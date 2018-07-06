@@ -190,6 +190,7 @@
 </script>
 <script>
 var token = '<?=$token?>';
+var serviceGroup = '<?=$serviceGroup?>';
 var app = angular.module('app', ['firebase']);
 app.filter('unsafe', function($sce) { return $sce.trustAsHtml; });
 app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseAuth', function($scope, $firebase , $firebaseArray, $firebaseAuth) {
@@ -313,7 +314,25 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
     }
 	$scope.checkAndSendChat = function(e) {
 		if (e.keyCode == 13) {
-			$scope.sendChat();
+			if (serviceGroup == 1) {
+				//group cskh thi ko chan email va phone
+				$scope.sendChat();
+				return;
+			}
+			else {
+				var input_msg = $('#input-msg').text();
+				var hasEmail = checkEmail(input_msg);
+				var hasPhone = checkPhone(input_msg);
+				if (hasEmail) {
+					warning('Bạn vui lòng bỏ Email ra khỏi tin nhắn');
+					return;
+				}
+				if (hasPhone) {
+					warning('Bạn vui lòng bỏ Số ĐT ra khỏi tin nhắn');
+					return;
+				}
+				$scope.sendChat();
+			}
 		}
     }
 	

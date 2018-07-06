@@ -194,6 +194,7 @@
 <script>
 var token = '<?=$token?>';
 var chat_code = '<?=$chat_code?>';
+var serviceGroup = '<?=$serviceGroup?>';
 var app = angular.module('app', ['firebase']);
 app.filter('unsafe', function($sce) { return $sce.trustAsHtml; });
 app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseAuth', function($scope, $firebase , $firebaseArray, $firebaseAuth) {
@@ -295,8 +296,8 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	
 	$scope.checkAndSendChat = function(e) {
 		if (e.keyCode == 13) {
-			if (isGuest == 1) {
-				//khach chua dang nhap thi ko chan email va phone
+			if (serviceGroup == 1) {
+				//group cskh thi ko chan email va phone
 				$scope.sendChat();
 				return;
 			}

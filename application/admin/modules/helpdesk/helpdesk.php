@@ -41,6 +41,7 @@ class Helpdesk extends CI_Controller {
         $data->csrfHash = $this->security->get_csrf_hash();
         $data->routes = $this->route;
         $data->login = $this->login;
+        $data->serviceGroup = $this->login->groupid == 3 ? 1 : 0;
         $data->controller = admin_url() . ($this->uri->segment(1));
         
 		$dbinfo = $this->model->get_firebasedb_info($this->login->id);

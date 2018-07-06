@@ -91,6 +91,7 @@ class Helpdesk extends CI_Controller {
 
 		$chat_code = $this->model->create_chatcode($user_id, $login->id, $dbinfo->id, $isGuest);
 		$data->isGuest = $isGuest;
+		$data->serviceGroup = $data->userInfo->groupid == 3 ? 1 : 0;
 		$data->login = $login;
 		$data->chat_code = $chat_code;
 		$data->configdb = $dbinfo->config;

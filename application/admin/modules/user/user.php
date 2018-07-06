@@ -113,7 +113,7 @@ class User extends CI_Controller {
 			$src_path = $_FILES['userfile']['tmp_name'];
 			$new_path = 'files/user/'.$filename;
 			
-			$this->base_model->resizeImg($this->thumbnail_width, $this->thumbnail_height, $src_path, $new_path, $array['x'], $array['y'], $array['w'], $array['h'], $ext);
+			$this->base_model->resizeImg(AVATAR_WIDTH, AVATAR_HEIGHT, $src_path, $new_path, $array['x'], $array['y'], $array['w'], $array['h'], $ext);
 			
 			$array['signature'] = $filename;
 		}

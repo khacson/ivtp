@@ -238,7 +238,7 @@
                                 var obj = $.evalJSON(datas);
                                 $('#token').val(obj.csrfHash);
                                 if (obj.status == 0) {
-                                    error('<?= getLanguage('all', 'delete_suc') ?>');
+                                    error('Xoá thành công');
                                     return false;
                                 }
                                 else {
@@ -261,7 +261,7 @@
         var token = $('#token').val();
 
         if (obj.catalog_name == '') {
-            error("loại danh mục <?= getLanguage('all', 'empty') ?>");
+            error("Loại danh mục không được trống");
             return false;
         }
         $('.loading').show();
@@ -285,25 +285,25 @@
 				$('.loading').hide();
                 if (obj.status == 0) {
                     if (id != '') {
-                        error('<?= getLanguage('all', 'edit-fail') ?>');
+                        error('Sửa thành công');
                         return false;
                     }
                     else {
-                        error('<?= getLanguage('all', 'add-fail') ?>');
+                        error('Có lỗi xảy ra. Thêm không thành công');
                         return false;
                     }
                 }
                 else if (obj.status == -1) {
-                    error("Manufacture <?= getLanguage('all', 'exits') ?>");
+                    error("Loại danh mục đã có rồi");
                     return false;
                 }
                 else {
 					if (id != '') {
-                        success('<?= getLanguage('all', 'edit-suc') ?>');
+                        success('Sửa thành công');
                         //return false;
                     }
                     else {
-                        success('<?= getLanguage('all', 'add-suc') ?>');
+                        success('Thêm thành công');
                         //return false;
                     }
                     refresh();

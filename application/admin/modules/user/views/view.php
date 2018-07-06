@@ -479,6 +479,10 @@
 				error("Vui lòng upload hình đại diện"); 
 				return false;		
 			}
+			if($("#password").val() == ""){
+				error("Vui lòng nhập mật khẩu"); 
+				return false;		
+			}
 		}		
 		
 		var data = new FormData();
