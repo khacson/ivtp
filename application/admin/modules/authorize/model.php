@@ -9,7 +9,7 @@
 	}
 	function login($u, $p = null) {
 		$query = $this->model->table('ivt_users')
-		->select("ivt_users.*,ivt_groups.params")
+		->select("ivt_users.*,ivt_groups.params, ivt_groups.grouptype")
 		->join('ivt_groups', 'ivt_groups.id = ivt_users.groupid', 'inner')
 		->where('ivt_users.isdelete',0)	
 		->where('ivt_groups.isdelete',0)	

@@ -12,6 +12,9 @@ CKEDITOR.editorConfig = function (config) {
 };
 
 CKEDITOR.editorConfig = function (config) {
+	config.extraPlugins = 'image2,copyformatting';
+	config.copyFormatting_allowRules = true;
+	config.pasteFromWordRemoveFontStyles = false;
     // config.contentsCss = 'http://'+location.host+'/vknew/themes/admin/default/assets/plugins/ckeditor/contents.css';
     //the next line add the new font to the combobox in CKEditor
     //config.font_names = '<Cutsom Font Name>/<YourFontName>;' + config.font_names;
@@ -39,9 +42,16 @@ CKEDITOR.editorConfig = function (config) {
                 }
             ];
 
-    config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Cut,Copy,Paste,PasteText,PasteFromWord,Replace,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CreateDiv,BidiLtr,BidiRtl,Language,Unlink,Anchor,Flash,HorizontalRule,Smiley,SpecialChar,PageBreak,Maximize,ShowBlocks,About';
+    config.removeButtons = 'Save,NewPage,Preview,Print,Templates,Cut,Copy,Paste,PasteText,PasteFromWord,Replace,SelectAll,Scayt,Form,Checkbox,Radio,TextField,Textarea,Select,Button,ImageButton,HiddenField,CreateDiv,BidiLtr,BidiRtl,Language,Unlink,Anchor,Flash,HorizontalRule,Smiley,SpecialChar,PageBreak,ShowBlocks,About';
     config.enterMode = 1;
     config.enterMode = CKEDITOR.ENTER_BR // pressing the ENTER Key puts the <br/> tag
     config.shiftEnterMode = CKEDITOR.ENTER_P; //pressing the SHIFT + ENTER Keys puts the <p> tag
 	config.allowedContent=true;
+	
+	config.filebrowserBrowseUrl = path_df +'ckfinder/ckfinder.html',
+    config.filebrowserImageBrowseUrl = path_df+'ckfinder/ckfinder.html?Type=Images',
+    config.filebrowserFlashBrowseUrl = path_df+'ckfinder/ckfinder.html?Type=Flash',
+    config.filebrowserUploadUrl = path_df+'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+    config.filebrowserImageUploadUrl = path_df+'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
+    config.filebrowserFlashUploadUrl = path_df+'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
 };

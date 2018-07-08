@@ -38,8 +38,8 @@
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
-					<label class="control-label col-md-5">Họ tên (<span class="red">*</span>)</label>
-					<div class="col-md-7">
+					<label class="control-label col-md-4">Họ tên (<span class="red">*</span>)</label>
+					<div class="col-md-8">
 						<input type="text" name="fullname" id="fullname" class="searchs form-control" value="<?=$userInfo->fullname?>" />
 					</div>
 				</div>
@@ -64,27 +64,14 @@
 			</div>
 			<div class="col-md-4">
 				<div class="form-group">
-					<label class="control-label col-md-5">Nhóm quyền (<span class="red">*</span>)</label>
-					<div class="col-md-7" >
-						<select name="groupid" id="groupid" class="combos" >
-							<option value=""></option>
-							<?php foreach ($groups as $item) { ?>
-								<option value="<?=$item->id;?>"><?=$item->groupname?></option>
-							<?php } ?>
-						</select>
-					</div>
-				</div>
-			</div>
-		</div>	
-		<div class="row mtop10">
-			<div class="col-md-4">
-				<div class="form-group">
 					<label class="control-label col-md-4">Trình độ</label>
 					<div class="col-md-8">
 						<input placeholder="Tối đa 50 ký tự" type="text" name="level" id="level" class="searchs form-control" maxlength="50" value="<?=$userInfo->level?>" />
 					</div>
 				</div>
 			</div>
+		</div>	
+		<div class="row mtop10">
 			<div class="col-md-4">
 				<div class="form-group">
 					<label class="control-label col-md-4">Bằng cấp</label>
@@ -93,21 +80,6 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-4">
-				<div class="form-group">
-					<label class="control-label col-md-5">Database (<span class="red">*</span>)</label>
-					<div class="col-md-7" >
-						<select name="firebasedb" id="firebasedb" class="combos" >
-							<option value=""></option>
-							<?php foreach ($firebasedb as $item) { ?>
-								<option value="<?=$item->id;?>"><?=$item->name?></option>
-							<?php } ?>
-						</select>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row mtop10">
 			<div class="col-md-4">
 				<div class="form-group">
 					<label class="control-label col-md-4">Kinh nghiệm</label>

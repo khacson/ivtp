@@ -4,8 +4,9 @@
 	table col.c1 { width: 45px; }
 	table col.c2 { width: 200px; }
 	table col.c3 { width: 180px; }
-	table col.c4 { width: 130px; }
-	table col.c5 { width: auto; }
+	table col.c4 { width: 180px; }
+	table col.c5 { width: 130px; }
+	table col.c6 { width: auto; }
 </style>
 <!-- BEGIN PORTLET-->
 <form method="post" enctype="multipart/form-data">
@@ -94,13 +95,14 @@
 				<div id="cHeader">
 					<div id="tHeader">    	
 						<table width="100%" cellspacing="0" border="1" id="tbheader" >
-							<?php for($i=1; $i< 5; $i++){?>
+							<?php for($i=1; $i< 6; $i++){?>
 								<col class="c<?=$i;?>">
 							<?php }?>
 							<tr>
 								<th>STT</th>
 								<th id="ord_c.user_id">Nhân viên</th>
 								<th id="ord_c.member_id">Tổng điểm</th>
+								<th id="ord_c.rank">Xếp hạng</th>
 								<th id="ord_c.chat_code">Chi tiết</th>
 								<th></th>
 							</tr>
@@ -112,7 +114,7 @@
 				<div id="data">
 					<div id="gridView">
 						<table  id="tbbody" width="100%" cellspacing="0" border="1">
-							<?php for($i=1; $i< 5; $i++){?>
+							<?php for($i=1; $i< 6; $i++){?>
 								<col class="c<?=$i;?>">
 							<?php }?>
 							<tbody id="grid-rows"></tbody>

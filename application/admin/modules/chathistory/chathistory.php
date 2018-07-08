@@ -34,7 +34,7 @@ class Chathistory extends CI_Controller {
 		$data->routes = $this->route;
 		$data->login = $this->login;
 	    $data->controller = admin_url().($this->uri->segment(1));
-	    $data->userList = $this->base_model->getAllHelpDeskUser();
+	    $data->userList = $this->base_model->getHelpDeskUser($this->login);
 	    $data->memberList = $this->base_model->getAllMember();
 	    $data->starList = $this->base_model->getStar();
 		

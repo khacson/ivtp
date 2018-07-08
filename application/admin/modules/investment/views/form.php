@@ -231,6 +231,17 @@
     var schoolid = 0;
     $(function() {
 		
+		var e = CKEDITOR.replace('description_long', {toolbarCanCollapse: true});  
+		e.on( 'key', function(e) {
+			if(e.data.keyCode == '113'){
+				$('#edit').trigger('click');
+			}
+		});
+		$('body').on( 'keyup', function(e) {
+			if(e.keyCode == '113'){
+				$('#edit').trigger('click');
+			}
+		});
 		$('#imageEnableThumb').change(function(evt) {
             var files = evt.target.files;
             for (var i = 0, f; f = files[i]; i++) {

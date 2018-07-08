@@ -55,6 +55,7 @@
 <script type="text/javascript" src="<?=url_tmpl();?>/fancybox/source/jquery.fancybox.pack.js"></script>  
 <script type="text/javascript">
 	var urlImg = '<?=url_tmpl()?>msgbox/Images/';
+	var path_df = '<?=url_tmpl()?>';
 </script>
 <script src="<?=url_tmpl();?>msgbox/Scripts/jquery.msgBox.js" type="text/javascript"></script>
 <script>

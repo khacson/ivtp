@@ -194,6 +194,17 @@ class base_model extends CI_Model {
         return $this->model->query($sql)->execute();
     }
 	
+	function getHelpDeskUser($login) {
+		$search = '';
+		if ($login->grouptype !=  0) {
+			$search = " AND id = ".$login->id;
+		}
+        $sql = "SELECT * FROM ivt_users
+                WHERE groupid = 2 AND isdelete=0 AND is_full = 0 $search
+				ORDER BY fullname";
+        return $this->model->query($sql)->execute();	
+	}
+	
 	function getAllHelpDeskUser($online_status="") {
 		$search = '';
 		if ($online_status !== '') {

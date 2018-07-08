@@ -159,13 +159,12 @@ class Changepass extends CI_Controller {
 			
 			$this->base_model->resizeImg(AVATAR_WIDTH, AVATAR_HEIGHT, $src_path, $new_path, $array['x'], $array['y'], $array['w'], $array['h'], $ext);
 			
-			$array['signature'] = $filename;
-			
-			unset($array['x']);
-			unset($array['y']);
-			unset($array['w']);
-			unset($array['h']);
+			$array['signature'] = $filename;	
 		}
+		unset($array['x']);
+		unset($array['y']);
+		unset($array['w']);
+		unset($array['h']);
 		if(empty($array['password'])){
 			 unset($array['password']);
 		}
