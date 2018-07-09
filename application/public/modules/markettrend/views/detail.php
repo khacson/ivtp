@@ -27,7 +27,7 @@
                       <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i><a class="text-gray-lighter" href="#"> <?=$totalComment;?> bình luận</a></li>
                     </ul>
                     <div class="offset-top-30"><img class="img-responsive center-block" src="<?=base_url();?>files/markettrend/<?=$finds->image;?>" width="960" height="550" alt=""></div>
-                    <div class="offset-top-30">
+                    <div class="offset-top-30 post-content">
 						<?=$finds->description_long;?>
                     </div>
 					

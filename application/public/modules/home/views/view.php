@@ -20,7 +20,7 @@
                           <h1>70% OFF</h1>
                         </div>-->
 						<?php if($item->url != '' && $item->url != '#'){?>
-                        <div class="offset-top-20"><a class="btn btn-width-165 btn-bermuda" href="<?=$item->url;?>">Xem</a></div>
+                        <div class="offset-top-20"><a class="btn btn-width-165 btn-primary" href="<?=$item->url;?>">Xem</a></div>
 						<?php }?>
                       </div>
                     </div>
@@ -37,7 +37,7 @@
             </div>
           </div>
         </div>
-        <div class="swiper-aside-right">
+        <div class="swiper-aside-right hide">
           <ul class="list list-background-minsk list-0 text-center section-xs-top-60 section-sm-top-0">
             <?php foreach($cpTangs as $item){
 				$des = $item->inc_des;

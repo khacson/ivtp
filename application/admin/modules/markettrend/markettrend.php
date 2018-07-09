@@ -185,7 +185,11 @@ class Markettrend extends CI_Controller {
         $result['csrfHash'] = $token;
         echo json_encode($result);
     }
-
+	function removeImage() {
+		$id = $this->input->post('id');
+		$sql = "UPDATE ivt_markettrend SET image = NULL WHERE id = $id;";
+		$this->model->executeQuery($sql);
+	}
     function resizeImg($image_data,$width='',$height='') {
         $this->load->library('image_lib');
         $configz = array();

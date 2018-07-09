@@ -215,8 +215,14 @@ a {
     color: #733272;
 }
 .page .btn-primary {
-    background-color: #733272;
-    border-color: #733272;
+    background-color: #E9B51B;
+    border-color: #E9B51B;
+	transition: all 0.3s ease-out 0s;
+}
+.page .btn-primary:hover, .page .btn-primary:active, .page .btn-primary:focus {
+    background-color: #FFCA0B;
+    border-color: #FFCA0B;
+	transition: all 0.3s ease-out 0s;
 }
 .page .bg-bermuda {
     background: #733272;
@@ -393,3 +399,23 @@ body{
     width: 100%;
 }
 /*end homepage*/
+/*post*/
+.post-content {
+	color: #000;
+}
+.post-content table {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+.post-content li {
+    list-style: outside none disc;
+    margin-bottom: 5px;
+    margin-left: 30px;
+    margin-top: 6px;
+    padding-left: 6px;
+}
+figure.image {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+/*end post*/

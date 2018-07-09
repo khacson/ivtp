@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?=url_tmpl()?>jcrop/jquery.Jcrop.min.css" />
 <form method="post" enctype="multipart/form-data">
     <div class="portlet box blue">
         <div class="portlet-title">
@@ -91,28 +92,13 @@
 				</div>
 				<div class="col-md-4">
                     <div class="form-group">
-                        <label class="control-label col-md-4">Hình đại diện</label>
-                        <div class="col-md-8">
-                            <div class="col-md-6" style="padding:0px !important;" >
-                                <ul style="margin:0px;" class="button-group">
-                                    <li class="" onclick ="javascript:document.getElementById('imageEnableThumb').click();"><button type="button" class="btnone">Chọn hình</button></li>
-                                </ul>
-                                <input style='display:none;' accept="image/*" id ="imageEnableThumb" type="file" name="userfile2">
-                            </div>
-                            <div class="col-md-6" >
-                                <span id="show2"></span> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
-				<div class="col-md-4">
-                    <div class="form-group">
                         <label class="control-label col-md-4">Hình ảnh</label>
                         <div class="col-md-8">
                             <div class="col-md-6" style="padding:0px !important;" >
                                 <ul style="margin:0px;" class="button-group">
                                     <li class="" onclick ="javascript:document.getElementById('imageEnable').click();"><button type="button" class="btnone">Chọn hình</button></li>
                                 </ul>
+								<br><a class="removeImage" href="javascript:;">Xóa</a>
                                 <input style='display:none;' accept="image/*" id ="imageEnable" type="file" name="userfile">
                             </div>
                             <div class="col-md-6" >
@@ -122,6 +108,26 @@
                     </div>
                 </div>
             </div>
+			
+            <div class="row mtop10">
+				<div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Hình đại diện</label>
+                        <div class="col-md-8">
+                            <div class="col-md-6" style="padding:0px !important;" >
+                                <ul style="margin:0px;" class="button-group">
+                                    <li class="" onclick ="javascript:document.getElementById('imageEnableThumb').click();"><button type="button" class="btnone">Chọn hình</button></li>
+                                </ul>
+                                <input style='display:none;' accept="image/*" id ="imageEnableThumb" type="file" name="userfile2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="col-md-5">
+					<span id="show2" style="" ></span> 
+				</div>
+			</div>
+			
             <div class="row mtop10">
                 <div class="col-md-12">
                         <div class="form-group">
@@ -240,16 +246,27 @@
                 var reader = new FileReader();
                 reader.onload = (function(theFile) {
                     return function(e) { //size e = e.tatal
-                       $('#show2').html('<img src="' + e.target.result + '" style="width:60px; height:40px" />');
+						$('#show2').html('');
+						$('#show2').append('<img class="cropimage" src="' + e.target.result + '" style="max-width:100%; float:left; margin-left:5px;" />');
+						var src = $('.cropimage').attr("src");
+						var img = new Image();//tinh original width
+						img.src = src;
+						img.onload = function() {
+							var curr_with = $('.cropimage').width();//co css
+							rate = this.width / curr_with;//ti le thu nho
+							//console.log(this.width);console.log(curr_with);
+							$('.cropimage').Jcrop({
+								aspectRatio: 1,
+								setSelect: [0,0,60,60],
+								aspectRatio: 100/100,
+								allowSelect : false,
+								onSelect: updateCoords,
+								onRelease: updateCoords
+							});
+						}
                     };
                 })(f);
                 reader.readAsDataURL(f);
-                /*}
-                 else{
-                 $('#fileupload').val(');
-                 $('.showImages').attr('src', ');
-                 alert("File size can't over 2Mb.");
-                 }*/
             }
         });
         $('#imageEnable').change(function(evt) {
@@ -264,17 +281,11 @@
                 var reader = new FileReader();
                 reader.onload = (function(theFile) {
                     return function(e) { //size e = e.tatal
-                        $('#show').html('<img src="' + e.target.result + '" style="width:60px; height:40px" />');
+                        $('#show').html('<img src="' + e.target.result + '" style="width:60px;" />');
                         //$("#img1").val(e.target.result);
                     };
                 })(f);
                 reader.readAsDataURL(f);
-                /*}
-                 else{
-                 $('#fileupload').val(');
-                 $('.showImages').attr('src', ');
-                 alert("File size can't over 2Mb.");
-                 }*/
             }
 			
         });        
@@ -312,6 +323,15 @@
             }
             save('edit', id,'1');
         });
+		$('.removeImage').click(function() {
+			$('#imageEnable').val('');
+			$('#show').html('');
+            var id = $('#id').val();
+            if (id == '') {
+                return false;
+            }
+            removeImage(id);
+        });
 		$('.loading').hide();        
 	});
     function save(func, id, type) {
@@ -339,7 +359,6 @@
         $.ajax({
             url: controller + func,
             type: 'POST',
-            async: false,
             data: data,
             enctype: 'multipart/form-data',
             processData: false,
@@ -406,10 +425,28 @@
             replace(/'/g, '\\\'').
             replace(/"/g, '\\"');
     }
+	function removeImage(id) {
+		$('.loading').show();
+		$.ajax({
+            url: controller + 'removeImage',
+            type: 'POST',
+            data: {id: id},
+            success: function(datas) {
+				$('.loading').hide();
+				$('#show').html('');
+            },
+            error: function() {
+				$('.loading').hide();
+            }
+        });
+		
+	}
 	function addform(){
-	   $("#title").val("<?=$finds->title;?>")
-		var img = '<?= base_url() ?>files/markettrend/' + '<?=$finds->image;?>';
-		var thumb  = '<?= base_url() ?>files/markettrend/thumb/' + '<?=$finds->thumb;?>';
+	    $("#title").val("<?=$finds->title;?>");
+	    var img = '<?=$finds->image;?>';
+		var imgUrl = '<?= base_url() ?>files/markettrend/' + '<?=$finds->image;?>';
+		var thumb = '<?=$finds->thumb;?>';
+		var thumbUrl  = '<?= base_url() ?>files/markettrend/thumb/' + '<?=$finds->thumb;?>';
 		var id = '<?=$finds->id;?>';		
 		//$('#id').val(id);
 		$('#title').val('<?=$finds->title;?>');//console.log(CKEDITOR.instances);
@@ -419,11 +456,23 @@
 		var typeid = '<?=$finds->typeid;?>';
 		$('#typeid').multipleSelect('setSelects', typeid.split(','));
 		if(id!=''){
-			$('#show').html('<img src="' + img + '" style="width:100px; height:50px" />');
-			$('#show2').html('<img src="' + thumb + '" style="width:100px; height:50px" />');
+			if(img) {
+				$('#show').html('<img src="' + imgUrl + '" style="width:100px;" />');
+			}
+			if(thumb) {
+				$('#show2').html('<img src="' + thumbUrl + '" style="width:100px;" />');
+			}
 		}
 		
 	}
+	function updateCoords(c){
+		//console.log(rate);
+		$('#x').val(c.x * rate);
+		$('#y').val(c.y * rate);
+		$('#w').val(c.w * rate);
+		$('#h').val(c.h * rate);
+	};
 </script>
 <script src="<?= url_tmpl(); ?>assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<?=url_tmpl();?>ckeditor/ckeditor.js" type="text/javascript"></script>
+<script src="<?= url_tmpl(); ?>jcrop/jquery.Jcrop.min.js" type="text/javascript"></script>

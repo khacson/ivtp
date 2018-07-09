@@ -113,6 +113,7 @@
                                 <ul style="margin:0px;" class="button-group">
                                     <li class="" onclick ="javascript:document.getElementById('imageEnable').click();"><button type="button" class="btnone">Chọn hình</button></li>
                                 </ul>
+								<br><a class="removeImage" href="javascript:;">Xóa</a>
                                 <input style='display:none;' accept="image/*" id ="imageEnable" type="file" name="userfile">
                             </div>
                             <div class="col-md-6" >
@@ -122,20 +123,6 @@
                     </div>
                 </div>
             </div>
-            <div class="row mtop10">
-				<div class="col-md-4">
-					<div class="form-group">
-						<label class="control-label col-md-4">Show on top</label>
-						<div class="col-md-8">
-							<select name="is_top" id="is_top" class="combos" >
-								<option value=""></option>
-								<option value="1">Có</option>
-								<option value="0">Không</option>
-							</select>
-						</div>
-					</div>
-                </div>
-			</div>
             <div class="row mtop10">
                 <div class="col-md-12">
                         <div class="form-group">
@@ -296,12 +283,7 @@
         	filter: true,
 			placeholder:"Chọn loại",
             single: true
-        });     
-		$('#is_top').multipleSelect({
-        	filter: true,
-			placeholder:"Chọn trạng thái",
-            single: true
-        }); 
+        });  
         refresh();addform();
 		//CKEDITOR.instances['description'].setData("111");
         $('#refresh').click(function() {
@@ -330,6 +312,15 @@
                 return false;
             }
             save('edit', id,'1');
+        });
+		$('.removeImage').click(function() {
+			$('#imageEnable').val('');
+			$('#show').html('');
+            var id = $('#id').val();
+            if (id == '') {
+                return false;
+            }
+            removeImage(id);
         });
 		$('.loading').hide();        
 	});
@@ -425,10 +416,28 @@
             replace(/'/g, '\\\'').
             replace(/"/g, '\\"');
     }
+	function removeImage(id) {
+		$('.loading').show();
+		$.ajax({
+            url: controller + 'removeImage',
+            type: 'POST',
+            data: {id: id},
+            success: function(datas) {
+				$('.loading').hide();
+				$('#show').html('');
+            },
+            error: function() {
+				$('.loading').hide();
+            }
+        });
+		
+	}
 	function addform(){
 	   $("#title").val("<?=$finds->title;?>")
-		var img = '<?= base_url() ?>files/investment/' + '<?=$finds->image;?>';
-		var thumb  = '<?= base_url() ?>files/investment/thumb/' + '<?=$finds->thumb;?>';
+	   var img = '<?=$finds->image;?>';
+	   var thumb = '<?=$finds->thumb;?>';
+		var imgUrl = '<?= base_url() ?>files/investment/' + '<?=$finds->image;?>';
+		var thumbUrl  = '<?= base_url() ?>files/investment/thumb/' + '<?=$finds->thumb;?>';
 		var id = '<?=$finds->id;?>';		
 		//$('#id').val(id);
 		$('#title').val('<?=$finds->title;?>');//console.log(CKEDITOR.instances);
@@ -436,12 +445,16 @@
 		$('#meta_keyword').val('<?=$finds->meta_keyword;?>');
 		$('#mete_description').val('<?=$finds->mete_description;?>');
 		var typeid = '<?=$finds->typeid;?>';
-		var is_top = '<?=$finds->is_top;?>';
 		$('#typeid').multipleSelect('setSelects', typeid.split(','));
-		$('#is_top').multipleSelect('setSelects', is_top.split(','));
 		if(id!=''){
-			$('#show').html('<img src="' + img + '" style="height:50px" />');
-			$('#show2').html('<img src="' + thumb + '" style="height:50px" />');
+			if(img) {
+				$('#show').html('<img src="' + imgUrl + '" style="height:50px" />');
+			}
+			
+			if(thumb) {
+				$('#show2').html('<img src="' + thumbUrl + '" style="height:50px" />');
+			}
+			
 		}
 		
 	}

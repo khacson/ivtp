@@ -122,8 +122,12 @@
 				 var email = $('#email').val();
 				 var address = $('#address').val();
 				 var description = $('#description').val();
+				 if(email == ''){
+					 warning('Email không được trống.');
+					 $('#email').focus(); return false;
+				 }
 				 if(description == ''){
-					 warning('Liên hệ không được trống.');
+					 warning('Nội dung không được trống.');
 					 $('#description').focus(); return false;
 				 }
 				 $.ajax({
@@ -133,6 +137,11 @@
 						data:{fullname:fullname,phone:phone,email:email,address:address,description:description},  
 						success:function(datas){
 							success('Cảm ơn bạn đã liên hệ với công ty chúng tôi. Chúng tôi sẽ phản hồi bạn trong thời gian sớm nhất');
+							$('#email').val('');
+							$('#address').val('');
+							$('#description').val('');
+							$('#phone').val('');
+							$('#address').val('');
 						}
 					});
 			});

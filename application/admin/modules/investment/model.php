@@ -101,14 +101,6 @@
 			 return -1;	
 		 }//print_r($array);exit;
 		 $result = $this->model->table('ivt_investment')->save($id,$array);	
-		 if ($array['is_top'] == 1) {
-			 $typeid = $array['typeid'];
-			 $sql = "UPDATE ivt_investment
-					 SET is_top = 0
-					 WHERE typeid = $typeid
-					 AND id <> $id;";
-			 $this->model->executeQuery($sql);
-		 }
 		 return $result;
 	}
 	

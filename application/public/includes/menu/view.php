@@ -72,7 +72,7 @@
 					  <?php if (!empty($markettendCatalogs)) { ?>
                       <ul class="rd-navbar-dropdown">
 						<?php foreach($markettendCatalogs as $item){?>
-                        <li><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->max_id;?>.html"><?=$item->catalog_name;?></a></li>
+                        <li><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
 						<?php }?>
                       </ul>
 					  <?php }?>
@@ -83,7 +83,7 @@
                       <ul class="rd-navbar-dropdown">
 						<li><a href="<?=base_url();?>danh-muc-tang-truong.html">Danh mục tăng trưởng</a></li>
 					    <?php foreach($investmentCatalogs as $item){?>
-							<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->max_id;?>.html"><?=$item->catalog_name;?></a></li>
+							<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
 						<?php }?>
                       </ul>
                     </li>
