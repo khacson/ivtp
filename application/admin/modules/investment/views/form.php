@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="<?=url_tmpl()?>jcrop/jquery.Jcrop.min.css" />
 <form method="post" enctype="multipart/form-data">
     <div class="portlet box blue">
         <div class="portlet-title">
@@ -89,22 +90,9 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-md-4">
-                    <div class="form-group">
-                        <label class="control-label col-md-4">Hình đại diện</label>
-                        <div class="col-md-8">
-                            <div class="col-md-6" style="padding:0px !important;" >
-                                <ul style="margin:0px;" class="button-group">
-                                    <li class="" onclick ="javascript:document.getElementById('imageEnableThumb').click();"><button type="button" class="btnone">Chọn hình</button></li>
-                                </ul>
-                                <input style='display:none;' accept="image/*" id ="imageEnableThumb" type="file" name="userfile2">
-                            </div>
-                            <div class="col-md-6" >
-                                <span id="show2"></span> 
-                            </div>
-                        </div>
-                    </div>
-                </div>
+			</div>
+			
+			<div class="row mtop10">
 				<div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label col-md-4">Hình ảnh</label>
@@ -123,12 +111,32 @@
                     </div>
                 </div>
             </div>
+			
+			<div class="row mtop10">
+				<div class="col-md-4">
+                    <div class="form-group">
+                        <label class="control-label col-md-4">Hình đại diện</label>
+                        <div class="col-md-8">
+                            <div class="col-md-6" style="padding:0px !important;" >
+                                <ul style="margin:0px;" class="button-group">
+                                    <li class="" onclick ="javascript:document.getElementById('imageEnableThumb').click();"><button type="button" class="btnone">Chọn hình</button></li>
+                                </ul>
+                                <input style='display:none;' accept="image/*" id ="imageEnableThumb" type="file" name="userfile2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+				<div class="col-md-5" style="display: block; margin-left: -147px;">
+					<span id="show2" ></span> 
+				</div>
+            </div>
+			
             <div class="row mtop10">
                 <div class="col-md-12">
                         <div class="form-group">
                                 <label class="control-label col-md-1">Nội dung ngắn</label>
                                 <div class="col-md-11" style="padding-left:44px !important;">
-                                    <textarea class="ckeditor form-control" id="description_sort" name="description_sort"><?=$finds->description_sort;?></textarea>
+                                    <textarea rows="5" class="form-control" id="description_sort" name="description_sort"><?=$finds->description_sort;?></textarea>
                                 </div>
                         </div>
                 </div>
@@ -148,6 +156,10 @@
                     <div class="mright10" >
                         <input type="hidden" name="id" id="id" value="<?=$finds->id;?>"/>
                         <input type="hidden" id="token" name="<?= $csrfName; ?>" value="<?= $csrfHash; ?>" />
+						<input type="hidden" class="searchs" id="x" name="x" />
+						<input type="hidden" class="searchs" id="y" name="y" />
+						<input type="hidden" class="searchs" id="w" name="w" />
+						<input type="hidden" class="searchs" id="h" name="h" />
                         
                     </div>		
                 </div>
@@ -217,7 +229,12 @@
     var search;
     var schoolid = 0;
     $(function() {
-		
+		$('#description_sort').on('keypress', function(){
+			if($(this).val().length > 190) {
+				warning('Tối đa 190 ký tự.');
+				return false;
+			}
+		})
 		var e = CKEDITOR.replace('description_long', {toolbarCanCollapse: true});  
 		e.on( 'key', function(e) {
 			if(e.data.keyCode == '113'){
@@ -241,16 +258,27 @@
                 var reader = new FileReader();
                 reader.onload = (function(theFile) {
                     return function(e) { //size e = e.tatal
-                       $('#show2').html('<img src="' + e.target.result + '" style="height:50px" />');
+                       $('#show2').html('');
+						$('#show2').append('<img class="cropimage" src="' + e.target.result + '" style="max-width:100%; float:left;" />');
+						var src = $('.cropimage').attr("src");
+						var img = new Image();//tinh original width
+						img.src = src;
+						img.onload = function() {
+							var curr_with = $('.cropimage').width();//co css
+							rate = this.width / curr_with;//ti le thu nho
+							//console.log(this.width);console.log(curr_with);
+							$('.cropimage').Jcrop({
+								aspectRatio: 1,
+								setSelect: [0,0,400,230],
+								aspectRatio: 400/230,
+								allowSelect : false,
+								onSelect: updateCoords,
+								onRelease: updateCoords
+							});
+						}
                     };
                 })(f);
                 reader.readAsDataURL(f);
-                /*}
-                 else{
-                 $('#fileupload').val(');
-                 $('.showImages').attr('src', ');
-                 alert("File size can't over 2Mb.");
-                 }*/
             }
         });
         $('#imageEnable').change(function(evt) {
@@ -327,7 +355,9 @@
     function save(func, id, type) {
         search = getSearch();
         var token = $('#token').val();
-        var description_sort = CKEDITOR.instances['description_sort'].getData();
+        //var description_sort = CKEDITOR.instances['description_sort'].getData();
+		var description_sort = $('#description_sort').val();
+		description_sort = description_sort.substr(0, 190);
 		var description_long = CKEDITOR.instances['description_long'].getData();
         if ($("#title").val() == '') {
             error("Tiêu đề <?= getLanguage('all', 'empty') ?>");
@@ -458,6 +488,14 @@
 		}
 		
 	}
+	function updateCoords(c){
+		//console.log(rate);
+		$('#x').val(c.x * rate);
+		$('#y').val(c.y * rate);
+		$('#w').val(c.w * rate);
+		$('#h').val(c.h * rate);
+	};
 </script>
 <script src="<?= url_tmpl(); ?>assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<?=url_tmpl();?>ckeditor/ckeditor.js" type="text/javascript"></script>
+<script src="<?= url_tmpl(); ?>jcrop/jquery.Jcrop.min.js" type="text/javascript"></script>

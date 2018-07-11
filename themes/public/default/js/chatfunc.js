@@ -11,6 +11,9 @@ $("#input-msg").keyup(function(e){
 		removeBr('#input-msg');
 	}
 	prev_key_code = e.keyCode;
+	if ($(this).html() == '<br>') {
+		$(this).html('');
+	}
 })
 $("#input-msg").keypress(function(e){
 	if (e.keyCode === 13) {
@@ -51,6 +54,18 @@ function uploadImage() {
 	});
 }
 function inserticon(e){
+	var icon_name = e.getAttribute("data") + '.png';
+	var icon_link = base_url + 'files/emotion_icon/' + icon_name;
+	var input_msg = $('#input-msg');
+	var img = '<img class="icon-msg" src="'+ icon_link +'" />';
+	
+	input_msg.append(img);
+	removeBr('#input-msg');
+	toggleIconChat();
+	placeCaretAtEnd( document.getElementById("input-msg") );
+}
+/*
+function inserticon(e){
 	var icon_name = 'emoji_u' + e.getAttribute("data") + '.png';
 	var icon_link = '//ssl.gstatic.com/chat/emoji/7/' + icon_name;
 	var input_msg = $('#input-msg');
@@ -60,9 +75,9 @@ function inserticon(e){
 	removeBr('#input-msg');
 	toggleIconChat();
 	placeCaretAtEnd( document.getElementById("input-msg") );
-}
+}*/
 function removeBr(e) {
-	$(e).find('br').remove(); //console.log(111);
+	//$(e).find('br').remove(); //console.log(111);
 }
 function toggleIconChat() {
 	$('#icon-motion-container').toggle();

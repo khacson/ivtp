@@ -123,12 +123,19 @@ class Markettrend extends CI_Controller {
             $resize = $this->resizeImg($image_data);
         }
 		if (isset($_FILES['userfile2']) && $_FILES['userfile2']['name'] != "") {
-            $imge_name = $_FILES['userfile2']['name'];
-            $this->upload->initialize($this->set_upload_options2());
-            $image_data = $this->upload->do_upload('userfile2', $imge_name); //Ten hinh 
-            $array['thumb'] = $image_data;
-            $resize = $this->resizeImg($image_data,300,300);
+            $temp = explode('.', $_FILES['userfile2']['name']);
+			$ext = end($temp);
+			$filename = $_FILES['userfile2']['name'];			
+			$src_path = $_FILES['userfile2']['tmp_name'];
+			$new_path = 'files/markettrend/thumb/'.$filename;
+			
+			$this->base_model->resizeImg(THUMB_WIDTH, THUMB_HEIGHT, $src_path, $new_path, $array['x'], $array['y'], $array['w'], $array['h'], $ext);
+			$array['thumb'] = $filename;
         }
+		unset($array['x']);
+		unset($array['y']);
+		unset($array['w']);
+		unset($array['h']);
         $login = $this->login;
 		$array['friendlyurl'] = $this->admin->friendlyURL($array['title']);
         $array['description_sort'] = $this->input->post('description_sort');
@@ -157,7 +164,10 @@ class Markettrend extends CI_Controller {
 					  ->find();
         if (isset($_FILES['userfile']) && $_FILES['userfile']['name'] != "") {
 			if(file_exists('files/markettrend/'.$finds->image)){
-				unlink('files/markettrend/'.$finds->image);
+				$imge_name = strtolower(uniqid()).$_FILES['userfile']['name'];
+			}
+			else {
+				$filename = $_FILES['userfile']['name'];
 			}
 			$imge_name = $_FILES['userfile']['name'];
             $this->upload->initialize($this->set_upload_options());
@@ -167,14 +177,26 @@ class Markettrend extends CI_Controller {
         }
 		if (isset($_FILES['userfile2']) && $_FILES['userfile2']['name'] != "") {
 			if(file_exists('files/markettrend/thumb/'.$finds->thumb)){
-				unlink('files/markettrend/thumb/'.$finds->thumb);
+				$filename = strtolower(uniqid()).$_FILES['userfile2']['name'];
 			}
-			$imge_name = $_FILES['userfile2']['name'];
-            $this->upload->initialize($this->set_upload_options2());
-            $image_data = $this->upload->do_upload('userfile2', $imge_name); //Ten hinh 
-            $array['thumb'] = $image_data;
-            $resize = $this->resizeImg($image_data,300,300);
+			else {
+				$filename = $_FILES['userfile2']['name'];
+			}
+			
+			$temp = explode('.', $_FILES['userfile2']['name']);
+			$ext = end($temp);
+			$filename = $_FILES['userfile2']['name'];			
+			$src_path = $_FILES['userfile2']['tmp_name'];
+			$new_path = 'files/markettrend/thumb/'.$filename;
+			
+			$this->base_model->resizeImg(THUMB_WIDTH, THUMB_HEIGHT, $src_path, $new_path, $array['x'], $array['y'], $array['w'], $array['h'], $ext);
+			$array['thumb'] = $filename;
         }
+		unset($array['x']);
+		unset($array['y']);
+		unset($array['w']);
+		unset($array['h']);
+		
 		$array['friendlyurl'] = $this->admin->friendlyURL($array['title']);
         $array['description_sort'] = $this->input->post('description_sort');
 		$array['description_long'] = $this->input->post('description_long');

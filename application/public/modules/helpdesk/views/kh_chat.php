@@ -192,6 +192,7 @@
 	
 	
 <script>
+var base_url = '<?=base_url();?>';
 var token = '<?=$token?>';
 var chat_code = '<?=$chat_code?>';
 var serviceGroup = '<?=$serviceGroup?>';
@@ -295,6 +296,10 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
     }
 	
 	$scope.checkAndSendChat = function(e) {
+		var input_msg = $('#input-msg').html();
+		if (input_msg.trim() == '' || input_msg.trim() == '<br>') {
+			return;
+		}
 		if (e.keyCode == 13) {
 			if (serviceGroup == 1) {
 				//group cskh thi ko chan email va phone

@@ -13,10 +13,6 @@
 			$to_date = $this->base_model->formatDate($search['to_date']);
 			$where .= " AND c.datecreate < '$to_date 23:59:59'";
 		}
-		$login = $this->admin->getSession('login');
-		if ($login->grouptype != 0) {
-			$where .= " AND u.id = ".$login->id;
-		}
 		$sql = "DROP TABLE IF EXISTS ivt_chat_rating_rank_temp;";
 		$this->model->executeQuery($sql);
 		
@@ -61,6 +57,10 @@
 		$sql = "";
 		if (!empty($search['user_id'])) {
 			$sql .= " AND tmp.user_id = '".$search['user_id']."' ";
+		}
+		$login = $this->admin->getSession('login');
+		if ($login->grouptype != 0) {
+			$sql .= " AND tmp.user_id = ".$login->id;
 		}
 		return $sql;
 	}

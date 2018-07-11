@@ -20,6 +20,8 @@ define('DIR_READ_MODE', 0755);
 define('DIR_WRITE_MODE', 0755);
 define('AVATAR_WIDTH', 60);
 define('AVATAR_HEIGHT', 60);
+define('THUMB_WIDTH', 400);
+define('THUMB_HEIGHT', 220);
 define('DISCOUNT_RATE_1', 0.1);
 define('DISCOUNT_RATE_2', 0.15);
 

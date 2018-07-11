@@ -62,128 +62,49 @@
             <?php }?>
           </div>
         </section>
-		<!-- E Nhung co phieu tang truong tot nhat-->
-        <section class="section-80 bg-selago">
-			<div class="shell-wide shell-wide-custom">
-			  <hr class="divider bg-bermuda">
-			  <div class="offset-top-20">
-				<h3>Cổ phiếu tiềm năng</h3>
-			  </div>
-		  </div>
-          <div class="range range-condensed range-xs-center bg-shark">
-		    <?php if(isset($cps[0]->id)){?>
-            <div class="cell-xs-6 cell-sm-6 cell-lg-3 inset-left-15 inset-right-15 inset-md-left-0 inset-md-right-0">
-              <figure class="thumbnail-terry thumbnail-terry-modern"><a href="sale-single.html"><img width="480" height="360" src="<?=url_tmpl();?>images/pages/sales-01-480x360.jpg" alt=""></a>
-                <figcaption class="text-left">
-                  <div class="figcaption-caption">
-                    <h4 class="thumbnail-terry-title text-spacing-40"><?=$cps[0]->mcp;?></h4>
-                    <p class="thumbnail-terry-desc text-white-07 offset-top-5">Giá hiện tại: <?=number_format($cps[0]->curr_price);?></p>
-					<p class="thumbnail-terry-desc text-white-07 offset-top-2">Giá mở cửa: <?=number_format($cps[0]->open_price);?></p>
-					<?php 
-						$des = $cps[0]->inc_des;
-						$inc_des = round($des * 100,2);
-						if($inc_des > 0){
-							$inc_dess = "<span class='green'>".$inc_des."</span>";
-						}
-						else{
-							$inc_dess = "<span class='red'>".$inc_des."</span>";
-						}
-					?>
-					<p class="thumbnail-terry-desc text-white-07 offset-top-2">%Tăng/Giảm: <b><?=$inc_dess;?></b></p>
-                  </div>
-                  <div class="thumbnail-terry-btn-wrap text-md-right offset-top-10 offset-md-top-0"><a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" href="<?=base_url();?>danh-muc-tang-truong/<?=$cps[0]->mcp;?>-dt<?=$cps[0]->id;?>.html"><i class="icon icon-xs fa fa-angle-double-right" aria-hidden="true"></i>
- </span>Xem chi tiết</a></div>
-                </figcaption>
-              </figure>
-            </div>
-			<?php }?>
-			<?php if(isset($cps[1]->id)){?>
-            <div class="cell-xs-6 cell-sm-6 cell-lg-3 offset-top-40 offset-xs-top-0 inset-left-15 inset-right-15 inset-md-left-0 inset-md-right-0">
-              <figure class="thumbnail-terry thumbnail-terry-modern"><a href="sale-single.html"><img width="480" height="360" src="<?=url_tmpl();?>images/pages/sales-02-480x360.jpg" alt=""></a>
-                <figcaption class="text-left">
-                  <div class="figcaption-caption">
-                    <h4 class="thumbnail-terry-title text-spacing-40"><?=$cps[1]->mcp;?></h4>
-                    <p class="thumbnail-terry-desc text-white-07 offset-top-5">Giá hiện tại: <?=number_format($cps[1]->curr_price);?></p>
-					<p class="thumbnail-terry-desc text-white-07 offset-top-2">Giá mở cửa: <?=number_format($cps[1]->open_price);?></p>
-					<?php 
-						$des = $cps[1]->inc_des;
-						$inc_des = round($des * 100,2);
-						if($inc_des > 0){
-							$inc_dess = "<span class='green'>".$inc_des."</span>";
-						}
-						else{
-							$inc_dess = "<span class='red'>".$inc_des."</span>";
-						}
-					?>
-					<p class="thumbnail-terry-desc text-white-07 offset-top-2">%Tăng/Giảm: <b><?=$inc_dess;?></b></p>
-                  </div>
-                  <div class="thumbnail-terry-btn-wrap text-md-right offset-top-10 offset-md-top-0"><a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" href="<?=base_url();?>danh-muc-tang-truong/<?=$cps[1]->mcp;?>-dt<?=$cps[1]->id;?>.html"><i class="icon icon-xs fa fa-angle-double-right" aria-hidden="true"></i>
- </span>Xem chi tiết</a></div>
-                </figcaption>
-              </figure>
-            </div>
-			<?php }?>
-			<?php if(isset($cps[2]->id)){?>
-            <div class="cell-xs-6 cell-sm-6 cell-lg-3 offset-top-40 offset-md-top-0 inset-left-15 inset-right-15 inset-md-left-0 inset-md-right-0">
-              <figure class="thumbnail-terry thumbnail-terry-modern"><a href="sale-single.html"><img width="480" height="360" src="<?=url_tmpl();?>images/pages/sales-03-480x360.jpg" alt=""></a>
-                <figcaption class="text-left">
-                  <div class="figcaption-caption">
-                    <h4 class="thumbnail-terry-title text-spacing-40"><?=$cps[2]->mcp;?></h4>
-                    <p class="thumbnail-terry-desc text-white-07 offset-top-5">Giá hiện tại: <?=number_format($cps[2]->curr_price);?></p>
-					<p class="thumbnail-terry-desc text-white-07 offset-top-2">Giá mở cửa: <?=number_format($cps[2]->open_price);?></p>
-					<?php 
-						$des = $cps[2]->inc_des;
-						$inc_des = round($des * 100,2);
-						if($inc_des > 0){
-							$inc_dess = "<span class='green'>".$inc_des."</span>";
-						}
-						else{
-							$inc_dess = "<span class='red'>".$inc_des."</span>";
-						}
-					?>
-					<p class="thumbnail-terry-desc text-white-07 offset-top-2">%Tăng/Giảm: <b><?=$inc_dess;?></b></p>
-                  </div>
-                  <div class="thumbnail-terry-btn-wrap text-md-right offset-top-10 offset-md-top-0"><a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" href="<?=base_url();?>danh-muc-tang-truong/<?=$cps[2]->mcp;?>-dt<?=$cps[2]->id;?>.html"><i class="icon icon-xs fa fa-angle-double-right" aria-hidden="true"></i>
- </span>Xem chi tiết</a></div>
-                </figcaption>
-            </div>
-			<?php }?>
-			<?php if(isset($cps[3]->id)){?>
-            <div class="cell-xs-6 cell-sm-6 cell-lg-3 offset-top-40 offset-md-top-0 inset-left-15 inset-right-15 inset-md-left-0 inset-md-right-0">
-              <figure class="thumbnail-terry thumbnail-terry-modern"><a href="sale-single.html"><img width="480" height="360" src="<?=url_tmpl();?>images/pages/sales-04-480x360.jpg" alt=""></a>
-                <figcaption class="text-left">
-                  <div class="figcaption-caption">
-                    <h4 class="thumbnail-terry-title text-spacing-40"><?=$cps[3]->mcp;?></h4>
-                    <p class="thumbnail-terry-desc text-white-07 offset-top-5">Giá hiện tại: <?=number_format($cps[3]->curr_price);?></p>
-					<p class="thumbnail-terry-desc text-white-07 offset-top-2">Giá mở cửa: <?=number_format($cps[3]->open_price);?></p>
-					<?php 
-						$des = $cps[3]->inc_des;
-						$inc_des = round($des * 100,2);
-						if($inc_des > 0){
-							$inc_dess = "<span class='green'>".$inc_des."</span>";
-						}
-						else{
-							$inc_dess = "<span class='red'>".$inc_des."</span>";
-						}
-					?>
-					<p class="thumbnail-terry-desc text-white-07 offset-top-2">%Tăng/Giảm: <b><?=$inc_dess;?></b></p>
-                  </div>
-                  <div class="thumbnail-terry-btn-wrap text-md-right offset-top-10 offset-md-top-0"><a class="btn btn-thumbnail-terry btn-rect btn-icon btn-icon-right btn-primary" href="<?=base_url();?>danh-muc-tang-truong/<?=$cps[3]->mcp;?>-dt<?=$cps[3]->id;?>.html"><i class="icon icon-xs fa fa-angle-double-right" aria-hidden="true"></i>
- </span>Xem chi tiết</a></div>
-                </figcaption>
-              </figure>
-            </div>
-			<?php }?>
-          </div>
-        </section>
-        
-		<!--S Tin tuc-->
+		<!-- Danh mục khuyến nghị IPro-->
         <section class="section-80 section-md-20 bg-selago">
           <div class="inset-md-left-35 inset-xl-left-125 inset-md-right-35 inset-xl-right-125">
             <div class="shell-wide shell-wide-custom">
               <hr class="divider bg-bermuda">
               <div class="offset-top-20">
-                <h3>Xu hướng thị trường</h3>
+                <h3 class="text-primary">Danh mục khuyến nghị IPro</h3>
+              </div>
+              <div class="range range-xs-center range-lg-left text-left">
+                <!--S Item 1-->
+				<?php foreach($investment as $item){?>
+				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-5">
+                  <div class="post-box shadow-drop post-box-max-width-none reveal-block">
+                    <div class="post-box-img-wrap"><a class="thumbnail-robben" href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="320" height="442" alt=""></span></a></div>
+                    <div class="post-box-caption post-box-bottom-radius bg-white">
+                      <h5 class="offset-top-15"><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a></h5>
+                      <p class="offset-top-20">
+						<?=strlen($item->description_sort) < 190 ? $item->description_sort : substr($item->description_sort, 0, 190).'...';?>
+					  </p>
+                      <ul class="list-inline list-inline-20 offset-top-22">
+                        <li>
+						<i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
+						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($item->datecreate));?> </span></li>
+                        <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i>
+<span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#"><?=$item->comment;?> Comments</a></span></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+				<!--S Item 2-->
+                <?php }?>
+              </div><a class="btn btn-width-200 btn-primary offset-top-35 offset-md-top-65" href="<?=base_url();?>danh-muc-dau-tu/danh-muc-khuyen-nghi-ipro.html">Xem tất cả</a>
+            </div>
+          </div>
+        </section>
+        
+		<!--S Tin tuc-->
+        <section class="section-80 section-md-20 bg-selago" style="padding-top: 0;">
+          <div class="inset-md-left-35 inset-xl-left-125 inset-md-right-35 inset-xl-right-125">
+            <div class="shell-wide shell-wide-custom">
+              <hr class="divider bg-bermuda">
+              <div class="offset-top-20">
+                <h3 class="text-primary">Xu hướng thị trường</h3>
               </div>
               <div class="range range-xs-center range-lg-left text-left">
                 <!--S Item 1-->
@@ -193,7 +114,9 @@
                     <div class="post-box-img-wrap"><a class="thumbnail-robben" href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=base_url();?>files/markettrend/thumb/<?=$item->thumb;?>" width="320" height="442" alt=""></span></a></div>
                     <div class="post-box-caption post-box-bottom-radius bg-white">
                       <h5 class="offset-top-15"><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a></h5>
-                      <p class="offset-top-20"><?=$item->description_sort;?></p>
+                      <p class="offset-top-20">
+						<?=strlen($item->description_sort) < 190 ? $item->description_sort : substr($item->description_sort, 0, 190).'...';?>
+					  </p>
                       <ul class="list-inline list-inline-20 offset-top-22">
                         <li>
 						<i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>

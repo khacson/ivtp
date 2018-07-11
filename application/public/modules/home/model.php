@@ -37,6 +37,17 @@ class HomeModel extends CI_Model
 		";
 		return $this->model->query($sql)->execute();
 	}
+	function getInvestment(){
+		$sql = "
+			SELECT `id`, `title`, `friendlyurl`, `description_sort`, `image`, `datecreate`, `thumb`, 
+			(select count(1) total from ivt_investment_commets mc where mc.blogid = m.`id`) comment
+			FROM `ivt_investment` m  
+			WHERE m.`isdelete` =0 
+			AND m.`isshow` = 1 
+			ORDER BY m.`id` DESC LIMIT 3
+		";
+		return $this->model->query($sql)->execute();
+	}
 	function getSlideList(){
 		$query = $this->model->table('ivt_slide')
 					  ->select('id,slide_name,description,url,img')
