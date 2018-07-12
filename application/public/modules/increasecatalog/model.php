@@ -85,8 +85,9 @@ class IncreasecatalogModel extends CI_Model
 		return $data->image;
 	}
 	function getFindNew($id, $typeid = 0){
-		$query = $this->model->table('ivt_investment')
-					  ->where('id <>',$id);
+		$query = $this->model->table('ivt_markettrend')
+					  ->where('id <>',$id)
+					  ->where('isdelete',0);
 		if (!empty($typeid)) {
 			$query = $query->where('typeid',$typeid);
 		}

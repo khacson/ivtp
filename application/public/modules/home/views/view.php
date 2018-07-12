@@ -68,23 +68,23 @@
             <div class="shell-wide shell-wide-custom">
               <hr class="divider bg-bermuda">
               <div class="offset-top-20">
-                <h3 class="text-primary">Danh mục khuyến nghị IPro</h3>
+                <h3 class="text-primary">DANH MỤC KHUYẾN NGHỊ</h3>
               </div>
               <div class="range range-xs-center range-lg-left text-left">
                 <!--S Item 1-->
 				<?php foreach($investment as $item){?>
 				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-5">
                   <div class="post-box shadow-drop post-box-max-width-none reveal-block">
-                    <div class="post-box-img-wrap"><a class="thumbnail-robben" href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="320" height="442" alt=""></span></a></div>
+                    <div class="post-box-img-wrap"><a class="thumbnail-robben" href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="320" height="442" alt=""></span></a></div>
                     <div class="post-box-caption post-box-bottom-radius bg-white">
-                      <h5 class="offset-top-15"><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a></h5>
+                      <h5 class="offset-top-15"><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a></h5>
                       <p class="offset-top-20">
 						<?=strlen($item->description_sort) < 190 ? $item->description_sort : substr($item->description_sort, 0, 190).'...';?>
 					  </p>
                       <ul class="list-inline list-inline-20 offset-top-22">
                         <li>
 						<i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
-						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($item->datecreate));?> </span></li>
+						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($item->dateupdate));?> </span></li>
                         <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i>
 <span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#"><?=$item->comment;?> Comments</a></span></li>
                       </ul>
@@ -104,7 +104,7 @@
             <div class="shell-wide shell-wide-custom">
               <hr class="divider bg-bermuda">
               <div class="offset-top-20">
-                <h3 class="text-primary">Xu hướng thị trường</h3>
+                <h3 class="text-primary">XU HƯỚNG THỊ TRƯỜNG</h3>
               </div>
               <div class="range range-xs-center range-lg-left text-left">
                 <!--S Item 1-->
@@ -120,7 +120,7 @@
                       <ul class="list-inline list-inline-20 offset-top-22">
                         <li>
 						<i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
-						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($item->datecreate));?> </span></li>
+						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($item->dateupdate));?> </span></li>
                         <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i>
 <span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#"><?=$item->comment;?> Comments</a></span></li>
                       </ul>

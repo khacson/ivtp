@@ -7,7 +7,7 @@
 				Danh mục đầu tư</a></li>
             </li>
 			<?php if(!empty($catalogFind->catalog_name)){?>
-				<li><a href="<?=base_url();?>gioi-thieu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
+				<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$catalogFind->friendlyurl?>.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
 					<?=$catalogFind->catalog_name;?></a></li>
 				</li>
 			<?php }?>
@@ -58,12 +58,19 @@
                         <div class="unit unit-horizontal">
                           <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="100" height="100" alt=""></div>
                           <div class="unit-body">
-                            <a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a>
+							<?php 
+								$new_icon = '';
+								if ((time() - strtotime($item->dateupdate) < 3*84600)
+								|| (time() - strtotime($item->datecreate) < 3*84600)) {
+									$new_icon = '<img src="'.base_url().'files/icon/new_icon.gif" />';
+								}
+							?>
+                            <a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?> <?=$new_icon?></a>
                             <div class="offset-top-10">
                               <!-- List Inline-->
                               <ul class="list-inline list-inline-dashed list-inline-12 text-gray text-italic p">
                                 <li><i class="fa fa-calendar icon icon-normal icon-sm font12" aria-hidden="true"></i>
-						<span class="text-middle inset-left-10 text-italic font12"><?=date('d/m/Y',strtotime($item->datecreate));?> </span></li>
+						<span class="text-middle inset-left-10 text-italic font12"><?=date('d/m/Y',strtotime($item->dateupdate));?> </span></li>
                             
                               </ul>
                             </div>

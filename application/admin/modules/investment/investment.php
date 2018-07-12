@@ -141,6 +141,7 @@ class Investment extends CI_Controller {
         $array['description_sort'] = $this->input->post('description_sort');
 		$array['description_long'] = $this->input->post('description_long');
         $array['datecreate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+        $array['dateupdate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
         $array['usercreate'] = $login->username;//print_r($array);exit;
         $result['status'] = $this->model->saves($array);
         $result['csrfHash'] = $token;

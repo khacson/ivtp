@@ -144,7 +144,7 @@ img.cotuc {
     max-width: 360px;
 }
 th {
-    background-color: #764ebe;
+    background-color: #ad47ab;
     color: #fff;
     font-weight: normal;
     padding: 3px 5px;
@@ -400,6 +400,9 @@ body{
 }
 /*end homepage*/
 /*post*/
+h2,h3 {
+	font-size: 32px;
+}
 .post-content {
 	color: #000;
 }
@@ -408,7 +411,7 @@ body{
     margin-top: 15px;
 }
 .post-content li {
-    list-style: outside none disc;
+    list-style: outside;
     margin-bottom: 5px;
     margin-left: 30px;
     margin-top: 6px;

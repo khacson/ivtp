@@ -28,7 +28,7 @@ class InvestmentModel extends CI_Model
 	}
 	function getFindCatalog($friendlyurl){
 		$query = $this->model->table('ivt_investmentcatalog')
-					  ->select('id,catalog_name')
+					  ->select('id,catalog_name,friendlyurl')
 					  ->where('friendlyurl',$friendlyurl)
 					  ->find();
 		return $query;

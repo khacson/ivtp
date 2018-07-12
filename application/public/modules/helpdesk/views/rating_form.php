@@ -13,7 +13,7 @@
 	border: 1px solid #79d5ca;
 }
 #send_rating {
-    border: 1px solid #f07c22;
+    border: 1px solid #e9b51b;
     border-radius: 4px;
     padding: 5px 8px;
 }	
