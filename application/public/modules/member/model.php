@@ -44,4 +44,60 @@ class MemberModel extends CI_Model
 			return $price_per_mon * $time_use * (1 - DISCOUNT_RATE_2);
 		}
 	}
+	function getServiceInfo($pblogin) {
+		$arr = array(
+			'service_name' => '',
+			'from_date' => '',
+			'to_date' => '',
+			'status' => '',
+		);
+		$today = gmdate('Y-m-d H:i:s', time() + 7*3600);
+		//kiem tra co dk dich vu hay k
+		$rs = $this->model->table('ivt_member_level')
+						  ->select('*')
+						  ->where('member_id', $pblogin->id)
+						  ->where('active_status', 1)
+						  ->find();
+		if (!empty($rs->level)) {
+			if ($rs->level == 1) {
+				$service_name = 'Normal';
+			}
+			else if ($rs->level == 2) {
+				$service_name = 'VIP';
+			}
+			if (strtotime($rs->to_date) >= strtotime($today)) {
+				$arr['status'] = 'Đã kích hoạt';
+			}
+			else {
+				$arr['status'] = 'Đã hết hạn';
+			}
+			$arr['service_name'] = $service_name;
+			$arr['from_date'] = date('d/m/Y H:i', strtotime($rs->from_date));
+			$arr['to_date'] = date('d/m/Y H:i', strtotime($rs->to_date));
+			return $arr;
+		}
+		
+		//mien phi 10 ngay
+		$rs = $this->model->table('ivt_member')
+						  ->select('dateactice')
+						  ->where('id', $pblogin->id)
+						  ->where('active', 1)
+						  ->find();
+		if (!empty($rs->dateactice)) {
+			$t = strtotime($today) - strtotime($rs->dateactice);
+			if ($t/86400 <= 10) {
+				$arr['status'] = 'Đã kích hoạt';
+			}
+			else {
+				$arr['status'] = 'Đã hết hạn';
+			}
+			
+			//VIP 10 ngay
+			$arr['service_name'] = 'Free (VIP 10 ngày)';
+			$arr['from_date'] = date('d/m/Y H:i', strtotime($rs->dateactice));
+			$arr['to_date'] = date('d/m/Y H:i', strtotime('+10 days', strtotime($rs->dateactice)));
+			return $arr;
+		}
+		
+	}
 }

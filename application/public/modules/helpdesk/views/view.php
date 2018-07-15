@@ -22,6 +22,12 @@
     padding: 10px;
 	transition: all ease 0.5s;
 }
+.user_info.offline {
+	background: rgba(159, 161, 165, 0.8);
+}
+.user_info-container:hover .user_info.offline{
+	background: rgba(159, 161, 165, 0.8);
+}
 .user_info-container:hover .user_info.cskh{
 	background: rgba(107, 8, 117, 0.65);
 }
@@ -66,8 +72,20 @@
     width: 50px;
 	color: #fff;
 }
+.chatbtn.offline::before {
+    content: "Offline";
+    font-size: 17px;
+    left: 3px;
+}
 .views{
 	min-height: 40px;
+}
+.sel_user {
+    display: block;
+    height: 30px;
+    margin: 10px auto auto !important;
+    max-width: 200px;
+    width: 100%;
 }
 </style>
 <section class="section-10 bg-selago">
@@ -110,12 +128,36 @@
 		  </div>
 		  <div class="inset-md-right-35 inset-xl-right-0 offset-top-40">
 			<h3 class="text-primary text-center">Tổ Tư Vấn Độc Lập</h3>
+			<div class="offset-top-20">
+				<div class="text-center">Chọn nhanh nhân viên tư vấn</div>
+				<div class="text-center">
+					<select id="sel_user" class="sel_user">
+						<option></option>
+						<?php foreach ($userList as $item) {
+								$status = 'Online';
+								$style = '';
+								if (!$item->online_status) {
+									$status = 'Offline';
+									$style = "style='color: #ccc;'";
+								}
+						?>
+							<option <?=$style?> value="<?=base_url()?>tu-van/dt<?=$item->id?>"><?=$item->fullname?> - <?=$item->username?> - <?=$status?></option>
+						<?php } ?>
+					</select>
+				</div>
+				
+			</div>
 			<div class="offset-top-40 range">
-			<?php foreach ($userList as $item) { ?>
+			<?php foreach ($userList as $item) {
+					$status = '';
+					if (!$item->online_status) {
+						$status = 'offline';
+					}
+			?>
 				<div class="cell-md-4">
 					<a href="<?=base_url()?>tu-van/dt<?=$item->id?>">
 						<div class="user_info-container">
-							<div class="user_info">
+							<div class="user_info <?=$status?>">
 								<img class="user_img" src="<?=base_url()?>files/user/<?=$item->signature?>">
 								<p class="username"><?=$item->fullname?></p>
 								<!--<p>ID: <?=$item->username?></p>-->
@@ -124,7 +166,7 @@
 								<p>Kinh Nghiệm: <?=$item->experience?></p>
 								<p class="views">Quan điểm: <?=$item->views?></p>
 							</div>
-							<span class="chatbtn" href="javascript:;"></span>
+							<span class="chatbtn <?=$status?>" href="javascript:;"></span>
 						</div>
 					</a>
 				</div>
@@ -136,3 +178,8 @@
 	</div>
   </div>
 </section>
+<script>
+$('#sel_user').change(function(){
+	window.location = this.value;
+})
+</script>

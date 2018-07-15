@@ -212,7 +212,7 @@ class base_model extends CI_Model {
 		}
         $sql = "SELECT * FROM ivt_users
                 WHERE groupid = 2 AND isdelete=0 AND is_full = 0 $search
-				ORDER BY fullname";
+				ORDER BY online_status DESC, fullname";
         return $this->model->query($sql)->execute();
     }
 	
@@ -409,7 +409,7 @@ class base_model extends CI_Model {
 						  ->find();
 		if (!empty($rs->dateactice)) {
 			$t = strtotime($today) - strtotime($rs->dateactice);
-			if ($t/84600 < 10) {
+			if ($t/86400 < 10) {
 				return 2;
 			}
 		}

@@ -37,7 +37,7 @@
 				</div>
 			</div>
 			<div class="chat-header">
-				<span class="fleft">Nhân viên tư vấn: <?=$userInfo->fullname?></span>
+				<span class="fleft">NV: <?=$userInfo->fullname?> - <?=$userInfo->username?> - <?=$status?></span>
 				<span class="fright" id="history" ng-click="get_chat_history()">
 					<a data-toggle="modal" href="#myModal">Xem lịch sử chat</a>
 				</span>
@@ -50,7 +50,7 @@
 							<img class="avatar" src="<?=base_url()?>files/user/<?=$userInfo->signature?>" />
 						</div>
 						<div class="log-msg">
-							<div class="msg-content">Xin chào bạn, mình có thể giúp được gì cho bạn ạ?</div>
+							<div class="msg-content"><?=$welcome_msg?></div>
 						</div>
 					</div>
 					
@@ -210,8 +210,11 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		$scope.init();
 	}).catch(function(error) {
 		console.log("Error:"+ error);	
-		console.log("token het han");	
-		$scope.getNewToken();
+		warning('Hệ thống phát hiện có lỗi bảo mật xảy ra. Trang web của bạn sẽ tự Refresh sau 5 giây.');	
+		setTimeout(function(){
+			window.location = '';
+		}, 5000);
+		//$scope.getNewToken();
 	});
 	
 	$scope.init = function() {

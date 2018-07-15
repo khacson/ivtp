@@ -71,8 +71,8 @@
                           <div class="unit-body">
 							<?php 
 								$new_icon = '';
-								if ((time() - strtotime($item->dateupdate) < 3*84600)
-								|| (time() - strtotime($item->datecreate) < 3*84600)) {
+								if ((time() - strtotime($item->dateupdate) < 3*86400)
+								|| (time() - strtotime($item->datecreate) < 3*86400)) {
 									$new_icon = '<img src="'.base_url().'files/icon/new_icon.gif" />';
 								}
 							?>

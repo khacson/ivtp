@@ -317,8 +317,10 @@ class Member extends CI_Controller {
 		if(empty($pblogin->id)){
 			redirect(base_url().'dang-nhap', 'location');
 		}
+		$serviceInfo = $this->model->getServiceInfo($pblogin);
 		$data = new stdClass();
 		$data->finds = $pblogin;
+		$data->serviceInfo = $serviceInfo;
 		$content = $this->load->view('profile',$data,true);
         $this->site->write('content',$content,true);
         $this->site->render();

@@ -84,17 +84,17 @@ class Investment extends CI_Controller {
 			$this->site->render();
 			return;
 		}
+		$typeid = 0;
+		if(!empty($finds->typeid)){
+			$typeid = $finds->typeid;
+		}
 		$data->catalogs = $this->model->getInvestmentCatalog();
-		$data->listNew = $this->model->getFindNew($id);
+		$data->listNew = $this->model->getFindNew($id, $typeid);
 		if(!empty($finds->id)){
 			$this->site->write('title',$finds->meta_title,true);
 			$this->site->write('description',$finds->meta_keyword,true);
 			$this->site->write('keywords',$finds->mete_description,true);
 			$this->site->write('title_page',$finds->title,true);
-		}
-		$typeid = 0;
-		if(!empty($finds->typeid)){
-			$typeid = $finds->typeid;
 		}
 		$data->catalogFind =  $this->model->getFindC($typeid);
 		$data->finds = $finds;

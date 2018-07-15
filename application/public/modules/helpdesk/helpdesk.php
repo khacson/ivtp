@@ -40,7 +40,7 @@ class Helpdesk extends CI_Controller {
 		$finds = $this->model->getInfor();
 		$data = new stdClass();
 		
-	    $data->userList = $this->base_model->getAllHelpDeskUser(1);
+	    $data->userList = $this->base_model->getAllHelpDeskUser();
 	    $data->userServiceList = $this->base_model->getAllCustomerServiceUser();
 		
 		$data->listNew = $this->model->getFindNew(0);
@@ -56,6 +56,8 @@ class Helpdesk extends CI_Controller {
 
 		$data->userInfo = $this->model->get_user_info($user_id);
 		$data->user_id = $user_id;
+		$data->status = 'Offline';
+		$data->welcome_msg = '';
 		
 		$data->listNew = $this->model->getFindNew(0);
 		$dbinfo = $this->model->get_firebasedb_info($user_id);
@@ -87,6 +89,15 @@ class Helpdesk extends CI_Controller {
 		else {
 			$isGuest = 0;
 			$login->signature = $login->avatar;
+		}
+
+		if ($data->userInfo->online_status == 1) {
+			$data->status = 'Online';
+			$data->welcome_msg = 'Xin chào bạn, mình có thể giúp được gì cho bạn ạ?';
+		}
+		else {
+			$data->status = 'Offline';
+			$data->welcome_msg = 'Xin chào bạn, bạn vui lòng để lại lời nhắn, mình sẽ phản hồi trong thời gian sớm nhất.';
 		}
 
 		$chat_code = $this->model->create_chatcode($user_id, $login->id, $dbinfo->id, $isGuest);
@@ -140,11 +151,14 @@ class Helpdesk extends CI_Controller {
 		$this->model->table('ivt_users_chat_detail')->insert($array);
 		$this->model->update_last_response($array['chat_code'], $array['datecreate']);
 	}
-	function getNewToken() {
-		$login->id = 111;
-		$login->fullname = 'Đặng Thu Huyền';
-		$login->signature = 'photo.jpg';
-		
+	function getNewToken() {return '';
+		$login = $this->site->getSession('pblogin');
+		if (empty($login)) {
+			$login = new stdClass();
+			$login->id = $this->model->getGuestId() * (-1);
+			$login->fullname = 'Guest'.$login->id;
+			$login->signature = 'noavatar.png';
+		}
 		$dbinfo = $this->model->get_firebasedb_info($user_id);
 		$dbinfo2 = $this->model->get_firebasedb_info2($dbinfo->name);
 		//echo '<pre>'; print_r($dbinfo);die;

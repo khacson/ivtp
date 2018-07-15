@@ -1,7 +1,7 @@
 <div class="shell-wide">
           <div class="range tleft">
             <div class="cell-md-7">
-              <p class="text-small">&#169; <span id="copyright-year"></span> © Copyright Investor. All Rights Reserved &nbsp;&nbsp;&nbsp;<a class="text-gray-light" href="http://firefuma.vn.html">Design by Firefuma </a></p>
+              <p class="text-small">&#169; <span id="copyright-year"></span> © Copyright investorpro.com.vn. All Rights Reserved</p>
             </div>
 			<div class="cell-md-5 tright">
 				<div class="right-side">

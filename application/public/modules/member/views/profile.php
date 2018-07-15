@@ -145,6 +145,15 @@
 					</div>
 					<div id="show"></div>
 				</div>
+				<div class="wrap-input100 validate-input">
+					<span class="label-input100 mbta20"><b>Thông tin gói dịch vụ đang sử dụng:</b></span><br><br>
+					<div class="ruby">
+						<p><span class="label-input100">Gói dịch vụ:</span> <?=$serviceInfo['service_name']?></p>
+						<p><span class="label-input100">Trạng thái:</span>  <?=$serviceInfo['status']?></p>
+						<p><span class="label-input100">Từ ngày:</span> <?=$serviceInfo['from_date']?></p>
+						<p><span class="label-input100">Đến ngày:</span> <?=$serviceInfo['to_date']?></p>
+					</div>
+				</div>
 				<div class="container-login-form-btn mtop30">
 					<div class="wrap-login-form-btn">
 						<div class="login-form-bgbtn"></div>
