@@ -49,7 +49,7 @@
     margin-bottom: 0vh;
     position: absolute;">
 	<div class="footer-inner">
-		2016 &copy; hays.vn
+		<?=date('Y')?> &copy; investorpro.com.vn
 	</div>
 </div>
 <!-- END FOOTER -->

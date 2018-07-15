@@ -22,6 +22,8 @@ define('AVATAR_WIDTH', 60);
 define('AVATAR_HEIGHT', 60);
 define('THUMB_WIDTH', 400);
 define('THUMB_HEIGHT', 220);
+define('SLIDE_WIDTH', 1366);
+define('SLIDE_HEIGHT', 550);
 define('DISCOUNT_RATE_1', 0.1);
 define('DISCOUNT_RATE_2', 0.15);
 

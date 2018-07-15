@@ -121,28 +121,20 @@ class Slide extends CI_Controller {
             echo json_encode($result);
             exit;
         }
-        if (isset($_FILES['userfile']) && $_FILES['userfile']['name'] != "") {
-            $imge_name = $_FILES['userfile']['name'];
-            $this->upload->initialize($this->set_upload_options());
-            $image_data = $this->upload->do_upload('userfile', $imge_name); //Ten hinh 
-            /*$data = getimagesize(base_url().'files/slide/'.$image_data);
-            $width = $data[0];
-            $height = $data[1];
-            if($width < 100){
-                $result['status'] = 2;
-                $result['csrfHash'] = $token;
-                echo json_encode($result);
-                exit;
-            }
-            if($height < 50){
-                $result['status'] = 3;
-                $result['csrfHash'] = $token;
-                echo json_encode($result);
-                exit;
-            }*/
-            $array['img'] = $image_data;
-            //$resize = $this->resizeImg($image_data);
+        if (isset($_FILES['userfile']) && $_FILES['userfile']['name'] != "") {		
+			$temp = explode('.', $_FILES['userfile']['name']);
+			$ext = end($temp);
+			$filename = $_FILES['userfile']['name'];			
+			$src_path = $_FILES['userfile']['tmp_name'];
+			$new_path = 'files/slide/'.$filename;
+			
+			$this->base_model->resizeImg(SLIDE_WIDTH, SLIDE_HEIGHT, $src_path, $new_path, $array['x'], $array['y'], $array['w'], $array['h'], $ext);
+			$array['img'] = $filename;
         }
+		unset($array['x']);
+		unset($array['y']);
+		unset($array['w']);
+		unset($array['h']);
         $login = $this->login;
         $array['description'] = $this->input->post('description');
         $array['datecreate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
@@ -165,28 +157,20 @@ class Slide extends CI_Controller {
         $array = json_decode($this->input->post('search'), true);
         $id = $this->input->post('id');
         $login = $this->login;
-        if (isset($_FILES['userfile']) && $_FILES['userfile']['name'] != "") {
-            $imge_name = $_FILES['userfile']['name'];
-            $this->upload->initialize($this->set_upload_options());
-            $image_data = $this->upload->do_upload('userfile', $imge_name); //Ten hinh 
-            /*$data = getimagesize(base_url().'files/slide/'.$image_data);
-            $width = $data[0];
-            $height = $data[1];
-            if($width < 100){
-                $result['status'] = 2;
-                $result['csrfHash'] = $token;
-                echo json_encode($result);
-                exit;
-            }
-            if($height < 50){
-                $result['status'] = 3;
-                $result['csrfHash'] = $token;
-                echo json_encode($result);
-                exit;
-            }*/
-            $array['img'] = $image_data;
-            //$resize = $this->resizeImg($image_data);
+        if (isset($_FILES['userfile']) && $_FILES['userfile']['name'] != "") {		
+			$temp = explode('.', $_FILES['userfile']['name']);
+			$ext = end($temp);
+			$filename = $_FILES['userfile']['name'];			
+			$src_path = $_FILES['userfile']['tmp_name'];
+			$new_path = 'files/slide/'.$filename;
+			
+			$this->base_model->resizeImg(SLIDE_WIDTH, SLIDE_HEIGHT, $src_path, $new_path, $array['x'], $array['y'], $array['w'], $array['h'], $ext);
+			$array['img'] = $filename;
         }
+		unset($array['x']);
+		unset($array['y']);
+		unset($array['w']);
+		unset($array['h']);
         $array['description'] = $this->input->post('description');
         $array['dateupdate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
         $array['userupdate'] = $login->username;
@@ -235,7 +219,7 @@ class Slide extends CI_Controller {
         $login = $this->login;
         $array['dateupdate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
         $array['userupdate'] = $login->username;
-        $this->model->table('ivt_slide')->where('id', $id)->delete();
+        $this->model->table('ivt_slide')->where("id IN($id)")->delete();
         $result['status'] = 1;
         $result['csrfHash'] = $token;
         echo json_encode($result);

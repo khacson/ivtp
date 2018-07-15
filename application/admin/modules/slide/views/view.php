@@ -3,7 +3,7 @@
 	table col.c2 { width: 60px; }
 	table col.c3 { width: 180px; }
 	table col.c4 { width: 250px; }
-	table col.c5 { width: 80px; }
+	table col.c5 { width: 120px; }
 	table col.c6 { width: 200px; }
 	table col.c7 { width: auto; }
 </style>

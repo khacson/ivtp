@@ -398,6 +398,9 @@ body{
     height: 100%;
     width: 100%;
 }
+.swiper-slide::after {
+	background: rgba(0, 0, 0, 0);
+}
 /*end homepage*/
 /*post*/
 h2,h3 {

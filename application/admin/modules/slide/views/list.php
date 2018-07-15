@@ -18,7 +18,7 @@ foreach ($datas as $item) {
 		<?php }?>
 		</td>
 		<td class="description"><?=$item->description;?></td>
-        <td class="text-center"><img src="<?php echo base_url().'files/slide/'.$item->img?>" alt="img" height="42" width="42"></td>
+        <td class="text-center"><img src="<?php echo base_url().'files/slide/'.$item->img?>" alt="img" width="100"></td>
 		<td class="url"  ><?=$item->url;?></td>
 		
 		<td></td>

@@ -121,8 +121,8 @@
 <!-- END CONTAINER -->
 <!-- BEGIN FOOTER -->
 <div class="footer">
-	<div class="footer-inner">
-		 2016 &copy; has.vn
+	<div class="footer-inner" style="color: #fff;">
+		 <?=date('Y')?> &copy; investorpro.com.vn
 	</div>
 	<div class="footer-tools">
 		<span class="go-top">

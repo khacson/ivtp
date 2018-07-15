@@ -1,4 +1,5 @@
 <!-- BEGIN PORTLET-->
+<link rel="stylesheet" href="<?=url_tmpl()?>jcrop/jquery.Jcrop.min.css" />
 <form method="post" enctype="multipart/form-data">
     <div class="portlet box blue">
         <div class="portlet-title">
@@ -60,6 +61,9 @@
                     </div>
                 </div>
                 
+            </div>
+
+            <div class="row mtop10">
                 <div class="col-md-4">
                     <div class="form-group">
                         <label class="control-label col-md-4">Hình ảnh</label>
@@ -70,14 +74,13 @@
                                 </ul>
                                 <input style='display:none;' accept="image/*" id ="imageEnable" type="file" name="userfile">
                             </div>
-                            <div class="col-md-6" >
-                                <span id="show"></span> 
-                            </div>
                         </div>
                     </div>
                 </div>
+				<div class="col-md-6" style="display: block; margin-left: -147px;">
+					<span id="show" ></span> 
+				</div>
             </div>
-
             <div class="row mtop10">
                 <div class="col-md-12">
                         <div class="form-group">
@@ -97,6 +100,10 @@
                     <div class="mright10" >
                         <input type="hidden" name="id" id="id" value="<?=$idaction?>"/>
                         <input type="hidden" id="token" name="<?= $csrfName; ?>" value="<?= $csrfHash; ?>" />
+						<input type="hidden" class="searchs" id="x" name="x" />
+						<input type="hidden" class="searchs" id="y" name="y" />
+						<input type="hidden" class="searchs" id="w" name="w" />
+						<input type="hidden" class="searchs" id="h" name="h" />
                         
                     </div>		
                 </div>
@@ -130,8 +137,24 @@
                 var reader = new FileReader();
                 reader.onload = (function(theFile) {
                     return function(e) { //size e = e.tatal
-                        $('#show').html('<img src="' + e.target.result + '" style="width:60px; height:40px" />');
-                        $("#img1").val(e.target.result);
+						$('#show').html('');
+						$('#show').append('<img class="cropimage" src="' + e.target.result + '" style="max-width:100%; float:left;" />');
+						var src = $('.cropimage').attr("src");
+						var img = new Image();//tinh original width
+						img.src = src;
+						img.onload = function() {
+							var curr_with = $('.cropimage').width();//co css
+							rate = this.width / curr_with;//ti le thu nho
+							//console.log(this.width);console.log(curr_with);
+							$('.cropimage').Jcrop({
+								aspectRatio: 1,
+								setSelect: [0,0,1366,550],
+								aspectRatio: 1366/550,
+								allowSelect : false,
+								onSelect: updateCoords,
+								onRelease: updateCoords
+							});
+						}
                     };
                 })(f);
                 reader.readAsDataURL(f);
@@ -163,6 +186,13 @@
             save('edit', id);
         });        
     });
+	function updateCoords(c){
+		//console.log(rate);
+		$('#x').val(c.x * rate);
+		$('#y').val(c.y * rate);
+		$('#w').val(c.w * rate);
+		$('#h').val(c.h * rate);
+	};
     function save(func, id) {
         search = getSearch();
         var token = $('#token').val();
@@ -281,3 +311,4 @@
 </script>
 <script src="<?= url_tmpl(); ?>assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 <script src="<?=url_tmpl();?>ckeditor/ckeditor.js" type="text/javascript"></script>
+<script src="<?= url_tmpl(); ?>jcrop/jquery.Jcrop.min.js" type="text/javascript"></script>
