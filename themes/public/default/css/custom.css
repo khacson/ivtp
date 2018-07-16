@@ -208,6 +208,14 @@ a {
 #show > img {
     max-width: 100%;
 }
+.rd-navbar-static {
+    max-width: 1366px;
+	margin: auto;
+}
+.page {
+    margin: auto;
+    max-width: 1366px;
+}
 .page-content {
     min-height: 440px;
 }
@@ -232,6 +240,10 @@ a {
 	background-color: #f1caf9;
     border-radius: 2px;
     padding: 3px 7px;
+}
+.rd-navbar-static .rd-navbar-top-panel, .rd-navbar-fullwidth .rd-navbar-top-panel {
+	padding: 0 15px 2px;
+	font-size: 14px;
 }
 .rd-navbar-static .rd-navbar-nav > li + li {
     margin-left: 28px;

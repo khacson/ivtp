@@ -37,31 +37,8 @@
             </div>
           </div>
         </div>
-        <div class="swiper-aside-right hide">
-          <ul class="list list-background-minsk list-0 text-center section-xs-top-60 section-sm-top-0">
-            <?php foreach($cpTangs as $item){
-				$des = $item->inc_des;
-				$inc_des = round($des * 100,2);
-				?>
-			<li class="inset-xs-left-85 inset-xs-right-85 inset-sm-left-0 inset-sm-right-0">
-				<a class="box-sm bg-primary reveal-block" href="<?=base_url();?>danh-muc-tang-truong/<?=$item->mcp;?>-dt<?=$item->id;?>.html">
-					<span class="text-bold"><?=$item->mcp;?></span>
-					<span class="text-white reveal-block"><?=$inc_des;?>%</span></a>
-				</li>
-			<?php }?>
-          </ul>
-        </div>
       </div>
       <main class="page-content">
-	  
-		<!-- S Nhung co phieu tang truong tot nhat-->
-        <section class="section-20 hide">
-          <div class="range range-condensed range-xs-middle range-xs-center range-md-justify list-inline-dashed-lg">
-			<?php foreach($supperliers as $item){?>	
-				<div class="cell-xs-5 cell-md-4 cell-lg-2"><a target="_blank" class="reveal-inline-block" href="<?=$item->url;?>"><img class="img-responsive center-block img-semi-transparent" src="<?=base_url();?>files/supperlier/<?=$item->img;?>" width="127" height="69" alt=""></a></div>
-            <?php }?>
-          </div>
-        </section>
 		<!-- Danh mục khuyến nghị IPro-->
         <section class="section-80 section-md-20 bg-selago">
           <div class="inset-md-left-35 inset-xl-left-125 inset-md-right-35 inset-xl-right-125">
@@ -73,7 +50,7 @@
               <div class="range range-xs-center range-lg-left text-left">
                 <!--S Item 1-->
 				<?php foreach($investment as $item){?>
-				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-5">
+				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-4">
                   <div class="post-box shadow-drop post-box-max-width-none reveal-block">
                     <div class="post-box-img-wrap"><a class="thumbnail-robben" href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="320" height="442" alt=""></span></a></div>
                     <div class="post-box-caption post-box-bottom-radius bg-white">
@@ -109,7 +86,7 @@
               <div class="range range-xs-center range-lg-left text-left">
                 <!--S Item 1-->
 				<?php foreach($markettrends as $item){?>
-				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-5">
+				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-4">
                   <div class="post-box shadow-drop post-box-max-width-none reveal-block">
                     <div class="post-box-img-wrap"><a class="thumbnail-robben" href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=base_url();?>files/markettrend/thumb/<?=$item->thumb;?>" width="320" height="442" alt=""></span></a></div>
                     <div class="post-box-caption post-box-bottom-radius bg-white">
