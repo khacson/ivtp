@@ -208,6 +208,7 @@ a {
 #show > img {
     max-width: 100%;
 }
+/*
 .rd-navbar-static {
     max-width: 1366px;
 	margin: auto;
@@ -215,6 +216,10 @@ a {
 .page {
     margin: auto;
     max-width: 1366px;
+}
+*/
+.rd-navbar-static .rd-navbar-inner, .rd-navbar-static .rd-navbar-top-panel {
+    max-width: initial;
 }
 .page-content {
     min-height: 440px;
@@ -412,6 +417,20 @@ body{
 }
 .swiper-slide::after {
 	background: rgba(0, 0, 0, 0);
+}
+.gmap-div{
+	height: 450px; 
+	overflow: hidden; 
+	position: relative
+}
+.map-overplay {
+    background-color: rgba(0, 0, 0, 0.1);
+    height: 100%;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    top: 0;
+    width: 100%;
 }
 /*end homepage*/
 /*post*/

@@ -63,6 +63,9 @@
 				success:function(datas){
 					if(datas == 1){
 						success("Đổi mật khẩu thành công.");
+						setTimeout(function(){
+							window.location.href = '<?=base_url();?>dang-nhap.html';
+						}, 500)
 					}
 					else{
 						error("Đổi mật khẩu không thành công."); return false;

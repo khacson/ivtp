@@ -169,7 +169,7 @@ class Member extends CI_Controller {
 		
 		$ci->email->initialize($config);
 		$ci->email->clear(TRUE);
-		$ci->email->from('investorprovn@gmail.com','Investor');
+		$ci->email->from('investorprovn@gmail.com','InvestorPro');
 		$list = array($email);
 		$ci->email->to($list); 
 		$ci->email->subject($title_register); 
@@ -264,8 +264,8 @@ class Member extends CI_Controller {
 		$config['protocol'] = "smtp"; //smtp
 		$config['smtp_host'] = "ssl://smtp.googlemail.com";
 		$config['smtp_port'] = "465";
-		$config['smtp_user'] = "swapphonevn@gmail.com"; 
-		$config['smtp_pass'] = "swapphonevn@1111";
+		$config['smtp_user'] = "investorprovn@gmail.com"; 
+		$config['smtp_pass'] = "DRBL2018";
 		$config['charset'] = "utf-8";
 		$config['mailtype'] = "html";
 		$config['newline'] = "\r\n";
@@ -289,7 +289,7 @@ class Member extends CI_Controller {
 		
 		$ci->email->initialize($config);
 		$ci->email->clear(TRUE);
-		$ci->email->from('swapphonevn@gmail.com','Investor');
+		$ci->email->from('investorprovn@gmail.com','InvestorPro');
 		$list = array($email);
 		$ci->email->to($list); 
 		$ci->email->subject($title_forgot); 
@@ -298,12 +298,18 @@ class Member extends CI_Controller {
 		$message = '';
 		$message.= '<h2></h2>';
 		$message.= '<p>'.$send_forgot.'<b></b></p>';
-		$message.= '<p><a href="'.$url.'member/activeEmail?e='.$email.'&t='.$datecreate.'">Click vào link để đổi mật khẩu</a></p><br>';
+		$message.= '<p><a href="'.$url.'member/activeEmail?e='.$email.'&t='.$datecreate.'">Click vào đây để đổi mật khẩu. Link này có hiệu lực trong vòng 24 giờ.</a></p><br>';
 		$message.= '<p>Trân trọng,</p>';
-		$message.= '<p>Investor</p>';
+		$message.= '<p>InvestorPro</p>';
 		$ci->email->message($message);
 		//$ci->email->set_header('Đăng ký tài khoản', 'Đăng ký thành công');
 		$send = $ci->email->send();	
+		
+		$update = array();
+		$update['date_click_forgot'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+		$this->model->table('ivt_member')
+						  ->where('id',$query->id)
+						  ->update($update);
 		echo 1;
 	}
 	function register(){
@@ -336,7 +342,7 @@ class Member extends CI_Controller {
 		}
 		$data = new stdClass();
 		$query = $this->model->table('ivt_member')
-					  ->select('id,datecreate')
+					  ->select('id,date_click_forgot')
 					  ->where('email',$email)
 					  ->find(); 
 		if(empty($query->id)){
@@ -346,12 +352,9 @@ class Member extends CI_Controller {
 			$this->site->render();
 		}		
 		else{
-			$update = array();
-			$update['active'] = 1;
-			$update['dateactice'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
-			$dateactice = strtotime($query->datecreate);
+			$date_click_forgot = strtotime($query->date_click_forgot);
 			//print_r($query); exit;
-			if($t - $dateactice > 86400){
+			if($t - $date_click_forgot > 86400){
 				$data->content = "Link Xác nhận email hết hạn.";
 				$content = $this->load->view('activeNone',$data,true);
 				$this->site->write('content',$content,true);

@@ -29,13 +29,6 @@
 		</div>
 	</div>
 </div>
-<div class="loading" style="display: none;">
-	<div class="blockUI blockOverlay" style="width: 100%;height: 100%;top:0px;left:0px;position: absolute;background-color: rgb(0,0,0);opacity: 0.1;z-index: 999999999999;">
-	</div>
-	<div class="blockUI blockMsg blockElement" style="width: 30%;position: absolute;top: 0%;left:35%;text-align: center; z-index: 999999999999;">
-		<img src="<?=url_tmpl()?>images/loading2.gif" style="z-index: 999999999999;position: absolute;"/>
-	</div>
-</div>
   <link rel="stylesheet" href="<?=url_tmpl();?>toast/toastr.min.css">
   <script src="<?=url_tmpl();?>toast/toastr.min.js"></script>
   <script src="<?=url_tmpl();?>toast/notifications.js"></script>
@@ -58,13 +51,13 @@
 				success:function(datas){
 					$('.loading').hide();
 					if(datas == 1){
-						success("Xác nhận email thành công. Vui lòng kiểm tra email để xác nhận tài khoản.");
+						success("Email xác nhận đổi mật khẩu đã được gửi đến bạn. Bạn vui lòng kiểm tra email.");
 					}
 					else if(datas == -1){
 						warning("Email không tồn tại."); return false;
 					}
 					else{
-						error("Xác nhận email không thành công."); return false;
+						error("Gửi email xác nhận không thành công."); return false;
 					}
 				}
 			});

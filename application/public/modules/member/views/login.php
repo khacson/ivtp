@@ -116,7 +116,7 @@
 						success("Đăng nhập thành công.");
 						setTimeout(function(){
 							window.location.href = '<?=base_url();?>trang-chu.html';
-						}, 1000)
+						}, 500)
 						
 					}
 					else if(datas == -1){

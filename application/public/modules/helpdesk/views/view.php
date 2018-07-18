@@ -45,6 +45,7 @@
 .user_info p{
 	margin: 5px 0;
 	font-size: 13px;
+	letter-spacing: -0.09px;
 }
 .user_info p.username{
 	font-weight: bold;

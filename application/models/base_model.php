@@ -82,7 +82,7 @@ class base_model extends CI_Model {
     }
 
     public function getMacAddress() {
-        $ip = $_SERVER['REMOTE_ADDR'];
+        $ip = $_SERVER['REMOTE_ADDR']; return $ip;
         $mac = shell_exec("arp -a $ip");
         $arr = explode(" ", $mac);
         if (isset($arr[3])) {
@@ -314,7 +314,7 @@ class base_model extends CI_Model {
 		
 		$ci->email->initialize($config);
 		$ci->email->clear(TRUE);
-		$ci->email->from('investorprovn@gmail.com','Investor');
+		$ci->email->from('investorprovn@gmail.com','InvestorPro');
 		$list = array($to);
 		$ci->email->to($list); 
 		$ci->email->subject($sub); 

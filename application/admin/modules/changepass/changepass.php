@@ -165,6 +165,7 @@ class Changepass extends CI_Controller {
 		unset($array['y']);
 		unset($array['w']);
 		unset($array['h']);
+		unset($array['groupid']);
 		if(empty($array['password'])){
 			 unset($array['password']);
 		}

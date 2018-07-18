@@ -40,7 +40,7 @@
                     <li><a class="text-gray-lighter" href="<?=base_url();?>dang-nhap.html"><i class="icon icon-xs icon-circle fa fa-user text-gray-lighter" ></i> Đăng nhập<a></li>
                     <li><a class="text-gray-lighter" href="<?=base_url();?>dang-ky.html"><i class="icon icon-xs icon-circle fa fa-edit text-gray-lighter" href="dangky.html"></i> Đăng ký</a></li>
 					<?php }else{?>
-					   <li><a class="text-gray-lighter" href="<?=base_url();?>ho-so.html"><i class="icon icon-xs icon-circle fa fa-user text-gray-lighter" h></i> Xin chào: <?=$logins->fullname;?><a></li>
+					   <li><a class="text-gray-lighter" href="<?=base_url();?>ho-so.html"><i class="icon icon-xs icon-circle fa fa-user text-gray-lighter" h></i> Xin chào: <?=$logins->fullname;?></a></li>
                     <li><a class="text-gray-lighter" href="<?=base_url();?>member/logout.html"><i class="icon icon-xs icon-circle fa fa-sign-out text-gray-lighter" ></i> Thoát</a></li>
 					<?php }?>
                   </ul>

@@ -99,12 +99,12 @@
 		 if(!empty($check->id)){
 			 return -1;	
 		 }//print_r($array);exit;
-		 if(isset($array['password']) && $array['password']!=""){
+		 if(!empty($array['password'])){
 			$pass = md5("firefuma.com").md5($array['password']);
 			$array['password'] = $pass;
 		 }
 		 
-		 $result = $this->model->table('ivt_users')->save($id,$array);	
+		 $result = $this->model->table('ivt_users')->where('id', $id)->update($array);	
 		 return $result;
 	}
 	function changueSearch($search){//print_r($search);exit;

@@ -152,12 +152,10 @@
                 </div>
               </div>
             </div>
-            <div class="google-map-container" data-zoom="15" data-center="<?=$finds->address;?>, Việt nam" data-styles="[{&quot;featureType&quot;:&quot;landscape.natural&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;color&quot;:&quot;#e0efef&quot;}]},{&quot;featureType&quot;:&quot;poi&quot;,&quot;elementType&quot;:&quot;geometry.fill&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;hue&quot;:&quot;#1900ff&quot;},{&quot;color&quot;:&quot;#c0e8e8&quot;}]},{&quot;featureType&quot;:&quot;road&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;lightness&quot;:100},{&quot;visibility&quot;:&quot;simplified&quot;}]},{&quot;featureType&quot;:&quot;road&quot;,&quot;elementType&quot;:&quot;labels&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;off&quot;}]},{&quot;featureType&quot;:&quot;transit.line&quot;,&quot;elementType&quot;:&quot;geometry&quot;,&quot;stylers&quot;:[{&quot;visibility&quot;:&quot;on&quot;},{&quot;lightness&quot;:700}]},{&quot;featureType&quot;:&quot;water&quot;,&quot;elementType&quot;:&quot;all&quot;,&quot;stylers&quot;:[{&quot;color&quot;:&quot;#7dcdcd&quot;}]}]">
-              <div class="google-map"></div>
-              <ul class="google-map-markers">
-                <li data-location="<?=$finds->address;?>, Việt nam" data-description="<?=$finds->address;?>, Việt nam" data-icon="<?=url_tmpl();?>images/gmap_marker.png" data-icon-active="<?=url_tmpl();?>images/gmap_marker_active.png"></li>
-              </ul>
-            </div>
+			<div class="gmap-div">
+				<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5230.904660089!2d106.68667256754902!3d10.830382031137335!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528f783238157%3A0xf7ff9686d87c2f8c!2zMTA2LCAxMCDEkMaw4budbmcgU-G7kSAxNCwgcGjGsOG7nW5nIDUsIEfDsiBW4bqlcCwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1531930166823&style=feature:all|element:labels|visibility:off" width="100%" height="600" frameborder="0" style="border:0; margin-top: -150px;" allowfullscreen></iframe>
+				<div class="map-overplay"></div>
+			</div>
           </div>
         </section>
       </main>

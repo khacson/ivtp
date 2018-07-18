@@ -22,7 +22,7 @@
                     <h3 class="text-primary"><?=$finds->title;?></h3>
                     <ul class="list list-inline list-inline-dashed list-inline-20 text-gray-lighter offset-top-20">
                       <li><i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
-						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($finds->datecreate));?> </span></li>
+						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($finds->dateupdate));?> </span></li>
                
                       <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i><a class="text-gray-lighter" href="#"> <?=$totalComment;?> bình luận</a></li>
                     </ul>
