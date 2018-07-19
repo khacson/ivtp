@@ -109,7 +109,7 @@ class User extends CI_Controller {
 			
 			$temp = explode('.', $_FILES['userfile']['name']);
 			$ext = end($temp);
-			$filename = 'u'.$this->login->username.'-'.$this->login->id.'.'.$ext;
+			$filename = 'u'.$array['username'].'-'.$this->login->id.'.'.$ext;
 			$src_path = $_FILES['userfile']['tmp_name'];
 			$new_path = 'files/user/'.$filename;
 			
@@ -161,7 +161,7 @@ class User extends CI_Controller {
 			
 			$temp = explode('.', $_FILES['userfile']['name']);
 			$ext = end($temp);
-			$filename = 'u'.$this->login->username.'.'.$ext;
+			$filename = 'u'.$array['username'].'.'.$ext;
 			$src_path = $_FILES['userfile']['tmp_name'];
 			$new_path = 'files/user/'.$filename;
 			

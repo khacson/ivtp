@@ -21219,7 +21219,6 @@ textarea.form-control {
 }
 
 .form-label {
-	position: absolute;
 	top: 27px;
 	left: 19px;
 	margin-bottom: 5px;
@@ -21228,12 +21227,10 @@ textarea.form-control {
 	pointer-events: none;
 	z-index: 9;
 	transition: .3s;
-	-webkit-transform: translateY(-50%);
-	transform: translateY(-50%);
 }
 
 .form-label.focus {
-	opacity: 0;
+	/*opacity: 0;*/
 }
 
 .form-label.auto-fill {
@@ -21243,6 +21240,8 @@ textarea.form-control {
 @media (min-width: 768px) {
 	.form-label-outside {
 		position: static;
+		-webkit-transform: translateY(-50%);
+		transform: translateY(-50%);
 	}
 	.form-label-outside, .form-label-outside.focus, .form-label-outside.auto-fill {
 		-webkit-transform: none;
