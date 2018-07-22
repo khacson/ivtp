@@ -73,6 +73,7 @@ class Increasecatalog extends CI_Controller {
 			$content = $this->load->view('view',$data,true);
 		}
 		else {
+			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
 			$content = $this->load->view('404',$data,true);
 		}
 		
