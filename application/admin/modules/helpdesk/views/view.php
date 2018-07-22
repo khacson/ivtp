@@ -201,6 +201,8 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	var current_customer = '';
 	var current_avatar = '';
 	var ref;
+	var msg_new = 0;
+	var title = $('title').text();
 	
     $scope.chatLogList = [];
 	$('.new-msg-form').hide();
@@ -222,6 +224,29 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		ref = dbping.child(user_id);
 		$scope.chatCodeList = $firebaseArray(ref);
 		$('.customers').show();
+		
+		$scope.setTitle();
+	}
+	
+	
+	$scope.setTitle = function() {
+		setTimeout(function(){
+			$scope.chatCodeList.$loaded().then(function(array) {
+				//console.log(array.length);
+				msg_new = 0;
+				for (var i = 0; i< array.length; i++) {
+					//console.log(array[i]['ping']);
+					msg_new += array[i]['ping'];
+				}
+			});
+			if (msg_new > 0) {
+				$('title').text(title + ' ('+ msg_new +')');
+			}
+			else {
+				$('title').text(title);
+			}
+			$scope.setTitle();
+		}, 1000);
 	}
 
     $scope.show_chat_log = function(chat_code, customername, avatar) {

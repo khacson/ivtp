@@ -46,7 +46,7 @@ class Helpdesk extends CI_Controller {
 		$data->listNew = $this->model->getFindNew(0);
         $content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);
-		$this->site->write('title',$finds->meta_title,true);
+		$this->site->write('title','Tư vấn',true);
 		$this->site->write('keywords',$finds->meta_keyword,true);
 		$this->site->write('description',$finds->mete_description,true);
         $this->site->render();
@@ -114,6 +114,7 @@ class Helpdesk extends CI_Controller {
         $data->csrfHash = $this->security->get_csrf_hash();
 		$content = $this->load->view('detail',$data,true);
         $this->site->write('content',$content,true);
+		$this->site->write('title','Tư vấn',true);
         $this->site->render();
 	}
 	function upload_image() {

@@ -22,7 +22,7 @@ class Contactus extends CI_Controller {
 		$data->finds = $find;
 		$content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);
-		$this->site->write('title',$find->meta_title,true);
+		$this->site->write('title','Liên hệ',true);
 		$this->site->write('description',$find->mete_description,true);
 		$this->site->write('keywords',$find->meta_keyword,true);
         $this->site->render();

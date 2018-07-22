@@ -58,7 +58,7 @@ class IncreasecatalogModel extends CI_Model
 				->select('mcp')
 				->where('id',$id)
 				->find();
-		return $data->mcp;
+		return $data;
 	}
 	function getDataYear($id) {
 		$data = $this->model->table('ivt_increase_catalog_detail')

@@ -246,7 +246,7 @@
                 }              
                 else {
                     CKEDITOR.instances['description'].setData("");
-                    location.href = '<?=base_url()."admin.php/slide"?>';
+                    location.href = '<?=base_url()."dttal.php/slide"?>';
                 }
             },
             error: function() {

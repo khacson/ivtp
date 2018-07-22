@@ -216,7 +216,7 @@
                 }              
                 else {
                     CKEDITOR.instances['description'].setData("");
-                    location.href = '<?=base_url()."admin.php/supperlier"?>';
+                    location.href = '<?=base_url()."dttal.php/supperlier"?>';
                 }
             },
             error: function() {

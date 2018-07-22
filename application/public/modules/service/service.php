@@ -41,7 +41,7 @@ class Service extends CI_Controller {
 		
         $content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);
-		$this->site->write('title',$finds->meta_title,true);
+		$this->site->write('title','Dịch vụ',true);
 		$this->site->write('keywords',$finds->meta_keyword,true);
 		$this->site->write('description',$finds->mete_description,true);
         $this->site->render();

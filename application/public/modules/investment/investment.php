@@ -66,10 +66,19 @@ class Investment extends CI_Controller {
 			$content = $this->load->view('404',$data,true);
 		}
 		
+		$title = 'Xu hướng thị trường';
+		$des = 'Xu hướng thị trường';
+		$keyword = 'Xu hướng thị trường';
+		if ($data->catalogFind) {
+			$title = $data->catalogFind->catalog_name;
+			$des = $title;
+			$keyword = $title;
+		}
+		
         $this->site->write('content',$content,true);
-		$this->site->write('title',$finds->meta_title,true);
-		$this->site->write('keywords',$finds->meta_keyword,true);
-		$this->site->write('description',$finds->mete_description,true);
+		$this->site->write('title',$title,true);
+		$this->site->write('keywords',$keyword,true);
+		$this->site->write('description',$des,true);
         $this->site->render();
 	}
 	function _detail($id){
@@ -91,7 +100,11 @@ class Investment extends CI_Controller {
 		$data->catalogs = $this->model->getInvestmentCatalog();
 		$data->listNew = $this->model->getFindNew($id, $typeid);
 		if(!empty($finds->id)){
-			$this->site->write('title',$finds->meta_title,true);
+			$title = $finds->meta_title;
+			if (empty($finds->meta_title)) {
+				$title = $finds->title;
+			}
+			$this->site->write('title',$title,true);
 			$this->site->write('description',$finds->meta_keyword,true);
 			$this->site->write('keywords',$finds->mete_description,true);
 			$this->site->write('title_page',$finds->title,true);

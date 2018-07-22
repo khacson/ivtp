@@ -77,7 +77,7 @@ class Increasecatalog extends CI_Controller {
 		}
 		
         $this->site->write('content',$content,true);
-		$this->site->write('title','Danh mục tăng trưởng',true);
+		$this->site->write('title',$finds->meta_title,true);
 		$this->site->write('keywords',$finds->meta_keyword,true);
 		$this->site->write('description',$finds->mete_description,true);
         $this->site->render();
@@ -93,27 +93,15 @@ class Increasecatalog extends CI_Controller {
 		}
 		$data->finds = $finds;*/
 		
-		$data->listNew = $this->model->getFindNew(0);
-		$finds = $this->model->getMcp($mcp_id);
-		if (empty($finds)) {
-			$data->msg = 'Bài viết này không có nội dung.';
-			$content = $this->load->view('404',$data,true);
-			$this->site->write('content',$content,true);
-			$this->site->render();
-			return;
-		}
-		
-		$title = $finds->mcp;
-		$this->site->write('title',$title,true);
-		
 		$updateInfo = $this->model->getUpdateInfo();
-		$data->mcp = $finds->mcp;
+		$data->mcp = $this->model->getMcp($mcp_id);
         $data->titleYear = $this->model->getTitles(2);
         $data->titleQuater = $this->model->getTitles(3);
 		$data->dataYear = $this->model->getDataYear($mcp_id);
 		$data->dataQuater = $this->model->getDataQuater($mcp_id);
 		$data->image = $this->model->getImage($mcp_id);
 		$data->info = $updateInfo;
+		$data->listNew = $this->model->getFindNew(0);
 		$id = -1;
 		
 		$login = $this->site->getSession('pblogin');
@@ -140,7 +128,6 @@ class Increasecatalog extends CI_Controller {
 			$content = $this->load->view('detail',$data,true);
 		}
 		else {
-			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
 			$content = $this->load->view('404',$data,true);
 		}
 		

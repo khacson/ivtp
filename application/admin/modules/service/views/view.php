@@ -178,7 +178,7 @@
         $('#save').click(function() {
             //save('save', '');
 			var id = $('#id').val();
-            location.href = '<?=base_url()."admin.php/service/form"?>';
+            location.href = '<?=base_url()."dttal.php/service/form"?>';
         });
         $('#edit').click(function() {
             var id = $('#id').val();
@@ -187,7 +187,7 @@
                 return false;
             }
             //save('edit', id);			
-            location.href = '<?=base_url()."admin.php/service/edits/"?>'+id;
+            location.href = '<?=base_url()."dttal.php/service/edits/"?>'+id;
         });
         $('#delete').click(function() {
 			var id = getCheckedId();

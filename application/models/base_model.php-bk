@@ -82,7 +82,7 @@ class base_model extends CI_Model {
     }
 
     public function getMacAddress() {
-        $ip = $_SERVER['REMOTE_ADDR']; return $ip;
+        $ip = $_SERVER['REMOTE_ADDR'];
         $mac = shell_exec("arp -a $ip");
         $arr = explode(" ", $mac);
         if (isset($arr[3])) {
@@ -212,7 +212,7 @@ class base_model extends CI_Model {
 		}
         $sql = "SELECT * FROM ivt_users
                 WHERE groupid = 2 AND isdelete=0 AND is_full = 0 $search
-				ORDER BY online_status DESC, fullname";
+				ORDER BY fullname";
         return $this->model->query($sql)->execute();
     }
 	
@@ -409,7 +409,7 @@ class base_model extends CI_Model {
 						  ->find();
 		if (!empty($rs->dateactice)) {
 			$t = strtotime($today) - strtotime($rs->dateactice);
-			if ($t/86400 < 10) {
+			if ($t/84600 < 10) {
 				return 2;
 			}
 		}

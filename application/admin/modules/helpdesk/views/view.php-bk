@@ -1,3 +1,6 @@
+<input type="hidden" name="id" id="id" />
+<input type="hidden" id="token" name="<?= $csrfName; ?>" value="<?= $csrfHash; ?>" />
+
 <!-- AngularJS -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular-sanitize.min.js"></script>
@@ -19,15 +22,14 @@
 #input-image, #input-file {
 	display: none;
 }
-#history a{
-	color: #fff;
-}
-#history a:Hover{
-	text-decoration: underline;
+#history a {
+    color: #fff;
+    font-size: 12px;
 }
 </style>
+
 <div ng-app="app">
-	<div ng-controller="chatCtrl">
+	<div ng-controller="chatCtrl" ng-init="showLoading()">
         <div id="chatBox">
 			<div class="loading-overplay none">
 				<div class="spinner">
@@ -37,23 +39,24 @@
 				</div>
 			</div>
 			<div class="chat-header">
-				<span class="fleft">NV: <?=$userInfo->fullname?> - <?=$userInfo->username?> - <?=$status?></span>
-				<span class="fright" id="history" ng-click="get_chat_history()">
-					<a data-toggle="modal" href="#myModal">Xem lịch sử chat</a>
-				</span>
+				<span class="fleft">Hỗ trợ tư vấn khách hàng</span>
+				<span class="fright" id="history"></span>
+				<span class="fright" id="chat_code"></span>
 			</div>
-            
-			<div class="chat_log">
-				<div class="chat_log_list hide">
-					<div class="log-item fright">
+            <div class="customerlist">
+				<ul class="customers"> 
+					<li class="customer-item" onclick="addActiveClass(this); showInputMsg()"  ng-repeat="chatCode in chatCodeList | orderBy: '-ping'" ng-click="show_chat_log(chatCode.chat_code, chatCode.name, chatCode.avatar)">
 						<div class="customer-avatar">
-							<img class="avatar" src="<?=base_url()?>files/user/<?=$userInfo->signature?>" />
+							<span ng-bind-html="chatCode.avatar | unsafe"></span>
+							<span class="have-new-msg-icon {{chatCode.ping ? 'show' : 'hide'}}"></span>
 						</div>
-						<div class="log-msg">
-							<div class="msg-content"><?=$welcome_msg?></div>
-						</div>
-					</div>
-					
+						<span class="customer-name">{{chatCode.name}}</span>
+						<span class="end-chat" ng-click="end_chat($index)"></span>
+					</li>
+				</ul>
+			</div>
+			<div class="chat_log">
+				<div class="chat_log_list">
 					<div class="log-item {{chatLog.type ? 'fright' : 'fleft'}}" ng-repeat="chatLog in chatLogList" ng-init="$last ? move_to_bottom() : null">
 						<div class="customer-avatar" ng-bind-html="chatLog.avatar | unsafe">
 							
@@ -69,9 +72,9 @@
 						<span class="fa fa-file"></span>
 						<input onchange="angular.element(this).scope().uploadFile()" ng-model="file" type="file" id="input-file" value="" accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf" />
 					</span>
-					<span title="Chèn hình ảnh" id="insert-image" class="insert fright">
+					<span title="Đính kèm hình ảnh" id="insert-image" class="insert fright">
 						<span class="fa fa-camera"></span>
-						<input onchange="angular.element(this).scope().uploadImage()" ng-model="image" type="file" id="input-image" value="" accept="image/*" />
+						<input onchange="angular.element(this).scope().uploadImage()" ng-model="image" type="file" hidden id="input-image" value="" accept="image/*" />
 					</span>
 					<span title="Chèn biểu tượng cảm xúc" id="insert-emotion" class="insert fright">
 						<span class="chaticon e1f60a" data="1f60a"></span>
@@ -154,176 +157,162 @@
         </div>
         
     </div>
-	
-</div>	
-
-
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h6 class="modal-title">Lịch sử chat</h6>
-      </div>
-      <div id="modal_content" class="modal-body">
-        <p></p>
-      </div>
-    </div>
-
-  </div>
 </div>
 
-	
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="loading" style="display: none;">
+    <div class="blockUI blockOverlay" style="width: 100%;height: 100%;top:0px;left:0px;position: absolute;background-color: rgb(0,0,0);opacity: 0.1;z-index: 1000;">
+    </div>
+    <div class="blockUI blockMsg blockElement" style="width: 30%;position: absolute;top: 15%;left:35%;text-align: center;">
+        <img src="<?= url_tmpl() ?>img/ajax_loader.gif" style="z-index: 2;position: absolute;"/>
+    </div>
+</div> 
 <script>
     var controller = '<?= $controller; ?>/';
     var csrfHash = '<?= $csrfHash; ?>';
-    var isGuest = '<?= $isGuest; ?>';
     var cpage = 0;
     var search;
     var schoolid = 0;
     $(function() {
 		
     });
-</script>	
-	
-	
+</script>
 <script>
 var base_url = '<?=base_url();?>';
 var token = '<?=$token?>';
-var chat_code = '<?=$chat_code?>';
 var serviceGroup = '<?=$serviceGroup?>';
 var app = angular.module('app', ['firebase']);
 app.filter('unsafe', function($sce) { return $sce.trustAsHtml; });
 app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseAuth', function($scope, $firebase , $firebaseArray, $firebaseAuth) {
-	var user_id = '<?=$user_id?>';
-    var customername = '<?=$login->fullname?>';
-    var customer_id = '<?=$login->id?>';
+    var user_id = '<?=$login->id?>';
+    var username = '<?=$login->fullname?>';
+	var current_chat_code = '';
+	var current_customer = '';
+	var current_avatar = '';
 	var ref;
-	var msg_new = 0;
-	var title = $('title').text();
+	
+    $scope.chatLogList = [];
+	$('.new-msg-form').hide();
+	$('.customers').hide();
 	
 	$scope.authObjMsg = $firebaseAuth();
 	$scope.authObjMsg.$signInWithCustomToken(token).then(function(firebaseUser) {
 		console.log("Signed in as:", firebaseUser.uid);	
 		$scope.init();
 	}).catch(function(error) {
-		console.log("Error:"+ error);	
-		warning('Hệ thống phát hiện có lỗi bảo mật xảy ra. Trang web của bạn sẽ tự Refresh sau 5 giây.');	
-		setTimeout(function(){
-			window.location = '';
-		}, 5000);
-		//$scope.getNewToken();
+		console.log("Error:", error);	
 	});
 	
 	$scope.init = function() {
 		db = firebase.database().ref();
 		dblog = db.child('log');
-		dbping = db.child('ping');
-		//show noi dung chat
-		current_chat = dblog.child(chat_code);
-		$scope.chatLogList = $firebaseArray(current_chat);
-		$('.chat_log_list').removeClass('hide');
-		$scope.setTitle();
-	}
-	
-	$scope.setTitle = function() {
-		setTimeout(function(){
-			$scope.chatLogList.$loaded().then(function(array) {
-				//console.log(array.length);
-				msg_new = 0;
-				for (var i = 0; i< array.length; i++) {
-					//console.log(array[i]['ping']);
-					msg_new += array[i]['type'];
-					if ( (i+1 < array.length) && !array[i+1]['type']) {
-						msg_new = 0;
-					}
-				}
-			});
-			if (msg_new > 0) {
-				$('title').text(title + ' ('+ msg_new +')');
-			}
-			else {
-				$('title').text(title);
-			}
-			$scope.setTitle();
-		}, 1000);
+		dbping = db.child('ping');	
+		//lay danh sach khach hang dang chat voi nhan vien hien tai
+		ref = dbping.child(user_id);
+		$scope.chatCodeList = $firebaseArray(ref);
+		$('.customers').show();
 	}
 
-	$scope.sendChat = function() {
-		$scope.add_to_chat_list();
+    $scope.show_chat_log = function(chat_code, customername, avatar) {
+		if (chat_code == current_chat_code) {
+			return;
+		} else {
+			$('#input-msg').html('');
+		}
 		
+		$('.new-msg-form').show();
+		$scope.showLoading();
+		
+		ref = dblog.child(chat_code);
+		$scope.chatLogList = $firebaseArray(ref);
+		
+		current_chat_code = chat_code;
+		current_customer = customername;
+		current_avatar = avatar;
+		$('#chat_code').text('Mã chat: ' + chat_code);
+		var m = chat_code.substr(chat_code.indexOf('T') + 1);
+		var link = '<a target="_blank" href="<?=admin_url()?>chathistory?m='+ m +'">Xem lịch sử</a>';
+		$('#history').html('&nbsp; -&nbsp; ' + link);
+	}
+	
+	$scope.sendChat = function() {
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
 		
 		removeBr('#input-msg');
 		var msg = input_msg.html();
 		
-		ref = dblog.child(chat_code);
-		var avatar = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
+		ref = dblog.child(current_chat_code);
+		var avatars = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
 		$firebaseArray(ref).$add({
-			type : 0,//khach hang gui tin nhan
+			type : 1,//nhan vien gui tin nhan
 			msg : msg,
 			dateTime : dateTimeLog,
-			user_id : customer_id,
-			name: customername,
-			avatar: avatar
+			user_id : user_id,
+			name: username,
+			avatar: avatars
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
-		$scope.save_chat_to_db(chat_code, customername, avatar, msg, dateTimeLog);
+		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar);
+		$scope.save_chat_to_db(current_chat_code, username, avatars, msg, dateTimeLog);
     }
 	
 	$scope.sendChatImage = function(img_src) {
-		$scope.add_to_chat_list();
-		
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
 		
 		removeBr('#input-msg');
 		var msg = '<a target="_blank" href="'+img_src+'"><img class="img-msg" src="'+ img_src +'" /></a>';
 		
-		ref = dblog.child(chat_code);
-		var avatar = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
+		ref = dblog.child(current_chat_code);
+		var avatars = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
 		$firebaseArray(ref).$add({
-			type : 0,//khach hang gui tin nhan
+			type : 1,//nhan vien gui tin nhan
 			msg : msg,
 			dateTime : dateTimeLog,
-			user_id : customer_id,
-			name: customername,
-			avatar: avatar
+			user_id : user_id,
+			name: username,
+			avatar: avatars
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
-		$scope.save_chat_to_db(chat_code, customername, avatar, msg, dateTimeLog);
+		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar);
+		$scope.save_chat_to_db(current_chat_code, username, avatars, msg, dateTimeLog);
     }
 	$scope.sendChatFile = function(file_src, filename) {
-		$scope.add_to_chat_list();
-		
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
 		
 		removeBr('#input-msg');
 		var msg = '<a target="_blank" href="'+file_src+'"><span class="fa fa-download"></span> '+ filename +'</a>';
 		
-		ref = dblog.child(chat_code);
-		var avatar = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
+		ref = dblog.child(current_chat_code);
+		var avatars = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
 		$firebaseArray(ref).$add({
-			type : 0,//khach hang gui tin nhan
+			type : 1,//nhan vien gui tin nhan
 			msg : msg,
 			dateTime : dateTimeLog,
-			user_id : customer_id,
-			name: customername,
-			avatar: avatar
+			user_id : user_id,
+			name: username,
+			avatar: avatars
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
-		$scope.save_chat_to_db(chat_code, customername, avatar, msg, dateTimeLog);
+		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar);
+		$scope.save_chat_to_db(current_chat_code, username, avatars, msg, dateTimeLog);
     }
-	
 	$scope.checkAndSendChat = function(e) {
 		var input_msg = $('#input-msg').html();
 		if (input_msg.trim() == '' || input_msg.trim() == '<br>') {
@@ -360,7 +349,6 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
     }
 	
 	$scope.uploadImage = function() {
-		$('.loading-overplay').show();
 		var formData = new FormData();
 		formData.append('image_file', $('#input-image')[0].files[0]);
 
@@ -372,7 +360,6 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   contentType: false,  // tell jQuery not to set contentType
 		   success : function(data) {
 			   $scope.sendChatImage(data);
-			   $('.loading-overplay').hide();
 		   }
 		});
 	}
@@ -394,21 +381,40 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   }
 		});
 	}
-	$scope.add_to_chat_list = function() {
+	$scope.hideAlertNewMessage = function(chat_code, customername, avatar) {
 		dbping.child(user_id).child(chat_code).set({
 			chat_code: chat_code,
 			name: customername,
-			ping: 1,
-			avatar: '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">'
+			ping: 0,
+			avatar: avatar
 		});
 	}
+	
+	$scope.end_chat = function(index) {
+		$.msgBox({
+			title: 'Warning',
+			type: 'error',
+			content:'Bạn có chắc muốn kết thúc cuộc chat này?',
+			buttons: [{value: 'Yes'},{ value: 'No'}],
+			success: function(result) { 
+				if (result == 'Yes') {
+					$scope.chatCodeList.$remove(index);
+					$scope.chatLogList = [];
+					$('#chat_code').text('');
+					$('.new-msg-form').hide();
+					current_chat_code = '';
+				}
+			}
+		});
+	}
+	
 	$scope.move_to_bottom = function() {
 		move_to_bottom('.chat_log_list');
 	}
 	$scope.save_chat_to_db = function(chat_code, name, avatar, msg, datecreate) {
 		var data = {};
 		data['chat_code'] = chat_code;
-		data['type'] = 0;
+		data['type'] = 1;
 		data['name'] = name;
 		data['avatar'] = avatar;
 		data['msg'] = msg;
@@ -422,37 +428,9 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   }
 		});
 	}
-	$scope.getNewToken = function() {
-		$.ajax({
-		   url : controller + 'getNewToken',
-		   type : 'POST',
-		   data : {},
-		   success : function(data) {
-				token = data;
-		   }
-		});
-	}
-	$scope.get_chat_history = function() {
-		$('.loading-overplay').show();
-		var data = {};
-		data['member_id'] = customer_id;
-		data['user_id'] = user_id;
-
-		$.ajax({
-		   url : controller + 'get_chat_history',
-		   type : 'POST',
-		   data : data,
-		   success : function(datas) {
-				var obj = JSON.parse(datas);
-				$('#modal_content').html(obj.content);
-				$('.loading-overplay').hide();
-		   },
-		   error: function() {
-			   $('.loading-overplay').hide();
-		   }
-		});
-	}
+	
 }]);
 
-</script>	
+</script>
 <script src="<?= url_tmpl(); ?>js/chatfunc.js" type="text/javascript"></script>
+<script src="<?=url_tmpl();?>assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
