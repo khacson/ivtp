@@ -24,4 +24,4 @@
     RewriteRule ^(.*)$ index.php [L]
 </IfModule>
 
-#php_value upload_max_filesize 30M
+php_value upload_max_filesize 30M

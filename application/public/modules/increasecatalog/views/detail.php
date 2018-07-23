@@ -28,7 +28,7 @@ table col.c11 { width: auto; }
 	<div class="shell-wide shell-wide-custom">
 	  <div class="range range-xs-center range-lg-right range-xl-justify">
 		<div class="cell-md-12 text-center">
-			<h3 class="text-primary">Mã Cổ Phiếu <?=$mcp?></h3>
+			<h3 class="text-primary"><?=$mcp?> - <?=$cp_name?></h3>
 			<ul class="list list-inline list-inline-dashed list-inline-20 text-gray-lighter">
 			  <li><?=date('d/m/Y', strtotime($info->datecreate))?></li>
 			  <li><span>by <a class="text-bermuda" href="#"><?=$info->usercreate?></a></span></li>

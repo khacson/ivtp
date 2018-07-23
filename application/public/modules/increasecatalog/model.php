@@ -55,7 +55,7 @@ class IncreasecatalogModel extends CI_Model
 	}
 	function getMcp($id) {
 		$data = $this->model->table('ivt_increase_catalog')
-				->select('mcp')
+				->select('mcp, cp_name')
 				->where('id',$id)
 				->find();
 		return $data;

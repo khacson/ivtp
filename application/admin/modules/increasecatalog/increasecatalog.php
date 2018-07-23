@@ -348,9 +348,11 @@ class Increasecatalog extends CI_Controller {
 		}
 		$this->model->insertTitle($arrTitle, $username, $datecreate, 1);
 		//echo '<pre>';print_r($arrTitle, $login);die;
-		
+		$n = $objWorksheet->getHighestRow() + 1;
 		$arrData = array();
-		for ($row = 4; $row <= 50; $row++) {
+		for ($row = 4; $row < $n; $row++) {
+			$mcp = $objWorksheet->getCell('C'.$row)->getValue();
+			if (empty(trim($mcp))) { continue; }
 			$str = '';
 			for ($col = 'C'; $col <='M'; $col++) {
 				$val = $objWorksheet->getCell($col.$row)->getValue();
@@ -368,7 +370,7 @@ class Increasecatalog extends CI_Controller {
 		$this->model->executeQuery($sql);
 		
 		//insert inc_des_avg
-		$inc_des_avg = $objWorksheet->getCell('L51')->getOldCalculatedValue();
+		$inc_des_avg = $objWorksheet->getCell('L2')->getOldCalculatedValue();
 		$sql = "INSERT INTO ivt_increase_catalog (inc_des_avg,usercreate,datecreate) VALUES ('$inc_des_avg', '$username', '$datecreate')";
 		$this->model->executeQuery($sql);
 	}
@@ -381,11 +383,18 @@ class Increasecatalog extends CI_Controller {
 			$objPHPExcel->setActiveSheetIndex($i);
 			$objWorksheet = $objPHPExcel->getActiveSheet();
 			$mcp = trim($objWorksheet->getCell('C1')->getValue());
-			if (!isset($arrParentId[$mcp])) {
+			$cp_name = trim($objWorksheet->getCell('D1')->getValue());
+			if (!isset($arrParentId[$mcp]) || empty($mcp)) {
 				continue;
 			} 
-			
+			//echo '<br> mcp'.$mcp;
 			$parent_id = $arrParentId[$mcp];
+			if (!empty($cp_name)) {
+				$sql = "UPDATE ivt_increase_catalog
+						SET cp_name = '$cp_name'
+						WHERE id = $parent_id";
+				$this->model->executeQuery($sql);
+			}
 			unset($arrParentId[$mcp]);
 			if ($k == 0) {
 				$k = 1;

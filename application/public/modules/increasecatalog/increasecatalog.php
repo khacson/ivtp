@@ -109,6 +109,7 @@ class Increasecatalog extends CI_Controller {
 		
 		$updateInfo = $this->model->getUpdateInfo();
 		$data->mcp = $finds->mcp;
+		$data->cp_name = $finds->cp_name;
         $data->titleYear = $this->model->getTitles(2);
         $data->titleQuater = $this->model->getTitles(3);
 		$data->dataYear = $this->model->getDataYear($mcp_id);
