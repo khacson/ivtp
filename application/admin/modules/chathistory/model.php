@@ -25,6 +25,10 @@
 				$sql .= " AND TIMESTAMPDIFF(MINUTE,last_response_utc,UTC_TIMESTAMP()) > 29";
 			}
 		}
+		$login = $this->admin->getSession('login');
+		if ($login->grouptype != 0) {
+			$sql .= " AND c.user_id = '".$login->id."'";
+		}
 		return $sql;
 	}
 	function getList($search,$page,$numrows){

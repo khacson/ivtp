@@ -55,3 +55,66 @@ CKEDITOR.editorConfig = function (config) {
     config.filebrowserImageUploadUrl = path_df+'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images',
     config.filebrowserFlashUploadUrl = path_df+'ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash'
 };
+CKEDITOR.on( 'dialogDefinition', function( ev ) {
+    // Take the dialog name and its definition from the event data.
+    var dialogName = ev.data.name;
+    var dialogDefinition = ev.data.definition;
+	var dialog = ev.data.definition.dialog;
+	var inputBgColor, inputBorderColor;
+    // Check if the definition is from the dialog window you are interested in (the "Link" dialog window).
+    if ( dialogName == 'cellProperties' ) {
+        // Get a reference to the "Link Info" tab.
+        var infoTab = dialogDefinition.getContents( 'info' );
+		
+		dialog.on('show', function () {
+			$('label.cke_dialog_ui_labeled_label').each(function(){
+				if ($(this).text() == 'Background Color') {
+					inputBgColor = $(this).siblings('.cke_dialog_ui_labeled_content').find('input.cke_dialog_ui_input_text');
+					var rememberBgColor = getCookie('rememberBgColor');
+					if (rememberBgColor) {
+						setTimeout(function(){
+							inputBgColor.val(rememberBgColor);
+						}, 100);
+						
+					}
+				}
+				else if ($(this).text() == 'Border Color') {
+					inputBorderColor = $(this).siblings('.cke_dialog_ui_labeled_content').find('input.cke_dialog_ui_input_text');
+					var rememberBorderColor = getCookie('rememberBorderColor');
+					if (rememberBorderColor) {
+						setTimeout(function(){
+							inputBorderColor.val(rememberBorderColor);
+						}, 100);
+						
+					}
+				}
+			})
+		});
+		
+		infoTab.add( {
+			type: 'button',
+			label: 'Remember color',
+			id: 'rememberColor',
+			'default': 1,
+			onClick: function(e) {
+				var bg = inputBgColor.val().trim();
+				var border = inputBorderColor.val().trim();
+				var year = (new Date()).getFullYear() + 1;
+				if (bg) {
+					document.cookie = 'rememberBgColor='+ bg +'; expires=Thu, 18 Dec '+ year +' 12:00:00 UTC';  
+				}
+				if (border) {
+					document.cookie = 'rememberBorderColor='+ border +'; expires=Thu, 18 Dec '+ year +' 12:00:00 UTC'; 
+				}
+			}
+		});
+    }
+});
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+function delete_cookie(name) {
+    document.cookie = name + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+};

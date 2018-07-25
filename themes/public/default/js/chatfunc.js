@@ -155,6 +155,7 @@ function checkEmail(str) {
 }
 function checkPhone(str) {
 	str = str.replace(/\+/g, '');
+	str = str.replace(/\-/g, ' ');
 	str = str.replace(/\./g, '');
 	str = str.replace(/\,/g, '');
 	var arr = str.split(' ');
@@ -166,7 +167,7 @@ function checkPhone(str) {
 	}
 	for (var i = 0; i < arr.length; i++) {
 		if (arr[i].indexOf('0') != -1 || arr[i].indexOf('84') != -1) {
-			var t = getNextNumber(i, arr); console.log(t);
+			var t = getNextNumber(i, arr);
 			if(t.length == 10 || t.length == 11) {
 				return true;
 			}
@@ -179,6 +180,18 @@ function getNextNumber(i, arr) {
 	while (i < arr.length - 1 && (arr[i+1] == parseInt(arr[i+1]) || arr[i+1].indexOf('0') != -1)) {
 		str += arr[i+1];
 		i++;
+	}
+	return str;
+}
+function convertLink(str) {
+	if (str.indexOf('http') != -1 && str.indexOf('href') == -1) {
+		var arr = str.split(' ');
+		for (var i in arr) {
+			if (arr[i].indexOf('http') != -1) {
+				arr[i] = '<a target="_blank" href="'+ arr[i] +'">'+ arr[i] +'</a>';
+			}
+		}
+		return arr.join(' ');
 	}
 	return str;
 }

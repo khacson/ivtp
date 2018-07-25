@@ -261,6 +261,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		
 		removeBr('#input-msg');
 		var msg = input_msg.html();
+		msg = convertLink(msg);
 		
 		ref = dblog.child(chat_code);
 		var avatar = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
