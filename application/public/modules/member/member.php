@@ -144,8 +144,8 @@ class Member extends CI_Controller {
 		$config['protocol'] = "smtp"; //smtp
 		$config['smtp_host'] = "ssl://smtp.googlemail.com";
 		$config['smtp_port'] = "465";
-		$config['smtp_user'] = "investorprovn@gmail.com"; 
-		$config['smtp_pass'] = "DRBL2018";
+		$config['smtp_user'] = $this->base_model->getEmail(); 
+		$config['smtp_pass'] = $this->base_model->getEmailPass();
 		$config['charset'] = "utf-8";
 		$config['mailtype'] = "html";
 		$config['newline'] = "\r\n";
@@ -169,7 +169,7 @@ class Member extends CI_Controller {
 		
 		$ci->email->initialize($config);
 		$ci->email->clear(TRUE);
-		$ci->email->from('investorprovn@gmail.com','InvestorPro');
+		$ci->email->from($this->base_model->getEmail(),'InvestorPro');
 		$list = array($email);
 		$ci->email->to($list); 
 		$ci->email->subject($title_register); 
@@ -183,7 +183,7 @@ class Member extends CI_Controller {
 		$message.= '<p>Investor</p>';
 		$ci->email->message($message);
 		//$ci->email->set_header('Đăng ký tài khoản', 'Đăng ký thành công');
-		$send = $ci->email->send();	
+		$send = $ci->email->send();
 		return $send;
 	}
 	function clickregistorUpdate(){
@@ -264,8 +264,8 @@ class Member extends CI_Controller {
 		$config['protocol'] = "smtp"; //smtp
 		$config['smtp_host'] = "ssl://smtp.googlemail.com";
 		$config['smtp_port'] = "465";
-		$config['smtp_user'] = "investorprovn@gmail.com"; 
-		$config['smtp_pass'] = "DRBL2018";
+		$config['smtp_user'] = $this->base_model->getEmail(); 
+		$config['smtp_pass'] = $this->base_model->getEmailPass();
 		$config['charset'] = "utf-8";
 		$config['mailtype'] = "html";
 		$config['newline'] = "\r\n";
@@ -289,7 +289,7 @@ class Member extends CI_Controller {
 		
 		$ci->email->initialize($config);
 		$ci->email->clear(TRUE);
-		$ci->email->from('investorprovn@gmail.com','InvestorPro');
+		$ci->email->from($this->base_model->getEmail(),'InvestorPro');
 		$list = array($email);
 		$ci->email->to($list); 
 		$ci->email->subject($title_forgot); 

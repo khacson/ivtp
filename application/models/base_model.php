@@ -289,8 +289,8 @@ class base_model extends CI_Model {
 		$config['protocol'] = "smtp"; //smtp
 		$config['smtp_host'] = "ssl://smtp.googlemail.com";
 		$config['smtp_port'] = "465";
-		$config['smtp_user'] = "investorprovn@gmail.com"; 
-		$config['smtp_pass'] = "DRBL2018";
+		$config['smtp_user'] = $this->getEmail(); 
+		$config['smtp_pass'] = $this->getEmailPass(); 
 		$config['charset'] = "utf-8";
 		$config['mailtype'] = "html";
 		$config['newline'] = "\r\n";
@@ -314,7 +314,7 @@ class base_model extends CI_Model {
 		
 		$ci->email->initialize($config);
 		$ci->email->clear(TRUE);
-		$ci->email->from('investorprovn@gmail.com','Investor');
+		$ci->email->from($this->getEmail(),'InvestorPro');
 		$list = array($to);
 		$ci->email->to($list); 
 		$ci->email->subject($sub); 
@@ -432,6 +432,14 @@ class base_model extends CI_Model {
 						  ->where('id', $memberID)
 						  ->find();
 		return $rs;
+	}
+	
+	function getEmail() {
+		return 'investorpro.jsc@gmail.com';
+	}
+	
+	function getEmailPass() {
+		return 'DRBL2018';
 	}
 	
 	function rand_string($length) {
