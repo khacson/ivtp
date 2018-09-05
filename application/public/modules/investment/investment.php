@@ -63,12 +63,13 @@ class Investment extends CI_Controller {
 		}
 		else {
 			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
+			$data->buttonlist = $this->base_model->getButton();
 			$content = $this->load->view('404',$data,true);
 		}
 		
-		$title = 'Xu hướng thị trường';
-		$des = 'Xu hướng thị trường';
-		$keyword = 'Xu hướng thị trường';
+		$title = 'Danh mục đầu tư';
+		$des = 'Danh mục đầu tư';
+		$keyword = 'Danh mục đầu tư';
 		if ($data->catalogFind) {
 			$title = $data->catalogFind->catalog_name;
 			$des = $title;
@@ -141,6 +142,7 @@ class Investment extends CI_Controller {
 		}
 		else {
 			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
+			$data->buttonlist = $this->base_model->getButton();
 			$content = $this->load->view('404',$data,true);
 		}
 		

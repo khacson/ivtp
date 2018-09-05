@@ -16,6 +16,7 @@ class incMenu extends CI_Include {
 		$data->investmentCatalogs = $this->model->getInvestmentCatalog();
 		$data->logins = $this->site->GetSession("pblogin");
 		$data->finds = $this->model->getInfor();
+		$data->redirectUrl = $this->model->getFullUrl();
 		$this->load->incView($data);
     }
 }

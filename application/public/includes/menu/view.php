@@ -37,7 +37,7 @@
                 <div class="right-side">
                   <ul class="list-inline list-inline-2 list-primary">
 					<?php if(empty($logins->id)){?>
-                    <li><a class="text-gray-lighter" href="<?=base_url();?>dang-nhap.html"><i class="icon icon-xs icon-circle fa fa-user text-gray-lighter" ></i> Đăng nhập<a></li>
+                    <li><a class="text-gray-lighter" href="<?=base_url();?>dang-nhap.html?r=<?=$redirectUrl?>"><i class="icon icon-xs icon-circle fa fa-user text-gray-lighter" ></i> Đăng nhập<a></li>
                     <li><a class="text-gray-lighter" href="<?=base_url();?>dang-ky.html"><i class="icon icon-xs icon-circle fa fa-edit text-gray-lighter" href="dangky.html"></i> Đăng ký</a></li>
 					<?php }else{?>
 					   <li><a class="text-gray-lighter" href="<?=base_url();?>ho-so.html"><i class="icon icon-xs icon-circle fa fa-user text-gray-lighter" h></i> Xin chào: <?=$logins->fullname;?></a></li>

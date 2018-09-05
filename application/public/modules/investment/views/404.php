@@ -20,6 +20,7 @@
                 <div class="cell-sm-10 cell-md-8 cell-xl-7">
                   <div class="inset-md-right-35 inset-xl-right-0">
                     <p><?=$msg?></p>
+					<?=$buttonlist?>
                   </div>
                 </div>
                 <div class="cell-sm-10 cell-md-4 offset-top-90 offset-md-top-0">

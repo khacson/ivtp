@@ -91,6 +91,10 @@
   <script src="<?=url_tmpl();?>toast/toastr.min.js"></script>
   <script src="<?=url_tmpl();?>toast/notifications.js"></script>
 <Script>
+	var redirectUrl = '';
+	<?php if(!empty($_GET['r'])) {?>
+		redirectUrl = '<?=urldecode($_GET['r'])?>';
+	<?php } ?>
 	$(function(){
 		//$('#email').val('');
 		//$('#password').val('');
@@ -115,7 +119,12 @@
 					if(datas == 1){
 						success("Đăng nhập thành công.");
 						setTimeout(function(){
-							window.location.href = '<?=base_url();?>trang-chu.html';
+							if (redirectUrl) {
+								window.location = redirectUrl;
+							}
+							else {
+								window.location.href = '<?=base_url();?>trang-chu.html';
+							}
 						}, 500)
 						
 					}

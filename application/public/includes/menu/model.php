@@ -8,6 +8,10 @@ class incModelMenu extends CI_Model{
 	function __construct(){
 		parent::__construct();
 	}
+	function getFullUrl() {
+		$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		return urlencode($url);
+	}
 	function getMarkettendCatalog(){
 		$query = $this->model->table('ivt_markettrendcatalog')
 							->select('id,catalog_name,friendlyurl')

@@ -74,6 +74,7 @@ class Increasecatalog extends CI_Controller {
 		}
 		else {
 			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
+			$data->buttonlist = $this->base_model->getButton();
 			$content = $this->load->view('404',$data,true);
 		}
 		
@@ -143,6 +144,7 @@ class Increasecatalog extends CI_Controller {
 		}
 		else {
 			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
+			$data->buttonlist = $this->base_model->getButton();
 			$content = $this->load->view('404',$data,true);
 		}
 		

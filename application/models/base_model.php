@@ -460,4 +460,21 @@ class base_model extends CI_Model {
 		}
 		return $str;
 	}
+	
+	function getFullUrl() {
+		$url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+		return urlencode($url);
+	}
+
+	function getButton() {
+		$redirectUrl = $this->getFullUrl();
+		$str = '<div class="buttonlist">';
+		$str .= '<a class="btn btn-primary" href="'.base_url().'dang-nhap.html?r='.$redirectUrl.'">Đăng nhập</a> ';
+		$str .= '<a class="btn btn-primary" href="'.base_url().'dang-ky.html">Đăng ký thành viên</a> ';
+		$str .= '<a class="btn btn-primary" href="'.base_url().'dich-vu.html">Đăng ký dịch vụ</a>';
+		$str .= '</div>';
+		return $str;
+	}
+	
+	
 }
