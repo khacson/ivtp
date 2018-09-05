@@ -122,8 +122,7 @@ class Slide extends CI_Controller {
             exit;
         }
         if (isset($_FILES['userfile']) && $_FILES['userfile']['name'] != "") {		
-			$temp = explode('.', $_FILES['userfile']['name']);
-			$ext = end($temp);
+			$ext = $this->base_model->getImageType($_FILES['userfile']['tmp_name']);
 			$filename = $_FILES['userfile']['name'];			
 			$src_path = $_FILES['userfile']['tmp_name'];
 			$new_path = 'files/slide/'.$filename;
@@ -157,13 +156,11 @@ class Slide extends CI_Controller {
         $array = json_decode($this->input->post('search'), true);
         $id = $this->input->post('id');
         $login = $this->login;
-        if (isset($_FILES['userfile']) && $_FILES['userfile']['name'] != "") {		
-			$temp = explode('.', $_FILES['userfile']['name']);
-			$ext = end($temp);
+        if (isset($_FILES['userfile']) && $_FILES['userfile']['name'] != "") {	
+			$ext = $this->base_model->getImageType($_FILES['userfile']['tmp_name']);
 			$filename = $_FILES['userfile']['name'];			
 			$src_path = $_FILES['userfile']['tmp_name'];
 			$new_path = 'files/slide/'.$filename;
-			
 			$this->base_model->resizeImg(SLIDE_WIDTH, SLIDE_HEIGHT, $src_path, $new_path, $array['x'], $array['y'], $array['w'], $array['h'], $ext);
 			$array['img'] = $filename;
         }

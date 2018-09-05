@@ -43,14 +43,16 @@
     <script src="<?=url_tmpl();?>js/core.js"></script>
     <script src="<?=url_tmpl();?>js/script.js"></script>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
-	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-122490469-1"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125020652-1"></script>
 	<script>
 	  window.dataLayer = window.dataLayer || [];
 	  function gtag(){dataLayer.push(arguments);}
 	  gtag('js', new Date());
 
-	  gtag('config', 'UA-122490469-1');
+	  gtag('config', 'UA-125020652-1');
 	</script>
+
+
 
 	<div class="loading-overplay-full loading" style="display: none"><div class="spinner"><div class="bounce1"></div><div class="bounce2"></div><div class="bounce3"></div></div></div>
   </body>

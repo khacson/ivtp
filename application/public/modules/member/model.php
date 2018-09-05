@@ -77,7 +77,7 @@ class MemberModel extends CI_Model
 			return $arr;
 		}
 		
-		//mien phi 10 ngay
+		//mien phi 30 ngay
 		$rs = $this->model->table('ivt_member')
 						  ->select('dateactice')
 						  ->where('id', $pblogin->id)
@@ -85,17 +85,17 @@ class MemberModel extends CI_Model
 						  ->find();
 		if (!empty($rs->dateactice)) {
 			$t = strtotime($today) - strtotime($rs->dateactice);
-			if ($t/86400 <= 10) {
+			if ($t/86400 <= DAY_FREE) {
 				$arr['status'] = 'Đã kích hoạt';
 			}
 			else {
 				$arr['status'] = 'Đã hết hạn';
 			}
 			
-			//VIP 10 ngay
-			$arr['service_name'] = 'Free (VIP 10 ngày)';
+			//VIP 30 ngay
+			$arr['service_name'] = 'Free (VIP '.DAY_FREE.' ngày)';
 			$arr['from_date'] = date('d/m/Y H:i', strtotime($rs->dateactice));
-			$arr['to_date'] = date('d/m/Y H:i', strtotime('+10 days', strtotime($rs->dateactice)));
+			$arr['to_date'] = date('d/m/Y H:i', strtotime('+'.DAY_FREE.' days', strtotime($rs->dateactice)));
 			return $arr;
 		}
 		

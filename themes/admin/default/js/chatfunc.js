@@ -180,7 +180,7 @@ function getNextNumber(i, arr) {
 	return str;
 }
 function convertLink(str) {
-	if (str.indexOf('http') != -1 && str.indexOf('href') == -1) {
+	if (str.indexOf('http') != -1 && str.indexOf('href') == -1 && str.indexOf('<img') == -1) {
 		var arr = str.split(' ');
 		for (var i in arr) {
 			if (arr[i].indexOf('http') != -1) {

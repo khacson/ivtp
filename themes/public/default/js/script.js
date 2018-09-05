@@ -802,7 +802,7 @@ $document.ready(function () {
   if (plugins.rdGoogleMaps.length) {
     var i;
 
-    $.getScript("//maps.google.com/maps/api/js?sensor=false&libraries=geometry,places&v=3.7", function () {
+    $.getScript("//maps.google.com/maps/api/js?key=AIzaSyBpwZkNegUg1pPW5CSdeGoN4wg1APyxkDo&sensor=false&libraries=geometry,places&v=3.7", function () {
       var head = document.getElementsByTagName('head')[0],
           insertBefore = head.insertBefore;
 

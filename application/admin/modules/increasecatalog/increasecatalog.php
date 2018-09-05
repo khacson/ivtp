@@ -352,7 +352,8 @@ class Increasecatalog extends CI_Controller {
 		$arrData = array();
 		for ($row = 4; $row < $n; $row++) {
 			$mcp = $objWorksheet->getCell('C'.$row)->getValue();
-			if (empty(trim($mcp))) { continue; }
+			$mcp = trim($mcp);
+			if (empty($mcp)) { continue; }
 			$str = '';
 			for ($col = 'C'; $col <='M'; $col++) {
 				$val = $objWorksheet->getCell($col.$row)->getValue();

@@ -406,6 +406,23 @@ body{
 }
 /*end login form*/
 
+/*Xu huong thi truong*/
+@media (max-width: 768px) {
+	.unit {
+		display: block
+	}
+	#grid-rows .unit-left, #grid-rows .unit-body {
+		width: 100%;
+	}
+	.unit .img-responsive{
+		width: 100%;
+		padding-bottom: 5px;
+	}
+}
+
+
+/*End Xu huong thi truong*/
+
 /*homepage*/
 .thumbnail-terry {
     height: 100%;
@@ -443,6 +460,11 @@ h2,h3 {
 .post-content table {
     margin-bottom: 15px;
     margin-top: 15px;
+	max-width: 100%;
+	width: auto;
+}
+.post-content ol li {
+    list-style: decimal;
 }
 .post-content li {
     list-style: outside;
@@ -454,5 +476,6 @@ h2,h3 {
 figure.image {
     margin-bottom: 20px;
     margin-top: 20px;
+	max-width: 100%;
 }
 /*end post*/

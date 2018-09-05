@@ -68,7 +68,7 @@ CKEDITOR.on( 'dialogDefinition', function( ev ) {
 		
 		dialog.on('show', function () {
 			$('label.cke_dialog_ui_labeled_label').each(function(){
-				if ($(this).text() == 'Background Color') {
+				if ($(this).text() == 'Background Color' || $(this).text() == 'Màu nền') {
 					inputBgColor = $(this).siblings('.cke_dialog_ui_labeled_content').find('input.cke_dialog_ui_input_text');
 					var rememberBgColor = getCookie('rememberBgColor');
 					if (rememberBgColor) {
@@ -78,7 +78,7 @@ CKEDITOR.on( 'dialogDefinition', function( ev ) {
 						
 					}
 				}
-				else if ($(this).text() == 'Border Color') {
+				else if ($(this).text() == 'Border Color' || $(this).text() == 'Màu viền') {
 					inputBorderColor = $(this).siblings('.cke_dialog_ui_labeled_content').find('input.cke_dialog_ui_input_text');
 					var rememberBorderColor = getCookie('rememberBorderColor');
 					if (rememberBorderColor) {

@@ -104,7 +104,7 @@
 	}
 	function insertTitle($arrTitle, $username, $datecreate, $type) {
 		$array['type'] = $type;
-		$array['titles'] = json_encode($arrTitle, JSON_UNESCAPED_UNICODE);
+		$array['titles'] = json_encode($arrTitle);
 		$array['datecreate'] = $datecreate;
         $array['usercreate'] = $username;
 		$this->model

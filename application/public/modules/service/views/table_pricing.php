@@ -70,7 +70,7 @@ foreach ($serviceInfo as $item) {
 	<tr>
 		<td colspan="2" align="center"><b style="font-size: 15px;">Giá</b></td>
 		<td align="center">
-			<span class="service_price_info">Dùng thử VIP<br>10 ngày</span>
+			<span class="service_price_info">Dùng thử VIP<br><?=DAY_FREE?> ngày</span>
 		</td>
 		<td align="center">
 			<span class="service_price_info"><?=number_format($normal_price)?></span> 

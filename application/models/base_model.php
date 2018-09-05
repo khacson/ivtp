@@ -325,6 +325,15 @@ class base_model extends CI_Model {
 		return $send;
 	}
 
+	function getImageType($tmp_file) {
+		$info   = getimagesize($tmp_file);
+		if (!isset($info['mime'])) {
+			return '';
+		}
+		$temp = explode('/', $info['mime']);
+		return end($temp);
+	}
+	
 	function isImage($filename, $fileUrl){
 		$allowed =  $this->getAllowType();
 		$ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -361,7 +370,7 @@ class base_model extends CI_Model {
 
 			imagepng($dst_r,$new_path,$quality);
 		}
-		elseif(strtolower($ext) == 'jpg'){
+		elseif(strtolower($ext) == 'jpg' || strtolower($ext) == 'jpeg'){
 			$quality = 100;
 			$img_r = imagecreatefromjpeg($src_path);
 			$dst_r = ImageCreateTrueColor( $width, $height );
@@ -400,7 +409,7 @@ class base_model extends CI_Model {
 		if (empty($pblogin)) {
 			return 0;
 		}
-		//mien phi 10 ngay
+		//mien phi 30 ngay
 		$today = gmdate('Y-m-d H:i:s', time() + 7*3600);
 		$rs = $this->model->table('ivt_member')
 						  ->select('dateactice')
@@ -409,7 +418,7 @@ class base_model extends CI_Model {
 						  ->find();
 		if (!empty($rs->dateactice)) {
 			$t = strtotime($today) - strtotime($rs->dateactice);
-			if ($t/86400 < 10) {
+			if ($t/86400 <= DAY_FREE) {
 				return 2;
 			}
 		}

@@ -82,7 +82,7 @@ class base_model extends CI_Model {
     }
 
     public function getMacAddress() {
-        $ip = $_SERVER['REMOTE_ADDR'];
+        $ip = $_SERVER['REMOTE_ADDR']; return $ip;
         $mac = shell_exec("arp -a $ip");
         $arr = explode(" ", $mac);
         if (isset($arr[3])) {
@@ -212,7 +212,7 @@ class base_model extends CI_Model {
 		}
         $sql = "SELECT * FROM ivt_users
                 WHERE groupid = 2 AND isdelete=0 AND is_full = 0 $search
-				ORDER BY fullname";
+				ORDER BY online_status DESC, fullname";
         return $this->model->query($sql)->execute();
     }
 	
@@ -289,8 +289,8 @@ class base_model extends CI_Model {
 		$config['protocol'] = "smtp"; //smtp
 		$config['smtp_host'] = "ssl://smtp.googlemail.com";
 		$config['smtp_port'] = "465";
-		$config['smtp_user'] = "investorprovn@gmail.com"; 
-		$config['smtp_pass'] = "DRBL2018";
+		$config['smtp_user'] = $this->getEmail(); 
+		$config['smtp_pass'] = $this->getEmailPass(); 
 		$config['charset'] = "utf-8";
 		$config['mailtype'] = "html";
 		$config['newline'] = "\r\n";
@@ -314,7 +314,7 @@ class base_model extends CI_Model {
 		
 		$ci->email->initialize($config);
 		$ci->email->clear(TRUE);
-		$ci->email->from('investorprovn@gmail.com','Investor');
+		$ci->email->from($this->getEmail(),'InvestorPro');
 		$list = array($to);
 		$ci->email->to($list); 
 		$ci->email->subject($sub); 
@@ -325,6 +325,15 @@ class base_model extends CI_Model {
 		return $send;
 	}
 
+	function getImageType($tmp_file) {
+		$info   = getimagesize($tmp_file);
+		if (!isset($info['mime'])) {
+			return '';
+		}
+		$temp = explode('/', $info['mime']);
+		return end($temp);
+	}
+	
 	function isImage($filename, $fileUrl){
 		$allowed =  $this->getAllowType();
 		$ext = pathinfo($filename, PATHINFO_EXTENSION);
@@ -361,7 +370,7 @@ class base_model extends CI_Model {
 
 			imagepng($dst_r,$new_path,$quality);
 		}
-		elseif(strtolower($ext) == 'jpg'){
+		elseif(strtolower($ext) == 'jpg' || strtolower($ext) == 'jpeg'){
 			$quality = 100;
 			$img_r = imagecreatefromjpeg($src_path);
 			$dst_r = ImageCreateTrueColor( $width, $height );
@@ -409,7 +418,7 @@ class base_model extends CI_Model {
 						  ->find();
 		if (!empty($rs->dateactice)) {
 			$t = strtotime($today) - strtotime($rs->dateactice);
-			if ($t/84600 < 10) {
+			if ($t/86400 < 10) {
 				return 2;
 			}
 		}
@@ -432,6 +441,14 @@ class base_model extends CI_Model {
 						  ->where('id', $memberID)
 						  ->find();
 		return $rs;
+	}
+	
+	function getEmail() {
+		return 'investorpro.jsc@gmail.com';
+	}
+	
+	function getEmailPass() {
+		return 'DRBL2018';
 	}
 	
 	function rand_string($length) {

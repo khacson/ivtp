@@ -132,11 +132,12 @@ class Member extends CI_Controller {
 		}
 		
 		$this->model->table('ivt_member')->insert($insert);
-		$this->sendEmail($email,$fullname);
+		$memberId = $this->db->insert_id();
+		$this->sendEmail($email,$fullname,$memberId);
 		
 		echo 1; exit;
 	}
-	function sendEmail($email='',$fullname=''){	
+	function sendEmail($email='',$fullname='', $memberId = ''){	
 		$ci = get_instance();
 		$ci->load->library('email');
 		$ci->load->library('parser');
@@ -163,6 +164,16 @@ class Member extends CI_Controller {
 		$send_register = '';
 		if(!empty($sendMail->send_register)){
 			$send_register = $sendMail->send_register;
+			if (!empty($memberId)) {
+				$memberInfo = $this->base_model->getMemberInfo($memberId);
+				$gender = $memberInfo->sex == 1 ? 'anh' : 'chị';
+				$arrTrans['{gender}'] = $gender;
+				$arrTrans['{Gender}'] = ucfirst($gender);
+				$arrTrans['{fullname}'] = $memberInfo->fullname;
+				$arrTrans['{email}'] = $memberInfo->email;	
+				
+				$send_register = $this->base_model->translateEmail($arrTrans, $send_register);
+			}
 		}
 		$tt = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
 		$datecreate  = strtotime($tt);
@@ -176,11 +187,9 @@ class Member extends CI_Controller {
 		
 		$url = base_url();
 		$message = '';
-		$message.= '<h2></h2>';
-		$message.= '<p>'.$send_register.'<b></b></p>';
-		$message.= '<p><a href="'.$url.'member/active?e='.$email.'&t='.$datecreate.'">Kích hoạt tài khoản</a></p><br>';
-		$message.= '<p>Trân trọng,</p>';
-		$message.= '<p>Investor</p>';
+		$message.= '<p>'.$send_register.'</p>';
+		$message.= '<p><a href="'.$url.'member/active?e='.$email.'&t='.$datecreate.'">Kích hoạt tài khoản</a></p>';
+		$message.= '<p>Trân trọng,<br>InvestorPro</p>';
 		$ci->email->message($message);
 		//$ci->email->set_header('Đăng ký tài khoản', 'Đăng ký thành công');
 		$send = $ci->email->send();

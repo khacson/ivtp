@@ -267,7 +267,7 @@ class Helpdesk extends CI_Controller {
 		$this->model->table('ivt_investment')->save($id,$array);	
 	}
 	function upload_image() {
-		if (isset($_FILES)) { 
+		if (isset($_FILES['image_file'])) { 
 			$filename = date('dmYHis').'_'.$_FILES['image_file']['name'];
 			move_uploaded_file($_FILES['image_file']['tmp_name'], 'upload/chat/'.$filename);
 			echo base_url().'upload/chat/'.$filename;
