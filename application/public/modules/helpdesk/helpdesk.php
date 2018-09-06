@@ -67,6 +67,11 @@ class Helpdesk extends CI_Controller {
 		$memberLevel = $this->base_model->getMemberLevel();
 		if ($memberLevel < $this->postLevel) {
 			if ($data->userInfo->groupid != 3) {
+				
+				$redirectUrl = $this->base_model->getFullUrl();
+				header('Location: '.base_url().'dang-nhap.html?r='.$redirectUrl);
+				return;
+				
 				$content = $this->load->view('404',$data,true);
 				$this->site->write('content',$content,true);
 				$this->site->render();
