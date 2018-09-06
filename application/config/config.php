@@ -503,4 +503,4 @@ $config['proxy_ips'] = '';
 
 $config['segment_class'] = XSC;
 $config['segment_method'] = XSM;//date_default_timezone_set('UTC');
-error_reporting(0);
+//error_reporting(0);
