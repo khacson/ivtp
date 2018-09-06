@@ -17,6 +17,9 @@
     <script src="<?=url_tmpl();?>js/html5shiv.min.js"></script>
 		<![endif]-->
 	<script src="<?=url_tmpl();?>js/jquery-2.2.3.min.js"></script>
+	<script>
+		var base_url = '<?=base_url()?>';
+	</script>
   </head>
   <body>
     <!-- Page-->

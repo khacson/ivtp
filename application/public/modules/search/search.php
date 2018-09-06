@@ -21,6 +21,7 @@ class Search extends CI_Controller {
     }
 	function _view($uri=''){
         $searchText = $this->uri->segment(2);
+		$searchText = urldecode($searchText);
 		$login = $this->site->getSession('login');
 		$finds = $this->model->getInfor();
 		$data = new stdClass();
