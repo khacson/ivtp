@@ -4,7 +4,7 @@
  * @author 
  * @copyright 2018
  */
-class Investment extends CI_Controller {
+class Search extends CI_Controller {
     
 	function __construct(){
 		parent::__construct();			
@@ -17,59 +17,43 @@ class Investment extends CI_Controller {
         {
             return call_user_func_array(array($this, $method), $params);
         }
-        $uri = $this->uri->segment(2);
-		if(empty($uri)){
-			$this->_view();
-		}
-		else{
-			//Ghi chú link Chi tiết thì thêm dtid sau cùng VD: tieu-de-tin-dt123.html
-			$arr_id = explode("-",$uri);
-			$count = count($arr_id);
-			$key = substr($arr_id[$count-1],0,2);
-			$id = substr($arr_id[$count-1],2);
-			if($key == 'dt' && is_numeric($id)){
-				$this->_detail($id);
-			}
-			else{
-				$this->_view($uri);
-			}
-		}
+		$this->_view();
     }
 	function _view($uri=''){
+        $searchText = $this->uri->segment(2);
 		$login = $this->site->getSession('login');
 		$finds = $this->model->getInfor();
 		$data = new stdClass();
 		
-		$data->catalogs = $this->model->getInvestmentCatalog();
+		$data->catalogs = $this->model->getMarkettendCatalog();
 		$data->listNew = $this->model->getFindNew(0);
 		$data->catalogFind = $this->model->getFindCatalog($uri);
 		$data->uri = $uri;
-		
-		if (empty($data->catalogFind)) {
-			$data->msg = 'Bài viết này không có nội dung.';
-			$content = $this->load->view('404',$data,true);
-			$this->site->write('content',$content,true);
-            $this->site->render();
-			return;
-		}
-		
-		if ($data->catalogFind->id == 13) {
-			$this->postLevel = 2;
-		}
+		$data->searchText = $searchText;
 		
 		$memberLevel = $this->base_model->getMemberLevel();
-		if ($memberLevel >= $this->postLevel) {
+		if (empty($searchText)) {
+			$data->msg = 'Không tìm thấy kết quả nào.';
+			$data->buttonlist = '';
+			$content = $this->load->view('404',$data,true);
+		}
+		elseif ($memberLevel >= $this->postLevel) {
 			$content = $this->load->view('view',$data,true);
 		}
 		else {
 			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
+			$data->buttonlist = $this->base_model->getButton();
 			$content = $this->load->view('404',$data,true);
 		}
 		
+		$title = 'Kết quả tìm kiếm cho từ khóa "'.$searchText.'"';
+		$des = 'Kết quả tìm kiếm cho từ khóa "'.$searchText.'"';
+		$keyword = 'Kết quả tìm kiếm cho từ khóa "'.$searchText.'"';
+        
         $this->site->write('content',$content,true);
-		$this->site->write('title',$finds->meta_title,true);
-		$this->site->write('keywords',$finds->meta_keyword,true);
-		$this->site->write('description',$finds->mete_description,true);
+		$this->site->write('title',$title,true);
+		$this->site->write('keywords',$keyword,true);
+		$this->site->write('description',$des,true);
         $this->site->render();
 	}
 	function _detail($id){
@@ -84,21 +68,23 @@ class Investment extends CI_Controller {
 			$this->site->render();
 			return;
 		}
-		$typeid = 0;
-		if(!empty($finds->typeid)){
-			$typeid = $finds->typeid;
-		}
-		$data->catalogs = $this->model->getInvestmentCatalog();
-		$data->listNew = $this->model->getFindNew($id, $typeid);
+		$data->catalogs = $this->model->getMarkettendCatalog();
+		$data->listNew = $this->model->getFindNew($id, $finds->typeid);
 		if(!empty($finds->id)){
-			$this->site->write('title',$finds->meta_title,true);
+			$title = $finds->meta_title;
+			if (empty($finds->meta_title)) {
+				$title = $finds->title;
+			}
+			$this->site->write('title',$title,true);
 			$this->site->write('description',$finds->meta_keyword,true);
 			$this->site->write('keywords',$finds->mete_description,true);
 			$this->site->write('title_page',$finds->title,true);
 		}
+		$typeid = 0;
+		if(!empty($finds->typeid)){
+			$typeid = $finds->typeid;
+		}
 		$data->catalogFind =  $this->model->getFindC($typeid);
-		$data->finds = $finds;
-		$data->totalComment = $this->model->getTotalComment($id);
 		
 		$login = $this->site->getSession('pblogin');
 		if (empty($login)) {
@@ -109,6 +95,8 @@ class Investment extends CI_Controller {
 			$m_fullname = $login->fullname;
 			$m_email = $login->email;
 		}
+		$data->finds = $finds;
+		$data->totalComment = $this->model->getTotalComment($id);
 		$array = array();
 		$array['postId'] = $id;
 		$array['m_fullname'] = $m_fullname;
@@ -117,10 +105,7 @@ class Investment extends CI_Controller {
 		
 		$array['commentList'] = $this->getCommentList($id);
 		$data->commentList = $this->load->view('comment_list',$array,true);
-		
-		if ($typeid == 13) {
-			$this->postLevel = 2;
-		}
+		$data->commentCount = count($array['commentList']);
 		
 		$memberLevel = $this->base_model->getMemberLevel();
 		if ($memberLevel >= $this->postLevel) {
@@ -128,6 +113,7 @@ class Investment extends CI_Controller {
 		}
 		else {
 			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
+			$data->buttonlist = $this->base_model->getButton();
 			$content = $this->load->view('404',$data,true);
 		}
 		
@@ -144,6 +130,7 @@ class Investment extends CI_Controller {
 
 		$count = $this->model->getTotal($search);
         $data->datas = $this->model->getList($search, $page, $numrows);
+		$data->total = $count;
         $page_view = $this->site->pagination($count, $numrows, 5, 'product/', $page);
 		
         $result = new stdClass();
@@ -168,7 +155,7 @@ class Investment extends CI_Controller {
 	}
 	function getCommentList($blogid) {
 		//get level 0
-		$sql = "SELECT * FROM ivt_investment_commets 
+		$sql = "SELECT * FROM ivt_markettrend_comment 
 				WHERE blogid = $blogid AND parent_id = 0 AND accept = 1
 				ORDER BY id DESC";
 		$rs = $this->model->query($sql)->execute();
@@ -182,7 +169,7 @@ class Investment extends CI_Controller {
 		return $arr;	
 	}
 	function getCommentChild(&$arr, $parent_id) {
-		$sql = "SELECT * FROM ivt_investment_commets 
+		$sql = "SELECT * FROM ivt_markettrend_comment 
 				WHERE parent_id = $parent_id AND accept = 1
 				ORDER BY id DESC";
 		$rs = $this->model->query($sql)->execute();
@@ -206,9 +193,18 @@ class Investment extends CI_Controller {
 		$arr['blogid'] = $this->input->post('blogid');
 		$arr['email'] = $this->input->post('email');
 		$arr['datecreate'] = gmdate('Y-m-d H:i:s', time() + 7*3600);
-		$this->model->table('ivt_investment_commets')->insert($arr);
+		$this->model->table('ivt_markettrend_comment')->insert($arr);
 		$this->model->updateHasChild($arr['parent_id']);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }

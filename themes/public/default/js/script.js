@@ -2154,6 +2154,46 @@ $document.ready(function () {
 			}
 		}
 	}
-
 });
+
+/*custom function*/
+function showSearchDiv() {
+	$('.search-overplay').fadeIn(200);
+	setTimeout(function(){
+		$('.search-overplay .search-icon').trigger('click');
+	}, 300);
+}
+function searchToggle(obj, evt){
+	var container = $(obj).closest('.search-wrapper');
+
+	if(!container.hasClass('active')){
+		container.addClass('active');
+		setTimeout(function(){
+			$('.search-overplay .search-input').focus();
+		}, 100);
+		evt.preventDefault();
+	}
+	else if(container.hasClass('active') && $(obj).closest('.input-holder').length == 0){
+		container.removeClass('active');
+		// clear input
+		container.find('.search-input').val('');
+		// clear and hide result container when we press close
+		container.find('.result-container').fadeOut(100, function(){$(this).empty();});
+		$('.search-overplay').fadeOut(500);
+	}
+}
+function searchtext(event) {
+	if (event.keyCode == 13) {
+		searchResult();
+	}
+}
+function searchResult() {
+	var searchText = $('input.search-input').val().trim();
+	if (searchText) {
+		window.location = base_url + 'tim-kiem/' + encodeURI(searchText);
+	}
+	return;
+}
+
+
 

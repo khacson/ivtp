@@ -19,6 +19,9 @@
     <script src="<?=url_tmpl();?>js/html5shiv.min.js"></script>
 		<![endif]-->
 	<script src="<?=url_tmpl();?>js/jquery-2.2.3.min.js"></script>
+	<script>
+		var base_url = '<?=base_url()?>';
+	</script>
 	<style>
 		.rd-navbar-wrap{
 			box-shadow: 0 3px 11px 5px rgba(0, 0, 0, 0.05);

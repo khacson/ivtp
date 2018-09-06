@@ -3,7 +3,7 @@
  * @author 
  * @copyright 2018
  */
-class MarkettrendModel extends CI_Model
+class SearchModel extends CI_Model
 {
 	function __construct(){
 		parent::__construct('');
@@ -55,24 +55,40 @@ class MarkettrendModel extends CI_Model
 					  ->find();
 		return $query;
 	}
+	function safeText($text) {
+		$arrReplace = array('where', 'or', 'update', 'delete', 'select', 'and', '=', '"', "'");
+		$text = strtolower($text);
+		$text = strip_tags($text);
+		$text = str_replace($arrReplace, '', $text);
+		return $text;
+	}
 	function getSearch($search){
 		$and = '';
 		if(!empty($search)){
-			$typeid = $this->getFindCatalog($search)->id;
-			if(!empty($typeid)){
-				$and.= " and m.typeid = '".$typeid."' ";
-			}
+			$search = $this->safeText($search);
+			$and.= " and (
+				m.title LIKE '%$search %' 
+				OR m.title LIKE '% $search%' 
+				OR m.description_long LIKE '%$search %'
+				OR m.description_long LIKE '% $search%'
+			)";
 		}
 		return $and;
 	}
 	function getTotal($search){
 		$and = $this->getSearch($search);
 		$sql = "
-			select COUNT(1) AS total
-			from ivt_markettrend m 
-			where m.isdelete = 0
-			$and
-			;
+			select COUNT(1) AS total from (
+				select 1
+				from ivt_markettrend m 
+				where m.isdelete = 0 $and
+				
+				UNION ALL
+				
+				select 1
+				from ivt_investment m 
+				where m.isdelete = 0 $and
+			) a
 		";
 		$query = $this->model->query($sql)->execute();
 		if(empty($query[0]->total)){
@@ -85,13 +101,21 @@ class MarkettrendModel extends CI_Model
 	function getList($search, $page, $numrows){
 		$and = $this->getSearch($search);
 		$sql = "
-			select m.*
+			select thumb, friendlyurl, id, title, description_sort, datecreate, 
+			'xu-huong-thi-truong' as prefix, 'markettrend' as fname
 			from ivt_markettrend m 
-			where m.isdelete = 0
-			$and
-			order by m.datecreate desc
+			where m.isdelete = 0 $and
+			
+			UNION ALL
+			
+			select thumb, friendlyurl, id, title, description_sort, datecreate, 
+			'danh-muc-dau-tu' as prefix, 'investment' as fname
+			from ivt_investment m 
+			where m.isdelete = 0 $and
+			
+			order by datecreate desc
 		";
-		$sql.= ' limit '.$page.','.$numrows; 
+		$sql.= ' limit '.$page.','.$numrows; //echo $sql;die;
 		return $this->model->query($sql)->execute();
 	}
 	function getTotalComment($blogid){

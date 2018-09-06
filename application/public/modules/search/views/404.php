@@ -2,8 +2,8 @@
         <div class="shell">
           <ul class="list-inline list-inline-12 list-inline-icon p tleft breads">
             <li><a href="<?=base_url();?>trang-chu.html"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;Trang chủ </a></li>
-            <li><a href="<?=base_url();?>danh-muc-dau-tu.html"><i class="fa fa-angle-right" aria-hidden="true"></i>
-				Danh mục đầu tư</a></li>
+            <li><a href="javascript:;"><i class="fa fa-angle-right" aria-hidden="true"></i>
+				Kết quả tìm kiếm</a></li>
             </li>
 			<?php if(!empty($catalogFind->catalog_name)){?>
 				<li><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>
@@ -20,6 +20,7 @@
                 <div class="cell-sm-10 cell-md-8 cell-xl-7">
                   <div class="inset-md-right-35 inset-xl-right-0">
                     <p><?=$msg?></p>
+					<?=$buttonlist?>
                   </div>
                 </div>
                 <div class="cell-sm-10 cell-md-4 offset-top-90 offset-md-top-0">
@@ -36,7 +37,7 @@
                           <!-- List Marked-->
                           <ul class="list list-marked list-marked-icon">
 								<?php foreach($catalogs as $item){?>
-								<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
+								<li><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>.html"><?=$item->catalog_name;?></a></li>
 								<?php }?>
                           </ul>
                         </div>
@@ -51,7 +52,7 @@
                       <div class="offset-top-20">
                         <!-- Unit-->
                         <div class="unit unit-horizontal">
-                          <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="100" height="100" alt=""></div>
+                          <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/markettrend/thumb/<?=$item->thumb;?>" width="100" height="100" alt=""></div>
                           <div class="unit-body">
 							<?php 
 								$new_icon = '';
@@ -60,7 +61,7 @@
 									$new_icon = '<img src="'.base_url().'files/icon/new_icon.gif" />';
 								}
 							?>
-                            <a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?> <?=$new_icon?></a>
+                            <a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?> <?=$new_icon?></a>
                             <div class="offset-top-10">
                               <!-- List Inline-->
                               <ul class="list-inline list-inline-dashed list-inline-12 text-gray text-italic p">

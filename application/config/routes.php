@@ -77,6 +77,9 @@ $route['danh-muc-dau-tu/(:any)'] = "investment/$1";
 $route['danh-muc-tang-truong'] = "increasecatalog";
 $route['danh-muc-tang-truong/(:any)'] = "increasecatalog/$1";
 
+$route['tim-kiem'] = "search";
+$route['tim-kiem/(:any)'] = "search/$1";
+
 $route['thiet-ke-web'] = "web";
 $route['thiet-ke-web/(:any)'] = "web/$1";
 
