@@ -42,6 +42,10 @@ class Search extends CI_Controller {
 			$content = $this->load->view('view',$data,true);
 		}
 		else {
+			$redirectUrl = $this->base_model->getFullUrl();
+			header('Location: '.base_url().'dang-nhap.html?r='.$redirectUrl);
+			return;
+			
 			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
 			$data->buttonlist = $this->base_model->getButton();
 			$content = $this->load->view('404',$data,true);
@@ -113,6 +117,10 @@ class Search extends CI_Controller {
 			$content = $this->load->view('detail',$data,true);
 		}
 		else {
+			$redirectUrl = $this->base_model->getFullUrl();
+			header('Location: '.base_url().'dang-nhap.html?r='.$redirectUrl);
+			return;
+			
 			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
 			$data->buttonlist = $this->base_model->getButton();
 			$content = $this->load->view('404',$data,true);
