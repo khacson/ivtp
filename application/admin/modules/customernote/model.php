@@ -2,6 +2,7 @@
  class CustomernoteModel extends CI_Model{
 	function __construct(){
 		parent::__construct();
+		$this->login = $this->admin->getSession('login');
 	}
 	function getSearch($search){
 		$sql = "";
@@ -11,49 +12,40 @@
 		if (!empty($search['member_id'])) {
 			$sql .= " AND c.member_id = '".$search['member_id']."' ";
 		}
-		if (!empty($search['star'])) {
-			$sql .= " AND c.star = '".$search['star']."' ";
-		}
-		if (!empty($search['chat_code'])) {
-			$sql .= " AND c.chat_code LIKE '%".$search['chat_code']."%' ";
-		}
-		if (!empty($search['status'])) {
-			if ($search['status'] == 1) {
-				$sql .= " AND TIMESTAMPDIFF(MINUTE,last_response_utc,UTC_TIMESTAMP()) < 30";
-			}
-			else {
-				$sql .= " AND TIMESTAMPDIFF(MINUTE,last_response_utc,UTC_TIMESTAMP()) > 29";
+		unset($search['user_id']);
+		unset($search['member_id']);
+		
+		foreach ($search as $k=>$v) {
+			if (!empty($v)) {
+				$sql .= " AND c.rows LIKE '%\"$k\":\"$v\"%'";
 			}
 		}
-		$login = $this->admin->getSession('login');
-		if ($login->grouptype != 0) {
-			$sql .= " AND c.user_id = '".$login->id."'";
+		if ($this->login->groupid != 1) {
+			$sql .= " AND c.user_id = '".$this->login->id."' ";
+		}
+		else if ($this->login->groupid == 1 && !empty($this->login->view_user_id)){
+			$sql .= " AND c.user_id = '".$this->login->view_user_id."' ";
 		}
 		return $sql;
 	}
 	function getList($search,$page,$numrows){
-		$sql = "SELECT c.member_id, c.chat_code, c.star, c.note, c.last_response, u.username, u.fullname as u_fullname, m.fullname as m_fullname
-				FROM ivt_users_chat c
+		$sql = "SELECT c.*, u.username, m.fullname
+				FROM ivt_customernote_row c
 				INNER JOIN ivt_users u ON u.id = c.user_id
 				LEFT JOIN ivt_member m ON m.id = c.member_id
-				WHERE c.last_response IS NOT NULL ";
+				WHERE c.isdelete = 0";
 		$sql.= $this->getSearch($search);
-		if(empty($search['order'])){
-			$sql .= " ORDER BY c.last_response DESC ";
-		}
-		else{
-			$sql.= " ORDER BY ".$search['order']." ".$search['index']." ";
-		}   
+		$sql .= " ORDER BY c.user_id, c.member_id, c.datecreate";   
         $sql.= ' limit '.$page.','.$numrows;
-		
+		//echo $sql;die;
 		return $this->model->query($sql)->execute();
 	}
 	function getTotal($search){
 		$sql = "SELECT count(1) as total
-				FROM ivt_users_chat c
+				FROM ivt_customernote_row c
 				INNER JOIN ivt_users u ON u.id = c.user_id
 				LEFT JOIN ivt_member m ON m.id = c.member_id
-				WHERE c.last_response IS NOT NULL ";
+				WHERE c.isdelete = 0 ";
 		$sql.= $this->getSearch($search);
 		$query = $this->model->query($sql)->execute();
 		if(empty($query[0]->total)){
@@ -63,26 +55,13 @@
 			return $query[0]->total;
 		}
 	}
-	function getChatHistory($chat_code) {
-		if (empty($chat_code)) {
-			return array();
+	function getAllCol($user_id, $show_hidden = 0) {
+		$show = "";
+		if ($show_hidden == 0) {
+			 $show = " AND isshow = 1";
 		}
-		$rs = $this->model->table('ivt_users_chat_detail')
-					->select('*')
-					->where('chat_code', $chat_code)
-					->find_all();
-		return $rs;
-	}
-	function clearEmptyChat() {
-		$date = gmdate('Y-m-d H:i:s', strtotime('-1 days'));
-		$sql = "DELETE FROM ivt_users_chat 
-				WHERE last_response_utc IS NULL 
-				AND datecreate < '$date'";
-		$this->model->executeQuery($sql);
-	}
-	function getAllCol($user_id) {
 		$sql = "SELECT * FROM ivt_customernote_col 
-				WHERE user_id = $user_id AND isdelete = 0
+				WHERE user_id = $user_id AND isdelete = 0 $show
 				ORDER BY col_order";
 		$rs = $this->model->query($sql)->execute();
 		return $rs;
@@ -171,4 +150,23 @@
 					->update($array);
 		return 'ok';
 	}
+	function saves($array){
+		 $result = $this->model
+						->table('ivt_customernote_row')
+						->insert($array);	
+		 return $result;
+	}
+	function edits($array,$id){
+		 $result = $this->model->table('ivt_customernote_row')->save($id,$array);	
+		 return $result;
+	}
+	function getUserListHasNote() {
+		$sql = "SELECT u.* FROM ivt_customernote_row r 
+				INNER JOIN ivt_users u ON u.id = r.user_id
+				GROUP BY u.id
+				ORDER BY fullname";
+        return $this->model->query($sql)->execute();
+	}
+	
+	
 }

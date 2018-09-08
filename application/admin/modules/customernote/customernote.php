@@ -19,7 +19,16 @@ class Customernote extends CI_Controller {
         if (method_exists($this, $method)) {
             return call_user_func_array(array($this, $method), $params);
         }
-        $this->_view();
+		$user_id = $this->uri->segment(2);
+		if (!empty($user_id)) {
+			$this->login->view_user_id = $user_id;
+		}
+		if ($this->login->groupid == 1 && empty($user_id)) {
+			$this->_view_root();
+		}
+        else {
+			$this->_view();
+		}
     }
 	function _view(){
 		$data = new stdClass();
@@ -27,8 +36,14 @@ class Customernote extends CI_Controller {
 		if (!isset($permission['view'])) {
 	    	redirect(admin_url().'home.html');
 	    }
-		
-		$user_id = $this->login->id;
+		if ($this->login->groupid == 1 && !empty($this->login->view_user_id)) {
+			$user_id = $this->login->view_user_id;
+			$data->view_user_name = ' - '.$this->base_model->getUserFullname($this->login->view_user_id);
+		}
+		else {
+			$user_id = $this->login->id;
+			$data->view_user_name = '';
+		}
 		
 		$data->colList = $this->model->getAllCol($user_id);
 	    $data->permission = $permission;
@@ -38,19 +53,47 @@ class Customernote extends CI_Controller {
 		$data->login = $this->login;
 	    $data->controller = admin_url().($this->uri->segment(1));
 	    $data->memberList = $this->base_model->getAllMember();
+	    $data->userList = $this->base_model->getHelpDeskUser($this->login);
 		
 		$content = $this->load->view('view',$data,true);
 		$this->admin->write('content',$content,true);
 		$this->admin->write('title',$this->title,true);
         $this->admin->render();
 	}
-	function getList(){
+	function _view_root(){
+		$data = new stdClass();
+		$permission = $this->base_model->getPermission($this->login, $this->route);
+		if (!isset($permission['view'])) {
+	    	redirect(admin_url().'home.html');
+	    }
 		
+		$user_id = $this->login->id;
+		
+	    $data->permission = $permission;
+		$data->csrfName = $this->security->get_csrf_token_name();
+		$data->csrfHash = $this->security->get_csrf_hash();
+		$data->routes = $this->route;
+		$data->login = $this->login;
+	    $data->controller = admin_url().($this->uri->segment(1));
+	    $data->userList = $this->model->getUserListHasNote();
+		
+		$content = $this->load->view('view_root',$data,true);
+		$this->admin->write('content',$content,true);
+		$this->admin->write('title',$this->title,true);
+        $this->admin->render();
+	}
+	function getList(){
+		if ($this->login->groupid == 1 && !empty($this->login->view_user_id)) {
+			$user_id = $this->login->view_user_id;
+		}
+		else {
+			$user_id = $this->login->id;
+		}
 		if(!isset($_POST['csrf_stock_name'])){
 			//show_404();
 		}
 		$param = array();
-		$numrows = 200; 
+		$numrows = 20000; 
 		$data = new stdClass();
 		///
 		$index = $this->input->post('index');
@@ -62,21 +105,17 @@ class Customernote extends CI_Controller {
 		$search = $this->input->post('search');
 		$search = json_decode($search,true);
 		///
-		$search['index'] = $index;
-        $search['order'] = $order;
+		$search['index'] = '';
+        $search['order'] = '';
 		$query = $this->model->getList($search,$page,$numrows);
 		$data->start = empty($page) ? 1 : $page + 1;
-	    $starList = $this->base_model->getStar();
-		$arrStar = array();
-		foreach ($starList as $item) {
-			$arrStar[$item->id] = $item->name;
-		}
-		$data->arrStar = $arrStar;
+		$data->login = $this->login;
 
 		$count = $this->model->getTotal($search);
 		$data->datas = $query;
 		$page_view=$this->admin->pagination($count,$numrows,5,'user/',$page);
 		$data->permission = $this->base_model->getPermission($this->login, $this->route);
+		$data->colList = $this->model->getAllCol($user_id);
 		$result = new stdClass();
 		$result->paging = $page_view;
         $result->cPage = $page;
@@ -85,21 +124,16 @@ class Customernote extends CI_Controller {
         $result->content = $this->load->view('list', $data, true);
 		echo json_encode($result);
 	}
-	function get_chat_history() {
-		$chat_code = $this->input->post('chat_code');
-		$data = new stdClass();
-		$data->chatLog = $this->model->getChatHistory($chat_code);
-		
-		$result = new stdClass();
-		$result->csrfHash = $this->security->get_csrf_hash();
-        $result->content = $this->load->view('chat_history', $data, true);
-		echo json_encode($result);
-	}
 	function getAllCol() {
 		$data = new stdClass();
-		$user_id = $this->login->id;
+		if ($this->login->groupid == 1 && !empty($this->login->view_user_id)) {
+			$user_id = $this->login->view_user_id;
+		}
+		else {
+			$user_id = $this->login->id;
+		}
 		
-		$data->datas = $this->model->getAllCol($user_id);
+		$data->datas = $this->model->getAllCol($user_id, 1);
 		
 		$result = new stdClass();
 		$result->csrfHash = $this->security->get_csrf_hash();
@@ -107,7 +141,12 @@ class Customernote extends CI_Controller {
 		echo json_encode($result);
 	}
 	function addCol() {
-		$user_id = $this->login->id;
+		if ($this->login->groupid == 1 && !empty($this->login->view_user_id)) {
+			$user_id = $this->login->view_user_id;
+		}
+		else {
+			$user_id = $this->login->id;
+		}
 		$col_order = $this->model->getMaxOrder($user_id);
 		//insert new col
 		$sql = "INSERT INTO ivt_customernote_col (user_id, col_order) VALUE ($user_id, $col_order)";
@@ -132,6 +171,17 @@ class Customernote extends CI_Controller {
 		
 		echo 1;die;
 	}
+	function changeRowColor() {
+		$row_id = $this->input->post('row_id');
+		$row_color = $this->input->post('row_color');
+		
+		$arr = array();
+		if (!empty($row_color)) { $arr['row_color'] = $row_color; }
+		$this->model->table('ivt_customernote_row')->where('id', $row_id)->update($arr);
+		
+		echo 1;die;
+	}
+	
 	function move() {
 		$col_id = $this->input->post('col_id');
 		$type = $this->input->post('type');
@@ -147,7 +197,75 @@ class Customernote extends CI_Controller {
 		$arr['csrfHash'] = $this->security->get_csrf_hash();
 		echo json_encode($arr);die;
 	}
-	
-	
+	function save() {
+        $permission = $this->base_model->getPermission($this->login, $this->route);
+        $token = $this->security->get_csrf_hash();
+        $json = $this->input->post('search');
+        $member_id = $this->input->post('member_id');
+        
+        if (!isset($permission['add'])) {
+            $result['status'] = 0;
+            $result['csrfHash'] = $token;
+            echo json_encode($result);
+            exit;
+        }
+        
+        if ($this->login->groupid == 1 && !empty($this->login->view_user_id)) {
+			$user_id = $this->login->view_user_id;
+		}
+		else {
+			$user_id = $this->login->id;
+		}
+        $array['user_id'] = $user_id;
+        $array['member_id'] = $member_id;
+        $array['rows'] = $json;
+        $array['usercreate'] = $this->login->id;
+        $array['datecreate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+        $result['status'] = $this->model->saves($array);
+        $result['csrfHash'] = $token;
+        echo json_encode($result);
+    }
+    function edit() {
+        $token = $this->security->get_csrf_hash();
+        $permission = $this->base_model->getPermission($this->login, $this->route);
+        if (!isset($permission['edit'])) {
+            $result['status'] = 0;
+            $result['csrfHash'] = $token;
+            echo json_encode($result);
+            exit;
+        }
+
+        $json = $this->input->post('search');
+        $member_id = $this->input->post('member_id');
+        $id = $this->input->post('id');
+        $array['usercreate'] = $this->login->id;
+        $array['member_id'] = $member_id;
+        $array['rows'] = $json;
+        $array['datecreate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+
+        $result['status'] = $this->model->edits($array, $id);
+        $result['csrfHash'] = $token;
+        echo json_encode($result);
+    }
+	function deletes() {
+        $token = $this->security->get_csrf_hash();
+        $id = $this->input->post('id');
+        $permission = $this->base_model->getPermission($this->login, $this->route);
+        if (!isset($permission['delete'])) {
+            $result['status'] = 0;
+            $result['csrfHash'] = $token;
+            echo json_encode($result);
+            exit;
+        }
+        $login = $this->login;
+        $array['datecreate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+        $array['usercreate'] = $login->id;
+        $array['isdelete'] = 1;
+        $this->model->table('ivt_customernote_row')->where("id IN($id)")->update($array);
+
+        $result['status'] = 1;
+        $result['csrfHash'] = $token;
+        echo json_encode($result);
+    }
 	
 }

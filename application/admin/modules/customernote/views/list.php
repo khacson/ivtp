@@ -1,36 +1,53 @@
 <?php
 $i= $start;
-$now = gmdate('Y-m-d H:i:s', time()+ 7*3600);
 foreach ($datas as $item) { 	
-	$t = strtotime($now) - strtotime($item->last_response); 
-	$status = 'Kết thúc';
-	if ($t < 1800) {
-		$status = 'Đang chat';
-	}
-	$rating = '';
-	if (isset($arrStar[$item->star])) {
-		$rating = $arrStar[$item->star];
-	}
-	$memberName = $item->member_id.' - '. $item->m_fullname;
-	if (strpos($item->member_id, '-') !== false) {
-		$memberName = 'Guest'.$item->member_id;
-	}
+	$rows = json_decode($item->rows, true);
+	$row_color = empty($item->row_color) ? '' : $item->row_color;
 ?>
-
-	<tr class="content edit">
-		<td class="center"><?=$i;?></td>
-		<td><?=$item->username;?> - <?=$item->u_fullname;?></td>
-		<td><?=$memberName;?></td>
-		<td align="center">
-			<a class="view_chat_code" chat_code="<?=$item->chat_code;?>" href="javascript:;"><?=$item->chat_code;?></a>
+	<tr style="background-color: <?=$row_color?> !important" class="content edit r<?=$item->id;?>" id="<?=$item->id;?>" user_id="<?=$item->user_id;?>" member_id="<?=$item->member_id;?>">
+		<td class="center">
+			<div class="btn-group btn-group-sm">
+		      <button type="button" row_id="<?=$item->id?>" class="btn btn-default row_color">
+				<span class="color-fill-icon dropdown-color-fill-icon" style="background-color:<?=$row_color?>;"></span>&nbsp;<b class="caret"></b>
+			  </button>
+		    </div>
 		</td>
-		<td align="center"><?=$rating?></td>
-		<td><?=$item->note;?></td>
-		<td><?=date('d/m/Y H:i:s', strtotime($item->last_response));?></td>
-		<td align="center"><?=$status?></td>
+		<td style="text-align: center;">
+			<input class="noClick" type="checkbox" name="keys[]" id="<?=$item->id; ?>">
+			<textarea hidden class="json"><?=$item->rows?></textarea>
+		</td>
+		<td class="center"><?=$i;?></td>
+		<td class=""><?=$item->fullname?></td>
+		<td><?=date('d/m/Y H:i:s', strtotime($item->datecreate));?></td>
+		<?php 
+			foreach ($colList as $col) { 
+				$col_id = $col->id;
+				$col_color = empty($col->col_color) ? '' : $col->col_color;
+				if (!isset($rows[$col_id])) { $rows[$col_id] = ''; };
+		?>	
+					<td style="background-color: <?=$col_color?> !important"><?=$rows[$col_id]?></td>
+		<?php } ?>
 		<td></td>
 	</tr>
 <?php	
 $i++;
 }
 ?>
+<script>
+$(function(){
+  var row_color = $('.row_color');
+	row_color.colorpickerplus();
+	row_color.on('changeColor', function(e,color){
+		var row_id = $(this).attr('row_id');
+		if(color==null) {
+		  //when select transparent color
+		  $('.color-fill-icon', $(this)).addClass('colorpicker-color');
+		  changeRowColor(row_id, '');
+		} else {
+		  $('.color-fill-icon', $(this)).removeClass('colorpicker-color');
+		  $('.color-fill-icon', $(this)).css('background-color', color);
+		  changeRowColor(row_id, color);
+		}
+	});
+});
+</script>

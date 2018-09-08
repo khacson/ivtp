@@ -476,5 +476,13 @@ class base_model extends CI_Model {
 		return $str;
 	}
 	
+	function getUserFullname($user_id) {
+		$rs = $this->model->table('ivt_users')
+						  ->select('fullname')
+						  ->where('id', $user_id)
+						  ->find();
+		return $rs->fullname;
+	}
+	
 	
 }

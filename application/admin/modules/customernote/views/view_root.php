@@ -50,7 +50,7 @@
 	<div class="portlet-title">
 		<div class="caption">
 			<i class="fa fa-reorder"></i>
-			<?=getLanguage('all','Search')?><?=$view_user_name?>
+			<?=getLanguage('all','Search')?>
 		</div>
 		<div class="tools">
 			<a href="javascript:;" class="collapse">
@@ -61,27 +61,17 @@
 		<div class="row">
 			<div class="col-md-4 mtop10">
 				<div class="form-group">
-					<label class="control-label col-md-4">Thành viên (<span class="red">*</span>)</label>
+					<label class="control-label col-md-4">Nhân viên</label>
 					<div class="col-md-8" >
-						<select name="member_id" id="member_id" class="combos" >
+						<select name="user_id" id="user_id" class="combos" >
 							<option value=""></option>
-							<?php foreach ($memberList as $item) { ?>
-								<option value="<?=$item->id;?>"><?=$item->id;?> - <?=$item->fullname?></option>
+							<?php foreach ($userList as $item) { ?>
+								<option value="<?=$item->id;?>"><?=$item->username?> - <?=$item->fullname?></option>
 							<?php } ?>
 						</select>
 					</div>
 				</div>
 			</div>
-			<?php foreach ($colList as $item) { ?>
-			<div class="col-md-4 mtop10">
-				<div class="form-group">
-					<label class="control-label col-md-4"><?=$item->col_name?></label>
-					<div class="col-md-8">
-						<input type="text" name="<?=$item->id?>" id="<?=$item->id?>" class="searchs form-control" />
-					</div>
-				</div>
-			</div>
-			<?php } ?>
 		</div>	
 		<div class="row mtop10">
 			<div class="col-md-8">
@@ -95,7 +85,7 @@
 	</div>
 </div>
 </form>
-<div class="portlet box blue">
+<div class="portlet box blue hide">
 	<div class="portlet-title">
         <div class="caption" style="margin-top:4px;">
             <i>Có <span class='viewtotal'>0</span> dòng</i>
@@ -158,6 +148,9 @@
 							<col class="c_row_color">
 							<col class="c_checkbox">
 							<col class="c_stt">
+							<?php if ($login->groupid == 1) { ?>
+								<col class="c_username">
+							<?php }?>
 							<col class="c_fullname">
 							<col class="c_datecreate">
 							<?php foreach ($colList as $item) { ?>
@@ -167,6 +160,9 @@
 								<th>Màu nền</th>
 								<th class="text-center"><input type="checkbox" name="checkAll" id="checkAll" /></th>
 								<th>STT</th>
+								<?php if ($login->groupid == 1) { ?>
+									<th>Nhân viên</th>
+								<?php }?>	
 								<th>Thành viên</th>
 								<th>Ngày tạo</th>
 								<?php foreach ($colList as $item) { ?>
@@ -185,6 +181,9 @@
 							<col class="c_row_color">
 							<col class="c_checkbox">
 							<col class="c_stt">
+							<?php if ($login->groupid == 1) { ?>
+								<col class="c_username">
+							<?php }?>
 							<col class="c_fullname">
 							<col class="c_datecreate">
 							<?php foreach ($colList as $item) { ?>
@@ -216,7 +215,7 @@
 <div id="dialog" title="Quản lý cột">
 	
 </div>
-
+<a id="openlink" target="_blank" href="#"></a>
 <script>
 	var controller = '<?=$controller;?>/';
 	var csrfHash = '<?=$csrfHash;?>';
@@ -228,7 +227,12 @@
 		$('#user_id').multipleSelect({
         	filter: true,
 			placeholder:"Chọn nhân viên",
-            single: true
+            single: true,
+			onClick: function (e) {
+				var url = controller + e.value;
+				$('#openlink').attr('href', url);
+				$('#openlink').get(0).click();
+			}
         });
 		$('#member_id').multipleSelect({
         	filter: true,
@@ -245,7 +249,7 @@
 			placeholder:"Chọn trạng thái",
             single: true
         });
-		refresh();
+		//refresh();
 		$('#refresh').click(function(){
 			$(".loading").show();
 			refresh();

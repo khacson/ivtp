@@ -101,7 +101,7 @@ class authorize extends CI_Controller {
 		}
 	}
 	function captcha(){
-        $captcha = $this->admin->createCapcha('captcha_lkn', 160,33,5);   
+        $captcha = $this->admin->createCapcha('captcha_lkn', 160,33,1);   
     }
 	function logout(){
 		$login = $this->admin->getSession('login');
