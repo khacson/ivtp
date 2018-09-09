@@ -8,7 +8,7 @@
 	table col.c<?=$item->id?> { width: <?=$item->col_width?>px; }
 <?php } ?>
 	table col.c_checkbox { width: 40px; }
-	table col.c_stt { width: 40px; }
+	table col.c_stt { width: 50px; }
 	table col.c_username { width: 180px; }
 	table col.c_fullname { width: 180px; }
 	table col.c_datecreate { width: 150px; }
@@ -35,6 +35,15 @@
 	#dialog {
 		overflow-x: hidden;
 	}
+	#dialog input.searchs {
+		width: 170px;
+		float: left;
+	}
+	#dialog input.searchs.col_width {
+		width: 60px;
+		float: left;
+	}
+	
 	.color-fill-icon{display:inline-block;width:16px;height:16px;border:1px solid #000;background-color:#fff;margin: 2px;}
     .dropdown-color-fill-icon{position:relative;float:left;margin-left:0;margin-right: 0}
 	.form-control.colorpicker-element, .colorpickerplus-custom-colors, span.input-group-btn button.btn-default {
@@ -42,6 +51,25 @@
 	}
 	colorpicker.dropdown-menu.colorpicker-with-alpha.colorpicker-right.colorpicker-hidden {
 		display: none;
+	}
+	#tbheader th {
+		cursor: pointer;
+	}
+	th i.sort.fa-sort-desc{
+		vertical-align: top;
+	}
+	th i.sort.fa-sort-asc{
+		vertical-align: bottom;
+	}
+	.seachForm label.control-label, .seachForm .col-md-10, .seachForm .col-md-9 {
+		padding: 0 !important;
+	}
+	textarea.searchs {
+		padding: 5px;
+		border: 1px solid #c3cfd7;
+	}
+	.ui-dialog {
+		z-index: 11;
 	}
 </style>
 <!-- BEGIN PORTLET-->
@@ -61,8 +89,8 @@
 		<div class="row">
 			<div class="col-md-4 mtop10">
 				<div class="form-group">
-					<label class="control-label col-md-4">Thành viên (<span class="red">*</span>)</label>
-					<div class="col-md-8" >
+					<label class="control-label col-md-3">Thành viên (<span class="red">*</span>)</label>
+					<div class="col-md-9" >
 						<select name="member_id" id="member_id" class="combos" >
 							<option value=""></option>
 							<?php foreach ($memberList as $item) { ?>
@@ -72,12 +100,14 @@
 					</div>
 				</div>
 			</div>
+		</div>
+		<div class="row">
 			<?php foreach ($colList as $item) { ?>
 			<div class="col-md-4 mtop10">
 				<div class="form-group">
-					<label class="control-label col-md-4"><?=$item->col_name?></label>
-					<div class="col-md-8">
-						<input type="text" name="<?=$item->id?>" id="<?=$item->id?>" class="searchs form-control" />
+					<label class="control-label col-md-3"><?=$item->col_name?></label>
+					<div class="col-md-9" style="z-index: 10">
+						<textarea rows="3" name="<?=$item->id?>" id="<?=$item->id?>" class="searchs form-control"></textarea>
 					</div>
 				</div>
 			</div>
@@ -166,11 +196,11 @@
 							<tr>
 								<th>Màu nền</th>
 								<th class="text-center"><input type="checkbox" name="checkAll" id="checkAll" /></th>
-								<th>STT</th>
-								<th>Thành viên</th>
-								<th>Ngày tạo</th>
+								<th>STT <i class="fa fa-sort-desc sort"></i></th>
+								<th>Thành viên <i class="fa fa-sort-desc sort"></i></th>
+								<th>Ngày tạo <i class="fa fa-sort-desc sort"></i></th>
 								<?php foreach ($colList as $item) { ?>
-								<th><?=$item->col_name?></th>
+								<th><?=$item->col_name?>  <i class="fa fa-sort-desc sort"></i></th>
 								<?php }?>
 								<th></th>
 							</tr>
@@ -316,7 +346,7 @@
 			return false;
 		});
 		
-		$('.actionbtn a, .actionbtn button.col_color').live('click', function(){
+		$('.actionbtn a, .actionbtn button.col_color, .saveAllCol').live('click', function(){
 			isedit = 1;
 		})
 		
@@ -324,6 +354,23 @@
 			if (isedit == 1) {
 				window.location = '';
 			}
+		})
+		
+		$('#tHeader th').live('click', function(){
+			if ($(this).text().trim() != '') {
+				var index = $(this).index();
+				sortTable(index, 'tbbody');
+				var iTag = $(this).find('i.sort');
+				if (iTag.hasClass('fa-sort-desc')) {
+					iTag.removeClass('fa-sort-desc');
+					iTag.addClass('fa-sort-asc');
+				}
+				else {
+					iTag.removeClass('fa-sort-asc');
+					iTag.addClass('fa-sort-desc');
+				}
+			}
+			
 		})
 	});
 	function save(func,id){
@@ -430,17 +477,81 @@
 	function editCol(col_id) {
 		$('.loading').show();
 		var token = $("#token").val();
-		var col_name = $("#col" + col_id).val().trim();
+		var col_name = $("#col_name" + col_id).val().trim();
+		var col_width = $("#col_width" + col_id).val().trim();
 		if (col_name == '') {
 			$('.loading').hide();
 			error("Tên cột không được trống"); 
+			return;
+		}
+		if (col_width == '') {
+			$('.loading').hide();
+			error("Độ rộng cột không được trống"); 
 			return;
 		}
 		$.ajax({
 			url : controller + 'editCol',
 			type: 'POST',
 			async: false,
-			data: {csrf_stock_name:token, col_name: col_name, col_id: col_id},
+			data: {csrf_stock_name:token, col_name: col_name, col_width: col_width, col_id: col_id},
+			success:function(datas){
+				var obj = $.evalJSON(datas); 
+				$("#token").val(obj.csrfHash); 
+				getAllCol();
+				$('.loading').hide();
+			},
+			error : function(){
+				$('.loading').hide();
+				
+			}
+		});
+	}
+	function saveAllCol() {
+		$('.loading').show();
+		var token = $("#token").val();
+		var check = 1;
+		var objColName = {};
+		var objColWidth = {};
+		$('#dialog .searchs.col_name').each(function(){
+			var col_id = $(this).attr('id').replace(/col_name/g, '');
+			var col_name = $(this).val().trim();
+			if (col_name == '') {
+				check = 0;
+				return;
+			}
+			objColName[col_id] = col_name;
+		})
+		
+		if (check == 0) {
+			$('.loading').hide();
+			error("Tên cột không được trống"); 
+			return;
+		}
+		
+		check = 1;
+		$('#dialog .searchs.col_width').each(function(){
+			var col_id = $(this).attr('id').replace(/col_width/g, '');
+			var col_width = $(this).val().trim();
+			if (col_width == '') {
+				check = 0;
+				return;
+			}
+			objColWidth[col_id] = col_width;
+		})
+		
+		if (check == 0) {
+			$('.loading').hide();
+			error("Độ rộng cột không được trống"); 
+			return;
+		}
+		
+		var jsonColWidth = JSON.stringify(objColWidth);
+		var jsonColName = JSON.stringify(objColName);
+		$.ajax({
+			url : controller + 'saveAllCol',
+			type: 'POST',
+			async: false,
+			data: {csrf_stock_name:token, jsonColName: jsonColName, jsonColWidth: jsonColWidth},
 			success:function(datas){
 				var obj = $.evalJSON(datas); 
 				$("#token").val(obj.csrfHash); 
@@ -595,14 +706,14 @@
 		getList(0,csrfHash);	
 	}
 	function getSearch(){
-		var str = '';
-		$('.seachForm input.searchs').each(function(){
-			str += ',"'+ $(this).attr('id') +'":"'+ $(this).val().trim() +'"';
+		var obj = {};
+		$('.seachForm input.searchs, .seachForm textarea.searchs').each(function(){
+			obj[$(this).attr('id')] = $(this).val().trim();
 		})
 		$('.seachForm select.combos').each(function(){
-			str += ',"'+ $(this).attr('id') +'":"'+ getCombo($(this).attr('id')) +'"';
+			obj[$(this).attr('id')] = getCombo($(this).attr('id'));
 		})
-		return '{'+ str.substr(1) +'}';
+		return JSON.stringify(obj);
 	}
 	function setSearch() {
 		<?php if (!empty($_GET['m'])) { ?>

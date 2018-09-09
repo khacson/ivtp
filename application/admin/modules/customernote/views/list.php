@@ -3,6 +3,11 @@ $i= $start;
 foreach ($datas as $item) { 	
 	$rows = json_decode($item->rows, true);
 	$row_color = empty($item->row_color) ? '' : $item->row_color;
+	$hiddenChar = '';
+	$char = mb_substr($item->fullname, 0, 1, "utf-8");
+	if ($char == 'đ' || $char == 'Đ') {
+		$hiddenChar = '<span style="opacity: 0; width: 0; height: 0;display: inline-block">dz</span>';
+	}
 ?>
 	<tr style="background-color: <?=$row_color?> !important" class="content edit r<?=$item->id;?>" id="<?=$item->id;?>" user_id="<?=$item->user_id;?>" member_id="<?=$item->member_id;?>">
 		<td class="center">
@@ -17,15 +22,16 @@ foreach ($datas as $item) {
 			<textarea hidden class="json"><?=$item->rows?></textarea>
 		</td>
 		<td class="center"><?=$i;?></td>
-		<td class=""><?=$item->fullname?></td>
+		<td class=""><a target="_blank" href="<?=admin_url()?>helpdesk"><?=$hiddenChar?><?=$item->fullname?></a></td>
 		<td><?=date('d/m/Y H:i:s', strtotime($item->datecreate));?></td>
 		<?php 
 			foreach ($colList as $col) { 
 				$col_id = $col->id;
-				$col_color = empty($col->col_color) ? '' : $col->col_color;
+				$col_color = empty($col->col_color) ? '' : 'background-color:'.$col->col_color.' !important';
 				if (!isset($rows[$col_id])) { $rows[$col_id] = ''; };
+				$val = $rows[$col_id];
 		?>	
-					<td style="background-color: <?=$col_color?> !important"><?=$rows[$col_id]?></td>
+					<td style="<?=$col_color?>"><?php echo nl2br($val)?></td>
 		<?php } ?>
 		<td></td>
 	</tr>
