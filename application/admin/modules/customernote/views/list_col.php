@@ -4,6 +4,10 @@
 		<i class="fa fa-plus"></i>
 		<?=getLanguage('all','Thêm cột')?>
 	</button>
+	<button onclick="saveAllCol()" type="button" class="button pull-right saveAllCol" style="font-weight: 300">
+		<i class="fa fa-save"></i>
+		<?=getLanguage('all','Lưu tất cả')?>
+	</button>
 </div>
 <?php 
 	foreach ($datas as $item) {
@@ -14,7 +18,8 @@
 	<div class="col-md-6">
 		<div class="form-group">
 			<div class="col-md-12">
-				<input type="text" name="col<?=$item->id?>" id="col<?=$item->id?>" class="searchs form-control <?=$graybg?>" value="<?=$item->col_name?>" />
+				<input placeholder="Tên cột" type="text" name="col_name<?=$item->id?>" id="col_name<?=$item->id?>" class="col_name searchs form-control <?=$graybg?>" value="<?=$item->col_name?>" />
+				<input placeholder="Rộng" type="text" name="col_width<?=$item->id?>" id="col_width<?=$item->id?>" class="col_width searchs form-control <?=$graybg?>" value="<?=$item->col_width?>" />
 			</div>
 		</div>
 	</div>

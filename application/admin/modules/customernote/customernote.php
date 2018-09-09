@@ -84,10 +84,10 @@ class Customernote extends CI_Controller {
 	}
 	function getList(){
 		if ($this->login->groupid == 1 && !empty($this->login->view_user_id)) {
-			$user_id = $this->login->view_user_id;
+			$user_id = $this->login->view_user_id; //echo '1<pre>';var_dump($this->login->view_user_id,$this->login);
 		}
 		else {
-			$user_id = $this->login->id;
+			$user_id = $this->login->id;echo '2<pre>';var_dump($this->login);
 		}
 		if(!isset($_POST['csrf_stock_name'])){
 			//show_404();
@@ -156,6 +156,7 @@ class Customernote extends CI_Controller {
 	function editCol() {
 		$col_id = $this->input->post('col_id');
 		$col_name = $this->input->post('col_name');
+		$col_width = $this->input->post('col_width');
 		$col_order = $this->input->post('col_order');
 		$col_color = $this->input->post('col_color');
 		$isshow = $this->input->post('isshow');
@@ -163,12 +164,42 @@ class Customernote extends CI_Controller {
 		
 		$arr = array();
 		if (!empty($col_name)) { $arr['col_name'] = $col_name; }
+		if (!empty($col_width)) { $arr['col_width'] = $col_width; }
 		if (!empty($col_order)) { $arr['col_order'] = $col_order; }
 		if (!empty($col_color)) { $arr['col_color'] = $col_color; }
 		if ($isshow === '0' || $isshow === '1') { $arr['isshow'] = $isshow; }
 		if ($isdelete === '0' || $isdelete === '1') { $arr['isdelete'] = $isdelete; }
 		$this->model->table('ivt_customernote_col')->where('id', $col_id)->update($arr);
 		
+		echo 1;die;
+	}
+	function saveAllCol() {
+		$jsonColName = $this->input->post('jsonColName');
+		$objColName = json_decode($jsonColName, true);
+		
+		foreach ($objColName as $col_id=>$col_name) {
+			$arr = array();
+			if (!empty($col_name)) { 
+				$arr['col_name'] = $col_name; 
+				$this->model->table('ivt_customernote_col')
+							->where('id', $col_id)
+							->update($arr);
+			}
+		}
+		
+		$jsonColWidth = $this->input->post('jsonColWidth');
+		$objColWidth = json_decode($jsonColWidth, true);
+		
+		foreach ($objColWidth as $col_id=>$col_width) {
+			$arr = array();
+			if (!empty($col_width)) { 
+				$arr['col_width'] = $col_width; 
+				$this->model->table('ivt_customernote_col')
+							->where('id', $col_id)
+							->update($arr);
+			}
+		}
+
 		echo 1;die;
 	}
 	function changeRowColor() {
@@ -218,7 +249,7 @@ class Customernote extends CI_Controller {
 		}
         $array['user_id'] = $user_id;
         $array['member_id'] = $member_id;
-        $array['rows'] = $json;
+        $array['rows'] = strip_tags($json);
         $array['usercreate'] = $this->login->id;
         $array['datecreate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
         $result['status'] = $this->model->saves($array);
@@ -240,7 +271,7 @@ class Customernote extends CI_Controller {
         $id = $this->input->post('id');
         $array['usercreate'] = $this->login->id;
         $array['member_id'] = $member_id;
-        $array['rows'] = $json;
+        $array['rows'] = strip_tags($json);
         $array['datecreate'] = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
 
         $result['status'] = $this->model->edits($array, $id);

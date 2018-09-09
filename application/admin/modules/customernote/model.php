@@ -61,8 +61,8 @@
 			 $show = " AND isshow = 1";
 		}
 		$sql = "SELECT * FROM ivt_customernote_col 
-				WHERE user_id = $user_id AND isdelete = 0 $show
-				ORDER BY col_order";
+				WHERE user_id = '$user_id' AND isdelete = 0 $show
+				ORDER BY col_order"; //echo $sql;die;
 		$rs = $this->model->query($sql)->execute();
 		return $rs;
 	}
@@ -163,6 +163,7 @@
 	function getUserListHasNote() {
 		$sql = "SELECT u.* FROM ivt_customernote_row r 
 				INNER JOIN ivt_users u ON u.id = r.user_id
+				WHERE r.isdelete = 0
 				GROUP BY u.id
 				ORDER BY fullname";
         return $this->model->query($sql)->execute();
