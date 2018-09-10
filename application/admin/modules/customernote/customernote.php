@@ -111,7 +111,7 @@ class Customernote extends CI_Controller {
 		$data->start = empty($page) ? 1 : $page + 1;
 		$data->login = $this->login;
 
-		$count = $this->model->getTotal($search);
+		$count = count($query);
 		$data->datas = $query;
 		$page_view=$this->admin->pagination($count,$numrows,5,'user/',$page);
 		$data->permission = $this->base_model->getPermission($this->login, $this->route);

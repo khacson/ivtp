@@ -27,7 +27,7 @@ foreach ($datas as $item) {
 		<?php 
 			foreach ($colList as $col) { 
 				$col_id = $col->id;
-				$col_color = empty($col->col_color) ? '' : 'background-color:'.$col->col_color.' !important';
+				$col_color = empty($col->col_color) || $col->col_color == '#ffffff' ? '' : 'background-color:'.$col->col_color.' !important';
 				if (!isset($rows[$col_id])) { $rows[$col_id] = ''; };
 				$val = $rows[$col_id];
 		?>	

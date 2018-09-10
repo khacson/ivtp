@@ -4,6 +4,21 @@
 		parent::__construct();
 		$this->login = $this->admin->getSession('login');
 	}
+	function filterData($rs, $search) {
+		unset($search['user_id']);
+		unset($search['member_id']);
+		foreach ($rs as $index=>$item) {
+			$arr = json_decode($item->rows, true);
+			foreach ($search as $k=>$v) {
+				if (!empty($v)) {
+					if (!isset($arr[$k]) || strpos($arr[$k], $v) === false) {
+						unset($rs[$index]);
+					}
+				}
+			}
+		}
+		return $rs;
+	}
 	function getSearch($search){
 		$sql = "";
 		if (!empty($search['user_id'])) {
@@ -17,7 +32,7 @@
 		
 		foreach ($search as $k=>$v) {
 			if (!empty($v)) {
-				$sql .= " AND c.rows LIKE '%\"$k\":\"$v\"%'";
+				//$sql .= " AND c.rows LIKE '%\"$k\":\"%$v%\"%'";
 			}
 		}
 		if ($this->login->groupid != 1) {
@@ -38,7 +53,8 @@
 		$sql .= " ORDER BY c.user_id, c.member_id, c.datecreate";   
         $sql.= ' limit '.$page.','.$numrows;
 		//echo $sql;die;
-		return $this->model->query($sql)->execute();
+		$rs = $this->model->query($sql)->execute();
+		return $this->filterData($rs, $search);
 	}
 	function getTotal($search){
 		$sql = "SELECT count(1) as total
