@@ -1,13 +1,12 @@
 <style title="" type="text/css">
-	table col.c1 { width: 45px; }
-	table col.c2 { width: 230px; }
-	table col.c3 { width: 180px; }
-	table col.c4 { width: 130px; }
-	table col.c5 { width: 100px; }
-	table col.c6 { width: 200px; }
-	table col.c7 { width: 180px; }
-	table col.c8 { width: 150px; }
-	table col.c9 { width: auto; }
+	table col.c_stt { width: 45px; }
+	table col.c_user_id { width: 230px; }
+	table col.c_member_id { width: 180px; }
+	table col.c_chat_code { width: 130px; }
+	table col.c_star { width: 100px; }
+	table col.c_datecreate { width: 180px; }
+	table col.c_status { width: 150px; }
+	table col.c_auto { width: auto; }
 	.btn-title-add {
 		float: right;
 		font-size: 10px !important;
@@ -135,19 +134,26 @@
 				<div id="cHeader">
 					<div id="tHeader">    	
 						<table width="100%" cellspacing="0" border="1" id="tbheader" >
-							<?php for($i=1; $i< 9; $i++){?>
-								<col class="c<?=$i;?>">
+							<?php 
+								$arr = array('c_stt','c_user_id','c_member_id','c_chat_code','c_star','c_datecreate','c_status');
+								if ($login->groupid != 1) {
+									unset($arr[4]);
+								}
+								foreach ($arr as $item){?>
+								<col class="<?=$item;?>">
 							<?php }?>
+							<col class="c_auto">
 							<tr>
-								<th>STT</th>
-								<th id="ord_c.user_id">Nhân viên</th>
-								<th id="ord_c.member_id">Thành viên</th>
-								<th id="ord_c.chat_code">Mã chat</th>
-								<th id="ord_c.star">Đánh giá</th>
-								<th id="ord_c.note">Góp ý</th>
-								<th id="ord_c.datecreate">Ngày chat</th>
-								<th id="ord_c.datecreate">Trạng thái</th>
-								<th></th>
+								<th class="c_stt">STT</th>
+								<th class="c_user_id">Nhân viên</th>
+								<th class="c_member_id">Thành viên</th>
+								<th class="c_chat_code">Mã chat</th>
+								<?php if ($login->groupid == 1) { ?>
+									<th class="c_star">Đánh giá</th>
+								<?php } ?>
+								<th class="c_datecreate">Ngày chat</th>
+								<th class="c_status">Trạng thái</th>
+								<th class="c_auto"></th>
 							</tr>
 						</table>
 					</div>
@@ -157,9 +163,15 @@
 				<div id="data">
 					<div id="gridView">
 						<table  id="tbbody" width="100%" cellspacing="0" border="1">
-							<?php for($i=1; $i< 9; $i++){?>
-								<col class="c<?=$i;?>">
+							<?php 
+							$arr = array('c_stt','c_user_id','c_member_id','c_chat_code','c_star','c_datecreate','c_status');
+								if ($login->groupid != 1) {
+									unset($arr[4]);
+								}
+								foreach ($arr as $item){?>
+								<col class="<?=$item;?>">
 							<?php }?>
+							<col class="c_auto">
 							<tbody id="grid-rows"></tbody>
 						</table>
 					</div>
@@ -348,6 +360,7 @@
     function funcList(obj){
 		$(".view_chat_code").each(function(e){
 			$(this).click(function(event){
+				$(".dialog-title-add").children(".ui-dialog-titlebar").children("#refreshchatlog").show();
 				$('#dialog').html('');				
 				$( "#dialog" ).dialog( "open" );
 				event.preventDefault();
@@ -359,11 +372,49 @@
 				return false;
 			});
 		});
+		$(".view_chat_rating").each(function(e){
+			$(this).click(function(event){
+				$('#dialog').html('');		
+				$( "#dialog" ).dialog({
+					autoOpen: false,
+					width: 700,
+					height:460,
+					modal:false,
+					dialogClass: 'dialog-title-add'
+				});				
+				$(".dialog-title-add").children(".ui-dialog-titlebar").children("#refreshchatlog").hide();
+				$( "#dialog" ).dialog( "open" );
+				event.preventDefault();
+				var chat_code = $(this).attr('chat_code');
+				curr_chat_code = chat_code;
+				var title = 'Lịch sử đánh giá chat: ' + curr_chat_code;
+				$('.ui-dialog-title').text(title);
+				get_chat_rating_history();
+				return false;
+			});
+		});
 	}
 	function get_chat_history() {
 		var token = $("#token").val();
 		$.ajax({
 			url : controller + 'get_chat_history',
+			type: 'POST',
+			async: false,
+			data: {csrf_stock_name:token, chat_code:curr_chat_code},
+			success:function(datas){
+				var obj = $.evalJSON(datas); 
+				$("#token").val(obj.csrfHash); 
+				$('#dialog').html(obj.content);
+			},
+			error : function(){
+				
+			}
+		});
+	}
+	function get_chat_rating_history() {
+		var token = $("#token").val();
+		$.ajax({
+			url : controller + 'get_chat_rating_history',
 			type: 'POST',
 			async: false,
 			data: {csrf_stock_name:token, chat_code:curr_chat_code},

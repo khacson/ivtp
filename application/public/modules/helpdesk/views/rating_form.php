@@ -74,6 +74,9 @@ $('#send_rating').click(function(){
 			$('#send_rating').val('Gửi lại đánh giá');
 			success('Cảm ơn bạn đã đánh giá');
 			running = 0;
+		},
+		error: function(){
+			running = 0;
 		}
 	})
 })

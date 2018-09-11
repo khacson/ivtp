@@ -29,8 +29,9 @@
 		$sql = "INSERT INTO ivt_chat_rating_rank_temp (user_id, username, fullname, point) 
 				SELECT u.id, u.username, u.fullname, SUM(s.point) AS point
 				FROM ivt_users_chat c
+				INNER JOIN ivt_users_chat_rating r ON r.chat_code = c.chat_code
+				INNER JOIN ivt_star s ON s.id = r.star
 				INNER JOIN ivt_users u ON u.id = c.user_id
-				INNER JOIN ivt_star s ON s.id = c.star
 				WHERE c.last_response IS NOT NULL AND u.groupid = 2 $where
 				GROUP BY c.user_id
 				ORDER BY point DESC;";

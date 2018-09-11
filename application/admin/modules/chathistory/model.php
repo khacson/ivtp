@@ -12,7 +12,10 @@
 			$sql .= " AND c.member_id = '".$search['member_id']."' ";
 		}
 		if (!empty($search['star'])) {
-			$sql .= " AND c.star = '".$search['star']."' ";
+			$sql .= " AND c.chat_code IN(
+				SELECT chat_code FROM ivt_users_chat_rating r
+				WHERE r.star  = '".$search['star']."' 
+			)";
 		}
 		if (!empty($search['chat_code'])) {
 			$sql .= " AND c.chat_code LIKE '%".$search['chat_code']."%' ";
@@ -32,7 +35,9 @@
 		return $sql;
 	}
 	function getList($search,$page,$numrows){
-		$sql = "SELECT c.member_id, c.chat_code, c.star, c.note, c.last_response, u.username, u.fullname as u_fullname, m.fullname as m_fullname
+		$sql = "SELECT c.member_id, c.chat_code, c.star, c.note, c.last_response, u.username, u.fullname as u_fullname, m.fullname as m_fullname,
+		(SELECT id FROM ivt_users_chat_rating r 
+		WHERE r.chat_code = c.chat_code LIMIT 1) as rating_id
 				FROM ivt_users_chat c
 				INNER JOIN ivt_users u ON u.id = c.user_id
 				LEFT JOIN ivt_member m ON m.id = c.member_id
@@ -68,6 +73,16 @@
 			return array();
 		}
 		$rs = $this->model->table('ivt_users_chat_detail')
+					->select('*')
+					->where('chat_code', $chat_code)
+					->find_all();
+		return $rs;
+	}
+	function getChatRatingHistory($chat_code) {
+		if (empty($chat_code)) {
+			return array();
+		}
+		$rs = $this->model->table('ivt_users_chat_rating')
 					->select('*')
 					->where('chat_code', $chat_code)
 					->find_all();

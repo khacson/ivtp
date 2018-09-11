@@ -224,7 +224,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		dblog = db.child('log');
 		dbping = db.child('ping');
 		//show noi dung chat
-		current_chat = dblog.child(chat_code);
+		current_chat = dblog.child(chat_code).limitToLast(50);
 		$scope.chatLogList = $firebaseArray(current_chat);
 		$('.chat_log_list').removeClass('hide');
 		$scope.setTitle();
@@ -254,7 +254,6 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	}
 
 	$scope.sendChat = function() {
-		$scope.add_to_chat_list();
 		
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
@@ -262,6 +261,8 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		removeBr('#input-msg');
 		var msg = input_msg.html();
 		msg = convertLink(msg);
+		
+		$scope.add_to_chat_list(msg);
 		
 		ref = dblog.child(chat_code);
 		var avatar = '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">';
@@ -279,7 +280,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
     }
 	
 	$scope.sendChatImage = function(img_src) {
-		$scope.add_to_chat_list();
+		$scope.add_to_chat_list('');
 		
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
@@ -302,7 +303,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		$scope.save_chat_to_db(chat_code, customername, avatar, msg, dateTimeLog);
     }
 	$scope.sendChatFile = function(file_src, filename) {
-		$scope.add_to_chat_list();
+		$scope.add_to_chat_list('');
 		
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
@@ -395,11 +396,15 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   }
 		});
 	}
-	$scope.add_to_chat_list = function() {
+	$scope.add_to_chat_list = function(msg) {
+		if (msg.length > 25) {
+			msg = msg.substr(0, 25) + '...';
+		}
 		dbping.child(user_id).child(chat_code).set({
 			chat_code: chat_code,
 			name: customername,
 			ping: 1,
+			msg: msg,
 			avatar: '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">'
 		});
 	}

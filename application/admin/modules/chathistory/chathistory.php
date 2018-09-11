@@ -71,6 +71,7 @@ class Chathistory extends CI_Controller {
 			$arrStar[$item->id] = $item->name;
 		}
 		$data->arrStar = $arrStar;
+		$data->login = $this->login;
 
 		$count = $this->model->getTotal($search);
 		$data->datas = $query;
@@ -94,6 +95,22 @@ class Chathistory extends CI_Controller {
         $result->content = $this->load->view('chat_history', $data, true);
 		echo json_encode($result);
 	}
-
+	function get_chat_rating_history() {
+		$chat_code = $this->input->post('chat_code');
+		$data = new stdClass();
+		$data->chatRatingLog = $this->model->getChatRatingHistory($chat_code);
+		
+		$starList = $this->base_model->getStar();
+		$arrStar = array();
+		foreach ($starList as $item) {
+			$arrStar[$item->id] = $item->name;
+		}
+		$data->arrStar = $arrStar;
+		
+		$result = new stdClass();
+		$result->csrfHash = $this->security->get_csrf_hash();
+        $result->content = $this->load->view('chat_rating_history', $data, true);
+		echo json_encode($result);
+	}
 
 }

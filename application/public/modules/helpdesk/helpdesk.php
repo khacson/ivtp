@@ -144,8 +144,21 @@ class Helpdesk extends CI_Controller {
 	function save_rating() {
 		$array['star'] = $this->input->post('star');
 		$array['note'] = $this->input->post('note');
+		$array['datecreate'] = gmdate('Y-m-d H:i:s', time());
 		$chat_code = $this->input->post('chat_code');
-		$this->model->table('ivt_users_chat')->where('chat_code', $chat_code)->update($array);
+		
+		$currentDate = gmdate('Y-m-d', time());
+		$check = $this->model->checkExistedRating($chat_code, $currentDate);
+		
+		if (empty($check)) {
+			$array['chat_code'] = $chat_code;
+			$this->model->table('ivt_users_chat_rating')->insert($array);
+		}
+		else {
+			$id = $check->id;
+			$this->model->table('ivt_users_chat_rating')->where('ids', $id)->update($array);
+		}
+		die;
 	}
 	function save_chat() {
 		$array['chat_code'] = $this->input->post('chat_code');

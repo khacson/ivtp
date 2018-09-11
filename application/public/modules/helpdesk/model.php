@@ -41,10 +41,10 @@ use Firebase\JWT\JWT;
 	function create_chatcode($user_id, $member_id, $firebasedb, $isGuest) {
 		//moi khach hang chat nhieu lan trong ngay thi dung chung 1 ma chat
 		if ($isGuest) {
-			$chat_code = gmdate('dmY', time() + 7 * 3600).$user_id.'G'.$member_id;
+			$chat_code = 'C'.$user_id.'G'.$member_id;
 		}
 		else {
-			$chat_code = gmdate('dmY', time() + 7 * 3600).$user_id.'M'.$member_id;
+			$chat_code = 'C'.$user_id.'M'.$member_id;
 		}
 		$check = $this->check_exist_chatcode($chat_code); 
 		if (empty($check)) {
@@ -116,5 +116,13 @@ use Firebase\JWT\JWT;
 			$this->table('ivt_guest')->insert($arr);
 			return $this->db->insert_id();
 		}
+	}
+	function checkExistedRating($chat_code, $currentDate) {	
+		$rs = $this->model->table('ivt_users_chat_rating')
+						->select('id')
+						->where('chat_code', $chat_code)
+						->where("datecreate >= '$currentDate'")
+						->find();
+		return $rs;
 	}
 }

@@ -11,7 +11,7 @@
 <!-- AngularFire -->
 <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 <link rel="stylesheet" href="<?=url_tmpl();?>css/chaticon.css">
-<link rel="stylesheet" href="<?=url_tmpl();?>css/chatstyle.css">
+<link rel="stylesheet" href="<?=url_tmpl();?>css/chatstyle.css?ver=1.0">
 <script>
   // Initialize Firebase
   var config = <?=$configdb?>;
@@ -49,6 +49,7 @@
 						<div class="customer-avatar">
 							<span ng-bind-html="chatCode.avatar | unsafe"></span>
 							<span class="have-new-msg-icon {{chatCode.ping ? 'show' : 'hide'}}"></span>
+							<span class="last-msg">{{chatCode.msg}}</span>
 						</div>
 						<span class="customer-name">{{chatCode.name}}</span>
 						<span class="end-chat" ng-click="end_chat($index)"></span>
@@ -260,7 +261,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		$scope.showLoading();
 		
 		ref = dblog.child(chat_code);
-		$scope.chatLogList = $firebaseArray(ref);
+		$scope.chatLogList = $firebaseArray(ref).limitToLast(50);;
 		
 		current_chat_code = chat_code;
 		current_customer = customername;
@@ -291,7 +292,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
-		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar);
+		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar, msg);
 		$scope.save_chat_to_db(current_chat_code, username, avatars, msg, dateTimeLog);
     }
 	
@@ -314,7 +315,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
-		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar);
+		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar, '');
 		$scope.save_chat_to_db(current_chat_code, username, avatars, msg, dateTimeLog);
     }
 	$scope.sendChatFile = function(file_src, filename) {
@@ -336,7 +337,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
-		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar);
+		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar, '');
 		$scope.save_chat_to_db(current_chat_code, username, avatars, msg, dateTimeLog);
     }
 	$scope.checkAndSendChat = function(e) {
@@ -407,11 +408,15 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   }
 		});
 	}
-	$scope.hideAlertNewMessage = function(chat_code, customername, avatar) {
+	$scope.hideAlertNewMessage = function(chat_code, customername, avatar, msg) {
+		if (msg.length > 25) {
+			msg = msg.substr(0, 25) + '...';
+		}
 		dbping.child(user_id).child(chat_code).set({
 			chat_code: chat_code,
 			name: customername,
 			ping: 0,
+			msg: msg,
 			avatar: avatar
 		});
 	}
