@@ -156,7 +156,7 @@ class Helpdesk extends CI_Controller {
 		}
 		else {
 			$id = $check->id;
-			$this->model->table('ivt_users_chat_rating')->where('ids', $id)->update($array);
+			$this->model->table('ivt_users_chat_rating')->where('id', $id)->update($array);
 		}
 		die;
 	}

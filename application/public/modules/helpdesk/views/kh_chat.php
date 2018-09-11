@@ -397,6 +397,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		});
 	}
 	$scope.add_to_chat_list = function(msg) {
+		msg = striptags(msg);
 		if (msg.length > 25) {
 			msg = msg.substr(0, 25) + '...';
 		}
@@ -459,6 +460,11 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		});
 	}
 }]);
-
+function striptags(html) {
+	var div = document.createElement("div");
+	div.innerHTML = html;
+	var text = div.textContent || div.innerText || "";
+	return text;
+}
 </script>	
 <script src="<?= url_tmpl(); ?>js/chatfunc.js?v=2.0" type="text/javascript"></script>

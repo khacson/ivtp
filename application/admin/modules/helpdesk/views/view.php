@@ -260,8 +260,8 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		$('.new-msg-form').show();
 		$scope.showLoading();
 		
-		ref = dblog.child(chat_code);
-		$scope.chatLogList = $firebaseArray(ref).limitToLast(50);;
+		ref = dblog.child(chat_code).limitToLast(50);
+		$scope.chatLogList = $firebaseArray(ref);
 		
 		current_chat_code = chat_code;
 		current_customer = customername;
@@ -409,6 +409,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		});
 	}
 	$scope.hideAlertNewMessage = function(chat_code, customername, avatar, msg) {
+		msg = striptags(msg);
 		if (msg.length > 25) {
 			msg = msg.substr(0, 25) + '...';
 		}
@@ -462,6 +463,12 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	
 }]);
 
+function striptags(html) {
+	var div = document.createElement("div");
+	div.innerHTML = html;
+	var text = div.textContent || div.innerText || "";
+	return text;
+}
 </script>
 <script src="<?= url_tmpl(); ?>js/chatfunc.js?v=2.0" type="text/javascript"></script>
 <script src="<?=url_tmpl();?>assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
