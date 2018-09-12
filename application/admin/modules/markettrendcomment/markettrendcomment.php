@@ -121,7 +121,8 @@ class Markettrendcomment extends CI_Controller {
 		$level = $this->input->post('level');
 		
 		$login = $this->login;
-		if (!empty(trim($search['reply_msg'])) && $search['accept'] == 1) {
+		$reply_msg = trim($search['reply_msg']);
+		if (!empty($reply_msg) && $search['accept'] == 1) {
 			$reply_id = $this->model->saveComment($search, $id, $blogid, $level, $login);
 			$this->model->updateHasChild($id);
 			$array['reply_id'] = $reply_id;

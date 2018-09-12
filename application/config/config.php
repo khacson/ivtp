@@ -502,5 +502,6 @@ $config['rewrite_short_tags'] = FALSE;
 $config['proxy_ips'] = '';
 
 $config['segment_class'] = XSC;
-$config['segment_method'] = XSM;//date_default_timezone_set('UTC');
+$config['segment_method'] = XSM;
+date_default_timezone_set('UTC');
 //error_reporting(0);

@@ -428,6 +428,7 @@ class base_model extends CI_Model {
 						  ->where('member_id', $pblogin->id)
 						  ->where('active_status', 1)
 						  ->where("to_date >= '$today'")
+						  ->order_by('dateupdate desc')
 						  ->find();
 		if (!empty($rs->level)) {
 			return $rs->level;

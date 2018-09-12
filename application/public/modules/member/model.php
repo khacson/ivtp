@@ -57,6 +57,7 @@ class MemberModel extends CI_Model
 						  ->select('*')
 						  ->where('member_id', $pblogin->id)
 						  ->where('active_status', 1)
+						  ->order_by('dateupdate desc')
 						  ->find();
 		if (!empty($rs->level)) {
 			if ($rs->level == 1) {

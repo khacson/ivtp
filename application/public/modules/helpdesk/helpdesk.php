@@ -144,10 +144,10 @@ class Helpdesk extends CI_Controller {
 	function save_rating() {
 		$array['star'] = $this->input->post('star');
 		$array['note'] = $this->input->post('note');
-		$array['datecreate'] = gmdate('Y-m-d H:i:s', time());
+		$array['datecreate'] = gmdate('Y-m-d H:i:s', time() + 7* 3600);
 		$chat_code = $this->input->post('chat_code');
 		
-		$currentDate = gmdate('Y-m-d', time());
+		$currentDate = gmdate('Y-m-d', time() + 7* 3600);
 		$check = $this->model->checkExistedRating($chat_code, $currentDate);
 		
 		if (empty($check)) {
