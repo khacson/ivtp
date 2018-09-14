@@ -2194,6 +2194,28 @@ function searchResult() {
 	}
 	return;
 }
-
-
-
+function toggleClass(e) {
+	e = $(e);
+	if (e.hasClass('fa-angle-up')) { //minimize
+		e.removeClass('fa-angle-up');
+		e.addClass('fa-angle-down');
+		e.addClass('fa-angle-down');
+		$('.framechat').removeClass('height0');
+		$('.supportbar').removeClass('borderradius');
+	}
+	else {
+		e.addClass('fa-angle-up');
+		e.removeClass('fa-angle-down');
+		$('.framechat').addClass('height0');
+		$('.supportbar').addClass('borderradius');
+	}
+}
+function showChatActionBtn() {
+	$('.chatactionbtn').removeClass('hide');
+	if (!$('.framechat').hasClass('height0')) {
+		$('.supportbar').removeClass('borderradius');
+	}
+}
+function minimize() {
+	$('.minimize').click();
+}
