@@ -2196,18 +2196,20 @@ function searchResult() {
 }
 function toggleClass(e) {
 	e = $(e);
-	if (e.hasClass('fa-angle-up')) { //minimize
+	if (e.hasClass('fa-angle-up')) { //is minimize, want to maximize
 		e.removeClass('fa-angle-up');
 		e.addClass('fa-angle-down');
 		e.addClass('fa-angle-down');
 		$('.framechat').removeClass('height0');
 		$('.supportbar').removeClass('borderradius');
+		document.cookie = "minimize=0"; 
 	}
 	else {
 		e.addClass('fa-angle-up');
 		e.removeClass('fa-angle-down');
 		$('.framechat').addClass('height0');
 		$('.supportbar').addClass('borderradius');
+		document.cookie = "minimize=1"; 
 	}
 }
 function showChatActionBtn() {

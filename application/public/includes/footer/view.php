@@ -20,22 +20,15 @@
 		
 <?php 
 	$uri = $_SERVER['REQUEST_URI'];
-	if (strpos($uri, '/tu-van') === false) {
-		$login = $this->site->getSession('pblogin');
-		if (empty($login)) {
-			$user_id = 32;
-		}
-		else {
-			$user_id = 33;
-		}
+	if (strpos($uri, '/tu-van') === false && strpos($uri, '/dang-nhap') === false && strpos($uri, '/dang-ky') === false) {
 ?>
 <style>
 .framechat {
 	position: fixed;
 	bottom: 35px;
 	right: 5px;
-	width: 300px;
-	height: 340px;
+	width: 310px;
+	height: 360px;
 	z-index: 1000;
 	overflow: hidden;
 	border-top-left-radius: 5px;
@@ -57,7 +50,7 @@
     position: fixed;
     right: 5px;
     text-align: center;
-    width: 300px;
+    width: 310px;
 	font-family: arial;
     z-index: 1000;
 }
@@ -102,11 +95,22 @@
     margin-left: 8px;
 	cursor: pointer;
 }
+.supportbar span.text {
+	cursor: pointer;
+}
 .chatactionbtn a, .chatactionbtn a:hover {
     color: #fff;
 }
 </style>
-<div class="framechat">
+<?php 
+	$height0 = '';
+	$fa_angle = 'fa-angle-down';
+	if (!empty($_COOKIE['minimize'])) {
+		$height0 = 'height0';
+		$fa_angle = 'fa-angle-up';
+	}
+?>
+<div class="framechat <?=$height0?>">
 <iframe onload="showChatActionBtn();" scrolling="no" src="<?=base_url()?>helpdeskframe/<?=$user_id?>"></iframe>
 <div class="chatactionbtn hide">
 	<span><i class="fa fa-window-minimize" onclick="minimize();"></i></span>
@@ -116,7 +120,15 @@
 </div>
 <div class="supportbar borderradius">
 	<i class="fa fa-comments"></i>
-	Hỗ trợ tư vấn Online
-	<i class="minimize fa fa-angle-down" onclick="toggleClass(this)"></i>
+	<span class="text" onclick="minimize();">Hỗ trợ tư vấn Online</span>
+	<i class="minimize fa <?=$fa_angle?>" onclick="toggleClass(this)"></i>
 </div>
+<script>
+$(window).ready(function(){
+	/*setTimeout(function(){
+		$('.framechat').removeClass('hide');
+	}, 2000);*/
+})
+	
+</script>
 <?php } ?>

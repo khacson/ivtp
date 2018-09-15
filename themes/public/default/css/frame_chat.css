@@ -102,16 +102,16 @@
     border-right: 1px solid #AD47AB;
     border-bottom: 1px solid #AD47AB;
     float: left;
-    height: 308px;
+    height: 328px;
     position: relative;
     width: 100%;
+	overflow: hidden;
 }
 .chat_log_list{
 	overflow-x: hidden;
 	overflow-y: auto;
-	height: 180px;
+	height: 214px;
 	padding: 10px;
-	margin-bottom: 10px;
 }
 #chatBox .chat_log .customer-avatar {
     height: 30px;
@@ -130,7 +130,7 @@
 	clear: both;
 }
 .log-item:first-child {
-	margin-top: 20px;
+	margin-top: 5px;
 }
 .log-msg {
     background-color: #d0e4f2;
@@ -178,6 +178,7 @@
 	background-color: #fff;
 	clear: both;
 	text-align: left;
+	overflow-x: hidden;
 }
 .insert{
 	display: inline-block;

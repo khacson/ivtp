@@ -40,8 +40,46 @@ form .framestar {
     font-size: 15px;
 	cursor: pointer;
 }
-.orange {
+.orange, .orangeclick {
 	color: orange;
+}
+.customernotearea {
+    background-color: #fff;
+    height: 100%;
+    left: 0;
+    padding: 10px;
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    transition: all 0.2s ease;
+}
+.showcustomerarea {
+	top: 0 !important;
+	transition: all 0.2s ease;
+}
+.customernotearea .customer_note {
+    height: 100px;
+    margin-bottom: 15px;
+    resize: none;
+    width: 100%;
+	padding: 10px;
+}
+.actionbutton .btn {
+    margin-right: 6px;
+    margin-top: 5px;
+    min-width: auto;
+    padding: 6px 5px;
+    width: 90px;
+}
+.actionbutton .btn-primary {
+    background-color: #e9b51b;
+    border-color: #e9b51b;
+    transition: all 0.3s ease-out 0s;
+}
+.actionbutton .btn-primary:hover, .actionbutton .btn-primary:active, .actionbutton .btn-primary:focus {
+    background-color: #ffca0b;
+    border-color: #ffca0b;
+    transition: all 0.3s ease-out 0s;
 }
 </style>
 <div ng-app="app">
@@ -156,33 +194,20 @@ form .framestar {
 						<span class="chaticon e1f608" data="1f608"></span>
 					</div>
 				</form>
+				<div id="customernotearea" class="customernotearea">
+					<p>Bạn có hài lòng về nhân viên tư vấn không?</p>
+					<textarea placeholder="Ý kiến của bạn" class="customer_note"></textarea>
+					<div class="actionbutton">
+						<a class="btn btn-primary sendcustomernote" href="javascript:;">Gửi</a>
+						<a class="btn btn-primary sendcustomernote" href="javascript:;">Đóng</a>
+					</div>
+				</div>
 			</div>
         </div>
         
     </div>
 	
 </div>	
-
-
-
-<!-- Modal -->
-<div id="myModal" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h6 class="modal-title">Lịch sử chat</h6>
-      </div>
-      <div id="modal_content" class="modal-body">
-        <p></p>
-      </div>
-    </div>
-
-  </div>
-</div>
-
 	
 <script>
     var controller = '<?= $controller; ?>/';
@@ -226,7 +251,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	});
 	
 	$scope.init = function() {
-		$scope.rows = 50;
+		$scope.rows = 20;
 		$scope.viewOldChat = 0;
 		db = firebase.database().ref();
 		dblog = db.child('log');
@@ -491,7 +516,29 @@ function move_to_top(e){console.log(33);
 		$(e).scrollTop(0);
 	}, 200);
 }
+function save_rating() {
+	var star_id = $('.framestar').find('.orangeclick').last().attr('id'); console.log(star_id);
+	var star = star_id.substr(4, 1);
+	var note = $('.customer_note').val().trim();
+	$.ajax({
+		type: 'post',
+		url: controller + 'save_rating',
+		data: {star: star, note: note, chat_code: chat_code},
+		success: function(data) {
+			
+		},
+		error: function(){
+			
+		}
+	})
+}
+function setStar(number) {
+	for (var i = 1; i<= number; i++) {
+		$('#star'+ i).addClass('orangeclick');
+	}
+}
 $(window).ready(function(){
+	setStar(<?=$starRate?>);
 	$('.framestar .fa-star').hover(
 		function(){
 			var id = $(this).attr('id');
@@ -505,12 +552,18 @@ $(window).ready(function(){
 		}
 	)
 	$('.framestar .fa-star').click(function(){
-		$('.framestar .fa-star').removeClass('orange');
+		$('.framestar .fa-star').removeClass('orangeclick');
 		var id = $(this).attr('id');
 		var number = id.substr(4, 1);
 		for (var i = 1; i<= number; i++) {
-			$('#star'+ i).addClass('orange');
+			$('#star'+ i).addClass('orangeclick');
 		}
+		$('#customernotearea').addClass('showcustomerarea');
+		
+	})
+	$('#customernotearea .sendcustomernote').click(function(){
+		save_rating();
+		$('#customernotearea').removeClass('showcustomerarea');
 	})
 })
 </script>	

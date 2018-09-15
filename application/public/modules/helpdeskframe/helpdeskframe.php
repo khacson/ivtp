@@ -95,8 +95,10 @@ class Helpdeskframe extends CI_Controller {
 		$data->configdb = $dbinfo->config;
 		$data->token = $this->model->create_custom_token($login->id, $dbinfo2->client_email, $dbinfo2->private_key);
 	    $data->starList = $this->base_model->getStar();
+	    $data->starRate = $this->base_model->getStarRate($chat_code);
 		
-		$data->controller = base_url() . ($this->uri->segment(1));
+		$data->controller2 = base_url() . ($this->uri->segment(1));
+		$data->controller = base_url() . 'helpdesk';
         $data->csrfName = $this->security->get_csrf_token_name();
         $data->csrfHash = $this->security->get_csrf_hash();
 		$content = $this->load->view('frame_chat',$data,true);

@@ -485,5 +485,53 @@ class base_model extends CI_Model {
 		return $rs->fullname;
 	}
 	
+	function getStarRate($chat_code) {
+        $sql = "SELECT star, DATE(datecreate) datecreate FROM ivt_users_chat_rating
+                WHERE chat_code = '$chat_code'
+				ORDER BY datecreate DESC
+				LIMIT 1;";
+        $rs = $this->model->query($sql)->execute();	
+		if (empty($rs)) {
+			return 0;
+		}
+		$now = gmdate('Y-m-d', time() + 7*3600);
+		if (strtotime($rs[0]->datecreate) == strtotime($now)) {
+			return $rs[0]->star;
+		}
+		return 0;
+	}
 	
+	function getLastChatUser() {
+		$member_level = $this->getMemberLevel();
+		$rs = $this->getAllCustomerServiceUser();
+		$cskh_id = $rs[0]->id;
+		if ($member_level < 2) {
+			return $cskh_id;
+		}
+		else {
+			$pblogin = $this->site->getSession('pblogin');
+			$member_id = $pblogin->id;
+			//nguoi chat lan cuoi
+			$sql = "SELECT c.user_id, u.online_status FROM ivt_users_chat c
+					INNER JOIN ivt_users u ON u.id = c.user_id
+					WHERE member_id = $member_id
+					ORDER BY last_response DESC
+					LIMIT 1";
+			$rs = $this->query($sql)->execute(); 
+			//nguoi nay online thi lay
+			if (!empty($rs) && $rs[0]->online_status == 1) {
+				return $rs[0]->user_id;
+			}
+			//lay ngau nhien 1 nguoi online
+			$sql = "SELECT id FROM ivt_users
+					WHERE groupid = 2 AND online_status = 1 AND isdelete = 0";
+			$rs = $this->query($sql)->execute();
+			if (empty($rs)) {
+				return $cskh_id;
+			}
+			$index = rand(0, count($rs));
+			return $rs[$index]->id;
+		}
+		return $cskh_id;
+	}
 }
