@@ -1,4 +1,4 @@
-var prev_key_code = '';console.log(2);
+var prev_key_code = '';
 document.execCommand("enableObjectResizing", false, false);
 $(document).mouseup(function(e) {
     var container = $("#icon-motion-container");
