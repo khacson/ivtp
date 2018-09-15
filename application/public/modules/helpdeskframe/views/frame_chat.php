@@ -117,11 +117,11 @@ form .framestar {
 					<?php } ?>
 					
 					<div class="log-item {{chatLog.type ? 'fright' : 'fleft'}}" ng-repeat="chatLog in chatLogList" ng-init="$last ? move_to_bottom() : null">
-						<div class="customer-avatar" ng-bind-html="chatLog.avatar | unsafe">
+						<div class="customer-avatar" ng-bind-html="chatLog.avatar.replace('http:', 'https:') | unsafe">
 							
 						</div>
 						<div class="log-msg {{chatLog.type ? '' : 'customer-active'}}">
-							<div class="msg-content"  ng-bind-html="chatLog.msg | unsafe"></div>
+							<div class="msg-content"  ng-bind-html="chatLog.msg.replace('http:', 'https:') | unsafe"></div>
 							<span class="log-time">{{chatLog.dateTime}}</span>
 						</div>
 					</div>

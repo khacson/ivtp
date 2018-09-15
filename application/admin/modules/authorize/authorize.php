@@ -86,6 +86,9 @@ class authorize extends CI_Controller {
 					setcookie('sellffm_pass','', time() + (86400 * 7),"/"); 
 				}
 				$result['token'] = $this->security->get_csrf_hash();
+				$now = gmdate('Y-m-d H:i:s', time() + 7*3600);
+				$sql = "UPDATE ivt_users set lastlogin = '$now' WHERE id = ".$login->id;
+				$this->model->executeQuery($sql);
 				echo json_encode($result);
 			} 
 			else {
@@ -101,7 +104,7 @@ class authorize extends CI_Controller {
 		}
 	}
 	function captcha(){
-        $captcha = $this->admin->createCapcha('captcha_lkn', 160,33,1);   
+        $captcha = $this->admin->createCapcha('captcha_lkn', 160,33,5);   
     }
 	function logout(){
 		$login = $this->admin->getSession('login');

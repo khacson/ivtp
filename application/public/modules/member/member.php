@@ -65,6 +65,9 @@ class Member extends CI_Controller {
 					$this->site->CreateCookie("pbemail", $email, 360);
 					$this->site->CreateCookie("pbpass", $pw, 360);
 				}
+				$now = gmdate('Y-m-d H:i:s', time() + 7*3600);
+				$sql = "UPDATE ivt_member set lastlogin = '$now' WHERE id = ".$query->id;
+				$this->model->executeQuery($sql);
 				echo 1; exit;
 			}
 		}
