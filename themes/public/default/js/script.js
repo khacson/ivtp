@@ -2221,3 +2221,73 @@ function showChatActionBtn() {
 function minimize() {
 	$('.minimize').click();
 }
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (!Notification) {
+    //alert('Desktop notifications not available in your browser. Try Chromium.'); 
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+  if (!Notification) {
+    //alert('Desktop notifications not available in your browser. Try Chromium.'); 
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+function notifyMe(title, img_url, msg, open_url, show_time) {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification(title, {
+      icon: img_url,
+      body: msg,
+    });
+
+    if (open_url != '') {
+		notification.onclick = function () {
+		  window.open(open_url);      
+		};
+	}
+	
+	if (show_time == 0) {
+		show_time = 10000;
+	}
+	notification.onshow = function() { 
+		setTimeout(function() { notification.close() }, show_time); 
+	}
+  }
+}
+function getImgSrc(img) {
+	$('body').append('<div id="temp_img" style="display:none;">'+ img +'</div>');
+	var src = $('#temp_img img').attr('src');
+	$('#temp_img img').remove();
+	return src;
+}

@@ -25,6 +25,9 @@
 #history a:Hover{
 	text-decoration: underline;
 }
+#chatBox{
+	margin-top: 0;
+}
 </style>
 <div ng-app="app">
 	<div ng-controller="chatCtrl">
@@ -55,11 +58,11 @@
 					</div>
 					
 					<div class="log-item {{chatLog.type ? 'fright' : 'fleft'}}" ng-repeat="chatLog in chatLogList" ng-init="$last ? move_to_bottom() : null">
-						<div class="customer-avatar" ng-bind-html="chatLog.avatar.replace('http:', 'https:') | unsafe">
+						<div class="customer-avatar" ng-bind-html="chatLog.avatar.replace('http://inv', 'https://inv') | unsafe">
 							
 						</div>
 						<div class="log-msg {{chatLog.type ? '' : 'customer-active'}}">
-							<div class="msg-content"  ng-bind-html="chatLog.msg.replace('http:', 'https:') | unsafe"></div>
+							<div class="msg-content"  ng-bind-html="chatLog.msg.replace('http://inv', 'https://inv') | unsafe"></div>
 							<span class="log-time">{{chatLog.dateTime}}</span>
 						</div>
 					</div>
@@ -208,7 +211,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	
 	$scope.authObjMsg = $firebaseAuth();
 	$scope.authObjMsg.$signInWithCustomToken(token).then(function(firebaseUser) {
-		console.log("Signed in as:", firebaseUser.uid);	
+		//console.log("Signed in as:", firebaseUser.uid);	
 		$scope.init();
 	}).catch(function(error) {
 		console.log("Error:"+ error);	
@@ -240,6 +243,28 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 					msg_new += array[i]['type'];
 					if ( (i+1 < array.length) && !array[i+1]['type']) {
 						msg_new = 0;
+					}
+				}
+				
+				i--;
+				if (array[i]['type']) {
+					var name = array[i]['name'];
+					var msg = array[i]['msg'];
+					var avatar = array[i]['avatar'];
+					var dateTime = array[i]['dateTime'];
+					var img_url = getImgSrc(avatar);
+					var text = striptags(msg);
+					if (text == '' && msg.indexOf('class="img-msg"') != -1) {
+						text = 'Đã gửi một ảnh mới';
+					}
+					else if (msg.indexOf('<span class="fa fa-download"></span>') != -1) {
+						text = 'Đã gửi một file mới';
+					}
+					var key = (text + dateTime).trim();
+					var lastMsg = getCookie('lastMsg' + user_id);//console.log(lastMsg);
+					if (key != lastMsg && text != '') {
+						notifyMe(name, img_url, text, '', 0);
+						setCookie('lastMsg' + user_id, key, 10);
 					}
 				}
 			});
@@ -280,7 +305,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
     }
 	
 	$scope.sendChatImage = function(img_src) {
-		$scope.add_to_chat_list('');
+		$scope.add_to_chat_list('Đã gửi một ảnh mới');
 		
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
@@ -303,7 +328,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		$scope.save_chat_to_db(chat_code, customername, avatar, msg, dateTimeLog);
     }
 	$scope.sendChatFile = function(file_src, filename) {
-		$scope.add_to_chat_list('');
+		$scope.add_to_chat_list('Đã gửi một file mới');
 		
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
@@ -405,6 +430,8 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 			chat_code: chat_code,
 			name: customername,
 			ping: 1,
+			alertUser: 1,
+			alertCustomer: 0,
 			msg: msg,
 			avatar: '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">'
 		});

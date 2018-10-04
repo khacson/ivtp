@@ -13,6 +13,10 @@ class Helpdeskframe extends CI_Controller {
 		$this->postLevel = 2;
 	}
     function  _remap($method, $params = array()){
+		if(method_exists($this, $method))
+        {
+            return call_user_func_array(array($this, $method), $params);
+        }
 		$user_id = $this->uri->segment(2);
         $this->detail($user_id);
     }
@@ -103,5 +107,13 @@ class Helpdeskframe extends CI_Controller {
         $data->csrfHash = $this->security->get_csrf_hash();
 		$content = $this->load->view('frame_chat',$data,true);
         echo $content;
+	}
+	function checkNewAlert() {
+		$login = $this->site->getSession('pblogin');
+		if (empty($login)) {
+			return -1;
+		}
+		$rs = $this->model->getNewAlert($login);
+		return $rs;
 	}
 }

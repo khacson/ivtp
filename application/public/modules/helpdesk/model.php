@@ -102,7 +102,8 @@ use Firebase\JWT\JWT;
 		return $this->query($sql)->execute();
 	}
 	function getGuestId() {
-		$ip = $this->base_model->getMacAddress();
+		//$ip = $this->base_model->getMacAddress();
+		$ip = $this->base_model->getUniqueAccessId();
 		$rs = $this->model->table('ivt_guest')
 						  ->select('id')
 						  ->where('ip', $ip)
@@ -123,6 +124,20 @@ use Firebase\JWT\JWT;
 						->where('chat_code', $chat_code)
 						->where("datecreate >= '$currentDate'")
 						->find();
+		return $rs;
+	}
+	function getFriendList($member_id, $isGuest) {
+		if ($isGuest == 1) {
+			return array();
+		}
+		$sql = "SELECT c.user_id, u.`fullname`, u.online_status,
+		(SELECT msg FROM `ivt_users_chat_detail` WHERE chat_code = c.`chat_code` ORDER BY datecreate DESC LIMIT 1) AS lastmsg
+		FROM `ivt_users_chat` c 
+		INNER JOIN `ivt_users` u ON u.id = c.`user_id`
+		WHERE c.`member_id` = $member_id AND u.`isdelete` = 0
+		GROUP BY c.`user_id`
+		ORDER BY u.`online_status` DESC, u.`fullname`";
+		$rs = $this->model->query($sql)->execute();
 		return $rs;
 	}
 }

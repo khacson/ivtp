@@ -102,7 +102,8 @@ use Firebase\JWT\JWT;
 		return $this->query($sql)->execute();
 	}
 	function getGuestId() {
-		$ip = $this->base_model->getMacAddress();
+		//$ip = $this->base_model->getMacAddress();
+		$ip = $this->base_model->getUniqueAccessId();
 		$rs = $this->model->table('ivt_guest')
 						  ->select('id')
 						  ->where('ip', $ip)
@@ -140,5 +141,25 @@ use Firebase\JWT\JWT;
 		}
 		return 0;
 	}
-	
+	function getNewAlert($login) {
+		$member_id = $login->id;
+		$date = gmdate('Y-m-d', time() + 3600*7);
+		$sql = "SELECT d.* FROM ivt_users_chat_detail d
+				INNER JOIN ivt_users_chat c USING(chat_code)
+				WHERE c.`member_id` = $member_id
+				AND d.id IN (
+					SELECT MAX(id) FROM ivt_users_chat_detail
+					WHERE datecreate > '$date'
+					GROUP BY chat_code
+					HAVING alert = 0
+				)
+				";
+		$rs = $this->query($sql)->execute();
+		foreach ($rs as $item) {
+			$id = $item->id;
+			$sql = "UPDATE ivt_users_chat_detail SET alert = 1 WHERE id = $id";
+			$this->model->executeQuery($sql);
+		}
+		echo json_encode($rs);die;
+	}
 }

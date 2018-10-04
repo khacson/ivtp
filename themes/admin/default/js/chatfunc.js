@@ -191,3 +191,50 @@ function convertLink(str) {
 	}
 	return str;
 }
+document.addEventListener('DOMContentLoaded', function () {
+  if (!Notification) {
+    //alert('Desktop notifications not available in your browser. Try Chromium.'); 
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+document.addEventListener('DOMContentLoaded', function () {
+  if (!Notification) {
+    //alert('Desktop notifications not available in your browser. Try Chromium.'); 
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+function notifyMe(title, img_url, msg, open_url, show_time) {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification(title, {
+      icon: img_url,
+      body: msg,
+    });
+
+    if (open_url != '') {
+		notification.onclick = function () {
+		  window.open(open_url);      
+		};
+	}
+	
+	if (show_time == 0) {
+		show_time = 10000;
+	}
+	notification.onshow = function() { 
+		setTimeout(function() { notification.close() }, show_time); 
+	}
+  }
+}
+function getImgSrc(img) {
+	$('body').append('<div id="temp_img" style="display:none;">'+ img +'</div>');
+	var src = $('#temp_img img').attr('src');
+	$('#temp_img img').remove();
+	return src;
+}

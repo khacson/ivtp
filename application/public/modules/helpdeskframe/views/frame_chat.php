@@ -30,7 +30,7 @@
 #history a:Hover{
 }
 .emotionicon {
-    background: rgba(0, 0, 0, 0) url("http://localhost/ivtp/files/emotion_icon/1f60a.png") no-repeat scroll center center / cover ;
+    background: rgba(0, 0, 0, 0) url("<?=base_url()?>/files/emotion_icon/1f60a.png") no-repeat scroll center center / cover ;
 }
 form .framestar {
     margin-left: 5px;
@@ -117,11 +117,11 @@ form .framestar {
 					<?php } ?>
 					
 					<div class="log-item {{chatLog.type ? 'fright' : 'fleft'}}" ng-repeat="chatLog in chatLogList" ng-init="$last ? move_to_bottom() : null">
-						<div class="customer-avatar" ng-bind-html="chatLog.avatar.replace('http:', 'https:') | unsafe">
+						<div class="customer-avatar" ng-bind-html="chatLog.avatar.replace('http://inv', 'https://inv') | unsafe">
 							
 						</div>
 						<div class="log-msg {{chatLog.type ? '' : 'customer-active'}}">
-							<div class="msg-content"  ng-bind-html="chatLog.msg.replace('http:', 'https:') | unsafe"></div>
+							<div class="msg-content"  ng-bind-html="chatLog.msg.replace('http://inv', 'https://inv') | unsafe"></div>
 							<span class="log-time">{{chatLog.dateTime}}</span>
 						</div>
 					</div>
@@ -275,6 +275,30 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 						msg_new = 0;
 					}
 				}
+				
+				i--;
+				if (array[i]['type']) {
+					var name = array[i]['name'];
+					var msg = array[i]['msg'];
+					var avatar = array[i]['avatar'];
+					var dateTime = array[i]['dateTime'];
+					var img_url = getImgSrc(avatar);
+					var text = striptags(msg);
+					if (text == '' && msg.indexOf('class="img-msg"') != -1) {
+						text = 'Đã gửi một ảnh mới';
+					}
+					else if (msg.indexOf('<span class="fa fa-download"></span>') != -1) {
+						text = 'Đã gửi một file mới';
+					}
+					var key = (text + dateTime).trim();
+					var lastMsg = getCookie('lastMsg' + user_id);//console.log(lastMsg);
+					if (key != lastMsg && text != '') {console.log($('#input-msg').is(':focus'));
+						if (!$('#input-msg').is(':focus')) {
+							notifyMe(name, img_url, text, '', 5000);
+						}
+						setCookie('lastMsg' + user_id, key, 10);
+					}
+				}
 			});
 			if (msg_new > 0) {
 				$('title').text(title + ' ('+ msg_new +')');
@@ -313,7 +337,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
     }
 	
 	$scope.sendChatImage = function(img_src) {
-		$scope.add_to_chat_list('');
+		$scope.add_to_chat_list('Đã gửi một ảnh mới');
 		
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
@@ -336,7 +360,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		$scope.save_chat_to_db(chat_code, customername, avatar, msg, dateTimeLog);
     }
 	$scope.sendChatFile = function(file_src, filename) {
-		$scope.add_to_chat_list('');
+		$scope.add_to_chat_list('Đã gửi một file mới');
 		
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
@@ -439,6 +463,8 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 			name: customername,
 			ping: 1,
 			msg: msg,
+			alertUser: 1,
+			alertCustomer: 0,
 			avatar: '<img class="avatar" src="<?=base_url()?>files/user/<?=$login->signature?>">'
 		});
 	}
@@ -536,6 +562,27 @@ function setStar(number) {
 	for (var i = 1; i<= number; i++) {
 		$('#star'+ i).addClass('orangeclick');
 	}
+}
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
 }
 $(window).ready(function(){
 	setStar(<?=$starRate?>);

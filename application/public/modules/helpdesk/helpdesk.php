@@ -104,6 +104,12 @@ class Helpdesk extends CI_Controller {
 			$data->status = 'Offline';
 			$data->welcome_msg = 'Xin chào bạn, bạn vui lòng để lại lời nhắn, mình sẽ phản hồi trong thời gian sớm nhất.';
 		}
+		
+		if ($isGuest == 0) {
+			$sql = "UPDATE ivt_member SET lastchat = $user_id WHERE id =".$login->id;
+			$this->model->executeQuery($sql);
+		}
+		
 
 		$chat_code = $this->model->create_chatcode($user_id, $login->id, $dbinfo->id, $isGuest);
 		$data->isGuest = $isGuest;
@@ -113,6 +119,7 @@ class Helpdesk extends CI_Controller {
 		$data->configdb = $dbinfo->config;
 		$data->token = $this->model->create_custom_token($login->id, $dbinfo2->client_email, $dbinfo2->private_key);
 	    $data->starList = $this->base_model->getStar();
+	    $data->friendList = $this->model->getFriendList($login->id, $isGuest);
 		
 		$data->controller = base_url() . ($this->uri->segment(1));
         $data->csrfName = $this->security->get_csrf_token_name();

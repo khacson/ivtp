@@ -16,7 +16,6 @@
   // Initialize Firebase
   var config = <?=$configdb?>;
   firebase.initializeApp(config);
-
 </script>
 <style>
 #input-image, #input-file {
@@ -211,7 +210,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	
 	$scope.authObjMsg = $firebaseAuth();
 	$scope.authObjMsg.$signInWithCustomToken(token).then(function(firebaseUser) {
-		console.log("Signed in as:", firebaseUser.uid);	
+		//console.log("Signed in as:", firebaseUser.uid);	
 		$scope.init();
 	}).catch(function(error) {
 		console.log("Error:", error);	
@@ -233,11 +232,23 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	$scope.setTitle = function() {
 		setTimeout(function(){
 			$scope.chatCodeList.$loaded().then(function(array) {
-				//console.log(array.length);
 				msg_new = 0;
+				var alert = 0;
 				for (var i = 0; i< array.length; i++) {
-					//console.log(array[i]['ping']);
 					msg_new += array[i]['ping'];
+					if (array[i]['alertUser'] == 1) {
+						if (alert == 0) {
+							var name = array[i]['name'];
+							var msg = array[i]['msg'];
+							var ping = array[i]['ping'];
+							var avatar = array[i]['avatar'];
+							var img_url = getImgSrc(avatar);
+							var text = striptags(msg); //console.log(msg);console.log(text);
+							notifyMe(name, img_url, text, '', 0);
+							$scope.hideAlert(array[i]['chat_code'], name, avatar, msg, ping);
+							alert = 1;
+						}
+					}
 				}
 			});
 			if (msg_new > 0) {
@@ -315,7 +326,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
-		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar, '');
+		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar, 'Đã gửi một ảnh mới');
 		$scope.save_chat_to_db(current_chat_code, username, avatars, msg, dateTimeLog);
     }
 	$scope.sendChatFile = function(file_src, filename) {
@@ -337,7 +348,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
-		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar, '');
+		$scope.hideAlertNewMessage(current_chat_code, current_customer, current_avatar, 'Đã gửi một file mới');
 		$scope.save_chat_to_db(current_chat_code, username, avatars, msg, dateTimeLog);
     }
 	$scope.checkAndSendChat = function(e) {
@@ -417,6 +428,17 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 			chat_code: chat_code,
 			name: customername,
 			ping: 0,
+			msg: msg,
+			avatar: avatar
+		});
+	}
+	$scope.hideAlert = function(chat_code, customername, avatar, msg, ping) {
+		dbping.child(user_id).child(chat_code).set({
+			chat_code: chat_code,
+			name: customername,
+			ping: ping,
+			alertUser: 0,
+			alertCustomer: 1,
 			msg: msg,
 			avatar: avatar
 		});

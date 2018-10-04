@@ -82,7 +82,8 @@ class base_model extends CI_Model {
     }
 
     public function getMacAddress() {
-        $ip = $_SERVER['REMOTE_ADDR']; return $ip;
+        $ip = $_SERVER['REMOTE_ADDR']; 
+		return $ip;
         $mac = shell_exec("arp -a $ip");
         $arr = explode(" ", $mac);
         if (isset($arr[3])) {
@@ -512,16 +513,29 @@ class base_model extends CI_Model {
 			$pblogin = $this->site->getSession('pblogin');
 			$member_id = $pblogin->id;
 			//nguoi chat lan cuoi
-			$sql = "SELECT c.user_id, u.online_status FROM ivt_users_chat c
-					INNER JOIN ivt_users u ON u.id = c.user_id
-					WHERE member_id = $member_id
-					ORDER BY last_response DESC
+			$sql = "SELECT u.id as user_id, u.online_status FROM ivt_member m
+					INNER JOIN ivt_users u ON u.id = m.lastchat
+					WHERE m.id = $member_id
 					LIMIT 1";
 			$rs = $this->query($sql)->execute(); 
+			if (empty($rs)) {
+				$sql = "SELECT c.user_id, u.online_status FROM ivt_users_chat c
+						INNER JOIN ivt_users u ON u.id = c.user_id
+						WHERE member_id = $member_id
+						ORDER BY last_response DESC
+						LIMIT 1";
+				$rs = $this->query($sql)->execute(); 
+				//nguoi nay online thi lay
+				if (!empty($rs) && $rs[0]->online_status == 1) {
+					return $rs[0]->user_id;
+				}
+			}
+			
 			//nguoi nay online thi lay
 			if (!empty($rs) && $rs[0]->online_status == 1) {
 				return $rs[0]->user_id;
 			}
+			
 			//lay ngau nhien 1 nguoi online
 			$sql = "SELECT id FROM ivt_users
 					WHERE groupid = 2 AND online_status = 1 AND isdelete = 0";
@@ -534,4 +548,27 @@ class base_model extends CI_Model {
 		}
 		return $cskh_id;
 	}
+
+	function getUniqueAccessId() {
+		if (isset($_COOKIE['investorproaccesssessionid'])) {
+			$val = $_COOKIE['investorproaccesssessionid'];
+			setcookie('investorproaccesssessionid', $val, time() + 86400*360);
+			return $val;
+		}
+		$val = md5(time());
+		setcookie('investorproaccesssessionid', $val, time() + 86400*360);
+		return $val;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

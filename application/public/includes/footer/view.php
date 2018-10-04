@@ -124,11 +124,52 @@
 	<i class="minimize fa <?=$fa_angle?>" onclick="toggleClass(this)"></i>
 </div>
 <script>
+var arrAlert = {};
 $(window).ready(function(){
-	/*setTimeout(function(){
-		$('.framechat').removeClass('hide');
-	}, 2000);*/
+	checkNewAlert();
 })
-	
+function showNewAlert() {
+	var t = setInterval(function(){
+		for (var i in arrAlert) {
+			var name = arrAlert[i]['name'];
+			var avatar = getImgSrc(arrAlert[i]['avatar']);
+			var msg = arrAlert[i]['msg'];
+			var text = striptags(msg);
+			if (text == '' && msg.indexOf('class="img-msg"') != -1) {
+				text = 'Đã gửi một ảnh mới';
+			}
+			else if (msg.indexOf('<span class="fa fa-download"></span>') != -1) {
+				text = 'Đã gửi một file mới';
+			}
+			else if (msg.indexOf('class="icon-msg"') != -1 && text == '') {
+				text = 'Đã gửi icon cảm xúc';
+			}
+			
+			notifyMe(name, avatar, text, '', 5000);
+			arrAlert.splice(i,1);
+			break;
+		}
+		if (arrAlert.length == 0) {
+			clearInterval(t);
+		}
+	}, 1000);
+}
+function checkNewAlert() {
+	$.ajax({
+		type: 'post',
+		url: '<?=base_url()?>helpdeskframe/checkNewAlert',
+		success: function(data) {
+			var obj = JSON.parse(data);
+			arrAlert = obj;
+			showNewAlert();
+		}
+	})
+}	
+function striptags(html) {
+	var div = document.createElement("div");
+	div.innerHTML = html;
+	var text = div.textContent || div.innerText || "";
+	return text;
+}
 </script>
 <?php } ?>
