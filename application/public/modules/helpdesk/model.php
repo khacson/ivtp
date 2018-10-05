@@ -130,13 +130,12 @@ use Firebase\JWT\JWT;
 		if ($isGuest == 1) {
 			return array();
 		}
-		$sql = "SELECT c.user_id, u.`fullname`, u.online_status,
+		$sql = "SELECT c.id, c.user_id, u.`fullname`, u.online_status, c.last_response, u.signature,
 		(SELECT msg FROM `ivt_users_chat_detail` WHERE chat_code = c.`chat_code` ORDER BY datecreate DESC LIMIT 1) AS lastmsg
 		FROM `ivt_users_chat` c 
 		INNER JOIN `ivt_users` u ON u.id = c.`user_id`
-		WHERE c.`member_id` = $member_id AND u.`isdelete` = 0
-		GROUP BY c.`user_id`
-		ORDER BY u.`online_status` DESC, u.`fullname`";
+		WHERE u.`isdelete` = 0 AND c.id IN (SELECT MAX(id) FROM ivt_users_chat WHERE `member_id` = $member_id GROUP BY user_id)
+        ORDER BY u.online_status DESC, c.last_response DESC";
 		$rs = $this->model->query($sql)->execute();
 		return $rs;
 	}

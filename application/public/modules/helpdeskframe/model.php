@@ -151,7 +151,7 @@ use Firebase\JWT\JWT;
 					SELECT MAX(id) FROM ivt_users_chat_detail
 					WHERE datecreate > '$date'
 					GROUP BY chat_code
-					HAVING alert = 0
+					HAVING alert = 0 AND type = 1
 				)
 				";
 		$rs = $this->query($sql)->execute();

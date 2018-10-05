@@ -30,6 +30,8 @@
 .friendlist {
     border: 1px solid #ccc;
     padding: 10px;
+	height: 200px;
+	overflow: auto;
 }
 .friend-item {
 	
@@ -54,13 +56,28 @@
 	border-radius: 50%;
 }
 .friendlist .name {
-	font-size: 12px;
+    color: #333;
+    font-size: 13px;
+    left: 50px;
+    position: absolute;
+    top: 5px;
+}
+.friendlist .online_status {
+    font-size: 11px;
+    left: 50px;
+    position: absolute;
+    top: 22px;
 }
 .friendlist .lastmsg {
 	font-size: 12px;
 	color: #666;
 	font-style: italic;
 	display: inline-block;
+}
+.friend-item .item {
+	margin-bottom: 8px;
+	position: relative;
+	background-color: #EEEEEE;
 }
 .gopy {
     color: #733272;
@@ -78,8 +95,9 @@
     top: 106%;
     width: 70px;
 }
-.ratingform {
-	
+.friend-avatar {
+	width: 39px;
+	border-radius: 50%;
 }
 </style>
 <?php if (!$isGuest) { ?>
@@ -91,9 +109,11 @@
 				foreach ($friendList as $item) {
 					$status = 'green';
 					$bgCir = 'bggreen';
+					$online_status = '<span class="online_status green">Online</span>';
 					if ($item->online_status == 0) {
 						$status = 'gray';
 						$bgCir = 'bggray';
+						$online_status = '<span class="online_status gray">Offline</span>';
 					}
 					$lastmsg = '';
 					if ($item->lastmsg) {
@@ -103,13 +123,17 @@
 						if ($length > 20) {
 							$lastmsg .= '...';
 						}
-						$lastmsg = "($lastmsg)";
+						if (!empty($lastmsg)) {
+							$lastmsg = "($lastmsg)";
+						}
+						
 					}					
 			?>
 			<div class="item">
-				<span class="circle <?=$bgCir?>"></span>
+				<!--<span class="circle <?=$bgCir?>"></span>-->
+				<img class="friend-avatar" src="<?=base_url()?>files/user/<?=$item->signature?>" />
 				<a href="<?=base_url()?>tu-van/dt<?=$item->user_id?>" class="name <?=$status?>"><?=$item->fullname?></a>
-				<span class="lastmsg"><?=$lastmsg?></span>
+				<?=$online_status?>
 			</div>
 			<?php	
 				}

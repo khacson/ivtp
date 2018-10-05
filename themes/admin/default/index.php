@@ -47,7 +47,7 @@
 <script src="<?=url_tmpl();?>js/bootbox.min.js" type="text/javascript"></script>
 <script src="<?=url_tmpl();?>assets/plugins/jquery-validation/dist/jquery.validate.js" type="text/javascript"></script>
 <script src="<?=url_tmpl();?>assets/plugins/jquery-validation/dist/jquery.form.js" type="text/javascript"></script>
-<script src="<?=url_tmpl();?>js/main.js?ver=1.0" type="text/javascript"></script>
+<script src="<?=url_tmpl();?>js/main.js?ver=1.1" type="text/javascript"></script>
 <script src="<?=url_tmpl();?>js/jquery-ui.js" type="text/javascript"></script>
 <!--<script src="<?=url_tmpl();?>js/jqClock.min.js" type="text/javascript"></script>-->
 <script src="<?=url_tmpl();?>js/colResizable-1.5.min.js" type="text/javascript"></script>

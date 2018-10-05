@@ -244,6 +244,12 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 							var avatar = array[i]['avatar'];
 							var img_url = getImgSrc(avatar);
 							var text = striptags(msg); //console.log(msg);console.log(text);
+							if (text == '' && msg.indexOf('class="img-msg"') != -1) {
+								text = 'Đã gửi một ảnh mới';
+							}
+							else if (msg.indexOf('<span class="fa fa-download"></span>') != -1) {
+								text = 'Đã gửi một file mới';
+							}
 							notifyMe(name, img_url, text, '', 0);
 							$scope.hideAlert(array[i]['chat_code'], name, avatar, msg, ping);
 							alert = 1;

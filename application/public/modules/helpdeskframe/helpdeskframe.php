@@ -111,7 +111,7 @@ class Helpdeskframe extends CI_Controller {
 	function checkNewAlert() {
 		$login = $this->site->getSession('pblogin');
 		if (empty($login)) {
-			return -1;
+			echo json_encode(array()); die;
 		}
 		$rs = $this->model->getNewAlert($login);
 		return $rs;

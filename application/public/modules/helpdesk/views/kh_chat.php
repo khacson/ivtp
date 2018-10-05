@@ -247,7 +247,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 				}
 				
 				i--;
-				if (array[i]['type']) {
+				if (array[i] && array[i]['type']) {
 					var name = array[i]['name'];
 					var msg = array[i]['msg'];
 					var avatar = array[i]['avatar'];

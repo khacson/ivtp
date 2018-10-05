@@ -81,6 +81,9 @@ form .framestar {
     border-color: #ffca0b;
     transition: all 0.3s ease-out 0s;
 }
+.img-msg {
+    max-width: 220px;
+}
 </style>
 <div ng-app="app">
 	<div ng-controller="chatCtrl">
@@ -277,7 +280,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 				}
 				
 				i--;
-				if (array[i]['type']) {
+				if (array[i] && array[i]['type'] == 1) {
 					var name = array[i]['name'];
 					var msg = array[i]['msg'];
 					var avatar = array[i]['avatar'];
