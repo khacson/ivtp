@@ -22,7 +22,7 @@ foreach ($datas as $item) {
 			<textarea hidden class="json"><?=$item->rows?></textarea>
 		</td>
 		<td class="center"><?=$i;?></td>
-		<td class=""><a target="_blank" href="<?=admin_url()?>helpdesk"><?=$hiddenChar?><?=$item->fullname?></a></td>
+		<td class=""><a target="_blank" href="<?=admin_url()?>helpdesk?m=<?=$item->member_id?>"><?=$hiddenChar?><?=$item->fullname?></a></td>
 		<td><?=date('d/m/Y H:i:s', strtotime($item->datecreate));?></td>
 		<?php 
 			foreach ($colList as $col) { 

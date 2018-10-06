@@ -38,4 +38,34 @@ use Firebase\JWT\JWT;
 		$array['last_response_utc'] = gmdate('Y-m-d H:i:s', time());
 		$this->model->table('ivt_users_chat')->where('chat_code', $chat_code)->update($array);
 	}
+	function create_chatcode($user_id, $member_id, $firebasedb, $isGuest) {
+		//moi khach hang chat nhieu lan trong ngay thi dung chung 1 ma chat
+		if ($isGuest) {
+			$chat_code = 'C'.$user_id.'G'.$member_id;
+		}
+		else {
+			$chat_code = 'C'.$user_id.'M'.$member_id;
+		}
+		$check = $this->check_exist_chatcode($chat_code); 
+		if (empty($check)) {
+			$array['chat_code'] = $chat_code;
+			$array['user_id'] = $user_id;
+			$array['member_id'] = $member_id;
+			$array['firebasedb'] = $firebasedb;
+			$array['datecreate']  = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+			$this->model->table('ivt_users_chat')->insert($array);	
+		}
+		else {
+			$array['dateupdate']  = gmdate("Y-m-d H:i:s", time() + 7 * 3600);
+			$this->model->table('ivt_users_chat')->where('id', $check->id)->update($array);	
+		}
+		return $chat_code;
+	}
+	function check_exist_chatcode($chat_code) {	
+		$rs = $this->model->table('ivt_users_chat')
+						->select('id')
+						->where('chat_code', $chat_code)
+						->find();
+		return $rs;
+	}
 }

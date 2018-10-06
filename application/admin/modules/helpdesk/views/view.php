@@ -50,6 +50,7 @@
 							<span class="have-new-msg-icon {{chatCode.ping ? 'show' : 'hide'}}"></span>
 							<span class="last-msg">{{chatCode.msg}}</span>
 						</div>
+						<span class="chatcode hide {{chatCode.chat_code}}"></span>
 						<span class="customer-name">{{chatCode.name}}</span>
 						<span class="end-chat" ng-click="end_chat($index)"></span>
 					</li>
@@ -226,6 +227,13 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		$('.customers').show();
 		
 		$scope.setTitle();
+		<?php 
+			if (!empty($_GET['m'])) {
+		?>		
+				$scope.addCustomerToChatList(<?=$_GET['m']?>);
+		<?php
+			}
+		?>
 	}
 	
 	
@@ -250,7 +258,9 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 							else if (msg.indexOf('<span class="fa fa-download"></span>') != -1) {
 								text = 'Đã gửi một file mới';
 							}
-							notifyMe(name, img_url, text, '', 0);
+							if (text) {
+								notifyMe(name, img_url, text, '', 0);
+							}
 							$scope.hideAlert(array[i]['chat_code'], name, avatar, msg, ping);
 							alert = 1;
 						}
@@ -486,6 +496,39 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   success : function(data) {
 			   
 		   }
+		});
+	}
+	$scope.addCustomerToChatList = function(member_id) {
+		var data = {};
+		data['member_id'] = member_id;
+		$.ajax({
+		   url : controller + 'getMemberInfo',
+		   type : 'POST',
+		   data : data,
+		   success : function(data) {
+			   //console.log(data);
+			   if (data.substr(0,1) == '{') {
+				   var obj = JSON.parse(data);
+				   var member_avatar = '<img class="avatar" src="<?=base_url()?>files/user/'+ obj.avatar +'">'
+				   $scope.add_to_chat_list(obj.chat_code, obj.fullname, member_avatar);
+				   $scope.show_chat_log(obj.chat_code, obj.fullname, member_avatar);
+				   setTimeout(function(){
+					   $('span.chatcode.' + obj.chat_code).parents('li').first().addClass('active');
+				   }, 1000);
+				   
+			   }
+		   }
+		});
+	}
+	$scope.add_to_chat_list = function(chat_code, customername, avatar) {
+		dbping.child(user_id).child(chat_code).set({
+			chat_code: chat_code,
+			name: customername,
+			ping: 1,
+			alertUser: 1,
+			alertCustomer: 0,
+			msg: '',
+			avatar: avatar
 		});
 	}
 	

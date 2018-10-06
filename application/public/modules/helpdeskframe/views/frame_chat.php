@@ -81,7 +81,7 @@ form .framestar {
     border-color: #ffca0b;
     transition: all 0.3s ease-out 0s;
 }
-.img-msg {
+.log-msg img {
     max-width: 220px;
 }
 </style>

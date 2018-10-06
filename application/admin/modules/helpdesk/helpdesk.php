@@ -295,5 +295,18 @@ class Helpdesk extends CI_Controller {
 		$this->model->table('ivt_users_chat_detail')->insert($array);
 		$this->model->update_last_response($array['chat_code'], $array['datecreate']);
 	}
+	function getMemberInfo() {
+		$member_id = $this->input->post('member_id');
+		$rs = $this->base_model->getMemberInfo($member_id);
+		if (empty($rs)) {
+			$rs = array();
+			echo json_encode($rs);die;
+		}
+		$login = $this->login;
+		$user_id = $login->id;
+		$dbinfo = $this->model->get_firebasedb_info($user_id);
+		$rs->chat_code = $this->model->create_chatcode($user_id, $member_id, $dbinfo->id, 0);
+		echo json_encode($rs, JSON_UNESCAPED_UNICODE);die;
+	}
 	
 }

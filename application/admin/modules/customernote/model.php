@@ -44,7 +44,7 @@
 		return $sql;
 	}
 	function getList($search,$page,$numrows){
-		$sql = "SELECT c.*, u.username, m.fullname
+		$sql = "SELECT c.*, u.username, m.fullname, m.id as member_id
 				FROM ivt_customernote_row c
 				INNER JOIN ivt_users u ON u.id = c.user_id
 				LEFT JOIN ivt_member m ON m.id = c.member_id
