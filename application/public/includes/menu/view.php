@@ -79,7 +79,7 @@
 			  <?php }?>
 			</li>
 			<li class="<?=$arrActive['tu-van']?>"><a href="<?=base_url();?>tu-van.html">Tổ tư vấn độc lập</a> </li>
-			<li class="<?=$arrActive['danh-muc-dau-tu']?>"><a href="javascript:;">Danh mục đầu tư</a>
+			<li class="<?=$arrActive['danh-muc-dau-tu']?>"><a href="javascript:;">Trung tâm phân tích</a>
 			  <!-- RD Navbar Dropdown-->
 			  <ul class="rd-navbar-dropdown">
 				<li><a href="<?=base_url();?>danh-muc-tang-truong.html">Danh mục tăng trưởng</a></li>

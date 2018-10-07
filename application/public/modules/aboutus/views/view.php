@@ -81,7 +81,7 @@
                       <p class="offset-top-20 text-justify">
 						Xu hướng thị trường: Ipro cung cấp các dự báo xu hướng thị trường và tổng hợp các bài nhận định xu hướng của các CTCK hàng đầu Việt Nam.
 						<br>
-						Danh mục đầu tư: Ipro cung cấp các bài đánh giá về cổ phiếu; danh mục cổ phiếu tăng trưởng và tổng hợp các bài phân tích về doanh nghiệp của các CTCK hàng đầu Việt Nam.
+						Trung tâm phân tích: Ipro cung cấp các bài đánh giá về cổ phiếu; danh mục cổ phiếu tăng trưởng và tổng hợp các bài phân tích về doanh nghiệp của các CTCK hàng đầu Việt Nam.
                     </div>
                   </div>
                 </div>

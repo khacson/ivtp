@@ -71,9 +71,9 @@ class Investment extends CI_Controller {
 			$content = $this->load->view('404',$data,true);
 		}
 		
-		$title = 'Danh mục đầu tư';
-		$des = 'Danh mục đầu tư';
-		$keyword = 'Danh mục đầu tư';
+		$title = 'Trung tâm phân tích';
+		$des = 'Trung tâm phân tích';
+		$keyword = 'Trung tâm phân tích';
 		if ($data->catalogFind) {
 			$title = $data->catalogFind->catalog_name;
 			$des = $title;
