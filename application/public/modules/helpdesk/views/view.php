@@ -114,10 +114,7 @@
 							<div class="user_info cskh">
 								<img class="user_img" src="<?=base_url()?>files/user/<?=$item->signature?>">
 								<p class="username"><?=$item->fullname?></p>
-								<p class="views text-center">
-									Bạn có thắc mắc về dịch vụ của chúng tôi?
-									<br>Bạn có những bức xúc về nhân viên tư vấn?
-									<br>Hãy chat với chúng tôi, chúng tôi sẽ cố hết sức để giúp bạn.
+								<p class="views text-center">Chúng tôi luôn sẵn sàng hỗ trợ bạn. <br>Hãy chia sẻ cho chúng tôi những góp ý và phản hồi của bạn.
 								</p>
 							</div>
 							<span class="chatbtn" href="javascript:;"></span>

@@ -16,7 +16,8 @@ foreach ($datas as $item) {
 		</td>
 		
         <td class="text-center"><img src="<?php echo base_url().'files/investment/thumb/'.$item->thumb?>" alt="img" width="100"></td>	
-		<td class="text-center"><input value="<?=$item->isshow;?>" class="isshow" id="<?=$item->id;?>" <?php if($item->isshow == 1){?> checked <?php }?> type="checkbox" /></td>
+		<td class="text-center"><input class="show_home" value="<?=$item->isshow;?>" class="isshow" id="<?=$item->id;?>" <?php if($item->isshow == 1){?> checked <?php }?> type="checkbox" /></td>
+		<td class="text-center"><input value="<?=$item->show_home;?>" class="show_home" id="<?=$item->id;?>" <?php if($item->show_home == 1){?> checked <?php }?> type="checkbox" /></td>
 		<td class="datecreate"><?=$item->datecreate;?></td>
 		<td class="usercreate"><?=$item->usercreate;?></td>
 		<td></td>

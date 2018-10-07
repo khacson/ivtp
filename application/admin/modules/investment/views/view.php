@@ -6,7 +6,8 @@
 	table col.c5 { width: 70px; }
 	table col.c6 { width: 150px; }
 	table col.c7 { width: 150px; }
-	table col.c8 { width: auto; }
+	table col.c8 { width: 150px; }
+	table col.c9 { width: auto; }
 </style>
 <!-- BEGIN PORTLET-->
 <form method="post" enctype="multipart/form-data">
@@ -102,7 +103,7 @@
                 <div id="cHeader">
                     <div id="tHeader">    	
                         <table id="tbheader" width="100%" cellspacing="0" border="1" >
-                            <?php for ($i = 1; $i < 9; $i++) { ?>
+                            <?php for ($i = 1; $i < 10; $i++) { ?>
                                 <col class="c<?= $i; ?>">
                             <?php } ?>
                             <tr>
@@ -111,6 +112,7 @@
                                 <th id="ord_title">Tiêu đề</th>
                                 <th id="ord_img">Hình ảnh</th>
 								<th id="">Hiển thị</th>
+								<th id="">Hiển thị trang chủ</th>
                                 <th id="ord_datecreate">Ngày tạo</th>
                                 <th id="ord_usercreate">Người tạo</th>
                                 <th></th>
@@ -123,7 +125,7 @@
                 <div id="data">
                     <div id="gridView">
                         <table id="tbbody" width="100%" cellspacing="0" border="1">
-                            <?php for ($i = 1; $i < 8; $i++) { ?>
+                            <?php for ($i = 1; $i < 10; $i++) { ?>
                                 <col class="c<?= $i; ?>">
                             <?php } ?>
                             <tbody id="grid-rows"></tbody>
@@ -258,6 +260,20 @@
 				var value = $(this).attr('value'); 
                 $.ajax({ 
 					url: controller + 'isshow',
+					type: 'POST',
+					async: false,
+					data: {id:id, value:value},
+					success: function(datas) { $('.loading').hide();}
+				 });
+            });
+        });
+        $('.show_home').each(function(e) {
+            $(this).click(function() {
+				$('.loading').show();
+                var id = $(this).attr('id');
+				var value = $(this).is(':checked') ? 1 : 0; 
+                $.ajax({ 
+					url: controller + 'show_home',
 					type: 'POST',
 					async: false,
 					data: {id:id, value:value},

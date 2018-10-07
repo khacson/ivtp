@@ -281,4 +281,11 @@ class Investment extends CI_Controller {
 		$array['isshow'] = $value * -1 + 1;
 		$this->model->table('ivt_investment')->save($id,$array);	
 	}
+	function show_home(){
+		$array = array();
+		$id = $this->input->post('id');
+		$value = $this->input->post('value');
+		$array['show_home'] = $value;
+		$this->model->table('ivt_investment')->save($id,$array);	
+	}
 }

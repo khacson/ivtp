@@ -38,45 +38,9 @@
           </div>
         </div>
       </div>
-      <main class="page-content">
-		<!-- Danh mục khuyến nghị IPro-->
-        <section class="section-80 section-md-20 bg-selago">
-          <div class="inset-md-left-35 inset-xl-left-125 inset-md-right-35 inset-xl-right-125">
-            <div class="shell-wide shell-wide-custom">
-              <hr class="divider bg-bermuda">
-              <div class="offset-top-20">
-                <h3 class="text-primary">DANH MỤC KHUYẾN NGHỊ</h3>
-              </div>
-              <div class="range range-xs-center range-lg-left text-left">
-                <!--S Item 1-->
-				<?php foreach($investment as $item){?>
-				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-4">
-                  <div class="post-box shadow-drop post-box-max-width-none reveal-block">
-                    <div class="post-box-img-wrap"><a class="thumbnail-robben" href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="320" height="442" alt=""></span></a></div>
-                    <div class="post-box-caption post-box-bottom-radius bg-white">
-                      <h5 class="offset-top-15"><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a></h5>
-                      <p class="offset-top-20">
-						<?=strlen($item->description_sort) < 190 ? $item->description_sort : substr($item->description_sort, 0, 190).'...';?>
-					  </p>
-                      <ul class="list-inline list-inline-20 offset-top-22">
-                        <li>
-						<i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
-						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($item->dateupdate));?> </span></li>
-                        <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i>
-<span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#"><?=$item->comment;?> Comments</a></span></li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-				<!--S Item 2-->
-                <?php }?>
-              </div><a class="btn btn-width-200 btn-primary offset-top-35 offset-md-top-65" href="<?=base_url();?>danh-muc-dau-tu/danh-muc-khuyen-nghi-ipro.html">Xem tất cả</a>
-            </div>
-          </div>
-        </section>
-        
+      <main class="page-content">      
 		<!--S Tin tuc-->
-        <section class="section-80 section-md-20 bg-selago" style="padding-top: 0;">
+        <section class="section-80 section-md-20 bg-selago">
           <div class="inset-md-left-35 inset-xl-left-125 inset-md-right-35 inset-xl-right-125">
             <div class="shell-wide shell-wide-custom">
               <hr class="divider bg-bermuda">
@@ -111,6 +75,43 @@
           </div>
         </section>
 		<!--E Tin tuc-->
+		
+		<!-- Danh mục khuyến nghị IPro-->
+        <section class="section-80 section-md-20 bg-selago" style="padding-top: 0;">
+          <div class="inset-md-left-35 inset-xl-left-125 inset-md-right-35 inset-xl-right-125">
+            <div class="shell-wide shell-wide-custom">
+              <hr class="divider bg-bermuda">
+              <div class="offset-top-20">
+                <h3 class="text-primary">TRUNG TÂM PHÂN TÍCH</h3>
+              </div>
+              <div class="range range-xs-center range-lg-left text-left">
+                <!--S Item 1-->
+				<?php foreach($investment as $item){?>
+				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-4">
+                  <div class="post-box shadow-drop post-box-max-width-none reveal-block">
+                    <div class="post-box-img-wrap"><a class="thumbnail-robben" href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="320" height="442" alt=""></span></a></div>
+                    <div class="post-box-caption post-box-bottom-radius bg-white">
+                      <h5 class="offset-top-15"><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a></h5>
+                      <p class="offset-top-20">
+						<?=strlen($item->description_sort) < 190 ? $item->description_sort : substr($item->description_sort, 0, 190).'...';?>
+					  </p>
+                      <ul class="list-inline list-inline-20 offset-top-22">
+                        <li>
+						<i class="fa fa-calendar icon icon-normal icon-sm font14" aria-hidden="true"></i>
+						<span class="text-middle inset-left-10 text-italic"><?=date('d/m/Y',strtotime($item->dateupdate));?> </span></li>
+                        <li><i class="fa fa-comment-o icon icon-normal icon-sm font14" aria-hidden="true"></i>
+<span class="text-middle inset-left-10 text-italic p"><a class="text-gray-light" href="#"><?=$item->comment;?> Comments</a></span></li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+				<!--S Item 2-->
+                <?php }?>
+              </div><a class="btn btn-width-200 btn-primary offset-top-35 offset-md-top-65" href="<?=base_url();?>danh-muc-dau-tu/danh-muc-khuyen-nghi-ipro.html">Xem tất cả</a>
+            </div>
+          </div>
+        </section>
+		
         <section>
           <div class="rd-google-map-wrap">
             <div class="section-60 section-md-0 inset-left-15 inset-right-15 inset-md-left-0 inset-md-right-0">
