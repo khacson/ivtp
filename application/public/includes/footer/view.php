@@ -17,6 +17,49 @@
 			</div>
           </div>
         </div>
+<?php 
+	if (!empty($_SESSION['expiredDate'])) {
+		$t = $_SESSION['expiredDate'];
+		if ($t > 0) {
+			$msg = "Gói dịch vụ của bạn còn <b>$t ngày</b> nữa sẽ hết hạn.";
+		}
+		else {
+			$msg = "Gói dịch vụ của bạn đã hết hạn.";
+		}
+?>
+<!-- Modal -->
+<a id="showModals" class="hide" data-toggle="modal" href="#myModals"> </a>
+<div id="myModals" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h6 class="modal-title text-left">Thông báo</h6>
+      </div>
+      <div id="modal_content" class="modal-body">
+        <p><?=$msg?></p>
+        <p>Bạn có muốn gia hạn thêm để tiếp tục sử dụng dịch vụ không?</p>
+		<div class="actionbutton">
+			<a class="btn btn-primary sendcustomernote" href="<?=base_url();?>dich-vu.html">Gia hạn ngay</a>
+		</div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$(window).ready(function(){console.log(1);
+	setTimeout(function(){
+		$('#showModals').get(0).click();
+	}, 800);
+	
+})
+</script>
+<?php
+		unset($_SESSION['expiredDate']);
+	}
+?>
+
 		
 <?php 
 	$uri = $_SERVER['REQUEST_URI'];

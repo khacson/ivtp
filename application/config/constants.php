@@ -27,6 +27,7 @@ define('SLIDE_HEIGHT', 550);
 define('DISCOUNT_RATE_1', 0.1);
 define('DISCOUNT_RATE_2', 0.15);
 define('DAY_FREE', 30);
+define('ALERT_DAY', 5);
 
 /*
 |--------------------------------------------------------------------------

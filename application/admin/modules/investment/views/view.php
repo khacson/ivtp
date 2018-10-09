@@ -3,11 +3,10 @@
 	table col.c2 { width: 60px; }
 	table col.c3 { width: 280px; }
 	table col.c4 { width: 150px; }
-	table col.c5 { width: 70px; }
+	table col.c5 { width: 150px; }
 	table col.c6 { width: 150px; }
 	table col.c7 { width: 150px; }
-	table col.c8 { width: 150px; }
-	table col.c9 { width: auto; }
+	table col.c8 { width: auto; }
 </style>
 <!-- BEGIN PORTLET-->
 <form method="post" enctype="multipart/form-data">
@@ -103,7 +102,7 @@
                 <div id="cHeader">
                     <div id="tHeader">    	
                         <table id="tbheader" width="100%" cellspacing="0" border="1" >
-                            <?php for ($i = 1; $i < 10; $i++) { ?>
+                            <?php for ($i = 1; $i < 9; $i++) { ?>
                                 <col class="c<?= $i; ?>">
                             <?php } ?>
                             <tr>
@@ -111,7 +110,6 @@
                                 <th>STT</th>
                                 <th id="ord_title">Tiêu đề</th>
                                 <th id="ord_img">Hình ảnh</th>
-								<th id="">Hiển thị</th>
 								<th id="">Hiển thị trang chủ</th>
                                 <th id="ord_datecreate">Ngày tạo</th>
                                 <th id="ord_usercreate">Người tạo</th>
@@ -125,7 +123,7 @@
                 <div id="data">
                     <div id="gridView">
                         <table id="tbbody" width="100%" cellspacing="0" border="1">
-                            <?php for ($i = 1; $i < 10; $i++) { ?>
+                            <?php for ($i = 1; $i < 9; $i++) { ?>
                                 <col class="c<?= $i; ?>">
                             <?php } ?>
                             <tbody id="grid-rows"></tbody>

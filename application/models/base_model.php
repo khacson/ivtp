@@ -437,6 +437,49 @@ class base_model extends CI_Model {
 		return 0;
 	}
 	
+	function checkExpiredDate($member_id) {//return $this->setSessionExpiredDate(-1);
+		$pblogin = $this->site->getSession('pblogin');
+		if (empty($pblogin)) {
+			return 0;
+		}
+		
+		$today = gmdate('Y-m-d H:i:s', time() + 7*3600);
+		//kiem tra co dk dich vu hay k
+		$rs = $this->model->table('ivt_member_level')
+						  ->select('level, to_date')
+						  ->where('member_id', $pblogin->id)
+						  ->where('active_status', 1)
+						  ->where("to_date >= '$today'")
+						  ->order_by('dateupdate desc')
+						  ->find();
+		if (!empty($rs->level)) {
+			$t = (strtotime($rs->to_date) - strtotime($today))/86400;
+			if ($t <= ALERT_DAY) {
+				return $this->setSessionExpiredDate($t);
+			}
+			return '';
+		}
+		//mien phi 30 ngay
+		$rs = $this->model->table('ivt_member')
+						  ->select('dateactice')
+						  ->where('id', $pblogin->id)
+						  ->where('active', 1)
+						  ->find();
+		if (!empty($rs->dateactice)) {
+			$t = (strtotime($today) - strtotime($rs->dateactice))/86400;
+			$t = DAY_FREE - $t;
+			if ($t <= ALERT_DAY) {
+				return $this->setSessionExpiredDate($t);
+			}
+			return '';
+		}
+		return $this->setSessionExpiredDate(-1);
+	}
+	
+	function setSessionExpiredDate($t) {
+		$_SESSION['expiredDate'] = ceil($t);
+	}
+	
 	function getMemberInfo($memberID) {
 		$rs = $this->model->table('ivt_member')
 						  ->select('*')

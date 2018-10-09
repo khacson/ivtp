@@ -68,6 +68,7 @@ class Member extends CI_Controller {
 				$now = gmdate('Y-m-d H:i:s', time() + 7*3600);
 				$sql = "UPDATE ivt_member set lastlogin = '$now' WHERE id = ".$query->id;
 				$this->model->executeQuery($sql);
+				$this->base_model->checkExpiredDate($query->id);
 				echo 1; exit;
 			}
 		}
