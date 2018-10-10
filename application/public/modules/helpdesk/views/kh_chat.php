@@ -526,4 +526,4 @@ function striptags(html) {
 	return text;
 }
 </script>	
-<script src="<?= url_tmpl(); ?>js/chatfunc.js?v=2.1" type="text/javascript"></script>
+<script src="<?= url_tmpl(); ?>js/chatfunc.js?v=2.2" type="text/javascript"></script>
