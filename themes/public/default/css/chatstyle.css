@@ -172,6 +172,7 @@
 	padding: 10px;
 	background-color: #fff;
 	clear: both;
+	overflow: auto;
 }
 .insert{
 	display: inline-block;

@@ -12,7 +12,7 @@
 <link rel="stylesheet" type="text/css" href="<?=url_tmpl();?>font-awesome-4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="<?=url_tmpl();?>css/style.css">
 <link rel="stylesheet" href="<?=url_tmpl();?>css/chaticon.css">
-<link rel="stylesheet" href="<?=url_tmpl();?>css/frame_chat.css">
+<link rel="stylesheet" href="<?=url_tmpl();?>css/frame_chat.css?ver=1.0">
 <script>
   // Initialize Firebase
   var config = <?=$configdb?>;
@@ -197,7 +197,7 @@ form .framestar {
 						<span class="chaticon e1f608" data="1f608"></span>
 					</div>
 				</form>
-				<div id="customernotearea" class="customernotearea">
+				<div id="customernotearea" class="customernotearea hide">
 					<p>Bạn có hài lòng về nhân viên tư vấn không?</p>
 					<textarea placeholder="Ý kiến của bạn" class="customer_note"></textarea>
 					<div class="actionbutton">
@@ -318,6 +318,13 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
 		
+		var html = input_msg.html();
+		if (html.substr(0,4) == '<img' && html.indexOf('base64,') != -1) {
+			var base64Src = $(html).attr('src');
+			$scope.sendPasteImg(base64Src);
+			return;
+		}
+		
 		removeBr('#input-msg');
 		var msg = input_msg.html();
 		msg = convertLink(msg);
@@ -362,6 +369,25 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		move_to_bottom('.chat_log_list');
 		$scope.save_chat_to_db(chat_code, customername, avatar, msg, dateTimeLog);
     }
+	$scope.sendPasteImg = function(base64Src) {
+		$('.loading-overplay').show();
+		var formData = new FormData();
+		formData.append('base64Src', base64Src);
+
+		$.ajax({
+		   url : controller + '/createImgFromBase64',
+		   type : 'POST',
+		   data : formData,
+		   processData: false,  // tell jQuery not to process the data
+		   contentType: false,  // tell jQuery not to set contentType
+		   success : function(data) {
+			   if (data.indexOf('upload/chat') != -1) {
+				   $scope.sendChatImage(data);
+			   }
+			   $('.loading-overplay').hide();
+		   }
+		});
+	}
 	$scope.sendChatFile = function(file_src, filename) {
 		$scope.add_to_chat_list('Đã gửi một file mới');
 		
@@ -608,13 +634,13 @@ $(window).ready(function(){
 		for (var i = 1; i<= number; i++) {
 			$('#star'+ i).addClass('orangeclick');
 		}
-		$('#customernotearea').addClass('showcustomerarea');
+		$('#customernotearea').addClass('showcustomerarea').removeClass('hide');
 		
 	})
 	$('#customernotearea .sendcustomernote').click(function(){
 		save_rating();
-		$('#customernotearea').removeClass('showcustomerarea');
+		$('#customernotearea').removeClass('showcustomerarea').addClass('hide');
 	})
 })
 </script>	
-<script src="<?= url_tmpl(); ?>js/chatfunc.js?v=2.0" type="text/javascript"></script>
+<script src="<?= url_tmpl(); ?>js/chatfunc.js?v=2.1" type="text/javascript"></script>

@@ -8,7 +8,7 @@
 <!-- AngularFire -->
 <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 <link rel="stylesheet" href="<?=url_tmpl();?>css/chaticon.css">
-<link rel="stylesheet" href="<?=url_tmpl();?>css/chatstyle.css">
+<link rel="stylesheet" href="<?=url_tmpl();?>css/chatstyle.css?ver=1.0">
 <script>
   // Initialize Firebase
   var config = <?=$configdb?>;
@@ -195,6 +195,12 @@
 	
 	
 <script>
+
+$("#input-msg").bind("paste", function(e){       
+    var pastedData = e.target.value;
+    console.log(pastedData);
+} )
+
 var base_url = '<?=base_url();?>';
 var token = '<?=$token?>';
 var chat_code = '<?=$chat_code?>';
@@ -282,6 +288,13 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
+		
+		var html = input_msg.html();
+		if (html.substr(0,4) == '<img' && html.indexOf('base64,') != -1) {
+			var base64Src = $(html).attr('src');
+			$scope.sendPasteImg(base64Src);
+			return;
+		}
 		
 		removeBr('#input-msg');
 		var msg = input_msg.html();
@@ -403,6 +416,25 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   }
 		});
 	}
+	$scope.sendPasteImg = function(base64Src) {
+		$('.loading-overplay').show();
+		var formData = new FormData();
+		formData.append('base64Src', base64Src);
+
+		$.ajax({
+		   url : controller + '/createImgFromBase64',
+		   type : 'POST',
+		   data : formData,
+		   processData: false,  // tell jQuery not to process the data
+		   contentType: false,  // tell jQuery not to set contentType
+		   success : function(data) {
+			   if (data.indexOf('upload/chat') != -1) {
+				   $scope.sendChatImage(data);
+			   }
+			   $('.loading-overplay').hide();
+		   }
+		});
+	}
 	$scope.uploadFile = function() {
 		$('.loading-overplay').show();
 		var formData = new FormData();
@@ -494,4 +526,4 @@ function striptags(html) {
 	return text;
 }
 </script>	
-<script src="<?= url_tmpl(); ?>js/chatfunc.js?v=2.0" type="text/javascript"></script>
+<script src="<?= url_tmpl(); ?>js/chatfunc.js?v=2.1" type="text/javascript"></script>

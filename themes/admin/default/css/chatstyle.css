@@ -183,6 +183,10 @@
 	padding: 10px;
 	background-color: #fff;
 	clear: both;
+	overflow: auto;
+}
+.input-msg img{
+    max-width: 100%;
 }
 .insert{
 	display: inline-block;

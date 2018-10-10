@@ -8,7 +8,7 @@
 <!-- AngularFire -->
 <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
 <link rel="stylesheet" href="<?=url_tmpl();?>css/chaticon.css">
-<link rel="stylesheet" href="<?=url_tmpl();?>css/chatstyle.css">
+<link rel="stylesheet" href="<?=url_tmpl();?>css/chatstyle.css?ver=1.0">
 <script>
   // Initialize Firebase
   var config = <?=$configdb?>;
@@ -258,6 +258,13 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		var input_msg = $('#input-msg');
 		var dateTimeLog = getDateTime(false);
 		
+		var html = input_msg.html();
+		if (html.substr(0,4) == '<img' && html.indexOf('base64,') != -1) {
+			var base64Src = $(html).attr('src');
+			$scope.sendPasteImg(base64Src);
+			return;
+		}
+		
 		removeBr('#input-msg');
 		var msg = input_msg.html();
 		msg = convertLink(msg);
@@ -302,6 +309,25 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		move_to_bottom('.chat_log_list');
 		$scope.save_chat_to_db(chat_code, customername, avatar, msg, dateTimeLog);
     }
+	$scope.sendPasteImg = function(base64Src) {
+		$('.loading-overplay').show();
+		var formData = new FormData();
+		formData.append('base64Src', base64Src);
+
+		$.ajax({
+		   url : controller + '/createImgFromBase64',
+		   type : 'POST',
+		   data : formData,
+		   processData: false,  // tell jQuery not to process the data
+		   contentType: false,  // tell jQuery not to set contentType
+		   success : function(data) {
+			   if (data.indexOf('upload/chat') != -1) {
+				   $scope.sendChatImage(data);
+			   }
+			   $('.loading-overplay').hide();
+		   }
+		});
+	}
 	$scope.sendChatFile = function(file_src, filename) {
 		$scope.add_to_chat_list('');
 		

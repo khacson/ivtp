@@ -204,4 +204,18 @@ class Helpdesk extends CI_Controller {
         $result->content = $this->load->view('chat_history', $data, true);
 		echo json_encode($result);
 	}
+	function createImgFromBase64() {
+		$base64Src = $this->input->post('base64Src');
+		$base64Src = str_replace(array('data:image/', ';base64'), '', $base64Src);
+		$arr = explode(',', $base64Src);
+		if ($arr[1]) {
+			$content = base64_decode($arr[1]);
+			$ext = $arr[0];
+			$filename = uniqid().".$ext";
+			file_put_contents("upload/chat/$filename", $content);
+			echo base_url().'upload/chat/'.$filename; die;
+		}
+		echo ''; die;
+	}
+	
 }

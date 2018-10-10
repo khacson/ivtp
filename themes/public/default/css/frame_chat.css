@@ -179,6 +179,10 @@
 	clear: both;
 	text-align: left;
 	overflow-x: hidden;
+	overflow-y: auto;
+}
+.input-msg  img{
+    max-width: 100%;
 }
 .insert{
 	display: inline-block;

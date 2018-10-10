@@ -39,7 +39,7 @@
       </div>
       <div id="modal_content" class="modal-body">
         <p><?=$msg?></p>
-        <p>Bạn có muốn gia hạn thêm để tiếp tục sử dụng dịch vụ không?</p>
+        <p>Hãy gia hạn ngay để tiếp tục sử dụng các dịch vụ của Ipro.</p>
 		<div class="actionbutton">
 			<a class="btn btn-primary sendcustomernote" href="<?=base_url();?>dich-vu.html">Gia hạn ngay</a>
 		</div>
@@ -68,7 +68,7 @@ $(window).ready(function(){console.log(1);
 <style>
 .framechat {
 	position: fixed;
-	bottom: 35px;
+	bottom: 28px;
 	right: 5px;
 	width: 310px;
 	height: 360px;
