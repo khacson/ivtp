@@ -381,6 +381,13 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   processData: false,  // tell jQuery not to process the data
 		   contentType: false,  // tell jQuery not to set contentType
 		   success : function(data) {
+			   if (data.substr(0, 9) == '<!DOCTYPE') {
+					warning('Bạn đã hết phiên làm việc. Hệ thống cần tải lại trang');
+					setTimeout(function(){
+					   window.location = '';
+					}, 3000);
+					return;
+			   }
 			   if (data.indexOf('upload/chat') != -1) {
 				   $scope.sendChatImage(data);
 			   }
@@ -459,6 +466,13 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   processData: false,  // tell jQuery not to process the data
 		   contentType: false,  // tell jQuery not to set contentType
 		   success : function(data) {
+			   if (data.substr(0, 9) == '<!DOCTYPE') {
+					warning('Bạn đã hết phiên làm việc. Hệ thống cần tải lại trang');
+					setTimeout(function(){
+					   window.location = '';
+					}, 3000);
+					return;
+			   }
 			   $scope.sendChatImage(data);
 			   $('.loading-overplay').hide();
 		   }
@@ -476,6 +490,13 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   processData: false,  // tell jQuery not to process the data
 		   contentType: false,  // tell jQuery not to set contentType
 		   success : function(data) {
+			   if (data.substr(0, 9) == '<!DOCTYPE') {
+					warning('Bạn đã hết phiên làm việc. Hệ thống cần tải lại trang');
+					setTimeout(function(){
+					   window.location = '';
+					}, 3000);
+					return;
+			   }
 			   var obj = JSON.parse(data);
 			   $scope.sendChatFile(obj.file_src, obj.filename);
 			   $('.loading-overplay').hide();
@@ -519,6 +540,13 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   type : 'POST',
 		   data : data,
 		   success : function(data) {
+			   if (data.substr(0, 9) == '<!DOCTYPE') {
+					warning('Bạn đã hết phiên làm việc. Hệ thống cần tải lại trang');
+					setTimeout(function(){
+					   window.location = '';
+					}, 3000);
+					return;
+			   }
 			   
 		   }
 		});
@@ -529,6 +557,13 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   type : 'POST',
 		   data : {},
 		   success : function(data) {
+			   if (data.substr(0, 9) == '<!DOCTYPE') {
+					warning('Bạn đã hết phiên làm việc. Hệ thống cần tải lại trang');
+					setTimeout(function(){
+					   window.location = '';
+					}, 3000);
+					return;
+			   }
 				token = data;
 		   }
 		});
@@ -550,6 +585,13 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		   type : 'POST',
 		   data : data,
 		   success : function(datas) {
+			   if (datas.substr(0, 9) == '<!DOCTYPE') {
+					warning('Bạn đã hết phiên làm việc. Hệ thống cần tải lại trang');
+					setTimeout(function(){
+					   window.location = '';
+					}, 3000);
+					return;
+			   }
 				var obj = JSON.parse(datas);
 				$('#modal_content').html(obj.content);
 				$('.loading-overplay').hide();
@@ -580,6 +622,13 @@ function save_rating() {
 		url: controller + 'save_rating',
 		data: {star: star, note: note, chat_code: chat_code},
 		success: function(data) {
+			   if (data.substr(0, 9) == '<!DOCTYPE') {
+					warning('Bạn đã hết phiên làm việc. Hệ thống cần tải lại trang');
+					setTimeout(function(){
+					   window.location = '';
+					}, 3000);
+					return;
+			   }
 			
 		},
 		error: function(){
