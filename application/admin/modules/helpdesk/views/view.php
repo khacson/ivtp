@@ -25,6 +25,19 @@
     color: #fff;
     font-size: 12px;
 }
+.readStatus{
+	font-size: 10px;
+	color: #733272;
+}
+.log-msg {
+	min-width: 185px;
+}
+.new-msg-form .typing {
+    display: inline-block;
+    font-size: 12px;
+    margin-top: 10px;
+	font-style: italic;
+}
 </style>
 
 <div ng-app="app">
@@ -64,11 +77,18 @@
 						</div>
 						<div class="log-msg {{chatLog.type ? '' : 'customer-active'}}">
 							<div class="msg-content"  ng-bind-html="chatLog.msg | unsafe"></div>
-							<span class="log-time">{{chatLog.dateTime}}</span>
+							<span class="log-time">
+								{{chatLog.dateTime}}
+								<span class="readStatus" ng-if="chatLog.type == 1 ">
+								 | {{chatLog.readStatus ? 'Đã nhận' : chatLog.readStatus == 0 ? 'Đã gửi' : 'Đã nhận'}}
+								{{}}
+								</span>
+							</span>
 						</div>
 					</div>
 				</div>
 				<form class="new-msg-form">
+					<span class="f-left typing"></span>
 					<span title="Upload file" id="insert-file" class="insert fright">
 						<span class="fa fa-file"></span>
 						<input onchange="angular.element(this).scope().uploadFile()" ng-model="file" type="file" id="input-file" value="" accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf" />
@@ -80,7 +100,7 @@
 					<span title="Chèn biểu tượng cảm xúc" id="insert-emotion" class="insert fright">
 						<span class="chaticon e1f60a" data="1f60a"></span>
 					</span>
-					<div id="input-msg" contenteditable="true" class="input-msg" ng-keyup="checkAndSendChat($event)"></div>
+					<div id="input-msg" contenteditable="true" class="input-msg" ng-keyup="checkAndSendChat($event)" ng-click="updateReadStatus()"></div>
 					<button hidden type="submit" ng-click="sendChat()" data=""></button>
 					
 					<div id="icon-motion-container" class="icon-motion-container" style="display: none;">
@@ -206,6 +226,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 	var title = $('title').text();
 	
     $scope.chatLogList = [];
+    $scope.chatLogReadStatus = [];
 	$('.new-msg-form').hide();
 	$('.customers').hide();
 	
@@ -221,6 +242,7 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		db = firebase.database().ref();
 		dblog = db.child('log');
 		dbping = db.child('ping');	
+		dbtyping = db.child('typing');
 		//lay danh sach khach hang dang chat voi nhan vien hien tai
 		ref = dbping.child(user_id);
 		$scope.chatCodeList = $firebaseArray(ref);
@@ -234,9 +256,36 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		<?php
 			}
 		?>
+		$scope.checkTyping();
 	}
 	
-	
+	$scope.checkTyping = function() {
+		setTimeout(function(){
+			if (current_chat_code) {
+				t = dbtyping.child(user_id).child(current_chat_code);
+				$scope.typing = $firebaseArray(t);
+				$scope.typing.$loaded().then(function(array) { 
+					for (var i = 0; i< array.length; i++) {
+						if (array[i]['$id'] == current_customer) {
+							var lastTyping = array[i]['lastTyping'];
+							var d1 = new Date();
+							var d2 = new Date(lastTyping);
+							var diff = Math.abs(d1-d2);
+							if (diff < 6000) {
+								$('.typing').text(current_customer + ' đang soạn tin ...');
+							}
+							else {
+								$('.typing').text('');
+							}
+						}	
+					}
+					
+				})	
+			}
+			
+			$scope.checkTyping();
+		}, 2000);
+	}
 	$scope.setTitle = function() {
 		setTimeout(function(){
 			$scope.chatCodeList.$loaded().then(function(array) {
@@ -322,7 +371,8 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 			dateTime : dateTimeLog,
 			user_id : user_id,
 			name: username,
-			avatar: avatars
+			avatar: avatars,
+			readStatus: 0
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
@@ -345,7 +395,8 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 			dateTime : dateTimeLog,
 			user_id : user_id,
 			name: username,
-			avatar: avatars
+			avatar: avatars,
+			readStatus: 0
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
@@ -393,7 +444,8 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 			dateTime : dateTimeLog,
 			user_id : user_id,
 			name: username,
-			avatar: avatars
+			avatar: avatars,
+			readStatus: 0
 		});
         input_msg.html('');
 		move_to_bottom('.chat_log_list');
@@ -405,6 +457,15 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		if (input_msg.trim() == '' || input_msg.trim() == '<br>') {
 			return;
 		}
+		
+		//update typing status
+		var time = getDateTime(true);
+		time = time.replace(/-/g, '/'); 
+		time = time.replace(/T/g, ' '); 
+		dbtyping.child(user_id).child(current_chat_code).child(user_id).set({
+			lastTyping: time,
+		});
+		
 		if (e.keyCode == 13) {
 			if (serviceGroup == 1) {
 				//group cskh thi ko chan email va phone
@@ -589,6 +650,23 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 			alertCustomer: 0,
 			msg: '',
 			avatar: avatar
+		});
+	}
+	$scope.updateReadStatus = function() {
+		$scope.chatLogList.$loaded().then(function(array) {
+			for (var i = 0; i< array.length; i++) {
+				if (array[i]['type'] == 0 && array[i]['readStatus'] == 0) {
+					dblog.child(current_chat_code).child(array[i]['$id']).set({
+						type : 0,//khach hang gui tin nhan
+						msg : array[i]['msg'],
+						dateTime : array[i]['dateTime'],
+						user_id : array[i]['user_id'],
+						name: array[i]['name'],
+						avatar: array[i]['avatar'],
+						readStatus: 1
+					});
+				}
+			}
 		});
 	}
 	
