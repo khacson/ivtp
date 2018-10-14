@@ -142,7 +142,7 @@ form .framestar {
 							<span class="log-time">
 								{{chatLog.dateTime}}
 								<span class="readStatus" ng-if="chatLog.type == 0">
-								 | {{chatLog.readStatus ? 'Đã nhận' : chatLog.readStatus == 0 ? 'Đã gửi' : 'Đã nhận'}}
+								 | {{chatLog.readStatus ? 'Đã xem' : chatLog.readStatus == 0 ? 'Đã gửi' : 'Đã xem'}}
 								{{}}
 								</span>
 							</span>
@@ -170,7 +170,7 @@ form .framestar {
 					<span title="Chèn biểu tượng cảm xúc" id="insert-emotion" class="insert fright">
 						<span class="chaticon 1f60a emotionicon"></span>
 					</span>
-					<div id="input-msg" contenteditable="true" class="input-msg" ng-keyup="checkAndSendChat($event)" ng-click="updateReadStatus()"></div>
+					<div id="input-msg" contenteditable="true" class="input-msg" ng-keyup="checkAndSendChat($event)" ng-focus="updateReadStatus()"></div>
 					<button hidden type="submit" ng-click="sendChat()" data=""></button>
 					
 					<div id="icon-motion-container" class="icon-motion-container" style="display: none;">
@@ -669,21 +669,27 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		});
 	}
 	$scope.updateReadStatus = function() {
-		$scope.chatLogList.$loaded().then(function(array) {
-			for (var i = 0; i< array.length; i++) {
-				if (array[i]['type'] == 1 && array[i]['readStatus'] == 0) {
-					dblog.child(chat_code).child(array[i]['$id']).set({
-						type : 1,//nv gui tin nhan
-						msg : array[i]['msg'],
-						dateTime : array[i]['dateTime'],
-						user_id : array[i]['user_id'],
-						name: array[i]['name'],
-						avatar: array[i]['avatar'],
-						readStatus: 1
-					});
-				}
+		setTimeout(function(){
+			if ($('#input-msg').is(':focus')) {
+				$scope.chatLogList.$loaded().then(function(array) {
+					for (var i = 0; i< array.length; i++) {
+						if (array[i]['type'] == 1 && array[i]['readStatus'] == 0) {
+							dblog.child(chat_code).child(array[i]['$id']).set({
+								type : 1,//nv gui tin nhan
+								msg : array[i]['msg'],
+								dateTime : array[i]['dateTime'],
+								user_id : array[i]['user_id'],
+								name: array[i]['name'],
+								avatar: array[i]['avatar'],
+								readStatus: 1
+							});
+						}
+					}
+				});	
 			}
-		});
+			$scope.updateReadStatus();
+		}, 1000)
+		
 	}
 }]);
 function striptags(html) {

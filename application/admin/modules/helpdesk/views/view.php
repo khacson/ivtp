@@ -80,7 +80,7 @@
 							<span class="log-time">
 								{{chatLog.dateTime}}
 								<span class="readStatus" ng-if="chatLog.type == 1 ">
-								 | {{chatLog.readStatus ? 'Đã nhận' : chatLog.readStatus == 0 ? 'Đã gửi' : 'Đã nhận'}}
+								 | {{chatLog.readStatus ? 'Đã xem' : chatLog.readStatus == 0 ? 'Đã gửi' : 'Đã xem'}}
 								{{}}
 								</span>
 							</span>
@@ -100,7 +100,7 @@
 					<span title="Chèn biểu tượng cảm xúc" id="insert-emotion" class="insert fright">
 						<span class="chaticon e1f60a" data="1f60a"></span>
 					</span>
-					<div id="input-msg" contenteditable="true" class="input-msg" ng-keyup="checkAndSendChat($event)" ng-click="updateReadStatus()"></div>
+					<div id="input-msg" contenteditable="true" class="input-msg" ng-keyup="checkAndSendChat($event)" ng-focus="updateReadStatus()"></div>
 					<button hidden type="submit" ng-click="sendChat()" data=""></button>
 					
 					<div id="icon-motion-container" class="icon-motion-container" style="display: none;">
@@ -653,21 +653,28 @@ app.controller('chatCtrl', ['$scope', '$firebase', '$firebaseArray', '$firebaseA
 		});
 	}
 	$scope.updateReadStatus = function() {
-		$scope.chatLogList.$loaded().then(function(array) {
-			for (var i = 0; i< array.length; i++) {
-				if (array[i]['type'] == 0 && array[i]['readStatus'] == 0) {
-					dblog.child(current_chat_code).child(array[i]['$id']).set({
-						type : 0,//khach hang gui tin nhan
-						msg : array[i]['msg'],
-						dateTime : array[i]['dateTime'],
-						user_id : array[i]['user_id'],
-						name: array[i]['name'],
-						avatar: array[i]['avatar'],
-						readStatus: 1
-					});
-				}
+		setTimeout(function(){
+			if ($('#input-msg').is(':focus')) {
+				$scope.chatLogList.$loaded().then(function(array) {
+					for (var i = 0; i< array.length; i++) {
+						if (array[i]['type'] == 0 && array[i]['readStatus'] == 0) {
+							dblog.child(current_chat_code).child(array[i]['$id']).set({
+								type : 0,//khach hang gui tin nhan
+								msg : array[i]['msg'],
+								dateTime : array[i]['dateTime'],
+								user_id : array[i]['user_id'],
+								name: array[i]['name'],
+								avatar: array[i]['avatar'],
+								readStatus: 1
+							});
+						}
+					}
+				});	
 			}
-		});
+			$scope.updateReadStatus();
+		}, 1000)
+
+		
 	}
 	
 }]);
