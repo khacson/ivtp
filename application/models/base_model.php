@@ -213,7 +213,7 @@ class base_model extends CI_Model {
 		}
         $sql = "SELECT * FROM ivt_users
                 WHERE groupid = 2 AND isdelete=0 AND is_full = 0 $search
-				ORDER BY online_status DESC, fullname";
+				ORDER BY -ordering DESC, fullname";
         return $this->model->query($sql)->execute();
     }
 	

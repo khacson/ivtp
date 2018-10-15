@@ -625,12 +625,25 @@ li.searchbtn i {
     top: 7px;
 	display: none;
 }
+.menu-icon {
+	display: none;
+}
 @media (max-width: 992px) {
 	.searchmobile {
 		display: block;
 	}
 	.searchbtn {
 		display: none;
+	}
+	.menu-icon {
+		display: block;
+		margin-right: 10px;
+		color: #764EBE;
+		display: inline-block;
+		font-size: 20px;
+	}
+	.rd-navbar-nav > li.active .menu-icon, .rd-navbar-nav > li:hover .menu-icon {
+		color: #fff;
 	}
 }
 @media (max-width: 580px) {

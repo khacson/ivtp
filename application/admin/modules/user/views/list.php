@@ -10,12 +10,24 @@ foreach ($datas as $item) {
 			$fullStatus = '<button is_full="0" class="btn-success btn btn-sm change_status">Free</button>';
 		}
 	}
+	$ordering = '';
+	if ($item->groupid == 2) {
+		$ordering = '<select class="sel_ordering" onchange="changeOrder('.$item->id.', this.value)">';
+		$ordering .= "<option value=''></option>";
+		for($k=1;$k<101;$k++) {
+			$selected = '';
+			if ($item->ordering == $k) { $selected = 'selected';}
+			$ordering .= "<option $selected value='$k'>$k</option>";
+		}
+		$ordering .= '</select>';
+	}
 ?>
 
-	<tr class="content edit" groupid="<?=$item->groupid;?>" level="<?=$item->level;?>" degree="<?=$item->degree;?>" experience="<?=$item->experience;?>" views="<?=$item->views;?>" firebasedb="<?=$item->firebasedb;?>" avatar="<?=$item->signature;?>" id="<?=$item->id;?>" >
+	<tr class="content edit" groupid="<?=$item->groupid;?>" level="<?=$item->level;?>" degree="<?=$item->degree;?>" experience="<?=$item->experience;?>" views="<?=$item->views;?>" firebasedb="<?=$item->firebasedb;?>" avatar="<?=$item->signature;?>" ordering="<?=$item->ordering;?>" id="<?=$item->id;?>" >
 		<td style="text-align: center;">
 		<input class="noClick" type="checkbox" name="keys[]" id="<?=$item->id; ?>"></td>
 		<td class="center"><?=$i;?></td>
+		<td align="center" class="ordering"><?=$ordering;?></td>
 		<td class="uusername"><?=$item->username;?></td>
 		<td class="ufullname"><?=$item->fullname;?></td>
 		<td class="ugroupid"  ><?=$item->groupname;?></td>

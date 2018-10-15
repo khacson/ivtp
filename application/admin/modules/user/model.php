@@ -5,6 +5,9 @@
 	}
 	function getSearch($search){
 		$sql = "";
+		foreach ($search as $k=>$v) {
+			$search[$k] = addslashes($v);
+		}
 		if (!empty($search['username'])) {
 			$sql .= " AND u.username LIKE '%".$search['username']."%' ";
 		}

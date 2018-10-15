@@ -66,9 +66,9 @@
 		<div class="rd-navbar-nav-wrap reveal-inline-block">
 		  <!-- RD Navbar Nav-->
 		  <ul class="rd-navbar-nav">
-			<li class="<?=$arrActive['trang-chu']?>"><a href="<?=base_url();?>trang-chu.html">Trang chủ</a></li>
-			<li class="<?=$arrActive['gioi-thieu']?>"><a href="<?=base_url();?>gioi-thieu.html">Giới thiệu</a> </li>
-			<li class="<?=$arrActive['xu-huong-thi-truong']?>"><a href="<?=base_url();?>xu-huong-thi-truong.html">Xu hướng thị trường</a>
+			<li class="<?=$arrActive['trang-chu']?>"><a href="<?=base_url();?>trang-chu.html"><i class="fa fa-home menu-icon"></i>Trang chủ</a></li>
+			<li class="<?=$arrActive['gioi-thieu']?>"><a href="<?=base_url();?>gioi-thieu.html"><i class="fa fa-info-circle menu-icon"></i>Giới thiệu</a> </li>
+			<li class="<?=$arrActive['xu-huong-thi-truong']?>"><a href="<?=base_url();?>xu-huong-thi-truong.html"><i class="fa fa-tachometer menu-icon"></i>Xu hướng thị trường</a>
 			  <!-- RD Navbar Dropdown-->
 			  <?php if (!empty($markettendCatalogs)) { ?>
 			  <ul class="rd-navbar-dropdown">
@@ -78,8 +78,8 @@
 			  </ul>
 			  <?php }?>
 			</li>
-			<li class="<?=$arrActive['tu-van']?>"><a href="<?=base_url();?>tu-van.html">Tổ tư vấn độc lập</a> </li>
-			<li class="<?=$arrActive['danh-muc-dau-tu']?>"><a href="javascript:;">Trung tâm phân tích</a>
+			<li class="<?=$arrActive['tu-van']?>"><a href="<?=base_url();?>tu-van.html"><i class="fa fa-comments menu-icon"></i>Tổ tư vấn độc lập</a> </li>
+			<li class="<?=$arrActive['danh-muc-dau-tu']?>"><a href="javascript:;"><i class="fa fa-bar-chart-o menu-icon"></i>Trung tâm phân tích</a>
 			  <!-- RD Navbar Dropdown-->
 			  <ul class="rd-navbar-dropdown">
 				<li><a href="<?=base_url();?>danh-muc-tang-truong.html">Danh mục tăng trưởng</a></li>
@@ -88,8 +88,8 @@
 				<?php }?>
 			  </ul>
 			</li>
-			<li class="<?=$arrActive['dich-vu']?>"><a href="<?=base_url();?>dich-vu.html">Dịch vụ</a></li>
-			<li class="<?=$arrActive['lien-he']?>"><a href="<?=base_url();?>lien-he.html">Liên hệ</a></li>
+			<li class="<?=$arrActive['dich-vu']?>"><a href="<?=base_url();?>dich-vu.html"><i class="fa fa-cog menu-icon"></i>Dịch vụ</a></li>
+			<li class="<?=$arrActive['lien-he']?>"><a href="<?=base_url();?>lien-he.html"><i class="fa fa-phone menu-icon"></i>Liên hệ</a></li>
 			<li class="searchbtn"><a title="Tìm kiếm" href="javascript:;"  onclick="showSearchDiv();"><i class="fa fa-search"></i></a></li>
 		  </ul>
 		</div>

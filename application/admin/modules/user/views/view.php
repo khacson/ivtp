@@ -2,18 +2,19 @@
 <style title="" type="text/css">
 	table col.c1 { width: 45px; }
 	table col.c2 { width: 60px; }
-	table col.c3 { width: 100px; }
-	table col.c4 { width: 180px; }
-	table col.c5 { width: 120px; }
+	table col.c3 {  width: 100px; }
+	table col.c4 { width: 100px; }
+	table col.c5 { width: 180px; }
 	table col.c6 { width: 120px; }
-	table col.c7 { width: 220px; }
-	table col.c8 { width: 150px; }
+	table col.c7 { width: 120px; }
+	table col.c8 { width: 220px; }
 	table col.c9 { width: 150px; }
-	table col.c10 { width: 300px; }
+	table col.c10 { width: 150px; }
 	table col.c11 { width: 300px; }
-	table col.c12 { width: 120px; }
-	table col.c13 {  width: 100px; }
-	table col.c14 {  width: auto; }
+	table col.c12 { width: 300px; }
+	table col.c13 { width: 120px; }
+	table col.c14 {  width: 100px; }
+	table col.c15 {  width: auto; }
 </style>
 <!-- BEGIN PORTLET-->
 <form method="post" enctype="multipart/form-data">
@@ -220,12 +221,13 @@
 				<div id="cHeader">
 					<div id="tHeader">    	
 						<table width="100%" cellspacing="0" border="1" id="tbheader" >
-							<?php for($i=1; $i< 15; $i++){?>
+							<?php for($i=1; $i< 16; $i++){?>
 								<col class="c<?=$i;?>">
 							<?php }?>
 							<tr>
 								<th width="40px" class="text-center"><input type="checkbox" name="checkAll" id="checkAll" /></th>
 								<th>STT</th>
+								<th id="ord_u.ordering">Thứ tự</th>
 								<th id="ord_u.username">Tài khoản</th>
 								<th id="ord_u.fullname">Họ tên</th>
 								<th id="ord_g.groupname">Nhóm quyền</th>
@@ -247,7 +249,7 @@
 				<div id="data">
 					<div id="gridView">
 						<table  id="tbbody" width="100%" cellspacing="0" border="1">
-							<?php for($i=1; $i< 15; $i++){?>
+							<?php for($i=1; $i< 16; $i++){?>
 								<col class="c<?=$i;?>">
 							<?php }?>
 							<tbody id="grid-rows"></tbody>
@@ -430,7 +432,29 @@
 			});
 		});
 	});
-	
+	function changeOrder(id, ordering) {
+		var token = $('#token').val();
+		$('.loading').show();
+		$.ajax({
+			url : controller + 'changeOrder',
+			type: 'POST',
+			async: false,
+			data: {csrf_stock_name:token,id:id, ordering: ordering},
+			success:function(datas){
+				$('.loading').hide();
+				var obj = $.evalJSON(datas); 
+				$('#token').val(obj.csrfHash);
+				if(obj.status == 0){
+					error('Có lỗi xảy ra, chuyển thứ tự thất bại'); return false;		
+				}
+				
+			},
+			error : function(){
+				$('.loading').hide();
+				error('Có lỗi xảy ra, chuyển thứ tự thất bại'); return false;
+			}
+		});
+	}
 	function updateCoords(c){
 		//console.log(rate);
 		$('#x').val(c.x * rate);

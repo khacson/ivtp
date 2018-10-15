@@ -257,6 +257,30 @@ class User extends CI_Controller {
 		$result->status = 1;
 		echo json_encode($result);
 	}
+	function changeOrder() {
+		$login = $this->login;
+		if (empty($login) || empty($login->id)) {
+			$result = new stdClass();
+			$result->csrfHash = $this->security->get_csrf_hash();
+			$result->status = 0;
+			echo json_encode($result);die;
+		}
+		$ordering = $this->input->post('ordering');
+		$id = $this->input->post('id');
+
+		$array['ordering'] = $ordering;
+		$array['dateupdate'] = gmdate('Y-m-d H:i:s', time() + 7*3600);
+		$array['userupdate'] = $login->username;
+		
+		$this->model->table('ivt_users')
+					->where('id', $id)
+					->update($array);
+		
+		$result = new stdClass();
+		$result->csrfHash = $this->security->get_csrf_hash();
+		$result->status = 1;
+		echo json_encode($result);
+	}
 	
 	
 }
