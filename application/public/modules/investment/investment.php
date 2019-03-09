@@ -115,8 +115,8 @@ class Investment extends CI_Controller {
 				$title = $finds->title;
 			}
 			$this->site->write('title',$title,true);
-			$this->site->write('description',$finds->meta_keyword,true);
-			$this->site->write('keywords',$finds->mete_description,true);
+			$this->site->write('description',$finds->mete_description,true);
+			$this->site->write('keywords',$finds->meta_keyword,true);
 			$this->site->write('title_page',$finds->title,true);
 		}
 		$data->catalogFind =  $this->model->getFindC($typeid);

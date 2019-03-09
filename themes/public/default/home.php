@@ -3,6 +3,8 @@
   <head>
     <!-- Site Title-->
     <title>Investor Pro</title>
+    <meta name="description" content="<?=$description?>" />
+	<meta name="keywords" content="<?=$keywords?>" />
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
