@@ -10,6 +10,25 @@ img {
 footer {
     margin-top: 0px;
 }
+.free {
+	color: #fff;
+	display: inline-block;
+	width: 45px;
+	height: 19px;
+	line-height: 19px;
+	text-align: center;
+	border-radius: 9px;
+	font-weight: 600;
+	font-size: 11px;
+	animation-name: free-animation;
+	animation-duration: 1s;
+	animation-direction: alternate;
+	animation-iteration-count: infinite;
+}
+@keyframes free-animation {
+  0% {background-color: #42cb27;}
+  100% {background-color: #349820;}
+}
 .pricing .plan.popular {
     border-radius: 5px;
 }

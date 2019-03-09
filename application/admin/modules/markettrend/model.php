@@ -19,6 +19,9 @@
 		if (!empty($search['typeid'])) {
 			$sql .= " AND typeid LIKE '%".$search['typeid']."%' ";
 		}
+		if ($search['free'] !== '') {
+			$sql .= " AND free = '".$search['free']."' ";
+		}
 		return $sql;
 	}
 	function getList($search,$page,$numrows){

@@ -154,6 +154,38 @@ class Site extends CI_Template {
         $CI->pagination->initialize($config);
         return $CI->pagination->create_links($page);
     }
+	
+	
+	function pagination_links($count, $rows, $links, $task, $page = 0) {
+        $CI = & get_instance();
+        $config['base_url'] = base_url() . $task;
+        $config['total_rows'] = $count;
+        $config['per_page'] = $rows;
+        $config['num_links'] = $links;
+
+        $num_pages = (!empty($rows)) ? ceil($count / $rows) : 1;
+        $cur_page = $page;
+        $cur_page = (int) $cur_page;
+        if (!is_numeric($cur_page)) {
+            $cur_page = 0;
+        }
+        if ($cur_page > $count) {
+            $cur_page = ($num_pages - 1) * $rows;
+        }
+        $cur_page = floor(($cur_page / $rows) + 1);
+
+        $config['full_tag_open'] = '<div class="pagination">';
+        $config['full_tag_close'] = '</div>'; //'<div class="limit">Trang thứ '.$cur_page.' / '.ceil($count/$rows).'</div></div>';
+
+        $config['first_link'] = '&nbsp;';
+        $config['prev_link'] = '&nbsp;';
+        $config['next_link'] = '&nbsp;';
+        $config['last_link'] = '&nbsp;';
+        $CI->load->library('pagination');
+
+        $CI->pagination->initialize($config);
+        return $CI->pagination->create_links_ex($page);
+    }
 }
 function rand_pass($length) {
     $pool = '0123456789abcdefghijklmnopqrstuvwxyz';

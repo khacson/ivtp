@@ -45,6 +45,16 @@
 					</div>
 				</div>
                 <div class="col-md-4">
+					<div class="form-group">
+						<label class="control-label col-md-4">Miễn phí </label>
+						<div class="col-md-8" >
+							<select name="free" id="free" class="combos">
+								<option></option>
+								<option value="0">Không</option>
+								<option value="1">Có</option>
+							</select>
+						</div>
+					</div>
                     <div class="mright10" >
                         <input type="hidden" name="id" id="id" />
                         <input type="hidden" id="token" name="<?= $csrfName; ?>" value="<?= $csrfHash; ?>" />
@@ -184,6 +194,11 @@
 			placeholder:"Chọn loại",
             single: true
         });
+		$('#free').multipleSelect({
+        	filter: false,
+			placeholder:"Chọn trạng thái",
+            single: true
+        });
         refresh();
         $('#refresh').click(function() {
             $(".loading").show();
@@ -269,6 +284,7 @@
     function refresh() {
         $('.loading').show();
         $('.searchs').val('');
+		$('select.combos').multipleSelect('uncheckAll');
         $('#show').html('');
         document.getElementById("checkAll").checked=false;
         csrfHash = $('#token').val();

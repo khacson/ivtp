@@ -132,6 +132,21 @@
 			</div>
 			
             <div class="row mtop10">
+				<div class="col-md-4">
+					<div class="form-group">
+						<label class="control-label col-md-4">Miễn phí </label>
+						<div class="col-md-8" >
+							<select name="free" id="free" class="combos">
+								<option></option>
+								<option value="0">Không</option>
+								<option value="1">Có</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+            <div class="row mtop10">
                 <div class="col-md-12">
                         <div class="form-group">
                                 <label class="control-label col-md-1">Nội dung ngắn</label>
@@ -306,6 +321,11 @@
         	filter: true,
 			placeholder:"Chọn loại",
             single: true
+        });     
+		$('#free').multipleSelect({
+        	filter: false,
+			placeholder:"Chọn trạng thái",
+            single: true
         });
         refresh();addform();
 		//CKEDITOR.instances['description'].setData("111");
@@ -469,7 +489,9 @@
 		$('#meta_keyword').val('<?=$finds->meta_keyword;?>');
 		$('#mete_description').val('<?=$finds->mete_description;?>');
 		var typeid = '<?=$finds->typeid;?>';
+		var free = '<?=$finds->free;?>';
 		$('#typeid').multipleSelect('setSelects', typeid.split(','));
+		$('#free').multipleSelect('setSelects', free.split(','));
 		if(id!=''){
 			if(img) {
 				$('#show').html('<img src="' + imgUrl + '" style="width:100px;" />');

@@ -28,7 +28,7 @@ class HomeModel extends CI_Model
 	}
 	function getMarkettrend(){
 		$sql = "
-			SELECT `id`, `title`, `friendlyurl`, `description_sort`, `image`, `datecreate`, `dateupdate`, `thumb`, 
+			SELECT `id`, `title`, `friendlyurl`, `description_sort`, `image`, `datecreate`, `dateupdate`, `thumb`, free,
 			(select count(1) total from ivt_markettrend_comment mc where mc.blogid = m.`id`) comment
 			FROM `ivt_markettrend` m  
 			WHERE m.`isdelete` =0 
@@ -39,7 +39,7 @@ class HomeModel extends CI_Model
 	}
 	function getInvestment(){
 		$sql = "
-			SELECT `id`, `title`, `friendlyurl`, `description_sort`, `image`, `dateupdate`, `datecreate`, `thumb`, 
+			SELECT `id`, `title`, `friendlyurl`, `description_sort`, `image`, `dateupdate`, `datecreate`, `thumb`, free,
 			(select count(1) total from ivt_investment_commets mc where mc.blogid = m.`id`) comment
 			FROM `ivt_investment` m  
 			WHERE m.`isdelete` =0

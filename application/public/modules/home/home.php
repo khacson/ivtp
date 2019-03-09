@@ -8,7 +8,7 @@ class Home extends CI_Controller {
     
 	function __construct(){
 		parent::__construct();			
-	    $this->load->model();
+	    $this->load->model(array('model','base_model'));
 		$this->site->setTemplate('home');
 	}
     function  _remap($method, $params = array()){
@@ -29,6 +29,7 @@ class Home extends CI_Controller {
 		$data->investment = $this->model->getInvestment();
 		$data->cps = $this->model->getCP();
 		$data->cpTangs = $this->model->getCPTang();
+		$data->memberLevel = $this->base_model->getMemberLevel();
 		
 		$content = $this->load->view('view',$data,true);
         $this->site->write('content',$content,true);

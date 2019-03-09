@@ -21,10 +21,41 @@
               <div class="range range-xs-center range-lg-right range-xl-justify">
                 <div class="cell-sm-10 cell-md-8 cell-xl-7">
 					<!--S Item-->
-					<div  id="grid-rows"></div>
+					<div  id="grid-rows">
+						 <?php if(count($datas) == 0){?>
+							<h6 class="center offset-md-top-30">Chuyên mục chưa có bài viết</h6>
+						 <?php }?>
+						 <?php foreach($datas as $item){
+							 $free = '';
+							 if (!empty($item->free)) {
+								 if ($view_all == 0) {
+									 $free = ' <span class="free">Free</span>';
+								 }
+							 }
+						 ?>
+							  <div class="offset-top-30">
+								<!-- Unit-->
+								<div class="unit unit-horizontal">
+								  <div class="unit-left"><img class="img-responsive center-block" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="300" height="200" alt=""></div>
+								  <div class="unit-body">
+									<a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><b><?=$item->title;?></b> <?=$free?></a>
+									<div class="offset-top-10">
+									   <?=$item->description_sort;?>
+									  <!-- List Inline-->
+									  <ul class="list-inline list-inline-dashed list-inline-12 text-gray text-italic p">
+										<li><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><i class="fa fa-angle-right" aria-hidden="true"></i> Xem chi tiết</a></li>
+									  </ul>
+									</div>
+								  </div>
+								</div>
+							  </div>
+						<?php }?>
+					</div>
 					<!--E Item-->
 					<div class="cell-sm-10 cell-md-8 cell-xl-7 offset-md-top-20">
-						<div class="text-center" id="paging"></div>
+						<div class="text-center" id="paging">
+							<?php echo $paging; ?>
+						</div>
 					</div>
                 </div>
 				
@@ -98,7 +129,7 @@
 	var index = 'asc';
 	var action = 'getList';
 	$(function(){
-		getListMore(cpage,csrfHash,action,'');
+		//getListMore(cpage,csrfHash,action,'');
 	});
 	function getListMore(page,csrfHash,action,type){
 		loaddingPage = false;

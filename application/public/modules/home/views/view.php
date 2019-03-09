@@ -49,12 +49,20 @@
               </div>
               <div class="range range-xs-center range-lg-left text-left">
                 <!--S Item 1-->
-				<?php foreach($markettrends as $item){?>
+				<?php 
+				foreach($markettrends as $item){
+					$free = '';
+					 if (!empty($item->free)) {
+						 if ($memberLevel < 1) {
+							 $free = ' <span class="free">Free</span>';
+						 }
+					 }
+				?>
 				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-4">
                   <div class="post-box shadow-drop post-box-max-width-none reveal-block">
                     <div class="post-box-img-wrap"><a class="thumbnail-robben" href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=base_url();?>files/markettrend/thumb/<?=$item->thumb;?>" width="320" height="442" alt=""></span></a></div>
                     <div class="post-box-caption post-box-bottom-radius bg-white">
-                      <h5 class="offset-top-15"><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a></h5>
+                      <h5 class="offset-top-15"><a href="<?=base_url();?>xu-huong-thi-truong/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?> <?=$free;?></a></h5>
                       <p class="offset-top-20">
 						<?=strlen($item->description_sort) < 190 ? $item->description_sort : substr($item->description_sort, 0, 190).'...';?>
 					  </p>
@@ -86,12 +94,21 @@
               </div>
               <div class="range range-xs-center range-lg-left text-left">
                 <!--S Item 1-->
-				<?php foreach($investment as $item){?>
+				<?php 
+				foreach($investment as $item){
+					$free = '';
+					 if (!empty($item->free)) {
+						 if ($memberLevel < 1) {
+							 $free = ' <span class="free">Free</span>';
+						 }
+					 }
+					
+				?>
 				<div class="cell-sm-10 cell-md-6 cell-lg-4 cell-xl-4">
                   <div class="post-box shadow-drop post-box-max-width-none reveal-block">
                     <div class="post-box-img-wrap"><a class="thumbnail-robben" href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><span class="thumbnail-robben-img-wrap post-box-top-radius"><img class="img-responsive center-block post-box-top-radius" src="<?=base_url();?>files/investment/thumb/<?=$item->thumb;?>" width="320" height="442" alt=""></span></a></div>
                     <div class="post-box-caption post-box-bottom-radius bg-white">
-                      <h5 class="offset-top-15"><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?></a></h5>
+                      <h5 class="offset-top-15"><a href="<?=base_url();?>danh-muc-dau-tu/<?=$item->friendlyurl;?>-dt<?=$item->id;?>.html"><?=$item->title;?> <?=$free;?></a></h5>
                       <p class="offset-top-20">
 						<?=strlen($item->description_sort) < 190 ? $item->description_sort : substr($item->description_sort, 0, 190).'...';?>
 					  </p>

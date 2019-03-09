@@ -45,6 +45,15 @@ class Investment extends CI_Controller {
 		$data->catalogFind = $this->model->getFindCatalog($uri);
 		$data->uri = $uri;
 		
+		$cat_id = 0;
+		if ($data->catalogFind) {
+			$cat_id = $data->catalogFind->id;
+		}
+		
+		$rs = $this->getList($cat_id);
+		$data->datas = $rs->datas;
+		$data->paging = $rs->paging;
+		
 		if (empty($data->catalogFind)) {
 			$data->msg = 'Bài viết này không có nội dung.';
 			$content = $this->load->view('404',$data,true);
@@ -59,17 +68,13 @@ class Investment extends CI_Controller {
 		
 		$memberLevel = $this->base_model->getMemberLevel();
 		if ($memberLevel >= $this->postLevel) {
-			$content = $this->load->view('view',$data,true);
+			$data->view_all = 1;
 		}
 		else {
-			$redirectUrl = $this->base_model->getFullUrl();
-			header('Location: '.base_url().'dang-nhap.html?r='.$redirectUrl);
-			return;
-			
-			$data->msg = 'Bạn cần đăng nhập và kích hoạt gói dịch vụ để xem nội dung trang này.';
-			$data->buttonlist = $this->base_model->getButton();
-			$content = $this->load->view('404',$data,true);
+			$data->view_all = 0;
 		}
+		
+		$content = $this->load->view('view',$data,true);
 		
 		$title = 'Trung tâm phân tích';
 		$des = 'Trung tâm phân tích';
@@ -141,7 +146,7 @@ class Investment extends CI_Controller {
 		}
 		
 		$memberLevel = $this->base_model->getMemberLevel();
-		if ($memberLevel >= $this->postLevel) {
+		if ($memberLevel >= $this->postLevel || $finds->free) {
 			$content = $this->load->view('detail',$data,true);
 		}
 		else {
@@ -157,27 +162,41 @@ class Investment extends CI_Controller {
         $this->site->write('content',$content,true);
         $this->site->render();
 	}
-	function getList(){
+	function getList($cat_id){
 		$param = array();
         $numrows = 10;
         $data = new stdClass();
-		$page = $this->input->post('page');
-        $search = $this->input->post('search');
-		
+		$uri = $this->uri->segment(1);
+		$uri2 = $this->uri->segment(2);
+		$uri3 = $this->uri->segment(3);
+		if (is_string($uri2) && strval(intval($uri2)) != $uri2) {
+			$uri = "$uri/$uri2";
+			$page = $uri3;
+		}
+		else {
+			$page = $uri2;
+		}
 
+		$page = intval($page);
+		if (!$page) {
+			$page = 0;
+		}
+		
+        $search = $this->input->post('search');
+		$search['cat_id'] = $cat_id;
+		
 		$count = $this->model->getTotal($search);
         $data->datas = $this->model->getList($search, $page, $numrows);
-        $page_view = $this->site->pagination($count, $numrows, 5, 'product/', $page);
+        $page_view = $this->site->pagination_links($count, $numrows, 5, "$uri/", $page);
 		
-        $result = new stdClass();
-		$result->numrows = $numrows;
-        $result->cPage = $page;
-        $result->viewtotal = $count;
+		$data->numrows = $numrows;
+        $data->cPage = $page;
+        $data->viewtotal = $count;
 		if($count > $numrows){
-			 $result->paging = $page_view;	
+			 $data->paging = $page_view;	
 		}
 		else{
-			$result->paging = '';
+			$data->paging = '';
 		}
 		if(empty($uri)){
 			$data->linkImg = '';
@@ -185,9 +204,7 @@ class Investment extends CI_Controller {
 		else{
 			$data->linkImg = '../';
 		}
-        $result->csrfHash = $this->security->get_csrf_hash();
-        $result->content = $this->load->view('list', $data, true);
-        echo json_encode($result);
+        return $data;
 	}
 	function getCommentList($blogid) {
 		//get level 0

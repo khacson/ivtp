@@ -21,7 +21,7 @@ class MarkettrendModel extends CI_Model
 					  ->find();
 		return $query;
 	}
-	function getFindCatalog($friendlyurl){
+	function getFindCatalog($friendlyurl){ 
 		$query = $this->model->table('ivt_markettrendcatalog')
 					  ->select('id,catalog_name')
 					  ->where('friendlyurl',$friendlyurl)
@@ -57,8 +57,8 @@ class MarkettrendModel extends CI_Model
 	}
 	function getSearch($search){
 		$and = '';
-		if(!empty($search)){
-			$typeid = $this->getFindCatalog($search)->id;
+		if(!empty($search['cat_id'])){
+			$typeid = $search['cat_id'];
 			if(!empty($typeid)){
 				$and.= " and m.typeid = '".$typeid."' ";
 			}
